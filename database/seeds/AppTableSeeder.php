@@ -12,8 +12,8 @@ class AppTableSeeder extends Seeder
     public function run()
     {
         App\Models\Application::create([
-            'name' => 'NYPSoft',
-            'description' => 'NyariPeluang Software',
+            'name' => 'ZetthCMS Core',
+            'description' => 'Core System ZetthCMS',
             'logo' => '',
             'status' => 1,
         ]);

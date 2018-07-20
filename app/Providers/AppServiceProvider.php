@@ -19,7 +19,8 @@ class AppServiceProvider extends ServiceProvider
         Schema::defaultStringLength(191);
 
         /* check config */
-        if (strpos(php_sapi_name(), 'cli') !== false) {
+        $isCLI = strpos(php_sapi_name(), 'cli') >= 0;
+        if (!$isCLI) {
             if (!Schema::hasTable('applications')) {
                 /* sementara, nanti redirect ke halaman install */
                 dd('you need to install this app first');
