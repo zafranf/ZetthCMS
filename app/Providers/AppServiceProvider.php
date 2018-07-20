@@ -15,7 +15,14 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
+        /* set default varchar */
         Schema::defaultStringLength(191);
+
+        /* check config */
+        if (!Schema::hasTable('applications')) {
+            /* sementara, nanti redirect ke halaman install */
+            dd('you need to install this app first');
+        }
 
         /* send application data to all views */
         if (Schema::hasTable('applications')) {
@@ -26,9 +33,9 @@ class AppServiceProvider extends ServiceProvider
         /* send menu data to all views */
         if (Schema::hasTable('menus')) {
             $menu = \App\Models\Menu::where([
-                        'parent_id' => 0, 
-                        'status' => 1
-                    ])->with('submenu')->orderBy('order')->get();
+                'parent_id' => 0,
+                'status' => 1,
+            ])->with('submenu')->orderBy('order')->get();
             View::share('appmenu', $menu);
         }
     }
