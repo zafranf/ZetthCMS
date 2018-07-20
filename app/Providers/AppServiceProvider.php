@@ -19,9 +19,12 @@ class AppServiceProvider extends ServiceProvider
         Schema::defaultStringLength(191);
 
         /* check config */
-        if (!Schema::hasTable('applications')) {
-            /* sementara, nanti redirect ke halaman install */
-            dd('you need to install this app first');
+        if (strpos(php_sapi_name(), 'cli') !== false) {
+            if (!Schema::hasTable('applications')) {
+                /* sementara, nanti redirect ke halaman install */
+                dd('you need to install this app first');
+                // redirect('http://google.com')->send();
+            }
         }
 
         /* send application data to all views */
