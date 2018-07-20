@@ -13,9 +13,9 @@
     <meta name="mobile-web-app-capable" content="yes">
     <meta name="HandheldFriendly" content="True">
     <meta name="MobileOptimized" content="320">
-    <link rel="icon" href="{{ _get_image('/images/' . $app->logo) }}" type="image/x-icon"/>
-    <link rel="shortcut icon" type="image/x-icon" href="{{ _get_image('/images/' . $app->logo) }}" />
-    <title>{{ $page_title }} | {{ $app->name }}</title>
+    <link rel="icon" href="{{ _get_image('/images/' . $apps->logo) }}" type="image/x-icon"/>
+    <link rel="shortcut icon" type="image/x-icon" href="{{ _get_image('/images/' . $apps->logo) }}" />
+    <title>{{ $page_title }} | {{ $apps->name }}</title>
     {!! _load_css('/css/font-awesome.min.css') !!}
     {!! _load_css('/css/sourcesanspro.css') !!}
     {{-- Dashboard Core --}}
