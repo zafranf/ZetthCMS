@@ -10,10 +10,13 @@ class DashboardController extends Controller
     private $current_url;
     private $page_title;
 
+    /**
+     * Constructor
+     */
     public function __construct()
     {
         $this->current_url = url('/setting/roles');
-        $this->page_title = 'Pengaturan Peran dan Akses';
+        $this->page_title = 'Dashboard Admin';
     }
 
     /**

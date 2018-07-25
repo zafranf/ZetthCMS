@@ -11,6 +11,9 @@ class MenuController extends Controller
     private $current_url;
     private $page_title;
 
+    /**
+     * Constructor
+     */
     public function __construct()
     {
         $this->current_url = url('/setting/menus');
@@ -194,6 +197,9 @@ class MenuController extends Controller
         abort(403);
     }
 
+    /**
+     * Menu Sort Form
+     */
     public function sort(Request $r)
     {
         /* get data */
@@ -210,6 +216,7 @@ class MenuController extends Controller
         return view('admin.setting.menu_sort', $data);
     }
 
+    /* Save Sorted Menu */
     public function sortSave(Request $r, $data = [], $parent = 0)
     {
         /* validation */
@@ -223,6 +230,7 @@ class MenuController extends Controller
         return redirect('/setting/menus')->with('success', 'Menu berhasil diurutkan!');
     }
 
+    /* Do Save Menu */
     public function sortQuery(Request $r, $data = [], $parent = 0)
     {
         /* mapping values */

@@ -11,6 +11,9 @@ class ApplicationController extends Controller
     private $current_url;
     private $page_title;
 
+    /**
+     * Constructor
+     */
     public function __construct()
     {
         $this->current_url = url('/setting/application');

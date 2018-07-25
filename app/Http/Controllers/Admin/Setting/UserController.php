@@ -12,6 +12,9 @@ class UserController extends Controller
     private $current_url;
     private $page_title;
 
+    /**
+     * Constructor
+     */
     public function __construct()
     {
         $this->current_url = url('/setting/users');
@@ -271,6 +274,9 @@ class UserController extends Controller
         abort(403);
     }
 
+    /**
+     * Assign user to a role 
+     */
     public function assignRole($user, $newRole)
     {
         /* hapus role sebelumnya */
