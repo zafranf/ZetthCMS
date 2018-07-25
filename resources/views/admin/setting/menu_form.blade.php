@@ -125,7 +125,7 @@
 
 {{-- include js --}}
 @section('js')
-{!! _load_js('/js/vendors/selectize.min.js') !!}
+{!! _load_js('/admin/js/vendors/selectize.min.js') !!}
 <script>
   $('document').ready(function(){
       $('#target, #parent').selectize();

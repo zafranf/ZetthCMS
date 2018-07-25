@@ -89,7 +89,7 @@ function sortMenu($data, $level = 0) {
 
 {{-- include js --}}
 @section('js')
-{!! _load_js('/js/vendors/jquery-sortable.min.js') !!}
+{!! _load_js('/admin/js/vendors/jquery-sortable.min.js') !!}
 <script>
     $(function() {
       var group = $('ol.default').sortable({

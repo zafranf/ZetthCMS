@@ -24,12 +24,12 @@
 
 {{-- include css --}}
 @section('css')
-{!! _load_css('/plugins/DataTables/datatables.min.css') !!}
+{!! _load_css('/admin/plugins/DataTables/datatables.min.css') !!}
 @endsection
 
 {{-- include js --}}
 @section('js')
-{!! _load_js('/plugins/DataTables/datatables.min.js') !!}
+{!! _load_js('/admin/plugins/DataTables/datatables.min.js') !!}
 <script>
   $(document).ready(function() {
     var table = $('#list').DataTable({
