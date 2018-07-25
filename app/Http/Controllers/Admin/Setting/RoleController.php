@@ -185,7 +185,7 @@ class RoleController extends Controller
             return $this->generateDataTable($r, $data);
         }
 
-        return [];
+        abort(403);
     }
     
     /**

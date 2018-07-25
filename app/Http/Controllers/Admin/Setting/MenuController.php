@@ -191,7 +191,7 @@ class MenuController extends Controller
             return $this->generateDataTable($r, $data);
         }
 
-        return [];
+        abort(403);
     }
 
     public function sort(Request $r)

@@ -268,7 +268,7 @@ class UserController extends Controller
             return $this->generateDataTable($r, $data);
         }
 
-        return [];
+        abort(403);
     }
 
     public function assignRole($user, $newRole)
