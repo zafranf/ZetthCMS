@@ -15,7 +15,7 @@
     </div>
     <script>
       var TOKEN = '{{ csrf_token() }}';
-      var APP_URL = '{{ url('/') }}';
+      var SITE_URL = '{{ url('/') }}';
     </script>
     {!! _load_js('/admin/js/vendors/jquery-3.2.1.min.js') !!}
     {!! _load_js('/admin/js/vendors/bootstrap.bundle.min.js') !!}

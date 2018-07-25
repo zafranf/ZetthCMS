@@ -35,7 +35,7 @@
     var table = $('#list').DataTable({
       "processing": true,
       "serverSide": true,
-      "ajax": APP_URL + "/admin/setting/menus/data",
+      "ajax": SITE_URL + "/admin/setting/menus/data",
       "columns": [
           { "data": "no", "width": "30px" },
           { "data": "name", "width": "200px" },
@@ -49,7 +49,7 @@
         "data": 'id',
         "render": function (data, type, row, meta) {
           var actions = '';
-          var url = APP_URL + '/admin/setting/menus/' + data;
+          var url = SITE_URL + '/admin/setting/menus/' + data;
           var del = "_delete('" + url + "')";
           {!! _get_access_buttons() !!}
           $('[data-toggle="tooltip"]').tooltip();
