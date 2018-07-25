@@ -1,16 +1,16 @@
 @php 
 $page_title = 'Masuk Aplikasi';
 @endphp
-@include('layouts.header')
+@include('admin.layouts.header')
 
 <div class="page-single">
   <div class="container">
     <div class="row">
       <div class="col col-login mx-auto">
         <div class="text-center mb-6">
-          <img src="{{ url('/images/logo.jpg') }}" class="h-6" alt="">
+          <img src="{{ url('/assets/images/logo.jpg') }}" class="h-6" alt="">
         </div>
-        <form class="card" action="{{ url('/login') }}" method="post">
+        <form class="card" action="{{ url('/admin/login') }}" method="post">
           @csrf
           <div class="card-body p-6">
             <div class="card-title">Masuk ke aplikasi NYPSoft</div>
@@ -34,4 +34,4 @@ $page_title = 'Masuk Aplikasi';
   </div>
 </div>
 
-@include('layouts.footer')
+@include('admin.layouts.footer')

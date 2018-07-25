@@ -1,8 +1,8 @@
-@extends('layouts.main')
+@extends('admin.layouts.main')
 
 @section('content')
   <div class="card-body">
-    <form action="{{ url('/setting/application/'.$data->id) }}" method="post" enctype="multipart/form-data">
+    <form action="{{ url('/admin/setting/application/'.$data->id) }}" method="post" enctype="multipart/form-data">
         @csrf
         {{ method_field('put') }}
       <div class="form-group row">

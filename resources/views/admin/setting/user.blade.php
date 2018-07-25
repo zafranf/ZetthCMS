@@ -1,4 +1,4 @@
-@extends('layouts.main')
+@extends('admin.layouts.main')
 
 @section('content')
   <div class="card-body">
@@ -29,7 +29,7 @@
     var table = $('#list').DataTable({
       "processing": true,
       "serverSide": true,
-      "ajax": APP_URL + "/setting/users/data",
+      "ajax": APP_URL + "/admin/setting/users/data",
       "columns": [
           { "data": "no", "width": "30px" },
           { "data": "name", "width": "200px" },
@@ -43,7 +43,7 @@
         "data": 'id',
         "render": function (data, type, row, meta) {
           var actions = '';
-          var url = APP_URL + '/setting/users/' + data;
+          var url = APP_URL + '/admin/setting/users/' + data;
           var del = "_delete('" + url + "')";
           {!! _get_access_buttons() !!}
           $('[data-toggle="tooltip"]').tooltip();

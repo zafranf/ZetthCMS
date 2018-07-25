@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Setting;
+namespace App\Http\Controllers\Admin\Setting;
 
 use App\Models\Role;
 use App\Models\Menu;
@@ -43,7 +43,7 @@ class RoleController extends Controller
             return $this->generateDataTable($r, $roles);
         }
 
-        return view('setting.role', $data);
+        return view('admin.setting.role', $data);
     }
 
     /**
@@ -61,7 +61,7 @@ class RoleController extends Controller
             'menus' => Menu::where('status', 1)->get(),
         ];
 
-        return view('setting.role_form', $data);
+        return view('admin.setting.role_form', $data);
     }
 
     /**
@@ -122,7 +122,7 @@ class RoleController extends Controller
             'menus' => Menu::where('status', 1)->get(),
         ];
 
-        return view('setting.role_form', $data);
+        return view('admin.setting.role_form', $data);
     }
 
     /**
@@ -171,7 +171,26 @@ class RoleController extends Controller
 
         return redirect('/setting/roles')->with('success', 'Peran berhasil dihapus!');
     }
+
+    /**
+     * Generate DataTables
+     */
+    public function datatable(Request $r)
+    {
+        /* get data */
+        $data = Role::select(sequence(), 'id', 'display_name as name', 'description', 'status')->get();
+        
+        /* generate datatable */
+        if ($r->ajax()) {
+            return $this->generateDataTable($r, $data);
+        }
+
+        return [];
+    }
     
+    /**
+     * Set Permission Role
+     */
     public function setPermissions(Request $r, Role $role)
     {
         /* remove all permissions */

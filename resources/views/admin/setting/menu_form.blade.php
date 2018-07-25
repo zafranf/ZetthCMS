@@ -1,14 +1,14 @@
-@extends('layouts.main')
+@extends('admin.layouts.main')
 
 @section('menu-sort')
   @if (\Auth::user()->can('update-menus'))
-    <a href="{{ url('/setting/menus/sort') }}" class="btn btn-info" data-toggle="tooltip" data-original-title="Urutkan"><i class="fa fa-sort"></i></a>
+    <a href="{{ url('/admin/setting/menus/sort') }}" class="btn btn-info" data-toggle="tooltip" data-original-title="Urutkan"><i class="fa fa-sort"></i></a>
   @endif
 @endsection
 
 @section('content')
   <div class="card-body">
-    <form action="{{ url('/setting/menus') }}{{ isset($data->id) ? '/' . $data->id : '' }}" method="post" enctype="multipart/form-data">
+    <form action="{{ url('/admin/setting/menus') }}{{ isset($data->id) ? '/' . $data->id : '' }}" method="post" enctype="multipart/form-data">
       @csrf
       @if (isset($data->id))
         {{ method_field('put') }}

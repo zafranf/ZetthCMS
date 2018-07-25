@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin;
 
+use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
 class DashboardController extends Controller
@@ -28,6 +29,6 @@ class DashboardController extends Controller
             'page_subtitle' => 'Dashboard',
         ];
 
-        return view('layouts.main', $data);
+        return view('admin.layouts.main', $data);
     }
 }

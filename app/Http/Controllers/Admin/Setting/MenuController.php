@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Setting;
+namespace App\Http\Controllers\Admin\Setting;
 
 use App\Http\Controllers\Controller;
 use App\Models\Menu;
@@ -35,12 +35,7 @@ class MenuController extends Controller
             'data' => $menus,
         ];
 
-        /* generate datatable */
-        if ($r->ajax()) {
-            return $this->generateDataTable($r, $menus);
-        }
-
-        return view('setting.menu', $data);
+        return view('admin.setting.menu', $data);
     }
 
     /**
@@ -58,7 +53,7 @@ class MenuController extends Controller
             'menus' => Menu::where('status', 1)->get(),
         ];
 
-        return view('setting.menu_form', $data);
+        return view('admin.setting.menu_form', $data);
     }
 
     /**
@@ -126,7 +121,7 @@ class MenuController extends Controller
             'data' => $menu,
         ];
 
-        return view('setting.menu_form', $data);
+        return view('admin.setting.menu_form', $data);
     }
 
     /**
@@ -183,6 +178,22 @@ class MenuController extends Controller
         return redirect('/setting/menus')->with('success', 'Menu berhasil dihapus!');
     }
 
+    /**
+     * Generate DataTables
+     */
+    public function datatable(Request $r)
+    {
+        /* get data */
+        $data = Menu::select(sequence(), 'id', 'name', 'description', 'status')->get();
+        
+        /* generate datatable */
+        if ($r->ajax()) {
+            return $this->generateDataTable($r, $data);
+        }
+
+        return [];
+    }
+
     public function sort(Request $r)
     {
         /* get data */
@@ -196,7 +207,7 @@ class MenuController extends Controller
             'data' => $menus,
         ];
 
-        return view('setting.menu_sort', $data);
+        return view('admin.setting.menu_sort', $data);
     }
 
     public function sortSave(Request $r, $data = [], $parent = 0)

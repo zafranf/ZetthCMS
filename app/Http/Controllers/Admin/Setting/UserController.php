@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Setting;
+namespace App\Http\Controllers\Admin\Setting;
 
 use App\Http\Controllers\Controller;
 use App\Models\Role;
@@ -36,12 +36,7 @@ class UserController extends Controller
             'data' => $users,
         ];
 
-        /* generate datatable */
-        if ($r->ajax()) {
-            return $this->generateDataTable($r, $users);
-        }
-
-        return view('setting.user', $data);
+        return view('admin.setting.user', $data);
     }
 
     /**
@@ -77,7 +72,7 @@ class UserController extends Controller
             'roles' => Role::where($whrRole)->get(),
         ];
 
-        return view('setting.user_form', $data);
+        return view('admin.setting.user_form', $data);
     }
 
     /**
@@ -180,7 +175,7 @@ class UserController extends Controller
             'data' => $user,
         ];
 
-        return view('setting.user_form', $data);
+        return view('admin.setting.user_form', $data);
     }
 
     /**
@@ -258,6 +253,22 @@ class UserController extends Controller
         $user->delete();
 
         return redirect('/setting/users')->with('success', 'Pengguna berhasil dihapus!');
+    }
+
+    /**
+     * Generate DataTables
+     */
+    public function datatable(Request $r)
+    {
+        /* get data */
+        $data = User::select(sequence(), 'id', 'name', 'fullname', 'status')->get();
+        
+        /* generate datatable */
+        if ($r->ajax()) {
+            return $this->generateDataTable($r, $data);
+        }
+
+        return [];
     }
 
     public function assignRole($user, $newRole)

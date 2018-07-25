@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Setting;
+namespace App\Http\Controllers\Admin\Setting;
 
 use App\Http\Controllers\Controller;
 use App\Models\Application;
@@ -31,7 +31,7 @@ class ApplicationController extends Controller
             'data' => Application::find(1),
         ];
 
-        return view('setting.application', $data);
+        return view('admin.setting.application', $data);
     }
 
     /**

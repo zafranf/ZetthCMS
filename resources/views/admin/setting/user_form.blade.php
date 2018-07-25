@@ -1,8 +1,8 @@
-@extends('layouts.main')
+@extends('admin.layouts.main')
 
 @section('content')
   <div class="card-body">
-    <form action="{{ url('/setting/users') }}{{ isset($data->id) ? '/' . $data->id : '' }}" method="post" enctype="multipart/form-data">
+    <form action="{{ url('/admin/setting/users') }}{{ isset($data->id) ? '/' . $data->id : '' }}" method="post" enctype="multipart/form-data">
       @csrf
       @if (isset($data->id))
         {{ method_field('put') }}

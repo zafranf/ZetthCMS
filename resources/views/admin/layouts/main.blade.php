@@ -1,4 +1,4 @@
-@include('layouts.header')
+@include('admin.layouts.header')
   <div class="page-main">
     <div class="header py-4">
       <div class="container">
@@ -81,4 +81,4 @@
       </div>
     </div>
   </div>
-@include('layouts.footer')
+@include('admin.layouts.footer')
