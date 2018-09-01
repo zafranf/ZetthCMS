@@ -34,7 +34,7 @@ Route::prefix('admin')->middleware('auth')->group(function (){
     /* api */
     Route::get('/setting/menus/data', 'Admin\Setting\MenuController@datatable');
     Route::get('/setting/roles/data', 'Admin\Setting\RoleController@datatable');
-    Route::get('/setting/users/data', 'Admin\Setting\UserController@datatable');
+    Route::get('/data/users/data', 'Admin\Data\UserController@datatable');
 
     /* sort menu */
     Route::get('/setting/menus/sort', 'Admin\Setting\MenuController@sort')->name('menus.sort');
@@ -50,7 +50,6 @@ Route::prefix('admin')->middleware('auth')->group(function (){
                 '/application' => 'Admin\Setting\ApplicationController',
                 '/menus' => 'Admin\Setting\MenuController',
                 '/roles' => 'Admin\Setting\RoleController',
-                '/users' => 'Admin\Setting\UserController',
             ]);
         });
 

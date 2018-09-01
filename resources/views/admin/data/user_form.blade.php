@@ -2,7 +2,7 @@
 
 @section('content')
   <div class="card-body">
-    <form action="{{ url('/admin/setting/users') }}{{ isset($data->id) ? '/' . $data->id : '' }}" method="post" enctype="multipart/form-data">
+    <form action="{{ url('/admin/data/users') }}{{ isset($data->id) ? '/' . $data->id : '' }}" method="post" enctype="multipart/form-data">
       @csrf
       @if (isset($data->id))
         {{ method_field('put') }}
@@ -26,8 +26,8 @@
             <label for="language" class="col-sm-3 col-form-label">Bahasa</label>
             <div class="col-sm-9">
               <select id="language" name="language" class="form-control custom-select">
-                <option value="id" data-data='{"image": "{{ url('/images/flags/id.svg') }}"}' {{ isset($data->id) && ($data->language == "id") ? 'selected' : '' }}>Indonesia</option>
-                <option value="en" data-data='{"image": "{{ url('/images/flags/gb.svg') }}"}' {{ isset($data->id) && ($data->language == "en") ? 'selected' : '' }}>English</option>
+                <option value="id" data-data='{"image": "{{ url('/admin/images/flags/id.svg') }}"}' {{ isset($data->id) && ($data->language == "id") ? 'selected' : '' }}>Indonesia</option>
+                <option value="en" data-data='{"image": "{{ url('/admin/images/flags/gb.svg') }}"}' {{ isset($data->id) && ($data->language == "en") ? 'selected' : '' }}>English</option>
               </select>
             </div>
           </div>

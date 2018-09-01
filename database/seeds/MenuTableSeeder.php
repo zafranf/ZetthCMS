@@ -77,7 +77,7 @@ class MenuTableSeeder extends Seeder
         $setRole->save();
         
         /* menu pengguna */
-        $setUser = new Menu;
+        /* $setUser = new Menu;
         $setUser->name = 'Pengguna';
         $setUser->description = 'Menu pengaturan pengguna';
         $setUser->route_name = 'users';
@@ -89,7 +89,7 @@ class MenuTableSeeder extends Seeder
         $setUser->read = 1;
         $setUser->update = 1;
         $setUser->delete = 1;
-        $setUser->save();
+        $setUser->save(); */
 
         /* menu data (grup) */
         $data = new Menu;

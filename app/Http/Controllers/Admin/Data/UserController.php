@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Admin\Setting;
+namespace App\Http\Controllers\Admin\Data;
 
 use App\Http\Controllers\Controller;
 use App\Models\Role;
@@ -17,7 +17,7 @@ class UserController extends Controller
      */
     public function __construct()
     {
-        $this->current_url = url('/setting/users');
+        $this->current_url = url('/admin/data/users');
         $this->page_title = 'Pengaturan Pengguna';
     }
 
@@ -39,7 +39,7 @@ class UserController extends Controller
             'data' => $users,
         ];
 
-        return view('admin.setting.user', $data);
+        return view('admin.data.user', $data);
     }
 
     /**
@@ -75,7 +75,7 @@ class UserController extends Controller
             'roles' => Role::where($whrRole)->get(),
         ];
 
-        return view('admin.setting.user_form', $data);
+        return view('admin.data.user_form', $data);
     }
 
     /**
@@ -129,7 +129,7 @@ class UserController extends Controller
         /* log aktifitas */
         $this->activityLog('<b>' . \Auth::user()->fullname . '</b> menambahkan Pengguna "' . $user->name . '"');
 
-        return redirect('/setting/users')->with('success', 'Pengguna berhasil ditambah!');
+        return redirect($this->current_url)->with('success', 'Pengguna berhasil ditambah!');
     }
 
     /**
@@ -178,7 +178,7 @@ class UserController extends Controller
             'data' => $user,
         ];
 
-        return view('admin.setting.user_form', $data);
+        return view('admin.data.user_form', $data);
     }
 
     /**
@@ -238,7 +238,7 @@ class UserController extends Controller
         /* log aktifitas */
         $this->activityLog('<b>' . \Auth::user()->fullname . '</b> memperbarui Pengguna "' . $user->name . '"');
 
-        return redirect('/setting/users')->with('success', 'Pengguna berhasil disimpan!');
+        return redirect($this->current_url)->with('success', 'Pengguna berhasil disimpan!');
     }
 
     /**
@@ -255,7 +255,7 @@ class UserController extends Controller
         /* soft delete */
         $user->delete();
 
-        return redirect('/setting/users')->with('success', 'Pengguna berhasil dihapus!');
+        return redirect($this->current_url)->with('success', 'Pengguna berhasil dihapus!');
     }
 
     /**
