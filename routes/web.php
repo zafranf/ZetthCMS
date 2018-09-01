@@ -53,6 +53,36 @@ Route::prefix('admin')->middleware('auth')->group(function (){
                 '/users' => 'Admin\Setting\UserController',
             ]);
         });
+
+        /* module data routes */
+        Route::prefix('data')->group(function () {
+            Route::resources([
+                '/users' => 'Admin\Data\UserController',
+                '/categories' => 'Admin\Data\CategoryController',
+                '/tags' => 'Admin\Data\TagController',
+                '/subscribers' => 'Admin\Data\SubsriberController',
+            ]);
+        });
+
+        /* module site routes */
+        Route::prefix('site')->group(function () {
+            Route::resources([
+                '/banners' => 'Admin\Site\BannerController',
+                '/posts' => 'Admin\Site\PostController',
+                '/pages' => 'Admin\Site\PageController',
+                '/photos' => 'Admin\Site\PhotoController',
+                '/videos' => 'Admin\Site\VideoController',
+            ]);
+        });
+
+        /* module report routes */
+        Route::prefix('report')->group(function () {
+            Route::resources([
+                '/inbox' => 'Admin\Report\InboxController',
+                '/comments' => 'Admin\Report\CommentController',
+                '/interms' => 'Admin\Report\IntermController',
+            ]);
+        });
         
     });
 });

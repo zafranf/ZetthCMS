@@ -512,8 +512,9 @@ if (!function_exists('generateMenu')) {
         foreach ($data as $menu) {
             $href = !empty($menu->route_name) ? 'href="' . route($menu->route_name . '.index') . '"' : '';
             $sub = count($menu->submenu) ? ' data-toggle="dropdown"' : '';
+            $icon = ($menu->icon != "") ? '<i class="fe ' . $menu->icon . '"></i>' : '';
             echo '<li class="nav-item">';
-            echo '<a ' . ($href ?? '') . ' class="nav-link" ' . ($sub ?? '') . '><i class="fe ' . $menu->icon . '"></i> ' . $menu->name . '</a>';
+            echo '<a ' . ($href ?? '') . ' class="nav-link" ' . ($sub ?? '') . '>' . $icon . ' ' . $menu->name . '</a>';
             if (count($menu->submenu) > 0) {
                 generateSubmenu($menu->submenu);
             }
@@ -536,7 +537,8 @@ if (!function_exists('generateSubmenu')) {
         foreach ($data as $submenu) {
             $href = !empty($submenu->route_name) ? 'href="' . route($submenu->route_name . '.index') . '"' : '';
             $sub = count($submenu->submenu) ? ' data-toggle="dropdown"' : '';
-            echo '<a ' . ($href ?? '') . ' class="dropdown-item " ' . ($sub ?? '') . '><i class="fe ' . $submenu->icon . '"></i> ' . $submenu->name . '</a>';
+            $icon = ($submenu->icon != '') ? '<i class="fe ' . $submenu->icon . '"></i>' : '';
+            echo '<a ' . ($href ?? '') . ' class="dropdown-item " ' . ($sub ?? '') . '>' . $icon . ' ' . $submenu->name . '</a>';
             if (count($submenu->submenu) > 0) {
                 generateSubmenu($submenu->submenu, $level + 1);
             }

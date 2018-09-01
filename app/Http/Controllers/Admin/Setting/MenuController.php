@@ -16,7 +16,7 @@ class MenuController extends Controller
      */
     public function __construct()
     {
-        $this->current_url = url('/setting/menus');
+        $this->current_url = url('/admin/setting/menus');
         $this->page_title = 'Pengaturan Menu';
     }
 
@@ -93,7 +93,7 @@ class MenuController extends Controller
         /* log aktifitas */
         $this->activityLog('<b>' . \Auth::user()->fullname . '</b> menambahkan Menu "' . $menu->name . '"');
 
-        return redirect('/setting/menus')->with('success', 'Menu berhasil ditambah!');
+        return redirect($this->current_url)->with('success', 'Menu berhasil ditambah!');
     }
 
     /**
@@ -161,7 +161,7 @@ class MenuController extends Controller
         /* log aktifitas */
         $this->activityLog('<b>' . \Auth::user()->fullname . '</b> memperbarui Menu "' . $menu->name . '"');
 
-        return redirect('/setting/menus')->with('success', 'Menu berhasil disimpan!');
+        return redirect($this->current_url)->with('success', 'Menu berhasil disimpan!');
     }
 
     /**
@@ -178,7 +178,7 @@ class MenuController extends Controller
         /* soft delete */
         $menu->delete();
 
-        return redirect('/setting/menus')->with('success', 'Menu berhasil dihapus!');
+        return redirect($this->current_url)->with('success', 'Menu berhasil dihapus!');
     }
 
     /**
@@ -227,7 +227,7 @@ class MenuController extends Controller
         /* save position */
         $save = $this->sortQuery($r);
 
-        return redirect('/setting/menus')->with('success', 'Menu berhasil diurutkan!');
+        return redirect($this->current_url)->with('success', 'Menu berhasil diurutkan!');
     }
 
     /* Do Save Menu */
@@ -235,8 +235,7 @@ class MenuController extends Controller
     {
         /* mapping values */
         $updates = [];
-        $sort = empty($data) ? json_decode($r->input('sort'))[0] : $data;
-        $sorts = $sort;
+        $sorts = empty($data) ? json_decode($r->input('sort'))[0] : $data;
         foreach ($sorts as $order => $sort) {
             $updates[] = Menu::where('id', $sort->id)->update([
                 'order' => ($order + 1),

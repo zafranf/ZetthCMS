@@ -13,7 +13,7 @@ $page_title = 'Masuk Aplikasi';
         <form class="card" action="{{ url('/admin/login') }}" method="post">
           @csrf
           <div class="card-body p-6">
-            <div class="card-title">Masuk ke aplikasi NYPSoft</div>
+            <div class="card-title">Masuk ke aplikasi ZetthCMS</div>
             <div class="form-group">
               <label class="form-label">Pengguna</label>
               <input type="text" class="form-control" id="name" name="name" placeholder="Nama Pengguna">

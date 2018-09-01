@@ -4,7 +4,7 @@
       <div class="container">
         <div class="d-flex">
           <a class="header-brand" href="{{ url('/dashboard') }}">
-            <img src="" class="header-brand-img" alt="nyp logo">
+            <img src="" class="header-brand-img" alt="ZetthCMS">
           </a>
           <div class="d-flex order-lg-2 ml-auto">
             <div class="dropdown">
