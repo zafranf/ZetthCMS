@@ -63,7 +63,7 @@
                       <th width="100px">Indeks</th>
                       <th width="100px">Tambah</th>
                       <th width="100px">Detail</th>
-                      <th width="100px">Edit</th>
+                      <th width="100px">Sunting</th>
                       <th width="100px">Hapus</th>
                   </tr>
                 </thead>

@@ -13,11 +13,11 @@ class LaratrustSetupTables extends Migration
     {
         // Create table for storing roles
         Schema::create('roles', function (Blueprint $table) {
-            $table->increments('id');
+            $table->increments('id')->unsigned();
             $table->string('name')->unique();
             $table->string('display_name')->nullable();
             $table->string('description')->nullable();
-            $table->boolean('status')->comment('0=inactive, 1=active');
+            $table->boolean('status')->comment('0=inactive, 1=active')->unsigned();
             $table->timestamps();
             $table->softDeletes();
         });
