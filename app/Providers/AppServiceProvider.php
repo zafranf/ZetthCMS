@@ -30,17 +30,17 @@ class AppServiceProvider extends ServiceProvider
 
         /* send application data to all views */
         if (Schema::hasTable('applications')) {
-            $app = \App\Models\Application::find(1);
-            View::share('apps', $app);
+            $apps = \App\Models\Application::find(1);
+            View::share('apps', $apps);
         }
 
         /* send menu data to all views */
         if (Schema::hasTable('menus')) {
-            $menu = \App\Models\Menu::where([
+            $appmenu = \App\Models\Menu::where([
                 'parent_id' => 0,
                 'status' => 1,
             ])->with('submenu')->orderBy('order')->get();
-            View::share('appmenu', $menu);
+            View::share('appmenu', $appmenu);
         }
     }
 

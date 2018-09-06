@@ -23,7 +23,7 @@ class AppTableSeeder extends Seeder
             'email' => '',
             'address' => '',
             'phone' => '',
-            'google_analytic' => '',
+            // 'google_analytic' => '',
             'location' => '',
         ]);
     }

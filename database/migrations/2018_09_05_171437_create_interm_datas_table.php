@@ -18,7 +18,7 @@ class CreateIntermDatasTable extends Migration
             $table->string('host')->index();
             $table->string('text');
             $table->integer('count');
-            $table->integer('post_id')->unsigned()->index();
+            $table->integer('post_id')->unsigned()->default(0)->nullable();
             $table->timestamps();
             $table->softDeletes();
         });

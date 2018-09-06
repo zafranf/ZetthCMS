@@ -21,12 +21,13 @@ class CreateApplicationTable extends Migration
             $table->string('icon');
             $table->string('description');
             $table->string('keyword');
+            $table->string('timezone')->default('Asia/Jakarta');
             $table->boolean('status')->comment('0=coming soon, 1=active, 2=maintenance')->unsigned();
             $table->dateTime('active_at');
             $table->string('email');
             $table->text('address');
             $table->string('phone');
-            $table->string('google_analytic');
+            // $table->string('google_analytic');
             $table->string('location')->comment('latitude, longitude');
             $table->boolean('enable_subscribe')->comment('0=no, 1=yes')->default(1);
             $table->boolean('enable_like')->comment('0=no, 1=yes')->default(1);

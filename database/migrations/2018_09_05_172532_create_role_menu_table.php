@@ -14,8 +14,10 @@ class CreateRoleMenuTable extends Migration
     public function up()
     {
         Schema::create('role_menu', function (Blueprint $table) {
-            $table->integer('role_id')->unsigned()->index();
-            $table->integer('menu_id')->unsigned()->index();
+            $table->unsignedInteger('role_id');
+            $table->unsignedInteger('menu_id');
+
+            $table->primary(['role_id', 'menu_id']);
         });
     }
 

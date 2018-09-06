@@ -14,8 +14,10 @@ class CreatePostTermsTable extends Migration
     public function up()
     {
         Schema::create('post_terms', function (Blueprint $table) {
-            $table->integer('post_id')->unsigned()->index();
-            $table->integer('term_id')->unsigned()->index();
+            $table->unsignedInteger('post_id');
+            $table->unsignedInteger('term_id');
+
+            $table->primary(['post_id', 'term_id']);
         });
     }
 

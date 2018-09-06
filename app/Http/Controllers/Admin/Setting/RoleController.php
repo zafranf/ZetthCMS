@@ -19,7 +19,7 @@ class RoleController extends AdminController
      */
     public function __construct()
     {
-        $this->current_url = url('/setting/roles');
+        $this->current_url = url('/admin/setting/roles');
         $this->page_title = 'Pengaturan Peran dan Akses';
     }
 
@@ -56,12 +56,18 @@ class RoleController extends AdminController
      */
     public function create()
     {
+        /* get data */
+        $menus = Menu::where([
+            'parent_id' => 0,
+            'status' => 1,
+        ])->with('submenu')->orderBy('order')->get();
+
         /* set variable for view */
         $data = [
             'current_url' => $this->current_url,
             'page_title' => $this->page_title,
             'page_subtitle' => 'Tambah Peran',
-            'menus' => Menu::where('status', 1)->get(),
+            'menus' => $menus,
         ];
 
         return view('admin.setting.role_form', $data);
@@ -117,13 +123,19 @@ class RoleController extends AdminController
      */
     public function edit(Role $role)
     {
+        /* get data */
+        $menus = Menu::where([
+            'parent_id' => 0,
+            'status' => 1,
+        ])->with('submenu')->orderBy('order')->get();
+
         /* set variable for view */
         $data = [
             'current_url' => $this->current_url,
             'page_title' => $this->page_title,
             'page_subtitle' => 'Sunting Peran',
             'data' => $role,
-            'menus' => Menu::where('status', 1)->get(),
+            'menus' => $menus,
         ];
 
         return view('admin.setting.role_form', $data);
