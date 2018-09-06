@@ -129,10 +129,10 @@ class MenuTableSeeder extends Seeder
         $dataCat->delete = 1;
         $dataCat->save();
         
-        /* menu tanda */
+        /* menu label */
         $dataTag = new Menu;
-        $dataTag->name = 'Tanda';
-        $dataTag->description = 'Menu pengaturan tanda';
+        $dataTag->name = 'Label';
+        $dataTag->description = 'Menu pengaturan label';
         $dataTag->route_name = 'tags';
         $dataTag->order = ($dataCat->order + 1);
         $dataTag->status = 1;
