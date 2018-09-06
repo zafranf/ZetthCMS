@@ -104,12 +104,12 @@ class UserController extends AdminController
 
         /* save data */
         $user = new User;
-        $user->name = $r->input('name');
-        $user->fullname = $r->input('fullname');
-        $user->email = $r->input('email');
+        $user->name = str_sanitize($r->input('name'));
+        $user->fullname = str_sanitize($r->input('fullname'));
+        $user->email = str_sanitize($r->input('email'));
         $user->password = bcrypt($r->input('password'));
-        $user->language = $r->input('language');
-        $user->status = $r->input('status') ? 1 : 0;
+        $user->language = str_sanitize($r->input('language'));
+        $user->status = bool($r->input('status')) ? 1 : 0;
         $user->save();
 
         /* upload image */
@@ -213,12 +213,12 @@ class UserController extends AdminController
         }
 
         /* save data */
-        $user->name = $r->input('name');
-        $user->fullname = $r->input('fullname');
-        $user->email = $r->input('email');
+        $user->name = str_sanitize($r->input('name'));
+        $user->fullname = str_sanitize($r->input('fullname'));
+        $user->email = str_sanitize($r->input('email'));
         $user->password = bcrypt($r->input('password'));
-        $user->language = $r->input('language');
-        $user->status = $r->input('status') ? 1 : 0;
+        $user->language = str_sanitize($r->input('language'));
+        $user->status = bool($r->input('status')) ? 1 : 0;
         $user->save();
 
         /* upload image */

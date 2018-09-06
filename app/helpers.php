@@ -112,6 +112,16 @@ if (!function_exists('bool')) {
     }
 }
 
+if (!function_exists('str_sanitize')) {
+    /**
+     * Sanitize string
+     */
+    function str_sanitize($string)
+    {
+        return trim(e($string));
+    }
+}
+
 if (!function_exists('_cut_text')) {
     /**
      * Cut some text

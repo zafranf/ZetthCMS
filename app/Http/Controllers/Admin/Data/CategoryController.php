@@ -8,6 +8,27 @@ use App\Http\Controllers\Admin\AdminController;
 
 class CategoryController extends AdminController
 {
+    private $current_url;
+    private $page_title;
+
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $str = "<h1>asdasda lksdj alksjda</h1> udin@mail.co";
+        dd(str_sanitize($str));
+
+        parent::__construct();
+        $this->current_url = url('/admin/data/categories');
+        $this->page_title = 'Pengaturan Kategori';
+        $this->breadcrumbs[] = [
+            'page' => 'Kategori',
+            'icon' => '',
+            'url' => $this->current_url,
+        ];
+    }
+
     /**
      * Display a listing of the resource.
      *

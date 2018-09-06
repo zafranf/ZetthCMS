@@ -81,11 +81,12 @@ class RoleController extends AdminController
         ]);
 
         /* save data */
+        $name = str_sanitize($r->input('name'));
         $role = new Role;
-        $role->name = str_slug($r->input('name'));
-        $role->display_name = $r->input('name');
-        $role->description = $r->input('description');
-        $role->status = $r->input('status') ? 1 : 0;
+        $role->name = str_slug($name);
+        $role->display_name = $name;
+        $role->description = str_sanitize($r->input('description'));
+        $role->status = bool($r->input('status')) ? 1 : 0;
         $role->save();
 
         /* set permissions */
@@ -143,10 +144,11 @@ class RoleController extends AdminController
         ]);
 
         /* save data */
-        $role->name = str_slug($r->input('name'));
-        $role->display_name = $r->input('name');
-        $role->description = $r->input('description');
-        $role->status = $r->input('status') ? 1 : 0;
+        $name = str_sanitize($r->input('name'));
+        $role->name = str_slug($name);
+        $role->display_name = $name;
+        $role->description = str_sanitize($r->input('description'));
+        $role->status = bool($r->input('status')) ? 1 : 0;
         $role->save();
 
         /* set permissions */

@@ -96,9 +96,9 @@ class ApplicationController extends AdminController
         ]);
 
         /* save data */
-        $app->name = $r->input('name');
-        $app->description = $r->input('description');
-        $app->status = $r->input('status') ? 1 : 0;
+        $app->name = str_sanitize($r->input('name'));
+        $app->description = str_sanitize($r->input('description'));
+        $app->status = bool($r->input('status') )? 1 : 0;
         $app->save();
 
         /* upload logo */

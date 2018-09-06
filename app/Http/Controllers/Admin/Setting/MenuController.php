@@ -74,20 +74,20 @@ class MenuController extends AdminController
 
         /* save data */
         $menu = new Menu;
-        $menu->name = $r->input('name');
-        $menu->description = $r->input('description');
+        $menu->name = str_sanitize($r->input('name'));
+        $menu->description = str_sanitize($r->input('description'));
         // $menu->url = $r->input('url');
-        $menu->route_name = $r->input('route_name');
-        $menu->target = $r->input('target');
-        $menu->order = $r->input('order');
-        $menu->icon = $r->input('icon');
-        $menu->status = $r->input('status') ? 1 : 0;
-        $menu->index = $r->input('index') ? 1 : 0;
-        $menu->create = $r->input('create') ? 1 : 0;
-        $menu->read = $r->input('read') ? 1 : 0;
-        $menu->update = $r->input('update') ? 1 : 0;
-        $menu->delete = $r->input('delete') ? 1 : 0;
-        $menu->parent_id = $r->input('parent');
+        $menu->route_name = str_sanitize($r->input('route_name'));
+        $menu->target = str_sanitize($r->input('target'));
+        $menu->order = (int) $r->input('order');
+        $menu->icon = str_sanitize($r->input('icon'));
+        $menu->status = bool($r->input('status')) ? 1 : 0;
+        $menu->index = bool($r->input('index')) ? 1 : 0;
+        $menu->create = bool($r->input('create')) ? 1 : 0;
+        $menu->read = bool($r->input('read')) ? 1 : 0;
+        $menu->update = bool($r->input('update')) ? 1 : 0;
+        $menu->delete = bool($r->input('delete')) ? 1 : 0;
+        $menu->parent_id = (int) $r->input('parent');
         $menu->save();
 
         /* log aktifitas */
