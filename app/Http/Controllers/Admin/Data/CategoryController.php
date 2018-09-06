@@ -16,9 +16,6 @@ class CategoryController extends AdminController
      */
     public function __construct()
     {
-        $str = "<h1>asdasda lksdj alksjda</h1> udin@mail.co";
-        dd(str_sanitize($str));
-
         parent::__construct();
         $this->current_url = url('/admin/data/categories');
         $this->page_title = 'Pengaturan Kategori';
