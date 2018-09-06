@@ -2,12 +2,12 @@
 
 namespace App\Http\Controllers\Admin\Data;
 
-use App\Http\Controllers\Controller;
+use App\Http\Controllers\Admin\AdminController;
 use App\Models\Role;
 use App\Models\User;
 use Illuminate\Http\Request;
 
-class UserController extends Controller
+class UserController extends AdminController
 {
     private $current_url;
     private $page_title;
@@ -17,8 +17,14 @@ class UserController extends Controller
      */
     public function __construct()
     {
+        parent::__construct();
         $this->current_url = url('/admin/data/users');
         $this->page_title = 'Pengaturan Pengguna';
+        $this->breadcrumbs[] = [
+            'page' => 'Pengguna',
+            'icon' => '',
+            'url' => $this->current_url,
+        ];
     }
 
     /**

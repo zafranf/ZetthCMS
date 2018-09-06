@@ -7,9 +7,9 @@ use App\Models\Menu;
 use App\Models\Permission;
 use App\Models\PermissionRole;
 use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
+use App\Http\Controllers\Admin\AdminController;
 
-class RoleController extends Controller
+class RoleController extends AdminController
 {
     private $current_url;
     private $page_title;

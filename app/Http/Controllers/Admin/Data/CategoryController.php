@@ -2,43 +2,20 @@
 
 namespace App\Http\Controllers\Admin\Data;
 
-use App\Http\Controllers\Controller;
-use App\Models\Category;
+use App\Models\Term;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Admin\AdminController;
 
-class CategoryController extends Controller
+class CategoryController extends AdminController
 {
-    private $current_url;
-    private $page_title;
-
-    /**
-     * Constructor
-     */
-    public function __construct()
-    {
-        $this->current_url = url('/admin/data/categories');
-        $this->page_title = 'Pengaturan Kategori';
-    }
-
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(Request $r)
+    public function index()
     {
-        /* get data */
-        $users = Term::select(sequence(), 'id', 'name', 'fullname', 'status')->get();
-
-        /* set variable for view */
-        $data = [
-            'current_url' => $this->current_url,
-            'page_title' => $this->page_title,
-            'page_subtitle' => 'Daftar Kategori',
-            'data' => $users,
-        ];
-
-        return view('admin.data.user', $data);
+        //
     }
 
     /**
@@ -48,241 +25,62 @@ class CategoryController extends Controller
      */
     public function create()
     {
-        /* where roles */
-        if (\Auth::user()->hasRole('super')) {
-            $whrRole = [
-                ['status', 1],
-            ];
-        } else if (\Auth::user()->hasRole('admin')) {
-            $whrRole = [
-                ['status', 1],
-                ['id', '!=', 1]
-            ];
-        } else {
-            $whrRole = [
-                ['status', 1],
-                ['id', '!=', 1],
-                ['id', '!=', 2],
-            ];
-        }
-
-        /* set variable for view */
-        $data = [
-            'current_url' => $this->current_url,
-            'page_title' => $this->page_title,
-            'page_subtitle' => 'Tambah Pengguna',
-        ];
-
-        return view('admin.data.user_form', $data);
+        //
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $r
+     * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $r)
+    public function store(Request $request)
     {
-        /* validation */
-        $this->validate($r, [
-            'name' => 'required|alpha_num|min:3|max:30|unique:users',
-            'fullname' => 'required|min:1|max:100',
-            'email' => 'required|email',
-            'image' => 'mimes:jpg,jpeg,png,svg|max:200|dimensions:max_width=500,max_height=500',
-            'password' => 'required',
-            'password_confirmation' => 'same:password',
-        ]);
-
-        /* save data */
-        $user = new User;
-        $user->name = $r->input('name');
-        $user->fullname = $r->input('fullname');
-        $user->email = $r->input('email');
-        $user->password = bcrypt($r->input('password'));
-        $user->language = $r->input('language');
-        $user->status = $r->input('status') ? 1 : 0;
-        $user->save();
-
-        /* upload image */
-        if ($r->hasFile('image')) {
-            $file = $r->file('image');
-            $par = [
-                'file' => $file,
-                'folder' => '/images/user/',
-                'name' => str_slug($r->input('name')),
-                'type' => $file->getMimeType(),
-                'ext' => $file->getClientOriginalExtension(),
-            ];
-
-            if ($this->uploadImage($par)) {
-                $user->image = $par['name'] . '.' . $par['ext'];
-                $user->save();
-            }
-        }
-
-        /* attach role */
-        $this->assignRole($user, $r->input('role'));
-
-        /* log aktifitas */
-        $this->activityLog('<b>' . \Auth::user()->fullname . '</b> menambahkan Pengguna "' . $user->name . '"');
-
-        return redirect($this->current_url)->with('success', 'Pengguna berhasil ditambah!');
+        //
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\User  $user
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(User $user)
+    public function show($id)
     {
-        abort(403);
+        //
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\User  $user
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit(User $user)
+    public function edit($id)
     {
-        /* where roles */
-        if (\Auth::user()->hasRole('super')) {
-            $whrRole = [
-                ['status', 1],
-            ];
-        } else if (\Auth::user()->hasRole('admin')) {
-            $whrRole = [
-                ['status', 1],
-                ['id', '!=', 1]
-            ];
-        } else {
-            $whrRole = [
-                ['status', 1],
-                ['id', '!=', 1],
-                ['id', '!=', 2],
-            ];
-        }
-
-        /* set variable for view */
-        $data = [
-            'current_url' => $this->current_url,
-            'page_title' => $this->page_title,
-            'page_subtitle' => 'Edit Pengguna',
-            'roles' => Role::where($whrRole)->get(),
-            'data' => $user,
-        ];
-
-        return view('admin.data.user_form', $data);
+        //
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $r
-     * @param  \App\Models\User  $user
+     * @param  \Illuminate\Http\Request  $request
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $r, User $user)
+    public function update(Request $request, $id)
     {
-        /* validation */
-        $this->validate($r, [
-            'name' => 'required|alpha_num|min:3|max:30|unique:users,name,' . $user->id . ',id',
-            'fullname' => 'required|min:1|max:100',
-            'email' => 'required|email',
-            'image' => 'mimes:jpg,jpeg,png,svg|max:200|dimensions:max_width=500,max_height=500',
-        ]);
-
-        /* validasi password jika ada */
-        if ($r->input('password') !== null || $r->input('password_confirmation') !== null) {
-            $this->validate($r, [
-                'password' => 'required',
-                'password_confirmation' => 'same:password',
-            ]);
-        }
-
-        /* save data */
-        $user->name = $r->input('name');
-        $user->fullname = $r->input('fullname');
-        $user->email = $r->input('email');
-        $user->password = bcrypt($r->input('password'));
-        $user->language = $r->input('language');
-        $user->status = $r->input('status') ? 1 : 0;
-        $user->save();
-
-        /* upload image */
-        if ($r->hasFile('image')) {
-            $file = $r->file('image');
-            $par = [
-                'file' => $file,
-                'folder' => '/images/user/',
-                'name' => str_slug($r->input('name')),
-                'type' => $file->getMimeType(),
-                'ext' => $file->getClientOriginalExtension(),
-            ];
-
-            if ($this->uploadImage($par)) {
-                $user->image = $par['name'] . '.' . $par['ext'];
-                $user->save();
-            }
-        }
-
-        /* attach role */
-        $this->assignRole($user, $r->input('role'));
-
-        /* log aktifitas */
-        $this->activityLog('<b>' . \Auth::user()->fullname . '</b> memperbarui Pengguna "' . $user->name . '"');
-
-        return redirect($this->current_url)->with('success', 'Pengguna berhasil disimpan!');
+        //
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\User  $user
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Request $r, User $user)
+    public function destroy($id)
     {
-        /* log aktifitas */
-        $this->activityLog('<b>' . \Auth::user()->fullname . '</b> menghapus Pengguna "' . $user->name . '"');
-
-        /* soft delete */
-        $user->delete();
-
-        return redirect($this->current_url)->with('success', 'Pengguna berhasil dihapus!');
-    }
-
-    /**
-     * Generate DataTables
-     */
-    public function datatable(Request $r)
-    {
-        /* get data */
-        $data = User::select(sequence(), 'id', 'name', 'fullname', 'status')->get();
-        
-        /* generate datatable */
-        if ($r->ajax()) {
-            return $this->generateDataTable($r, $data);
-        }
-
-        abort(403);
-    }
-
-    /**
-     * Assign user to a role 
-     */
-    public function assignRole($user, $newRole)
-    {
-        /* hapus role sebelumnya */
-        foreach ($user->roles as $role) {
-            $user->detachRole($role->id);
-        }
-
-        /* tambah role baru */
-        $user->attachRole($newRole);
+        //
     }
 }

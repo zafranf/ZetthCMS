@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers\Admin\Setting;
 
-use App\Http\Controllers\Controller;
+use App\Http\Controllers\Admin\AdminController;
 use App\Models\Application;
 use Illuminate\Http\Request;
 
-class ApplicationController extends Controller
+class ApplicationController extends AdminController
 {
     private $current_url;
     private $page_title;

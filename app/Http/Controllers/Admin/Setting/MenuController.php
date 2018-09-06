@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers\Admin\Setting;
 
-use App\Http\Controllers\Controller;
+use App\Http\Controllers\Admin\AdminController;
 use App\Models\Menu;
 use Illuminate\Http\Request;
 
-class MenuController extends Controller
+class MenuController extends AdminController
 {
     private $current_url;
     private $page_title;
