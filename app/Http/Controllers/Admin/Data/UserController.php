@@ -173,7 +173,7 @@ class UserController extends Controller
         $data = [
             'current_url' => $this->current_url,
             'page_title' => $this->page_title,
-            'page_subtitle' => 'Edit Pengguna',
+            'page_subtitle' => 'Sunting Pengguna',
             'roles' => Role::where($whrRole)->get(),
             'data' => $user,
         ];

@@ -3,11 +3,10 @@
 namespace App\Http\Controllers\Admin\Data;
 
 use App\Http\Controllers\Controller;
-use App\Models\Role;
-use App\Models\User;
+use App\Models\Category;
 use Illuminate\Http\Request;
 
-class UserController extends Controller
+class CategoryController extends Controller
 {
     private $current_url;
     private $page_title;
@@ -17,8 +16,8 @@ class UserController extends Controller
      */
     public function __construct()
     {
-        $this->current_url = url('/admin/data/users');
-        $this->page_title = 'Pengaturan Pengguna';
+        $this->current_url = url('/admin/data/categories');
+        $this->page_title = 'Pengaturan Kategori';
     }
 
     /**
@@ -29,13 +28,13 @@ class UserController extends Controller
     public function index(Request $r)
     {
         /* get data */
-        $users = User::select(sequence(), 'id', 'name', 'fullname', 'status')->get();
+        $users = Term::select(sequence(), 'id', 'name', 'fullname', 'status')->get();
 
         /* set variable for view */
         $data = [
             'current_url' => $this->current_url,
             'page_title' => $this->page_title,
-            'page_subtitle' => 'Daftar Pengguna',
+            'page_subtitle' => 'Daftar Kategori',
             'data' => $users,
         ];
 
@@ -72,7 +71,6 @@ class UserController extends Controller
             'current_url' => $this->current_url,
             'page_title' => $this->page_title,
             'page_subtitle' => 'Tambah Pengguna',
-            'roles' => Role::where($whrRole)->get(),
         ];
 
         return view('admin.data.user_form', $data);

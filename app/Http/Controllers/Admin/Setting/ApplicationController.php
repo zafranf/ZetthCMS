@@ -30,7 +30,7 @@ class ApplicationController extends Controller
         $data = [
             'current_url' => $this->current_url,
             'page_title' => $this->page_title,
-            'page_subtitle' => 'Edit Aplikasi',
+            'page_subtitle' => 'Sunting Aplikasi',
             'data' => Application::find(1),
         ];
 

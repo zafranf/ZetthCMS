@@ -120,7 +120,7 @@ class RoleController extends Controller
         $data = [
             'current_url' => $this->current_url,
             'page_title' => $this->page_title,
-            'page_subtitle' => 'Edit Peran',
+            'page_subtitle' => 'Sunting Peran',
             'data' => $role,
             'menus' => Menu::where('status', 1)->get(),
         ];

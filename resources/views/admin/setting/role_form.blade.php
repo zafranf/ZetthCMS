@@ -68,7 +68,7 @@
                   </tr>
                 </thead>
                 <tbody>
-                  @foreach (generateMenuArray($appmenu) as $menu)
+                  @foreach (generateMenuArray($menus) as $menu)
                     <tr>
                       <td>{!! $menu->name !!}</td>
                       <td>

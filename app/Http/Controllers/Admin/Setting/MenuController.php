@@ -119,7 +119,7 @@ class MenuController extends Controller
         $data = [
             'current_url' => $this->current_url,
             'page_title' => $this->page_title,
-            'page_subtitle' => 'Edit Menu',
+            'page_subtitle' => 'Sunting Menu',
             'menus' => Menu::where('status', 1)->get(),
             'data' => $menu,
         ];
