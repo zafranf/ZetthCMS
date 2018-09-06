@@ -16,6 +16,12 @@ class CreateVisitorLogsTable extends Migration
         Schema::create('visitor_logs', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->ipAddress('ip');
+            $table->string('browser');
+            $table->string('browser_agent');
+            $table->string('referral')->nullable();
+            $table->string('page');
+            $table->string('device');
+            $table->string('device_name');
             $table->bigInteger('count');
             $table->timestamps();
         });

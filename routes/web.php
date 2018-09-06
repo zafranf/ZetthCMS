@@ -29,59 +29,60 @@ Route::prefix('admin')->group(function (){
     if (env('APP_DEBUG')) {
         Route::get('/logout', 'Auth\LoginController@logout');
     }
-});
-Route::prefix('admin')->middleware('auth')->group(function (){
-    /* api */
-    Route::get('/setting/menus/data', 'Admin\Setting\MenuController@datatable');
-    Route::get('/setting/roles/data', 'Admin\Setting\RoleController@datatable');
-    Route::get('/data/users/data', 'Admin\Data\UserController@datatable');
 
-    /* sort menu */
-    Route::get('/setting/menus/sort', 'Admin\Setting\MenuController@sort')->name('menus.sort');
-    Route::put('/setting/menus/sort', 'Admin\Setting\MenuController@sortSave');
+    Route::middleware('auth')->group(function (){
+        /* api */
+        Route::get('/setting/menus/data', 'Admin\Setting\MenuController@datatable');
+        Route::get('/setting/roles/data', 'Admin\Setting\RoleController@datatable');
+        Route::get('/data/users/data', 'Admin\Data\UserController@datatable');
 
-    Route::middleware('access')->group(function (){
-        /* dashboard */
-        Route::get('/dashboard', 'Admin\DashboardController@index')->name('dashboard.index');
+        /* sort menu */
+        Route::get('/setting/menus/sort', 'Admin\Setting\MenuController@sort')->name('menus.sort');
+        Route::put('/setting/menus/sort', 'Admin\Setting\MenuController@sortSave');
 
-        /* module setting routes */
-        Route::prefix('setting')->group(function () {
-            Route::resources([
-                '/application' => 'Admin\Setting\ApplicationController',
-                '/menus' => 'Admin\Setting\MenuController',
-                '/roles' => 'Admin\Setting\RoleController',
-            ]);
+        Route::middleware('access')->group(function (){
+            /* dashboard */
+            Route::get('/dashboard', 'Admin\DashboardController@index')->name('dashboard.index');
+
+            /* module setting routes */
+            Route::prefix('setting')->group(function () {
+                Route::resources([
+                    '/application' => 'Admin\Setting\ApplicationController',
+                    '/menus' => 'Admin\Setting\MenuController',
+                    '/roles' => 'Admin\Setting\RoleController',
+                ]);
+            });
+
+            /* module data routes */
+            Route::prefix('data')->group(function () {
+                Route::resources([
+                    '/users' => 'Admin\Data\UserController',
+                    '/categories' => 'Admin\Data\CategoryController',
+                    '/tags' => 'Admin\Data\TagController',
+                    '/subscribers' => 'Admin\Data\SubsriberController',
+                ]);
+            });
+
+            /* module site routes */
+            Route::prefix('site')->group(function () {
+                Route::resources([
+                    '/banners' => 'Admin\Site\BannerController',
+                    '/posts' => 'Admin\Site\PostController',
+                    '/pages' => 'Admin\Site\PageController',
+                    '/photos' => 'Admin\Site\PhotoController',
+                    '/videos' => 'Admin\Site\VideoController',
+                ]);
+            });
+
+            /* module report routes */
+            Route::prefix('report')->group(function () {
+                Route::resources([
+                    '/inbox' => 'Admin\Report\InboxController',
+                    '/comments' => 'Admin\Report\CommentController',
+                    '/interms' => 'Admin\Report\IntermController',
+                ]);
+            });
+            
         });
-
-        /* module data routes */
-        Route::prefix('data')->group(function () {
-            Route::resources([
-                '/users' => 'Admin\Data\UserController',
-                '/categories' => 'Admin\Data\CategoryController',
-                '/tags' => 'Admin\Data\TagController',
-                '/subscribers' => 'Admin\Data\SubsriberController',
-            ]);
-        });
-
-        /* module site routes */
-        Route::prefix('site')->group(function () {
-            Route::resources([
-                '/banners' => 'Admin\Site\BannerController',
-                '/posts' => 'Admin\Site\PostController',
-                '/pages' => 'Admin\Site\PageController',
-                '/photos' => 'Admin\Site\PhotoController',
-                '/videos' => 'Admin\Site\VideoController',
-            ]);
-        });
-
-        /* module report routes */
-        Route::prefix('report')->group(function () {
-            Route::resources([
-                '/inbox' => 'Admin\Report\InboxController',
-                '/comments' => 'Admin\Report\CommentController',
-                '/interms' => 'Admin\Report\IntermController',
-            ]);
-        });
-        
     });
 });
