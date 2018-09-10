@@ -3,7 +3,7 @@
     <div class="header py-4">
       <div class="container">
         <div class="d-flex">
-          <a class="header-brand" href="{{ url('/dashboard') }}">
+          <a class="header-brand" href="{{ url('/admin/dashboard') }}">
             <img src="" class="header-brand-img" alt="ZetthCMS">
           </a>
           <div class="d-flex order-lg-2 ml-auto">

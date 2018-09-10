@@ -24,7 +24,7 @@ class LaratrustSeeder extends Seeder
             $role = \App\Models\Role::create([
                 'name' => $key,
                 'display_name' => ucwords(str_replace('_', ' ', $key)),
-                'description' => ucwords(str_replace('_', ' ', $key)) . ' Role',
+                'description' => 'Peran sebagai' . ucwords(str_replace('_', ' ', $key)),
                 'status' => 1,
             ]);
             $permissions = [];
@@ -33,9 +33,7 @@ class LaratrustSeeder extends Seeder
 
             // Reading role permission modules
             foreach ($modules as $module => $value) {
-
                 foreach (explode(',', $value) as $p => $perm) {
-
                     $permissionValue = $mapPermission->get($perm);
 
                     $permissions[] = \App\Models\Permission::firstOrCreate([
