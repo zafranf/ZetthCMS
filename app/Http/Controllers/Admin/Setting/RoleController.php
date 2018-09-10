@@ -30,15 +30,11 @@ class RoleController extends AdminController
      */
     public function index(Request $r)
     {
-        /* get data */
-        $roles = Role::select(sequence(), 'id', 'display_name as name', 'description', 'status')->get();
-
         /* set variable for view */
         $data = [
             'current_url' => $this->current_url,
             'page_title' => $this->page_title,
             'page_subtitle' => 'Daftar Peran',
-            'data' => $roles,
         ];
 
         /* generate datatable */

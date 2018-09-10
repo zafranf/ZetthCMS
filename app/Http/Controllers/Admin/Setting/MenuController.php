@@ -27,15 +27,11 @@ class MenuController extends AdminController
      */
     public function index(Request $r)
     {
-        /* get data */
-        $menus = Menu::select(sequence(), 'id', 'name', 'description', 'status')->get();
-
         /* set variable for view */
         $data = [
             'current_url' => $this->current_url,
             'page_title' => $this->page_title,
             'page_subtitle' => 'Daftar Menu',
-            'data' => $menus,
         ];
 
         return view('admin.setting.menu', $data);

@@ -10,7 +10,7 @@
       <div class="form-group row">
         <label for="name" class="col-sm-2 col-form-label">Nama</label>
         <div class="col-sm-10">
-          <input type="text" class="form-control" id="name" name="name" placeholder="Nama Menu" value="{{ isset($data->id) ? $data->name : '' }}">
+          <input type="text" class="form-control" id="name" name="name" placeholder="Nama Kategori" value="{{ isset($data->id) ? $data->name : '' }}">
         </div>
       </div>
       <div class="form-group row">

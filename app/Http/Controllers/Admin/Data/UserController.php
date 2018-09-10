@@ -34,15 +34,11 @@ class UserController extends AdminController
      */
     public function index(Request $r)
     {
-        /* get data */
-        $users = User::select(sequence(), 'id', 'name', 'fullname', 'status')->get();
-
         /* set variable for view */
         $data = [
             'current_url' => $this->current_url,
             'page_title' => $this->page_title,
             'page_subtitle' => 'Daftar Pengguna',
-            'data' => $users,
         ];
 
         return view('admin.data.user', $data);

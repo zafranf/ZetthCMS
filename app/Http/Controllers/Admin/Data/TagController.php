@@ -33,15 +33,11 @@ class TagController extends AdminController
      */
     public function index()
     {
-        /* get data */
-        $tags = Term::select(sequence(), 'id', 'name', 'description', 'status')->where('type', 'tag')->orderBy('name', 'asc')->get();
-
         /* set variable for view */
         $data = [
             'current_url' => $this->current_url,
             'page_title' => $this->page_title,
             'page_subtitle' => 'Daftar Label',
-            'data' => $tags,
         ];
 
         return view('admin.data.tag', $data);
@@ -117,7 +113,7 @@ class TagController extends AdminController
         $data = [
             'current_url' => $this->current_url,
             'page_title' => $this->page_title,
-            'page_subtitle' => 'Tambah Label',
+            'page_subtitle' => 'Sunting Label',
             'data' => $tag
         ];
 

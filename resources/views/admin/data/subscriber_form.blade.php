@@ -2,21 +2,21 @@
 
 @section('content')
   <div class="card-body">
-    <form action="{{ url('/admin/data/tags') }}{{ isset($data->id) ? '/' . $data->id : '' }}" method="post" enctype="multipart/form-data">
+    <form action="{{ url('/admin/data/subscribers') }}{{ isset($data->id) ? '/' . $data->id : '' }}" method="post" enctype="multipart/form-data">
       @csrf
       @if (isset($data->id))
         {{ method_field('put') }}
       @endif
       <div class="form-group row">
-        <label for="name" class="col-sm-2 col-form-label">Nama</label>
+        <label for="email" class="col-sm-2 col-form-label">Email</label>
         <div class="col-sm-10">
-          <input type="text" class="form-control" id="name" name="name" placeholder="Nama Label" value="{{ isset($data->id) ? $data->name : '' }}">
+          <input type="text" class="form-control" id="email" name="email" placeholder="Email" value="{{ isset($data->id) ? $data->email : '' }}" readonly>
         </div>
       </div>
       <div class="form-group row">
-        <label for="description" class="col-sm-2 col-form-label">Deskripsi</label>
+        <label for="token" class="col-sm-2 col-form-label">Token</label>
         <div class="col-sm-10">
-          <textarea class="form-control" name="description" rows="3" placeholder="Penjelasan singkat kategori">{{ isset($data->id) ? $data->description : '' }}</textarea>
+          <input type="text" class="form-control" id="token" name="token" placeholder="Token" value="{{ isset($data->id) ? $data->token : '' }}" readonly>
         </div>
       </div>
       <div class="form-group row">

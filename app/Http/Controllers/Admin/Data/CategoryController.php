@@ -33,15 +33,11 @@ class CategoryController extends AdminController
      */
     public function index()
     {
-        /* get data */
-        $categories = Term::select(sequence(), 'id', 'name', 'description', 'status')->where('type', 'category')->orderBy('name', 'asc')->get();
-
         /* set variable for view */
         $data = [
             'current_url' => $this->current_url,
             'page_title' => $this->page_title,
             'page_subtitle' => 'Daftar Kategori',
-            'data' => $categories,
         ];
 
         return view('admin.data.category', $data);
@@ -124,7 +120,7 @@ class CategoryController extends AdminController
         $data = [
             'current_url' => $this->current_url,
             'page_title' => $this->page_title,
-            'page_subtitle' => 'Tambah Kategori',
+            'page_subtitle' => 'Sunting Kategori',
             'categories' => $categories,
             'data' => $category
         ];

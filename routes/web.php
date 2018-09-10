@@ -37,6 +37,7 @@ Route::prefix('admin')->group(function (){
         Route::get('/data/users/data', 'Admin\Data\UserController@datatable');
         Route::get('/data/categories/data', 'Admin\Data\CategoryController@datatable');
         Route::get('/data/tags/data', 'Admin\Data\TagController@datatable');
+        Route::get('/data/subscribers/data', 'Admin\Data\SubscriberController@datatable');
 
         /* sort menu */
         Route::get('/setting/menus/sort', 'Admin\Setting\MenuController@sort')->name('menus.sort');
@@ -61,7 +62,7 @@ Route::prefix('admin')->group(function (){
                     '/users' => 'Admin\Data\UserController',
                     '/categories' => 'Admin\Data\CategoryController',
                     '/tags' => 'Admin\Data\TagController',
-                    '/subscribers' => 'Admin\Data\SubsriberController',
+                    '/subscribers' => 'Admin\Data\SubscriberController',
                 ]);
             });
 
