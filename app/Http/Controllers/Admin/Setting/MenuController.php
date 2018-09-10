@@ -53,7 +53,7 @@ class MenuController extends AdminController
             'current_url' => $this->current_url,
             'page_title' => $this->page_title,
             'page_subtitle' => 'Tambah Menu',
-            'menus' => Menu::where('status', 1)->get(),
+            'menus' => Menu::where('parent_id', 0)->with('allSubmenu')->orderBy('order')->get(),
         ];
 
         return view('admin.setting.menu_form', $data);
@@ -120,7 +120,7 @@ class MenuController extends AdminController
             'current_url' => $this->current_url,
             'page_title' => $this->page_title,
             'page_subtitle' => 'Sunting Menu',
-            'menus' => Menu::where('status', 1)->get(),
+            'menus' => Menu::where('parent_id', 0)->with('allSubmenu')->orderBy('order')->get(),
             'data' => $menu,
         ];
 
@@ -142,20 +142,20 @@ class MenuController extends AdminController
         ]);
 
         /* save data */
-        $menu->name = $r->input('name');
-        $menu->description = $r->input('description');
-        $menu->url = $r->input('url');
-        $menu->route_name = $r->input('route_name');
-        $menu->target = $r->input('target');
-        $menu->order = $r->input('order');
-        $menu->icon = $r->input('icon');
-        $menu->status = $r->input('status') ? 1 : 0;
-        $menu->index = $r->input('index') ? 1 : 0;
-        $menu->create = $r->input('create') ? 1 : 0;
-        $menu->read = $r->input('read') ? 1 : 0;
-        $menu->update = $r->input('update') ? 1 : 0;
-        $menu->delete = $r->input('delete') ? 1 : 0;
-        $menu->parent_id = $r->input('parent');
+        $menu->name = str_sanitize($r->input('name'));
+        $menu->description = str_sanitize($r->input('description'));
+        // $menu->url = $r->input('url');
+        $menu->route_name = str_sanitize($r->input('route_name'));
+        $menu->target = str_sanitize($r->input('target'));
+        $menu->order = (int) $r->input('order');
+        $menu->icon = str_sanitize($r->input('icon'));
+        $menu->status = bool($r->input('status')) ? 1 : 0;
+        $menu->index = bool($r->input('index')) ? 1 : 0;
+        $menu->create = bool($r->input('create')) ? 1 : 0;
+        $menu->read = bool($r->input('read')) ? 1 : 0;
+        $menu->update = bool($r->input('update')) ? 1 : 0;
+        $menu->delete = bool($r->input('delete')) ? 1 : 0;
+        $menu->parent_id = (int) $r->input('parent');
         $menu->save();
 
         /* log aktifitas */
@@ -188,7 +188,7 @@ class MenuController extends AdminController
     {
         /* get data */
         $data = Menu::select(sequence(), 'id', 'name', 'description', 'status')->get();
-        
+
         /* generate datatable */
         if ($r->ajax()) {
             return $this->generateDataTable($r, $data);
@@ -239,7 +239,7 @@ class MenuController extends AdminController
         foreach ($sorts as $order => $sort) {
             $updates[] = Menu::where('id', $sort->id)->update([
                 'order' => ($order + 1),
-                'parent_id' => $parent
+                'parent_id' => $parent,
             ]);
             if (count($sort->children) > 0) {
                 foreach ($sort->children as $child) {
@@ -249,7 +249,7 @@ class MenuController extends AdminController
                 }
             }
         }
-        
+
         return $updates;
     }
 }

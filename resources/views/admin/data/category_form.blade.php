@@ -19,6 +19,17 @@
           <textarea class="form-control" name="description" rows="3" placeholder="Penjelasan singkat kategori">{{ isset($data->id) ? $data->description : '' }}</textarea>
         </div>
       </div>
+      {{-- <div class="form-group row">
+        <label for="parent" class="col-sm-2 col-form-label">Grup</label>
+        <div class="col-sm-10">
+          <select class="form-control" name="parent" id="parent">
+              <option value="0">--Pilih--</option>
+              @foreach (generateMenuArray($categories) as $category)
+                <option value="{{ $category->id }}" {{ isset($data->id) && ($data->parent_id == $category->id) ? 'selected' : '' }}>{!! $category->name !!}</option>
+              @endforeach
+          </select>
+        </div>
+      </div> --}}
       <div class="form-group row">
         <label for="status" class="col-sm-2 col-form-label">Status</label>
         {{-- <div class="col-sm-10"> --}}

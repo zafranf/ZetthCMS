@@ -55,10 +55,7 @@ class CategoryController extends AdminController
     public function create()
     {
         /* get data */
-        $categories = Term::where('type', 'category')->
-            where('status', 1)->
-            orderBy('name', 'asc')->
-            get();
+        $categories = Term::where('type', 'category')->orderBy('name')->get();
 
         /* set variable for view */
         $data = [
@@ -95,13 +92,16 @@ class CategoryController extends AdminController
         $term->status = bool($r->input('status')) ? 1 : 0;
         $term->save();
 
+        /* log aktifitas */
+        $this->activityLog('<b>' . \Auth::user()->fullname . '</b> menambahkan Kategori "' . $category->name . '"');
+
         return redirect($this->current_url)->with('success', 'Kategori berhasil ditambah!');
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param  \App\Models\Term  $category
      * @return \Illuminate\Http\Response
      */
     public function show($id)
@@ -112,35 +112,71 @@ class CategoryController extends AdminController
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param  \App\Models\Term  $category
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Term $category)
     {
-        //
+        /* get data */
+        $categories = Term::where('type', 'category')->orderBy('name')->get();
+
+        /* set variable for view */
+        $data = [
+            'current_url' => $this->current_url,
+            'page_title' => $this->page_title,
+            'page_subtitle' => 'Tambah Kategori',
+            'categories' => $categories,
+            'data' => $category
+        ];
+
+        return view('admin.data.category_form', $data);
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $r
-     * @param  int  $id
+     * @param  \App\Models\Term  $category
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $r, $id)
+    public function update(Request $r, Term $category)
     {
-        //
+        /* validation */
+        $this->validate($r, [
+            'name' => 'required|unique:terms,name,' . $category->id . ',id,type,category',
+        ]);
+
+        /* save data */
+        $name = str_sanitize($r->input('name'));
+        $category->name = $name;
+        $category->slug = str_slug($name);
+        $category->description = str_sanitize($r->input('description'));
+        $category->type = 'category';
+        $category->parent_id = (int) $r->input('parent');
+        $category->status = bool($r->input('status')) ? 1 : 0;
+        $category->save();
+
+        /* log aktifitas */
+        $this->activityLog('<b>' . \Auth::user()->fullname . '</b> memperbarui Kategori "' . $category->name . '"');
+
+        return redirect($this->current_url)->with('success', 'Kategori berhasil disimpan!');
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param  \App\Models\Term  $category
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Term $category)
     {
-        //
+        /* log aktifitas */
+        $this->activityLog('<b>' . \Auth::user()->fullname . '</b> menghapus Kategori "' . $category->name . '"');
+
+        /* soft delete */
+        $category->delete();
+
+        return redirect($this->current_url)->with('success', 'Kategori berhasil dihapus!');
     }
 
     /**
