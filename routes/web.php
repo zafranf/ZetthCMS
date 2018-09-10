@@ -36,6 +36,7 @@ Route::prefix('admin')->group(function (){
         Route::get('/setting/roles/data', 'Admin\Setting\RoleController@datatable');
         Route::get('/data/users/data', 'Admin\Data\UserController@datatable');
         Route::get('/data/categories/data', 'Admin\Data\CategoryController@datatable');
+        Route::get('/data/tags/data', 'Admin\Data\TagController@datatable');
 
         /* sort menu */
         Route::get('/setting/menus/sort', 'Admin\Setting\MenuController@sort')->name('menus.sort');

@@ -83,14 +83,14 @@ class CategoryController extends AdminController
 
         /* save data */
         $name = str_sanitize($r->input('name'));
-        $term = new Term;
-        $term->name = $name;
-        $term->slug = str_slug($name);
-        $term->description = str_sanitize($r->input('description'));
-        $term->type = 'category';
-        $term->parent_id = (int) $r->input('parent');
-        $term->status = bool($r->input('status')) ? 1 : 0;
-        $term->save();
+        $category = new Term;
+        $category->name = $name;
+        $category->slug = str_slug($name);
+        $category->description = str_sanitize($r->input('description'));
+        $category->type = 'category';
+        $category->parent_id = (int) $r->input('parent');
+        $category->status = bool($r->input('status')) ? 1 : 0;
+        $category->save();
 
         /* log aktifitas */
         $this->activityLog('<b>' . \Auth::user()->fullname . '</b> menambahkan Kategori "' . $category->name . '"');
@@ -185,7 +185,7 @@ class CategoryController extends AdminController
     public function datatable(Request $r)
     {
         /* get data */
-        $data = Term::select(sequence(), 'id', 'name', 'description', 'status')->where('type', 'category')->orderBy('name', 'asc')->get();
+        $data = Term::select(sequence(), 'id', 'name', 'description', 'status')->where('type', 'category')->get();
 
         /* generate datatable */
         if ($r->ajax()) {
