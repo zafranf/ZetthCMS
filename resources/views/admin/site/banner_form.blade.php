@@ -1,3 +1,9 @@
+@php
+$orders = collect($banners)->map(function($arr) {
+  return $arr->id;
+})->toArray();
+@endphp
+
 @extends('admin.layouts.main')
 
 @section('content')
@@ -43,22 +49,31 @@
               </div>
           </div>
           <div class="form-group row">
-              <label for="order" class="col-sm-3 col-form-label">Urutan</label>
-              <div class="col-sm-9">
+            <label for="order" class="col-sm-3 col-form-label">Urutan</label>
+            <div class="col-sm-9">
+              <input type="hidden" name="orders" value="{{ implode(',', $orders) }}">
               <select id="order" name="order" class="form-control custom-select">
-                  <option value="first">Pertama</option>
-                  @foreach ($banners as $banner)
-                  <option value="{{ $banner->order }}">Setelah {{ $banner->title }}</option>
-                  @endforeach
-                  {{-- <option value="last">Terakhir</option> --}}
+                <option value="first">Pertama</option>
+                @foreach ($banners as $banner)
+                  <option value="{{ $banner->id }}">Setelah {{ $banner->title != '' ? $banner->title : $banner->order }}</option>
+                @endforeach
               </select>
-              </div>
+            </div>
+          </div>
+          <div class="form-group row">
+            <label for="target" class="col-sm-3 col-form-label">Target</label>
+            <div class="col-sm-9">
+              <select id="target" name="target" class="form-control custom-select">
+                <option value="_self">Tab Sendiri</option>
+                <option value="_blank">Tab Baru</option>
+              </select>
+            </div>
           </div>
           <div class="form-group row">
               <label for="status" class="col-sm-3 col-form-label">Status</label>
               {{-- <div class="col-sm-9"> --}}
               <label class="custom-switch" style="margin-left: 10px;">
-                  <input type="checkbox" id="status" name="status" class="custom-switch-input" {{ isset($data->id) && $data->status ? 'checked' : '' }}>
+                  <input type="checkbox" id="status" name="status" class="custom-switch-input" {{ (isset($data->id) && !$data->status) ? '' : 'checked' }}>
                   <span class="custom-switch-indicator"></span>
                   <span class="custom-switch-description">Aktif</span>
               </label>

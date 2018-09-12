@@ -265,10 +265,17 @@ class Controller extends BaseController
         $img = \Image::make($par['file']);
 
         /* folder check */
-        $folder = public_path($par['folder']);
-        if (!is_dir($folder)) {
-            mkdir($folder);
+        $folders = explode('/', $par['folder']);
+        $fldr = public_path('');
+        foreach ($folders as $folder) {
+            if ($folder != '') {
+                $fldr .= '/'.$folder;
+                if (!is_dir($fldr)) {
+                    mkdir($fldr);
+                }
+            }
         }
+        $folder = public_path($par['folder']);
 
         /* insert watermark */
         if (isset($par['watermark'])) {

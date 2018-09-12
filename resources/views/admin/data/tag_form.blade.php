@@ -23,7 +23,7 @@
         <label for="status" class="col-sm-2 col-form-label">Status</label>
         {{-- <div class="col-sm-10"> --}}
           <label class="custom-switch" style="margin-left: 10px;">
-            <input type="checkbox" id="status" name="status" class="custom-switch-input" {{ isset($data->id) && $data->status ? 'checked' : '' }}>
+            <input type="checkbox" id="status" name="status" class="custom-switch-input" {{ (isset($data->id) && !$data->status) ? '' : 'checked' }}>
             <span class="custom-switch-indicator"></span>
             <span class="custom-switch-description">Aktif</span>
           </label>
