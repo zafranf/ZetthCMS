@@ -18,7 +18,7 @@ class CreateAlbumDetailsTable extends Migration
             $table->string('name');
             $table->string('description');
             $table->boolean('status')->comment('0=inactive, 1=active')->unsigned();
-            $table->integer('album_id');
+            $table->integer('album_id')->unsigned();
             $table->timestamps();
             $table->softDeletes();
         });

@@ -159,10 +159,10 @@ class MenuTableSeeder extends Seeder
         $dataSubscriber->delete = 1;
         $dataSubscriber->save();
 
-        /* menu site (grup) */
+        /* menu situs (grup) */
         $site = new Menu;
-        $site->name = 'Site';
-        $site->description = 'Grup menu site';
+        $site->name = 'Situs';
+        $site->description = 'Grup menu situs';
         $site->order = ($data->order + 1);
         $site->status = 1;
         $site->save();

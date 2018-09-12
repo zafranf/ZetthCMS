@@ -17,7 +17,7 @@ class CreateSubscribersTable extends Migration
             $table->increments('id');
             $table->string('email')->index();
             $table->string('token');
-            $table->boolean('status')->default(1)->comment('0=inactive, 1=active')->unsigned();
+            $table->boolean('status')->comment('0=inactive, 1=active')->unsigned();
             $table->timestamps();
             $table->softDeletes();
         });

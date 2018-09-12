@@ -14,9 +14,9 @@ class CreateMediaSocialDatasTable extends Migration
     public function up()
     {
         Schema::create('media_social_datas', function (Blueprint $table) {
-            $table->string('username', 100);
-            $table->integer('id');
-            $table->string('type', 10);
+            $table->string('username');
+            $table->integer('id')->unsigned();
+            $table->enum('type', ['config', 'user'])->default('user');
             $table->integer('user_id')->unsigned()->nullable()->index();
         });
     }

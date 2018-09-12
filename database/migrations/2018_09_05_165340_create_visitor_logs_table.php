@@ -22,7 +22,7 @@ class CreateVisitorLogsTable extends Migration
             $table->string('page');
             $table->string('device');
             $table->string('device_name');
-            $table->bigInteger('count');
+            $table->bigInteger('count')->unsigned();
             $table->timestamps();
         });
     }

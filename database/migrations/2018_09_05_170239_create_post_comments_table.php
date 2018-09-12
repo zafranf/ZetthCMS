@@ -19,10 +19,10 @@ class CreatePostCommentsTable extends Migration
             $table->string('email');
             $table->string('site')->nullable();
             $table->longText('comment');
-            $table->boolean('read')->comment('0=unread, 1=read');
+            $table->boolean('read')->comment('0=unread, 1=read')->unsigned();
             $table->boolean('status')->comment('0=pending, 1=active')->unsigned();
-            $table->integer('parent_id')->unsigned()->default(0)->nullable();
-            $table->integer('post_id')->unsigned()->default(0)->nullable();
+            $table->integer('parent_id')->unsigned()->default(0);
+            $table->integer('post_id')->unsigned()->default(0);
             $table->integer('approved_by')->unsigned()->nullable();
             $table->integer('created_by')->unsigned()->nullable();
             $table->integer('updated_by')->unsigned()->nullable();

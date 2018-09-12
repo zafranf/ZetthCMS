@@ -21,7 +21,7 @@ class CreateActivityLogsTable extends Migration
             $table->longText('get');
             $table->longText('post');
             $table->longText('files');
-            $table->integer('user_id')->unsigned()->default(0)->nullable();
+            $table->integer('user_id')->unsigned()->nullable();
             $table->timestamps();
         });
     }
