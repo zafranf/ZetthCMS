@@ -52,12 +52,12 @@
           <input type="text" class="form-control" id="icon" name="icon" placeholder="Ikon Menu" value="{{ isset($data->id) ? $data->icon : '' }}">
         </div>
       </div>
-      <div class="form-group row">
+      {{-- <div class="form-group row">
         <label for="order" class="col-sm-2 col-form-label">Urutan</label>
         <div class="col-sm-10">
           <input type="text" class="form-control" id="order" name="order" placeholder="Urutan Menu" value="{{ isset($data->id) ? $data->order : '' }}">
         </div>
-      </div>
+      </div> --}}
       <div class="form-group row">
         <label for="parent" class="col-sm-2 col-form-label">Grup</label>
         <div class="col-sm-10">

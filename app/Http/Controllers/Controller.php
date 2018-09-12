@@ -166,14 +166,15 @@ class Controller extends BaseController
     public function activityLog($description)
     {
         /* Filter password */
+        $sensor = 'xxx';
         if (isset($_POST['password'])) {
-            $_POST['password'] = 'xxx';
+            $_POST['password'] = $sensor;
         }
         if (isset($_POST['password_confirmation'])) {
-            $_POST['password_confirmation'] = 'xxx';
+            $_POST['password_confirmation'] = $sensor;
         }
         if (isset($_POST['user_password'])) {
-            $_POST['user_password'] = 'xxx';
+            $_POST['user_password'] = $sensor;
         }
 
         $act = new ActivityLog;
@@ -184,7 +185,7 @@ class Controller extends BaseController
         $act->get = json_encode($_GET);
         $act->post = json_encode($_POST);
         $act->files = json_encode($_FILES);
-        $act->user_id = \Auth::user() ? \Auth::user()->id : null;
+        $act->user_id = \Auth::user()->id ?? null;
         $act->save();
     }
 
@@ -219,8 +220,8 @@ class Controller extends BaseController
         $error = ($e->getCode() != 0) ? $e->getMessage() : 'Error :(';
         if (env('APP_DEBUG')) {
             $error = [
-                'file' => $e->getFile(),
                 'message' => $e->getMessage(),
+                'file' => $e->getFile(),
                 'line' => $e->getLine(),
             ];
         }

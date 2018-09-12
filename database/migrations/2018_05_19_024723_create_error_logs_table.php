@@ -19,7 +19,9 @@ class CreateErrorLogsTable extends Migration
             $table->string('file');
             $table->string('line');
             $table->text('message');
+            $table->integer('count')->unsigned()->default(1);
             $table->timestamps();
+            $table->text('time_history');
         });
     }
 

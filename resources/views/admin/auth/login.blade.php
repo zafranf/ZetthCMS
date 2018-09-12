@@ -16,7 +16,7 @@ $page_title = 'Masuk Aplikasi';
             <div class="card-title">Masuk ke aplikasi ZetthCMS</div>
             <div class="form-group">
               <label class="form-label">Pengguna</label>
-              <input type="text" class="form-control" id="name" name="name" placeholder="Nama Pengguna">
+              <input type="text" class="form-control" id="name" name="name" placeholder="Nama Pengguna" autofocus>
             </div>
             <div class="form-group">
               <label class="form-label">

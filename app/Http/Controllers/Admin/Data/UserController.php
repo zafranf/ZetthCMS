@@ -114,7 +114,7 @@ class UserController extends AdminController
             $par = [
                 'file' => $file,
                 'folder' => '/images/user/',
-                'name' => str_slug($r->input('name')),
+                'name' => str_slug($user->name),
                 'type' => $file->getMimeType(),
                 'ext' => $file->getClientOriginalExtension(),
             ];

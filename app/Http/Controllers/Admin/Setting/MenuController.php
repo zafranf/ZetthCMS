@@ -75,7 +75,7 @@ class MenuController extends AdminController
         // $menu->url = $r->input('url');
         $menu->route_name = str_sanitize($r->input('route_name'));
         $menu->target = str_sanitize($r->input('target'));
-        $menu->order = (int) $r->input('order');
+        // $menu->order = (int) $r->input('order');
         $menu->icon = str_sanitize($r->input('icon'));
         $menu->status = bool($r->input('status')) ? 1 : 0;
         $menu->index = bool($r->input('index')) ? 1 : 0;
@@ -143,7 +143,7 @@ class MenuController extends AdminController
         // $menu->url = $r->input('url');
         $menu->route_name = str_sanitize($r->input('route_name'));
         $menu->target = str_sanitize($r->input('target'));
-        $menu->order = (int) $r->input('order');
+        // $menu->order = (int) $r->input('order');
         $menu->icon = str_sanitize($r->input('icon'));
         $menu->status = bool($r->input('status')) ? 1 : 0;
         $menu->index = bool($r->input('index')) ? 1 : 0;
@@ -199,7 +199,7 @@ class MenuController extends AdminController
     public function sort(Request $r)
     {
         /* get data */
-        $menus = Menu::where('parent_id', 0)->with('submenu')->orderBy('order')->get();
+        $menus = Menu::where('parent_id', 0)->with('allSubmenu')->orderBy('order')->get();
 
         /* set variable for view */
         $data = [
