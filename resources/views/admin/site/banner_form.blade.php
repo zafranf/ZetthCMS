@@ -1,6 +1,8 @@
 @php
-$orders = collect($banners)->map(function($arr) {
-  return $arr->id;
+$orders = collect($banners)->map(function($arr) use ($data) {
+  if ($arr->id != $data->id) {
+    return $arr->id;
+  }
 })->toArray();
 @endphp
 
@@ -55,7 +57,9 @@ $orders = collect($banners)->map(function($arr) {
               <select id="order" name="order" class="form-control custom-select">
                 <option value="first">Pertama</option>
                 @foreach ($banners as $banner)
-                  <option value="{{ $banner->id }}">Setelah {{ $banner->title != '' ? $banner->title : $banner->order }}</option>
+                  @if ($banner->id != $data->id)
+                    <option value="{{ $banner->id }}" {{ ($banner->order == ($data->order - 1)) ? 'selected' : '' }}>Setelah {{ $banner->title != '' ? $banner->title : $banner->order }}</option>
+                  @endif
                 @endforeach
               </select>
             </div>

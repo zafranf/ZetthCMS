@@ -152,11 +152,15 @@ class BannerController extends AdminController
      */
     public function edit(Banner $banner)
     {
+        /* get data */
+        $banners = Banner::select('id', 'order', 'title')->orderBy('order')->get();
+
         /* set variable for view */
         $data = [
             'current_url' => $this->current_url,
             'page_title' => $this->page_title,
             'page_subtitle' => 'Sunting Spanduk',
+            'banners' => $banners,
             'data' => $banner
         ];
 
@@ -172,7 +176,64 @@ class BannerController extends AdminController
      */
     public function update(Request $r, Banner $banner)
     {
-        //
+        /* set variable */
+        $orders = explode(',', $r->input('orders'));
+        
+        /* validation */
+        if (bool($r->input('only_image'))) {
+            $validate = [
+                'image' => 'mimes:jpg,jpeg,png,svg|max:200|dimensions:max_width=500,max_height=500',
+            ];
+        } else {
+            $validate = [
+                'title' => 'required',
+                'description' => 'required',
+                'image' => 'mimes:jpg,jpeg,png,svg|max:200|dimensions:max_width=500,max_height=500',
+            ];
+        }
+        $this->validate($r, $validate);
+        
+        /* save data */
+        $banner->title = str_sanitize($r->input('title'));
+        $banner->description = str_sanitize($r->input('description'));
+        $banner->url = str_sanitize($r->input('url'));
+        $banner->url_external = bool($r->input('url_external')) ? 1 : 0;
+        $banner->target = str_sanitize($r->input('target'));
+        // $banner->order = $order;
+        $banner->only_image = bool($r->input('only_image')) ? 1 : 0;
+        $banner->status = bool($r->input('status')) ? 1 : 0;
+        $banner->save();
+        
+        /* set order */
+        if ($r->input('order') == 'first') {
+            array_unshift($orders, $banner->id);
+        } else {
+            $key = array_search($r->input('order'), $orders);
+            array_splice($orders, ($key + 1), 0, $banner->id);
+        }
+        $this->sortQuery($r, $orders);
+
+        /* upload image */
+        if ($r->hasFile('image')) {
+            $file = $r->file('image');
+            $par = [
+                'file' => $file,
+                'folder' => '/assets/images/banner/',
+                'name' => str_slug(pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME)),
+                'type' => $file->getMimeType(),
+                'ext' => pathinfo($file->getClientOriginalName(), PATHINFO_EXTENSION),
+            ];
+
+            if ($this->uploadImage($par)) {
+                $banner->image = $par['name'] . '.' . $par['ext'];
+                $banner->save();
+            }
+        }
+
+        /* log aktifitas */
+        $this->activityLog('<b>' . \Auth::user()->fullname . '</b> memperbarui Spanduk "' . $banner->title . '"');
+
+        return redirect($this->current_url)->with('success', 'Spanduk berhasil disimpan!');
     }
 
     /**
@@ -198,7 +259,7 @@ class BannerController extends AdminController
     public function datatable(Request $r)
     {
         /* get data */
-        $data = Banner::select(sequence(), 'id', 'title', 'description', 'image', 'status')->get();
+        $data = Banner::select(sequence(), 'id', 'title', 'description', 'image', 'order', 'status')->get();
 
         /* generate datatable */
         if ($r->ajax()) {

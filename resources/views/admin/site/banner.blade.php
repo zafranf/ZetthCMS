@@ -9,6 +9,7 @@
             <th>Gambar</th>
             <th>Judul</th>
             <th>Deskripsi</th>
+            <th>Urutan</th>
             <th>Status</th>
             <th>Aksi</th>
         </tr>
@@ -36,12 +37,13 @@
           { "data": "image", "width": "80px" },
           { "data": "title", "width": "200px" },
           { "data": "description" },
+          { "data": "order", "width": "30px" },
           { "data": "status", "width": "50px" },
           { "width": "100px" },
       ],
       "lengthMenu": [ [20, 50, 100, -1], [20, 50, 100, "All"] ],
       "columnDefs": [{
-        "targets": 5,
+        "targets": 6,
         "data": 'id',
         "render": function (data, type, row, meta) {
           var actions = '';
@@ -52,7 +54,7 @@
           return actions;
         }
       }, {
-        "targets": 4,
+        "targets": 5,
         "data": 'status',
         "render": function (data, type, row, meta) {
           return _get_status_text(data);
