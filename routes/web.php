@@ -45,8 +45,8 @@ Route::prefix('admin')->group(function (){
         Route::put('/setting/menus/sort', 'Admin\Setting\MenuController@sortSave');
 
         /* sort banner */
-        Route::get('/setting/banners/sort', 'Admin\Site\BannerController@sort')->name('banners.sort');
-        Route::put('/setting/banners/sort', 'Admin\Site\BannerController@sortSave');
+        Route::get('/site/banners/sort', 'Admin\Site\BannerController@sort')->name('banners.sort');
+        Route::put('/site/banners/sort', 'Admin\Site\BannerController@sortSave');
 
         Route::middleware('access')->group(function (){
             /* dashboard */

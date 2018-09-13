@@ -5,8 +5,9 @@ $orders = collect($banners)->map(function($arr) use ($data) {
 })->toArray();
 
 /* remove current id */
-$key = array_search($data->id, $orders);
-unset($orders[$key]);
+if (($key = array_search($data->id, $orders)) !== false) {;
+  unset($orders[$key]);
+}
 @endphp
 
 @extends('admin.layouts.main')
