@@ -1,9 +1,12 @@
 @php
+/* mapping order to array */
 $orders = collect($banners)->map(function($arr) use ($data) {
-  if ($arr->id != $data->id) {
     return $arr->id;
-  }
 })->toArray();
+
+/* remove current id */
+$key = array_search($data->id, $orders);
+unset($orders[$key]);
 @endphp
 
 @extends('admin.layouts.main')
