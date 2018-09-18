@@ -26,7 +26,7 @@ class LoginController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = '/admin/dashboard';
+    protected $redirectTo = '/';
 
     /**
      * Create a new controller instance.
@@ -55,43 +55,66 @@ class LoginController extends Controller
      */
     public function username()
     {
-        return 'name';
+        /* set variable */
+        $field = 'name';
+        $name = request()->get($field);
+
+        /* check input email */
+        if (filter_var($name, FILTER_VALIDATE_EMAIL)) {
+            $field = 'email';
+        }
+
+        /* merge request */
+        request()->merge([$field => $name]);
+
+        return $field;
     }
 
     /**
      * Send the response after the user was authenticated.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \Illuminate\Http\Request  $r
      * @return \Illuminate\Http\Response
      */
-    protected function sendLoginResponse(Request $request)
+    protected function sendLoginResponse(Request $r)
     {
-        $request->session()->regenerate();
+        $r->session()->regenerate();
 
-        $this->clearLoginAttempts($request);
+        $this->clearLoginAttempts($r);
         
         /* log aktifitas */
         $this->activityLog('<b>' . \Auth::user()->fullname . '</b> masuk aplikasi');
 
-        return $this->authenticated($request, $this->guard()->user())
+        /* set redirect for user admin */
+        if (\Auth::user()->is_admin) {
+            $this->redirectTo = '/admin/dashboard';
+        }
+
+        return $this->authenticated($r, $this->guard()->user())
                 ?: redirect()->intended($this->redirectPath());
     }
 
     /**
      * Log the user out of the application.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \Illuminate\Http\Request  $r
      * @return \Illuminate\Http\Response
      */
-    public function logout(Request $request)
+    public function logout(Request $r)
     {
+        /* set redirect */
+        $redirect = '/';
+        if (\Auth::user()->is_admin) {
+            $redirect = '/admin/login';
+        }
+
         /* log aktifitas */
-        $this->activityLog('<b>' . \Auth::user()->fullname . '</b> keluar aplikasi');
+        $this->activityLog('<b>' . \Auth::user()->fullname . '</b> keluar dari aplikasi');
 
         $this->guard()->logout();
 
-        $request->session()->invalidate();
+        $r->session()->invalidate();
 
-        return redirect('/');
+        return redirect($redirect);
     }
 }
