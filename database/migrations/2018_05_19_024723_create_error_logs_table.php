@@ -20,8 +20,8 @@ class CreateErrorLogsTable extends Migration
             $table->string('line');
             $table->string('path');
             $table->integer('count')->unsigned()->default(1);
-            $table->timestamps();
             $table->text('time_history')->nullable();
+            $table->timestamps();
         });
     }
 
