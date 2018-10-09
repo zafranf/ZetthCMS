@@ -17,6 +17,11 @@ class CreateRoleMenuTable extends Migration
             $table->unsignedInteger('role_id');
             $table->unsignedInteger('menu_id');
 
+            $table->foreign('role_id')->references('id')->on('roles')
+                ->onUpdate('cascade')->onDelete('cascade');
+            $table->foreign('menu_id')->references('id')->on('menus')
+                ->onUpdate('cascade')->onDelete('cascade');
+
             $table->primary(['role_id', 'menu_id']);
         });
     }

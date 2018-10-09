@@ -8,4 +8,6 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class RoleMenu extends Model
 {
     use SoftDeletes;
+    
+    protected $table = 'role_menu';
 }
