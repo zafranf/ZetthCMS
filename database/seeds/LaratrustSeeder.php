@@ -111,8 +111,8 @@ class LaratrustSeeder extends Seeder
     public function truncateLaratrustTables()
     {
         Schema::disableForeignKeyConstraints();
-        DB::table('permission_role')->truncate();
-        DB::table('permission_user')->truncate();
+        DB::table('role_permission')->truncate();
+        DB::table('user_permission')->truncate();
         DB::table('role_user')->truncate();
         \App\Models\User::truncate();
         \App\Models\Role::truncate();
