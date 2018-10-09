@@ -24,7 +24,7 @@ class LaratrustSeeder extends Seeder
             $role = \App\Models\Role::create([
                 'name' => $key,
                 'display_name' => ucwords(str_replace('_', ' ', $key)),
-                'description' => 'Peran sebagai' . ucwords(str_replace('_', ' ', $key)),
+                'description' => 'Peran sebagai ' . ucwords(str_replace('_', ' ', $key)),
                 'status' => 1,
             ]);
             $permissions = [];
