@@ -25,6 +25,8 @@ if (env('APP_DEBUG')) {
 Route::domain('admin.zcms.ap')->group(function () {
     include "admin.php";
 });
-Route::prefix('admin')->group(function () {
-    include "admin.php";
-});
+if (env('APP_DEBUG')) {
+    Route::prefix('admin')->group(function () {
+        include "admin.php";
+    });
+}
