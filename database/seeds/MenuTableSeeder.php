@@ -45,7 +45,7 @@ class MenuTableSeeder extends Seeder
         $setApl->update = 1;
         $setApl->delete = 0;
         $setApl->save();
-        
+
         /* menu menu */
         $setMenu = new Menu;
         $setMenu->name = 'Menu';
@@ -60,7 +60,7 @@ class MenuTableSeeder extends Seeder
         $setMenu->update = 1;
         $setMenu->delete = 1;
         $setMenu->save();
-        
+
         /* menu peran */
         $setRole = new Menu;
         $setRole->name = 'Peran dan Akses';
@@ -75,7 +75,7 @@ class MenuTableSeeder extends Seeder
         $setRole->update = 1;
         $setRole->delete = 1;
         $setRole->save();
-        
+
         /* menu pengguna */
         /* $setUser = new Menu;
         $setUser->name = 'Pengguna';
@@ -113,7 +113,7 @@ class MenuTableSeeder extends Seeder
         $dataUser->update = 1;
         $dataUser->delete = 1;
         $dataUser->save();
-        
+
         /* menu kategori */
         $dataCat = new Menu;
         $dataCat->name = 'Kategori';
@@ -128,7 +128,7 @@ class MenuTableSeeder extends Seeder
         $dataCat->update = 1;
         $dataCat->delete = 1;
         $dataCat->save();
-        
+
         /* menu label */
         $dataTag = new Menu;
         $dataTag->name = 'Label';
@@ -143,13 +143,43 @@ class MenuTableSeeder extends Seeder
         $dataTag->update = 1;
         $dataTag->delete = 1;
         $dataTag->save();
-        
+
+        /* menu artikel */
+        $dataPost = new Menu;
+        $dataPost->name = 'Artikel';
+        $dataPost->description = 'Menu pengaturan artikel';
+        $dataPost->route_name = 'posts';
+        $dataPost->order = ($dataTag->order + 1);
+        $dataPost->status = 1;
+        $dataPost->parent_id = $data->id;
+        $dataPost->index = 1;
+        $dataPost->create = 1;
+        $dataPost->read = 1;
+        $dataPost->update = 1;
+        $dataPost->delete = 1;
+        $dataPost->save();
+
+        /* menu halaman */
+        $dataPage = new Menu;
+        $dataPage->name = 'Halaman';
+        $dataPage->description = 'Menu pengaturan halaman';
+        $dataPage->route_name = 'pages';
+        $dataPage->order = ($dataPost->order + 1);
+        $dataPage->status = 1;
+        $dataPage->parent_id = $data->id;
+        $dataPage->index = 1;
+        $dataPage->create = 1;
+        $dataPage->read = 1;
+        $dataPage->update = 1;
+        $dataPage->delete = 1;
+        $dataPage->save();
+
         /* menu pelanggan info */
         $dataSubscriber = new Menu;
         $dataSubscriber->name = 'Pelanggan Info';
         $dataSubscriber->description = 'Menu pengaturan pelanggan info';
         $dataSubscriber->route_name = 'subscribers';
-        $dataSubscriber->order = ($dataTag->order + 1);
+        $dataSubscriber->order = ($dataPage->order + 1);
         $dataSubscriber->status = 1;
         $dataSubscriber->parent_id = $data->id;
         $dataSubscriber->index = 1;
@@ -160,15 +190,15 @@ class MenuTableSeeder extends Seeder
         $dataSubscriber->save();
 
         /* menu situs (grup) */
-        $site = new Menu;
+        /* $site = new Menu;
         $site->name = 'Situs';
         $site->description = 'Grup menu situs';
         $site->order = ($data->order + 1);
         $site->status = 1;
-        $site->save();
+        $site->save(); */
 
         /* menu spanduk */
-        $siteBanner = new Menu;
+        /* $siteBanner = new Menu;
         $siteBanner->name = 'Spanduk';
         $siteBanner->description = 'Menu pengaturan spanduk';
         $siteBanner->route_name = 'banners';
@@ -180,10 +210,10 @@ class MenuTableSeeder extends Seeder
         $siteBanner->read = 0;
         $siteBanner->update = 1;
         $siteBanner->delete = 1;
-        $siteBanner->save();
-        
+        $siteBanner->save(); */
+
         /* menu artikel */
-        $sitePost = new Menu;
+        /* $sitePost = new Menu;
         $sitePost->name = 'Artikel';
         $sitePost->description = 'Menu pengaturan artikel';
         $sitePost->route_name = 'posts';
@@ -195,10 +225,10 @@ class MenuTableSeeder extends Seeder
         $sitePost->read = 1;
         $sitePost->update = 1;
         $sitePost->delete = 1;
-        $sitePost->save();
-        
+        $sitePost->save(); */
+
         /* menu halaman */
-        $sitePage = new Menu;
+        /* $sitePage = new Menu;
         $sitePage->name = 'Halaman';
         $sitePage->description = 'Menu pengaturan halaman';
         $sitePage->route_name = 'pages';
@@ -210,19 +240,19 @@ class MenuTableSeeder extends Seeder
         $sitePage->read = 1;
         $sitePage->update = 1;
         $sitePage->delete = 1;
-        $sitePage->save();
+        $sitePage->save(); */
 
         /* menu galeri (grup) */
-        $gallery = new Menu;
+        /* $gallery = new Menu;
         $gallery->name = 'Galeri';
         $gallery->description = 'Grup menu galeri';
         $gallery->order = ($sitePage->order + 1);
         $gallery->status = 1;
         $gallery->parent_id = $site->id;
-        $gallery->save();
-        
+        $gallery->save(); */
+
         /* menu foto */
-        $galPhoto = new Menu;
+        /* $galPhoto = new Menu;
         $galPhoto->name = 'Foto';
         $galPhoto->description = 'Menu pengaturan foto';
         $galPhoto->route_name = 'photos';
@@ -234,10 +264,10 @@ class MenuTableSeeder extends Seeder
         $galPhoto->read = 0;
         $galPhoto->update = 1;
         $galPhoto->delete = 1;
-        $galPhoto->save();
-        
+        $galPhoto->save(); */
+
         /* menu video */
-        $galVideo = new Menu;
+        /* $galVideo = new Menu;
         $galVideo->name = 'Video';
         $galVideo->description = 'Menu pengaturan video';
         $galVideo->route_name = 'videos';
@@ -249,16 +279,16 @@ class MenuTableSeeder extends Seeder
         $galVideo->read = 0;
         $galVideo->update = 1;
         $galVideo->delete = 1;
-        $galVideo->save();
+        $galVideo->save(); */
 
         /* menu laporan (grup) */
         $report = new Menu;
         $report->name = 'Laporan';
         $report->description = 'Grup menu laporan';
-        $report->order = ($site->order + 1);
+        $report->order = ($data->order + 1);
         $report->status = 1;
         $report->save();
-        
+
         /* menu kontak masuk */
         $repInbox = new Menu;
         $repInbox->name = 'Kontak Masuk';
@@ -273,7 +303,7 @@ class MenuTableSeeder extends Seeder
         $repInbox->update = 0;
         $repInbox->delete = 1;
         $repInbox->save();
-        
+
         /* menu komentar */
         $repComment = new Menu;
         $repComment->name = 'Komentar';
@@ -288,7 +318,7 @@ class MenuTableSeeder extends Seeder
         $repComment->update = 1;
         $repComment->delete = 1;
         $repComment->save();
-        
+
         /* menu kata pencarian */
         $repInterm = new Menu;
         $repInterm->name = 'Kata Pencarian';

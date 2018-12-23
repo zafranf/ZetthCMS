@@ -24,12 +24,12 @@ function sortMenu($data, $level = 0) {
 @section('content')
   <div class="card-body">
     <div class="form-group row">
-      <div class="col-sm-6">
+      <div class="col-sm-12">
         {!! sortMenu($data) !!}
       </div>
-      <div class="col-sm-6">
+      {{-- <div class="col-sm-6">
         <pre id="serialize_output2"></pre>
-      </div>
+      </div> --}}
     </div>
     <div class="form-group row">
       <div class="offset-sm-2 col-sm-10">
