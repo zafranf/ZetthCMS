@@ -10,6 +10,17 @@
 | contains the "web" middleware group. Now create something great!
 |
  */
+/* admin routes */
+Route::domain('admin.' . env('APP_DOMAIN', 'zcms.ap'))->group(function () {
+    include "admin.php";
+});
+if (env('APP_DEBUG')) {
+    Route::prefix('admin')->group(function () {
+        include "admin.php";
+    });
+}
+
+/* site routes */
 Route::get('/', function () {
     return view('welcome');
 });
@@ -19,14 +30,4 @@ Auth::routes();
 if (env('APP_DEBUG')) {
     Route::get('/logout', 'Auth\LoginController@logout');
     Route::get('/test', 'TestController@index');
-}
-
-/* admin routes */
-Route::domain('admin.zcms.ap')->group(function () {
-    include "admin.php";
-});
-if (env('APP_DEBUG')) {
-    Route::prefix('admin')->group(function () {
-        include "admin.php";
-    });
 }
