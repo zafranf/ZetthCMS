@@ -19,13 +19,21 @@ class AppServiceProvider extends ServiceProvider
         Schema::defaultStringLength(191);
 
         /* check config */
-        $isCLI = strpos(php_sapi_name(), 'cli') >= 0;
+        $isCLI = strpos(php_sapi_name(), 'cli') !== false;
         if (!$isCLI) {
             if (!Schema::hasTable('applications')) {
                 /* sementara, nanti redirect ke halaman install */
-                dd('you need to install this app first');
+                dd('You need to install this app first');
                 // redirect('http://google.com')->send();
             }
+
+            /* check admin page */
+            $isAdminPage = false;
+            $host = parse_url(url('/'))['host'];
+            if (strpos($host, 'admin') !== false) {
+                $isAdminPage = true;
+            }
+            View::share('isAdminPage', $isAdminPage);
         }
 
         /* send application data to all views */

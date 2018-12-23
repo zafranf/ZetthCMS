@@ -10,7 +10,7 @@ $page_title = 'Masuk Aplikasi';
         <div class="text-center mb-6">
           <img src="{{ url('/assets/images/logo.jpg') }}" class="h-6" alt="">
         </div>
-        <form class="card" action="{{ url('/admin/login') }}" method="post">
+        <form class="card" action="{{ (isset($isAdminPage) && $isAdminPage) ? url('/login') : url('/admin/login') }}" method="post">
           @csrf
           <div class="card-body p-6">
             <div class="card-title">Masuk ke aplikasi ZetthCMS</div>

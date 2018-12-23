@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Models\ActivityLog;
 use App\Models\ErrorLog;
-use App\Models\Menu;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Foundation\Bus\DispatchesJobs;
 use Illuminate\Foundation\Validation\ValidatesRequests;
@@ -17,6 +16,15 @@ class Controller extends BaseController
     use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
 
     private $mail_id;
+    public $isAdminPage = false;
+
+    public function __construct()
+    {
+        $host = parse_url(url('/'))['host'];
+        if (strpos($host, 'admin') !== false) {
+            $this->isAdminPage = true;
+        }
+    }
 
     public function sendMail($par)
     {
@@ -269,7 +277,7 @@ class Controller extends BaseController
         $fldr = public_path('');
         foreach ($folders as $folder) {
             if ($folder != '') {
-                $fldr .= '/'.$folder;
+                $fldr .= '/' . $folder;
                 if (!is_dir($fldr)) {
                     mkdir($fldr);
                 }

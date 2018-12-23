@@ -35,6 +35,7 @@ class LoginController extends Controller
      */
     public function __construct()
     {
+        parent::__construct();
         $this->middleware('guest')->except('logout');
     }
 
@@ -81,17 +82,21 @@ class LoginController extends Controller
         $r->session()->regenerate();
 
         $this->clearLoginAttempts($r);
-        
+
         /* log aktifitas */
         $this->activityLog('<b>' . \Auth::user()->fullname . '</b> masuk aplikasi');
 
         /* set redirect for user admin */
         if (\Auth::user()->is_admin) {
-            $this->redirectTo = '/admin/dashboard';
+            if ($this->isAdminPage) {
+                $this->redirectTo = '/dashboard';
+            } else {
+                $this->redirectTo = '/admin/dashboard';
+            }
         }
 
         return $this->authenticated($r, $this->guard()->user())
-                ?: redirect()->intended($this->redirectPath());
+        ?: redirect()->intended($this->redirectPath());
     }
 
     /**
@@ -105,7 +110,11 @@ class LoginController extends Controller
         /* set redirect */
         $redirect = '/';
         if (\Auth::user()->is_admin) {
-            $redirect = '/admin/login';
+            if ($this->isAdminPage) {
+                $redirect = '/login';
+            } else {
+                $redirect = '/admin/login';
+            }
         }
 
         /* log aktifitas */
