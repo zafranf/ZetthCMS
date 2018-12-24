@@ -2,7 +2,7 @@
 
 @section('content')
 <div class="card-body">
-  <form action="{{ url('/admin/setting/roles') }}{{ isset($data->id) ? '/' . $data->id : '' }}" method="post" enctype="multipart/form-data">
+  <form action="{{ url('/setting/roles') }}{{ isset($data->id) ? '/' . $data->id : '' }}" method="post" enctype="multipart/form-data">
     @csrf
     @if (isset($data->id))
       {{ method_field('put') }}

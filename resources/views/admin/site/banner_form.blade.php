@@ -14,7 +14,7 @@ if (($key = array_search($data->id, $orders)) !== false) {;
 
 @section('content')
   <div class="card-body">
-    <form action="{{ url('/admin/site/banners') }}{{ isset($data->id) ? '/' . $data->id : '' }}" method="post" enctype="multipart/form-data">
+    <form action="{{ url('/site/banners') }}{{ isset($data->id) ? '/' . $data->id : '' }}" method="post" enctype="multipart/form-data">
       @csrf
       @if (isset($data->id))
         {{ method_field('put') }}

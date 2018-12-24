@@ -17,7 +17,7 @@ function sortMenu($data, $level = 0) {
 
 @section('menu-sort')
   @if (\Auth::user()->can('update-menus'))
-    <a href="{{ url('/admin/setting/menus/sort') }}" class="btn btn-info" data-toggle="tooltip" data-original-title="Urutkan"><i class="fa fa-sort"></i></a>
+    <a href="{{ url('/setting/menus/sort') }}" class="btn btn-info" data-toggle="tooltip" data-original-title="Urutkan"><i class="fa fa-sort"></i></a>
   @endif
 @endsection
 
@@ -33,7 +33,7 @@ function sortMenu($data, $level = 0) {
     </div>
     <div class="form-group row">
       <div class="offset-sm-2 col-sm-10">
-        <form action="{{ url('/admin/setting/menus/sort') }}" method="post">
+        <form action="{{ url('/setting/menus/sort') }}" method="post">
           @csrf
           {{ method_field('put') }}
           <input type="hidden" id="serialize_output" name="sort">

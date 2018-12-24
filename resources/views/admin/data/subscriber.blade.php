@@ -28,7 +28,7 @@
     var table = $('#list').DataTable({
       "processing": true,
       "serverSide": true,
-      "ajax": SITE_URL + "/admin/data/subscribers/data",
+      "ajax": SITE_URL + "/data/subscribers/data",
       "columns": [
           { "data": "no", "width": "30px" },
           { "data": "email" },

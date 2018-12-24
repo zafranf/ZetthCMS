@@ -10,7 +10,7 @@ $page_title = 'Masuk Aplikasi';
         <div class="text-center mb-6">
           <img src="{{ url('/assets/images/logo.jpg') }}" class="h-9" alt="{{ $apps->name }} Logo">
         </div>
-        <form class="card" action="{{ (isset($isAdminSubdomain) && $isAdminSubdomain) ? url('/login') : url('/admin/login') }}" method="post">
+        <form class="card" action="{{ url('/login') }}" method="post">
           @csrf
           <div class="card-body p-6">
             <div class="card-title">Masuk ke aplikasi {{ $apps->name }}</div>

@@ -516,19 +516,21 @@ if (!function_exists('generateMenu')) {
      *
      * @return void
      */
-    function generateMenu($data)
+    function generateMenu($data, $group = 'admin')
     {
         echo '<ul class="nav nav-tabs border-0 flex-column flex-lg-row">';
         foreach ($data as $menu) {
-            $href = !empty($menu->route_name) ? 'href="' . route($menu->route_name . '.index') . '"' : '';
-            $sub = count($menu->submenu) ? ' data-toggle="dropdown"' : '';
-            $icon = ($menu->icon != "") ? '<i class="fe ' . $menu->icon . '"></i>' : '';
-            echo '<li class="nav-item">';
-            echo '<a ' . ($href ?? '') . ' class="nav-link" ' . ($sub ?? '') . '>' . $icon . ' ' . $menu->name . '</a>';
-            if (count($menu->submenu) > 0) {
-                generateSubmenu($menu->submenu);
+            if ($menu->group == $group) {
+                $href = !empty($menu->route_name) ? 'href="' . route($menu->route_name . '.index') . '"' : '';
+                $sub = count($menu->submenu) ? ' data-toggle="dropdown"' : '';
+                $icon = ($menu->icon != "") ? '<i class="fe ' . $menu->icon . '"></i>' : '';
+                echo '<li class="nav-item">';
+                echo '<a ' . ($href ?? '') . ' class="nav-link" ' . ($sub ?? '') . '>' . $icon . ' ' . $menu->name . '</a>';
+                if (count($menu->submenu) > 0) {
+                    generateSubmenu($menu->submenu);
+                }
+                echo '</li>';
             }
-            echo '</li>';
         }
         echo '</ul>';
     }

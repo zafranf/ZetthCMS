@@ -2,7 +2,7 @@
 
 @section('menu-sort')
   @if (\Auth::user()->can('update-menus'))
-    <a href="{{ url('/admin/site/banners/sort') }}" class="btn btn-info" data-toggle="tooltip" data-original-title="Urutkan"><i class="fa fa-sort"></i></a>
+    <a href="{{ url('/site/banners/sort') }}" class="btn btn-info" data-toggle="tooltip" data-original-title="Urutkan"><i class="fa fa-sort"></i></a>
   @endif
 @endsection
 
@@ -37,7 +37,7 @@
     var table = $('#list').DataTable({
       "processing": true,
       "serverSide": true,
-      "ajax": SITE_URL + "/admin/site/banners/data",
+      "ajax": SITE_URL + "/site/banners/data",
       "columns": [
           { "data": "no", "width": "30px" },
           { "data": "image", "width": "80px" },
@@ -53,7 +53,7 @@
         "data": 'id',
         "render": function (data, type, row, meta) {
           var actions = '';
-          var url = SITE_URL + '/admin/site/banners/' + data;
+          var url = SITE_URL + '/site/banners/' + data;
           var del = "_delete('" + url + "')";
           {!! _get_access_buttons() !!}
           $('[data-toggle="tooltip"]').tooltip();

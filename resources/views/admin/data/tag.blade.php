@@ -29,7 +29,7 @@
     var table = $('#list').DataTable({
       "processing": true,
       "serverSide": true,
-      "ajax": SITE_URL + "/admin/data/tags/data",
+      "ajax": SITE_URL + "/data/tags/data",
       "columns": [
           { "data": "no", "width": "30px" },
           { "data": "name", "width": "200px" },
@@ -43,7 +43,7 @@
         "data": 'id',
         "render": function (data, type, row, meta) {
           var actions = '';
-          var url = SITE_URL + '/admin/data/tags/' + data;
+          var url = SITE_URL + '/data/tags/' + data;
           var del = "_delete('" + url + "')";
           {!! _get_access_buttons() !!}
           $('[data-toggle="tooltip"]').tooltip();
