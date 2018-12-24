@@ -70,5 +70,13 @@ Route::middleware('auth')->group(function () {
             ]);
         });
 
+        /* module log routes */
+        Route::prefix('log')->group(function () {
+            Route::resources([
+                '/activity_log' => 'Admin\Report\ActivityLogController',
+                '/error_log' => 'Admin\Report\ErrorLogController',
+            ]);
+        });
+
     });
 });
