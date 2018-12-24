@@ -17,7 +17,7 @@ class TagController extends AdminController
     public function __construct()
     {
         parent::__construct();
-        $this->current_url = url('/admin/data/tags');
+        $this->current_url = url('/data/tags');
         $this->page_title = 'Pengaturan Label';
         $this->breadcrumbs[] = [
             'page' => 'Label',
@@ -114,7 +114,7 @@ class TagController extends AdminController
             'current_url' => $this->current_url,
             'page_title' => $this->page_title,
             'page_subtitle' => 'Sunting Label',
-            'data' => $tag
+            'data' => $tag,
         ];
 
         return view('admin.data.tag_form', $data);

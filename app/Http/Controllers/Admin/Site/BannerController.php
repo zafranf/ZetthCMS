@@ -17,7 +17,7 @@ class BannerController extends AdminController
     public function __construct()
     {
         parent::__construct();
-        $this->current_url = url('/admin/site/banners');
+        $this->current_url = url('/site/banners');
         $this->page_title = 'Pengaturan Spanduk';
         $this->breadcrumbs[] = [
             'page' => 'Spanduk',
@@ -74,7 +74,7 @@ class BannerController extends AdminController
     {
         /* set variable */
         $orders = explode(',', $r->input('orders'));
-        
+
         /* validation */
         if (bool($r->input('only_image'))) {
             $validate = [
@@ -88,7 +88,7 @@ class BannerController extends AdminController
             ];
         }
         $this->validate($r, $validate);
-        
+
         /* save data */
         $banner = new Banner;
         $banner->title = str_sanitize($r->input('title'));
@@ -100,7 +100,7 @@ class BannerController extends AdminController
         $banner->only_image = bool($r->input('only_image')) ? 1 : 0;
         $banner->status = bool($r->input('status')) ? 1 : 0;
         $banner->save();
-        
+
         /* set order */
         if ($r->input('order') == 'first') {
             array_unshift($orders, $banner->id);
@@ -161,7 +161,7 @@ class BannerController extends AdminController
             'page_title' => $this->page_title,
             'page_subtitle' => 'Sunting Spanduk',
             'banners' => $banners,
-            'data' => $banner
+            'data' => $banner,
         ];
 
         return view('admin.site.banner_form', $data);
@@ -178,7 +178,7 @@ class BannerController extends AdminController
     {
         /* set variable */
         $orders = explode(',', $r->input('orders'));
-        
+
         /* validation */
         if (bool($r->input('only_image'))) {
             $validate = [
@@ -192,7 +192,7 @@ class BannerController extends AdminController
             ];
         }
         $this->validate($r, $validate);
-        
+
         /* save data */
         $banner->title = str_sanitize($r->input('title'));
         $banner->description = str_sanitize($r->input('description'));
@@ -203,7 +203,7 @@ class BannerController extends AdminController
         $banner->only_image = bool($r->input('only_image')) ? 1 : 0;
         $banner->status = bool($r->input('status')) ? 1 : 0;
         $banner->save();
-        
+
         /* set order */
         if ($r->input('order') == 'first') {
             array_unshift($orders, $banner->id);

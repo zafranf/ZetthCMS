@@ -2,12 +2,12 @@
 
 namespace App\Http\Controllers\Admin\Setting;
 
-use App\Models\Role;
+use App\Http\Controllers\Admin\AdminController;
 use App\Models\Menu;
 use App\Models\Permission;
 use App\Models\PermissionRole;
+use App\Models\Role;
 use Illuminate\Http\Request;
-use App\Http\Controllers\Admin\AdminController;
 
 class RoleController extends AdminController
 {
@@ -19,7 +19,7 @@ class RoleController extends AdminController
      */
     public function __construct()
     {
-        $this->current_url = url('/admin/setting/roles');
+        $this->current_url = url('/setting/roles');
         $this->page_title = 'Pengaturan Peran dan Akses';
     }
 
@@ -192,7 +192,7 @@ class RoleController extends AdminController
     {
         /* get data */
         $data = Role::select(sequence(), 'id', 'display_name as name', 'description', 'status')->get();
-        
+
         /* generate datatable */
         if ($r->ajax()) {
             return $this->generateDataTable($r, $data);
@@ -200,7 +200,7 @@ class RoleController extends AdminController
 
         abort(403);
     }
-    
+
     /**
      * Set Permission Role
      */
@@ -222,7 +222,7 @@ class RoleController extends AdminController
                 ])->id;
             }
         }
-        
+
         // Attach all permissions to the role
         $role->permissions()->sync($permissions);
     }

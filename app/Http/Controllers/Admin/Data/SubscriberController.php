@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers\Admin\Data;
 
+use App\Http\Controllers\Admin\AdminController;
 use App\Models\Subscriber;
 use Illuminate\Http\Request;
-use App\Http\Controllers\Admin\AdminController;
 
 class SubscriberController extends AdminController
 {
@@ -17,7 +17,7 @@ class SubscriberController extends AdminController
     public function __construct()
     {
         parent::__construct();
-        $this->current_url = url('/admin/data/subscribers');
+        $this->current_url = url('/data/subscribers');
         $this->page_title = 'Pengaturan Pelanggan';
         $this->breadcrumbs[] = [
             'page' => 'Pelanggan Info',
@@ -88,7 +88,7 @@ class SubscriberController extends AdminController
             'current_url' => $this->current_url,
             'page_title' => $this->page_title,
             'page_subtitle' => 'Sunting Pelanggan',
-            'data' => $subscriber
+            'data' => $subscriber,
         ];
 
         return view('admin.data.subscriber_form', $data);

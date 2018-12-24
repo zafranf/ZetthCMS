@@ -16,7 +16,7 @@ class MenuController extends AdminController
      */
     public function __construct()
     {
-        $this->current_url = url('/admin/setting/menus');
+        $this->current_url = url('/setting/menus');
         $this->page_title = 'Pengaturan Menu';
     }
 
