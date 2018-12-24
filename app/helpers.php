@@ -529,10 +529,10 @@ if (!function_exists('getMenu')) {
             \Cache::put($cacheRoleIdName, $roles_id, 10);
         }
 
-        $cacheName = 'cache-menu-user' . $user->id;
-        $cache = \Cache::get($cacheName);
-        if ($cache) {
-            $menus = $cache;
+        $cacheMenuName = 'cacheMenu-menu-user' . $user->id;
+        $cacheMenu = \Cache::get($cacheMenuName);
+        if ($cacheMenu) {
+            $menus = $cacheMenu;
         } else {
             $roles = \App\Models\Role::with('menu.submenu')->whereIn('id', $roles_id)->get();
 
@@ -546,7 +546,7 @@ if (!function_exists('getMenu')) {
                 }
             }
 
-            \Cache::put($cacheName, $menus, 10);
+            \Cache::put($cacheMenuName, $menus, 10);
         }
 
         return $menus;
@@ -610,17 +610,17 @@ if (!function_exists('generateMenuArray')) {
      */
     function generateMenuArray($data, $separator = '-', $level = 0)
     {
-        $a = [];
+        $array = [];
         $sep = $separator ? str_pad("", $level, $separator) : '';
         $pad = $level * 10;
         foreach ($data as $menu) {
             $menu->name = ($sep ? '<span class="text-muted" style="padding-left: ' . $pad . 'px">' . $sep . '</span> ' : '') . $menu->name;
-            $a[] = $menu;
+            $array[] = $menu;
             if (count($menu->submenu) > 0) {
-                $a = array_merge($a, generateMenuArray($menu->submenu, $separator, $level + 1));
+                $array = array_merge($array, generateMenuArray($menu->submenu, $separator, $level + 1));
             }
         }
 
-        return $a;
+        return $array;
     }
 }
