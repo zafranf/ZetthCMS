@@ -35,7 +35,7 @@
       <div class="container">
         <div class="row align-items-center">
           <div class="col-lg order-lg-first">
-            {{ generateMenu($appmenu) }}
+            {{ generateMenu() }}
           </div>
         </div>
       </div>

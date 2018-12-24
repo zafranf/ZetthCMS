@@ -43,13 +43,13 @@ class AppServiceProvider extends ServiceProvider
         }
 
         /* send menu data to all views */
-        if (Schema::hasTable('menus')) {
-            $appmenu = \App\Models\Menu::where([
-                'parent_id' => 0,
-                'status' => 1,
-            ])->with('submenu')->orderBy('order')->get();
-            View::share('appmenu', $appmenu);
-        }
+        /* if (Schema::hasTable('menus')) {
+    $appmenu = \App\Models\Menu::where([
+    'parent_id' => 0,
+    'status' => 1,
+    ])->with('submenu')->orderBy('order')->get();
+    View::share('appmenu', $appmenu);
+    } */
     }
 
     /**

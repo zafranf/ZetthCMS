@@ -510,27 +510,70 @@ if (!function_exists('rearrangeFiles')) {
     }
 }
 
+if (!function_exists('getMenu')) {
+    function getMenu($group = 'admin')
+    {
+        $menus = [];
+        $user = \Auth::user();
+
+        $cacheRoleIdName = 'cache-roleid-user' . $user->id;
+        $cacheRoleId = \Cache::get($cacheRoleIdName);
+        if ($cacheRoleId) {
+            $roles_id = $cacheRoleId;
+        } else {
+            $user = $user->load('role_ids');
+            $roles_id = $user->role_ids->map(function ($arr) {
+                return $arr->role_id;
+            });
+
+            \Cache::put($cacheRoleIdName, $roles_id, 10);
+        }
+
+        $cacheName = 'cache-menu-user' . $user->id;
+        $cache = \Cache::get($cacheName);
+        if ($cache) {
+            $menus = $cache;
+        } else {
+            $roles = \App\Models\Role::with('menu.submenu')->whereIn('id', $roles_id)->get();
+
+            foreach ($roles as $role) {
+                if ($role->menu) {
+                    foreach ($role->menu as $menu) {
+                        if ($menu->group == $group) {
+                            $menus[] = $menu;
+                        }
+                    }
+                }
+            }
+
+            \Cache::put($cacheName, $menus, 10);
+        }
+
+        return $menus;
+    }
+}
+
 if (!function_exists('generateMenu')) {
     /**
      * Generate Top Menu
      *
      * @return void
      */
-    function generateMenu($data, $group = 'admin')
+    function generateMenu($group = 'admin')
     {
+        $menus = getMenu($group);
+
         echo '<ul class="nav nav-tabs border-0 flex-column flex-lg-row">';
-        foreach ($data as $menu) {
-            if ($menu->group == $group) {
-                $href = !empty($menu->route_name) ? 'href="' . route($menu->route_name . '.index') . '"' : '';
-                $sub = count($menu->submenu) ? ' data-toggle="dropdown"' : '';
-                $icon = ($menu->icon != "") ? '<i class="fe ' . $menu->icon . '"></i>' : '';
-                echo '<li class="nav-item">';
-                echo '<a ' . ($href ?? '') . ' class="nav-link" ' . ($sub ?? '') . '>' . $icon . ' ' . $menu->name . '</a>';
-                if (count($menu->submenu) > 0) {
-                    generateSubmenu($menu->submenu);
-                }
-                echo '</li>';
+        foreach ($menus as $menu) {
+            $href = !empty($menu->route_name) ? 'href="' . route($menu->route_name . '.index') . '"' : '';
+            $sub = count($menu->submenu) ? ' data-toggle="dropdown"' : '';
+            $icon = ($menu->icon != "") ? '<i class="fe ' . $menu->icon . '"></i>' : '';
+            echo '<li class="nav-item">';
+            echo '<a ' . ($href ?? '') . ' class="nav-link" ' . ($sub ?? '') . '>' . $icon . ' ' . $menu->name . '</a>';
+            if (count($menu->submenu) > 0) {
+                generateSubmenu($menu->submenu);
             }
+            echo '</li>';
         }
         echo '</ul>';
     }
