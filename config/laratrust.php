@@ -130,12 +130,12 @@ return [
         /**
          * Permission - User intermediate table.
          */
-        'permission_user' => 'permission_user',
+        'permission_user' => 'user_permission',
 
         /**
          * Permission - Role intermediate table.
          */
-        'permission_role' => 'permission_role',
+        'permission_role' => 'role_permission',
 
     ],
 
@@ -149,22 +149,22 @@ return [
     */
     'foreign_keys' => [
         /**
-         * User foreign key on Laratrust's role_user and permission_user tables.
+         * User foreign key on Laratrust's role_user and user_permission tables.
          */
         'user' => 'user_id',
 
         /**
-         * Role foreign key on Laratrust's role_user and permission_role tables.
+         * Role foreign key on Laratrust's role_user and role_permission tables.
          */
         'role' => 'role_id',
 
         /**
-         * Role foreign key on Laratrust's permission_user and permission_role tables.
+         * Role foreign key on Laratrust's user_permission and role_permission tables.
          */
         'permission' => 'permission_id',
 
         /**
-         * Role foreign key on Laratrust's role_user and permission_user tables.
+         * Role foreign key on Laratrust's role_user and user_permission tables.
          */
         'team' => 'team_id',
 

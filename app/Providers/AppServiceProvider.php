@@ -15,20 +15,41 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
+        /* set default varchar */
         Schema::defaultStringLength(191);
+
+        /* check config */
+        $isCLI = strpos(php_sapi_name(), 'cli') !== false;
+        if (!$isCLI) {
+            if (!Schema::hasTable('applications')) {
+                /* sementara, nanti redirect ke halaman install */
+                dd('You need to install this app first');
+                // redirect('http://google.com')->send();
+            }
+
+            /* check admin page */
+            $isAdminSubdomain = false;
+            $host = parse_url(url('/'))['host'];
+            if (strpos($host, 'admin') !== false) {
+                $isAdminSubdomain = true;
+            }
+            View::share('isAdminSubdomain', $isAdminSubdomain);
+        }
 
         /* send application data to all views */
         if (Schema::hasTable('applications')) {
-            $app = \App\Models\Application::find(1);
-            View::share('app', $app);
+            $apps = \App\Models\Application::find(1);
+            View::share('apps', $apps);
         }
 
         /* send menu data to all views */
-        $menu = \App\Models\Menu::where([
-                    'parent_id' => 0, 
-                    'status' => 1
-                ])->with('submenu')->orderBy('order')->get();
-        View::share('appmenu', $menu);
+        /* if (Schema::hasTable('menus')) {
+    $appmenu = \App\Models\Menu::where([
+    'parent_id' => 0,
+    'status' => 1,
+    ])->with('submenu')->orderBy('order')->get();
+    View::share('appmenu', $appmenu);
+    } */
     }
 
     /**

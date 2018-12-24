@@ -13,11 +13,11 @@ class LaratrustSetupTables extends Migration
     {
         // Create table for storing roles
         Schema::create('roles', function (Blueprint $table) {
-            $table->increments('id');
+            $table->increments('id')->unsigned();
             $table->string('name')->unique();
             $table->string('display_name')->nullable();
             $table->string('description')->nullable();
-            $table->boolean('status')->comment('0=inactive, 1=active');
+            $table->boolean('status')->comment('0=inactive, 1=active')->unsigned();
             $table->timestamps();
             $table->softDeletes();
         });
@@ -45,7 +45,7 @@ class LaratrustSetupTables extends Migration
         });
 
         // Create table for associating permissions to users (Many To Many Polymorphic)
-        Schema::create('permission_user', function (Blueprint $table) {
+        Schema::create('user_permission', function (Blueprint $table) {
             $table->unsignedInteger('permission_id');
             $table->unsignedInteger('user_id');
             $table->string('user_type');
@@ -57,7 +57,7 @@ class LaratrustSetupTables extends Migration
         });
 
         // Create table for associating permissions to roles (Many-to-Many)
-        Schema::create('permission_role', function (Blueprint $table) {
+        Schema::create('role_permission', function (Blueprint $table) {
             $table->unsignedInteger('permission_id');
             $table->unsignedInteger('role_id');
 
@@ -77,8 +77,8 @@ class LaratrustSetupTables extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('permission_user');
-        Schema::dropIfExists('permission_role');
+        Schema::dropIfExists('user_permission');
+        Schema::dropIfExists('role_permission');
         Schema::dropIfExists('permissions');
         Schema::dropIfExists('role_user');
         Schema::dropIfExists('roles');

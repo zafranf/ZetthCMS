@@ -11,7 +11,7 @@ class UsersTableSeeder extends Seeder
      */
     public function run()
     {
-        App\Models\User::create([
+        /* App\Models\User::create([
             'email' => 'super@user.co',
             'name' => 'su',
             'fullname' => 'Super User',
@@ -20,6 +20,6 @@ class UsersTableSeeder extends Seeder
             'image' => '',
             // 'role_id' => 1,
             'status' => 1,
-        ]);
+        ]); */
     }
 }

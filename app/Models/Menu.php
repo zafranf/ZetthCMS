@@ -13,4 +13,9 @@ class Menu extends Model
     {
         return $this->hasMany('App\Models\Menu', 'parent_id', 'id')->where('status', 1)->orderBy('order')->with('submenu');
     }
+
+    public function allSubmenu()
+    {
+        return $this->hasMany('App\Models\Menu', 'parent_id', 'id')->orderBy('order')->with('allSubmenu');
+    }
 }

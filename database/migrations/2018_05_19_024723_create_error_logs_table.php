@@ -15,10 +15,12 @@ class CreateErrorLogsTable extends Migration
     {
         Schema::create('error_logs', function (Blueprint $table) {
             $table->string('code');
-            $table->string('path');
+            $table->text('message');
             $table->string('file');
             $table->string('line');
-            $table->text('message');
+            $table->string('path');
+            $table->integer('count')->unsigned()->default(1);
+            $table->text('time_history')->nullable();
             $table->timestamps();
         });
     }

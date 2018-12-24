@@ -112,6 +112,16 @@ if (!function_exists('bool')) {
     }
 }
 
+if (!function_exists('str_sanitize')) {
+    /**
+     * Sanitize string
+     */
+    function str_sanitize($string)
+    {
+        return trim(e($string));
+    }
+}
+
 if (!function_exists('_cut_text')) {
     /**
      * Cut some text
@@ -500,20 +510,66 @@ if (!function_exists('rearrangeFiles')) {
     }
 }
 
+if (!function_exists('getMenu')) {
+    function getMenu($group = 'admin')
+    {
+        $menus = [];
+        $user = \Auth::user();
+
+        $cacheRoleIdName = 'cache-roleid-user' . $user->id;
+        $cacheRoleId = \Cache::get($cacheRoleIdName);
+        if ($cacheRoleId) {
+            $roles_id = $cacheRoleId;
+        } else {
+            $user = $user->load('role_ids');
+            $roles_id = $user->role_ids->map(function ($arr) {
+                return $arr->role_id;
+            });
+
+            \Cache::put($cacheRoleIdName, $roles_id, 10);
+        }
+
+        $cacheMenuName = 'cacheMenu-menu-user' . $user->id;
+        $cacheMenu = \Cache::get($cacheMenuName);
+        if ($cacheMenu) {
+            $menus = $cacheMenu;
+        } else {
+            $roles = \App\Models\Role::with('menu.submenu')->whereIn('id', $roles_id)->get();
+
+            foreach ($roles as $role) {
+                if ($role->menu) {
+                    foreach ($role->menu as $menu) {
+                        if ($menu->group == $group) {
+                            $menus[] = $menu;
+                        }
+                    }
+                }
+            }
+
+            \Cache::put($cacheMenuName, $menus, 10);
+        }
+
+        return $menus;
+    }
+}
+
 if (!function_exists('generateMenu')) {
     /**
      * Generate Top Menu
      *
      * @return void
      */
-    function generateMenu($data)
+    function generateMenu($group = 'admin')
     {
+        $menus = getMenu($group);
+
         echo '<ul class="nav nav-tabs border-0 flex-column flex-lg-row">';
-        foreach ($data as $menu) {
+        foreach ($menus as $menu) {
             $href = !empty($menu->route_name) ? 'href="' . route($menu->route_name . '.index') . '"' : '';
             $sub = count($menu->submenu) ? ' data-toggle="dropdown"' : '';
+            $icon = ($menu->icon != "") ? '<i class="fe ' . $menu->icon . '"></i>' : '';
             echo '<li class="nav-item">';
-            echo '<a ' . ($href ?? '') . ' class="nav-link" ' . ($sub ?? '') . '><i class="fe ' . $menu->icon . '"></i> ' . $menu->name . '</a>';
+            echo '<a ' . ($href ?? '') . ' class="nav-link" ' . ($sub ?? '') . '>' . $icon . ' ' . $menu->name . '</a>';
             if (count($menu->submenu) > 0) {
                 generateSubmenu($menu->submenu);
             }
@@ -536,7 +592,8 @@ if (!function_exists('generateSubmenu')) {
         foreach ($data as $submenu) {
             $href = !empty($submenu->route_name) ? 'href="' . route($submenu->route_name . '.index') . '"' : '';
             $sub = count($submenu->submenu) ? ' data-toggle="dropdown"' : '';
-            echo '<a ' . ($href ?? '') . ' class="dropdown-item " ' . ($sub ?? '') . '><i class="fe ' . $submenu->icon . '"></i> ' . $submenu->name . '</a>';
+            $icon = ($submenu->icon != '') ? '<i class="fe ' . $submenu->icon . '"></i>' : '';
+            echo '<a ' . ($href ?? '') . ' class="dropdown-item " ' . ($sub ?? '') . '>' . $icon . ' ' . $submenu->name . '</a>';
             if (count($submenu->submenu) > 0) {
                 generateSubmenu($submenu->submenu, $level + 1);
             }
@@ -553,17 +610,17 @@ if (!function_exists('generateMenuArray')) {
      */
     function generateMenuArray($data, $separator = '-', $level = 0)
     {
-        $a = [];
+        $array = [];
         $sep = $separator ? str_pad("", $level, $separator) : '';
         $pad = $level * 10;
         foreach ($data as $menu) {
             $menu->name = ($sep ? '<span class="text-muted" style="padding-left: ' . $pad . 'px">' . $sep . '</span> ' : '') . $menu->name;
-            $a[] = $menu;
+            $array[] = $menu;
             if (count($menu->submenu) > 0) {
-                $a = array_merge($a, generateMenuArray($menu->submenu, $separator, $level + 1));
+                $array = array_merge($array, generateMenuArray($menu->submenu, $separator, $level + 1));
             }
         }
 
-        return $a;
+        return $array;
     }
 }

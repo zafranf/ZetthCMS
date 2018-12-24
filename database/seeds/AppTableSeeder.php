@@ -12,10 +12,19 @@ class AppTableSeeder extends Seeder
     public function run()
     {
         App\Models\Application::create([
-            'name' => 'NYPSoft',
-            'description' => 'NyariPeluang Software',
+            'name' => 'ZetthCMS Core',
+            'slogan' => '',
             'logo' => '',
+            'icon' => '',
+            'description' => 'Core System ZetthCMS',
+            'keyword' => '',
             'status' => 1,
+            'active_at' => date("Y-m-d H:i:s"),
+            'email' => '',
+            'address' => '',
+            'phone' => '',
+            // 'google_analytic' => '',
+            'location' => '',
         ]);
     }
 }
