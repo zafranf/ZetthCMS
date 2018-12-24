@@ -14,11 +14,11 @@
 Route::domain('admin.' . env('APP_DOMAIN', 'zcms.ap'))->group(function () {
     include "admin.php";
 });
-if (env('APP_DEBUG')) {
-    Route::prefix('admin')->group(function () {
-        include "admin.php";
-    });
-}
+/* if (env('APP_DEBUG')) {
+Route::prefix('admin')->group(function () {
+include "admin.php";
+});
+} */
 
 /* site routes */
 Route::get('/', function () {

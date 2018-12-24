@@ -8,15 +8,15 @@ $page_title = 'Masuk Aplikasi';
     <div class="row">
       <div class="col col-login mx-auto">
         <div class="text-center mb-6">
-          <img src="{{ url('/assets/images/logo.jpg') }}" class="h-6" alt="">
+          <img src="{{ url('/assets/images/logo.jpg') }}" class="h-9" alt="{{ $apps->name }} Logo">
         </div>
         <form class="card" action="{{ (isset($isAdminSubdomain) && $isAdminSubdomain) ? url('/login') : url('/admin/login') }}" method="post">
           @csrf
           <div class="card-body p-6">
-            <div class="card-title">Masuk ke aplikasi ZetthCMS</div>
+            <div class="card-title">Masuk ke aplikasi {{ $apps->name }}</div>
             <div class="form-group">
-              <label class="form-label">Pengguna</label>
-              <input type="text" class="form-control" id="name" name="name" placeholder="Nama Pengguna" autofocus>
+              <label class="form-label">Pengguna/Email</label>
+              <input type="text" class="form-control" id="name" name="name" placeholder="Nama Pengguna/Alamat Email" autofocus>
             </div>
             <div class="form-group">
               <label class="form-label">
