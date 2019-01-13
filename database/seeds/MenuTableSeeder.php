@@ -29,6 +29,7 @@ class MenuTableSeeder extends Seeder
         $set->description = 'Grup menu pegaturan';
         $set->order = ($dash->order + 1);
         $set->status = 1;
+        $set->index = 1;
         $set->save();
 
         /* menu aplikasi */
@@ -97,6 +98,7 @@ class MenuTableSeeder extends Seeder
         $data->description = 'Grup menu data';
         $data->order = ($set->order + 1);
         $data->status = 1;
+        $data->index = 1;
         $data->save();
 
         /* menu pengguna */
@@ -165,6 +167,7 @@ class MenuTableSeeder extends Seeder
         $site->description = 'Grup menu situs';
         $site->order = ($data->order + 1);
         $site->status = 1;
+        $site->index = 1;
         $site->save();
 
         /* menu spanduk */
@@ -257,6 +260,7 @@ class MenuTableSeeder extends Seeder
         $report->description = 'Grup menu laporan';
         $report->order = ($site->order + 1);
         $report->status = 1;
+        $report->index = 1;
         $report->save();
 
         /* menu kontak masuk */
@@ -310,6 +314,7 @@ class MenuTableSeeder extends Seeder
         $log->description = 'Grup menu catatan';
         $log->order = ($site->order + 1);
         $log->status = 1;
+        $log->index = 1;
         $log->save();
 
         /* menu catatan aktifitas */

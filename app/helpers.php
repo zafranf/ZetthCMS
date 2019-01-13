@@ -563,13 +563,15 @@ if (!function_exists('generateMenu')) {
     {
         $menus = getMenu($group);
 
-        echo '<ul class="nav nav-tabs border-0 flex-column flex-lg-row">';
+        echo '<ul class="navbar-nav">';
         foreach ($menus as $menu) {
             $href = !empty($menu->route_name) ? 'href="' . route($menu->route_name . '.index') . '"' : '';
-            $sub = count($menu->submenu) ? ' data-toggle="dropdown"' : '';
-            $icon = ($menu->icon != "") ? '<i class="fe ' . $menu->icon . '"></i>' : '';
-            echo '<li class="nav-item">';
-            echo '<a ' . ($href ?? '') . ' class="nav-link" ' . ($sub ?? '') . '>' . $icon . ' ' . $menu->name . '</a>';
+            $sub = count($menu->submenu) ? ' dropdown' : '';
+            $sublink = count($menu->submenu) ? ' dropdown-toggle' : '';
+            $subtoggle = count($menu->submenu) ? ' data-toggle="dropdown"' : '';
+            $icon = ($menu->icon != "") ? '<i class="' . $menu->icon . '"></i>' : '';
+            echo '<li class="nav-item' . ($sub ?? '') . '">';
+            echo '<a ' . ($href ?? '') . ' class="nav-link' . ($sublink ?? '') . '"' . ($subtoggle ?? '') . '>' . $icon . ' ' . $menu->name . '</a>';
             if (count($menu->submenu) > 0) {
                 generateSubmenu($menu->submenu);
             }
@@ -588,17 +590,19 @@ if (!function_exists('generateSubmenu')) {
     function generateSubmenu($data, $level = 0)
     {
         $sublevel = ($level > 0) ? 'dropdown-menu-side' : 'dropdown-menu-arrow';
-        echo '<div class="dropright dropdown-menu ' . $sublevel . '">';
+        echo '<ul class="dropdown-menu">';
         foreach ($data as $submenu) {
             $href = !empty($submenu->route_name) ? 'href="' . route($submenu->route_name . '.index') . '"' : '';
-            $sub = count($submenu->submenu) ? ' data-toggle="dropdown"' : '';
-            $icon = ($submenu->icon != '') ? '<i class="fe ' . $submenu->icon . '"></i>' : '';
-            echo '<a ' . ($href ?? '') . ' class="dropdown-item " ' . ($sub ?? '') . '>' . $icon . ' ' . $submenu->name . '</a>';
+            $sublink = count($submenu->submenu) ? ' dropdown-toggle' : '';
+            $icon = ($submenu->icon != '') ? '<i class="' . $submenu->icon . '"></i>' : '';
+            echo '<li>';
+            echo '<a ' . ($href ?? '') . ' class="dropdown-item' . ($sublink ?? '') . '">' . $icon . ' ' . $submenu->name . '</a>';
             if (count($submenu->submenu) > 0) {
                 generateSubmenu($submenu->submenu, $level + 1);
             }
+            echo '</li>';
         }
-        echo '</div>';
+        echo '</ul>';
     }
 }
 

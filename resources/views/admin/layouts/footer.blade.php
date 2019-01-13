@@ -21,6 +21,7 @@
     {!! _load_js('/admin/js/vendors/bootstrap.bundle.min.js') !!}
     {!! _load_js('/admin/js/vendors/sweetalert2.min.js') !!}
     {!! _load_js('/admin/js/app.js') !!}
+    {!! _load_js('/admin/js/navbar.js') !!}
     @yield('js')
   </body>
 </html>

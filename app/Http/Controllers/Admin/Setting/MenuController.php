@@ -89,6 +89,9 @@ class MenuController extends AdminController
         /* log aktifitas */
         $this->activityLog('<b>' . \Auth::user()->fullname . '</b> menambahkan Menu "' . $menu->name . '"');
 
+        /* clear cache */
+        \Cache::flush();
+
         return redirect($this->current_url)->with('success', 'Menu berhasil ditambah!');
     }
 
@@ -157,6 +160,9 @@ class MenuController extends AdminController
         /* log aktifitas */
         $this->activityLog('<b>' . \Auth::user()->fullname . '</b> memperbarui Menu "' . $menu->name . '"');
 
+        /* clear cache */
+        \Cache::flush();
+
         return redirect($this->current_url)->with('success', 'Menu berhasil disimpan!');
     }
 
@@ -173,6 +179,9 @@ class MenuController extends AdminController
 
         /* soft delete */
         $menu->delete();
+
+        /* clear cache */
+        \Cache::flush();
 
         return redirect($this->current_url)->with('success', 'Menu berhasil dihapus!');
     }
@@ -222,6 +231,9 @@ class MenuController extends AdminController
 
         /* save position */
         $save = $this->sortQuery($r);
+
+        /* clear cache */
+        \Cache::flush();
 
         return redirect($this->current_url)->with('success', 'Menu berhasil diurutkan!');
     }

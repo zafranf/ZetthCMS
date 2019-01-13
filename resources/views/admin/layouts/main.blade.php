@@ -35,7 +35,12 @@
       <div class="container">
         <div class="row align-items-center">
           <div class="col-lg order-lg-first">
-            {{ generateMenu() }}
+            <!-- Static navbar -->
+            <nav class="nav border-0 nav-tabs navbar-expand-md">
+              <div class="navbar-collapse" id="navbarNavDropdown">
+                {{ generateMenu() }}
+              </div>
+            </nav>
           </div>
         </div>
       </div>
@@ -43,20 +48,20 @@
     <div class="my-3 my-md-5">
       <div class="container">
         @if (session('success'))
-            <div class="alert alert-success alert-dismissable">
-                <button type="button" class="close" data-dismiss="alert"></button>
-                {{ session('success') }}
-            </div>
+          <div class="alert alert-success alert-dismissable">
+            <button type="button" class="close" data-dismiss="alert"></button>
+            {{ session('success') }}
+          </div>
         @endif
         @if (count($errors)>0)
-            <div class="alert alert-danger alert-dismissable">
-                <button type="button" class="close" data-dismiss="alert"></button>
-                <ul>
-                    @foreach ($errors->all() as $error)
-                        <li>{{ $error }}</li>
-                    @endforeach
-                </ul>
-            </div>
+          <div class="alert alert-danger alert-dismissable">
+            <button type="button" class="close" data-dismiss="alert"></button>
+            <ul>
+              @foreach ($errors->all() as $error)
+                <li>{{ $error }}</li>
+              @endforeach
+            </ul>
+          </div>
         @endif
         <div class="page-header">
           <h1 class="page-title">

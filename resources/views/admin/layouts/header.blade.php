@@ -20,6 +20,7 @@
     {!! _load_css('/admin/css/sourcesanspro.css') !!}
     {{-- Dashboard Core --}}
     {!! _load_css('/admin/css/dashboard.css') !!}
+    {!! _load_css('/admin/css/navbar.css') !!}
     @yield('css')
   </head>
   <body class="">
