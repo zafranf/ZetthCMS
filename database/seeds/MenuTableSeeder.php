@@ -187,6 +187,7 @@ class MenuTableSeeder extends Seeder
         $gallery->order = $kontenOrder++;
         $gallery->status = 1;
         $gallery->parent_id = $konten->id;
+        $gallery->index = 1;
         $gallery->save();
 
         /* menu foto */
@@ -218,6 +219,62 @@ class MenuTableSeeder extends Seeder
         $galVideo->update = 1;
         $galVideo->delete = 1;
         $galVideo->save();
+
+        $prodOrder = 1;
+        /* menu produk (grup) */
+        $product = new Menu;
+        $product->name = 'Produk';
+        $product->description = 'Grup menu produk';
+        $product->order = $kontenOrder++;
+        $product->status = 1;
+        $product->parent_id = $konten->id;
+        $product->index = 1;
+        $product->save();
+
+        /* menu semua produk */
+        $prodAll = new Menu;
+        $prodAll->name = 'Semua Produk';
+        $prodAll->description = 'Menu pengaturan semua produk';
+        $prodAll->route_name = 'products';
+        $prodAll->order = $prodOrder++;
+        $prodAll->status = 1;
+        $prodAll->parent_id = $product->id;
+        $prodAll->index = 1;
+        $prodAll->create = 1;
+        $prodAll->read = 1;
+        $prodAll->update = 1;
+        $prodAll->delete = 1;
+        $prodAll->save();
+
+        /* menu produk kategori */
+        $prodCat = new Menu;
+        $prodCat->name = 'Kategori';
+        $prodCat->description = 'Menu pengaturan produk kategori';
+        $prodCat->route_name = 'products.categories';
+        $prodCat->order = $prodOrder++;
+        $prodCat->status = 1;
+        $prodCat->parent_id = $product->id;
+        $prodCat->index = 1;
+        $prodCat->create = 1;
+        $prodCat->read = 0;
+        $prodCat->update = 1;
+        $prodCat->delete = 1;
+        $prodCat->save();
+
+        /* menu produk label */
+        $prodTag = new Menu;
+        $prodTag->name = 'Label';
+        $prodTag->description = 'Menu pengaturan produk label';
+        $prodTag->route_name = 'products.tags';
+        $prodTag->order = $prodOrder++;
+        $prodTag->status = 1;
+        $prodTag->parent_id = $product->id;
+        $prodTag->index = 1;
+        $prodTag->create = 1;
+        $prodTag->read = 0;
+        $prodTag->update = 1;
+        $prodTag->delete = 1;
+        $prodTag->save();
 
         $repOrder = 1;
         /* menu laporan (grup) */
@@ -303,7 +360,7 @@ class MenuTableSeeder extends Seeder
         $logActivity = new Menu;
         $logActivity->name = 'Aktifitas';
         $logActivity->description = 'Menu catatan aktifitas';
-        $logActivity->route_name = 'activity_log';
+        $logActivity->route_name = 'activities';
         $logActivity->order = $logOrder++;
         $logActivity->status = 1;
         $logActivity->parent_id = $log->id;
@@ -318,7 +375,7 @@ class MenuTableSeeder extends Seeder
         $logError = new Menu;
         $logError->name = 'Galat';
         $logError->description = 'Menu catatan galat';
-        $logError->route_name = 'error_log';
+        $logError->route_name = 'errors';
         $logError->order = $logOrder++;
         $logError->status = 1;
         $logError->parent_id = $log->id;

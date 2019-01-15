@@ -49,9 +49,12 @@ Route::middleware('auth')->group(function () {
                 '/pages' => 'Admin\Content\PageController',
                 '/categories' => 'Admin\Content\CategoryController',
                 '/tags' => 'Admin\Content\TagController',
-                '/gallery/photos' => 'Admin\Content\PhotoController',
-                '/gallery/videos' => 'Admin\Content\VideoController',
+                '/gallery/photos' => 'Admin\Content\Gallery\PhotoController',
+                '/gallery/videos' => 'Admin\Content\Gallery\VideoController',
+                '/products' => 'Admin\Content\Product\ProductController',
             ]);
+            Route::resource('/products/categories', 'Admin\Content\Product\CategoryController')->names('products.categories');
+            Route::resource('/products/tags', 'Admin\Content\Product\TagController')->names('products.tags');
         });
 
         /* module report routes */
@@ -67,8 +70,8 @@ Route::middleware('auth')->group(function () {
         /* module log routes */
         Route::prefix('log')->group(function () {
             Route::resources([
-                '/activity_log' => 'Admin\Report\ActivityLogController',
-                '/error_log' => 'Admin\Report\ErrorLogController',
+                '/activities' => 'Admin\Log\ActivityController',
+                '/errors' => 'Admin\Log\ErrorController',
             ]);
         });
 
