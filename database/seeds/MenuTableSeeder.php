@@ -12,22 +12,24 @@ class MenuTableSeeder extends Seeder
      */
     public function run()
     {
+        $mainOrder = 1;
         /* menu dashboard */
         $dash = new Menu;
         $dash->name = 'Beranda';
         $dash->description = 'Halaman utama aplikasi';
         $dash->route_name = 'dashboard';
         $dash->target = '_self';
-        $dash->order = 1;
+        $dash->order = $mainOrder++;
         $dash->status = 1;
         $dash->index = 1;
         $dash->save();
 
+        $setOrder = 1;
         /* menu pengaturan (grup) */
         $set = new Menu;
         $set->name = 'Pengaturan';
         $set->description = 'Grup menu pegaturan';
-        $set->order = ($dash->order + 1);
+        $set->order = $mainOrder++;
         $set->status = 1;
         $set->index = 1;
         $set->save();
@@ -37,7 +39,7 @@ class MenuTableSeeder extends Seeder
         $setApl->name = 'Aplikasi';
         $setApl->description = 'Menu pengaturan aplikasi';
         $setApl->route_name = 'application';
-        $setApl->order = 1;
+        $setApl->order = $setOrder++;
         $setApl->status = 1;
         $setApl->parent_id = $set->id;
         $setApl->index = 1;
@@ -52,7 +54,7 @@ class MenuTableSeeder extends Seeder
         $setMenu->name = 'Menu';
         $setMenu->description = 'Menu pengaturan menu';
         $setMenu->route_name = 'menus';
-        $setMenu->order = ($setApl->order + 1);
+        $setMenu->order = $setOrder++;
         $setMenu->status = 1;
         $setMenu->parent_id = $set->id;
         $setMenu->index = 1;
@@ -67,7 +69,7 @@ class MenuTableSeeder extends Seeder
         $setRole->name = 'Peran dan Akses';
         $setRole->description = 'Menu pengaturan peran dan akses';
         $setRole->route_name = 'roles';
-        $setRole->order = ($setMenu->order + 1);
+        $setRole->order = $setOrder++;
         $setRole->status = 1;
         $setRole->parent_id = $set->id;
         $setRole->index = 1;
@@ -78,11 +80,11 @@ class MenuTableSeeder extends Seeder
         $setRole->save();
 
         /* menu pengguna */
-        /* $setUser = new Menu;
+        $setUser = new Menu;
         $setUser->name = 'Pengguna';
         $setUser->description = 'Menu pengaturan pengguna';
         $setUser->route_name = 'users';
-        $setUser->order = ($setRole->order + 1);
+        $setUser->order = $setOrder++;
         $setUser->status = 1;
         $setUser->parent_id = $set->id;
         $setUser->index = 1;
@@ -90,146 +92,109 @@ class MenuTableSeeder extends Seeder
         $setUser->read = 1;
         $setUser->update = 1;
         $setUser->delete = 1;
-        $setUser->save(); */
+        $setUser->save();
 
-        /* menu data (grup) */
-        $data = new Menu;
-        $data->name = 'Data';
-        $data->description = 'Grup menu data';
-        $data->order = ($set->order + 1);
-        $data->status = 1;
-        $data->index = 1;
-        $data->save();
-
-        /* menu pengguna */
-        $dataUser = new Menu;
-        $dataUser->name = 'Pengguna';
-        $dataUser->description = 'Menu pengaturan pengguna';
-        $dataUser->route_name = 'users';
-        $dataUser->order = 1;
-        $dataUser->status = 1;
-        $dataUser->parent_id = $data->id;
-        $dataUser->index = 1;
-        $dataUser->create = 1;
-        $dataUser->read = 1;
-        $dataUser->update = 1;
-        $dataUser->delete = 1;
-        $dataUser->save();
-
-        /* menu kategori */
-        $dataCat = new Menu;
-        $dataCat->name = 'Kategori';
-        $dataCat->description = 'Menu pengaturan kategori';
-        $dataCat->route_name = 'categories';
-        $dataCat->order = ($dataUser->order + 1);
-        $dataCat->status = 1;
-        $dataCat->parent_id = $data->id;
-        $dataCat->index = 1;
-        $dataCat->create = 1;
-        $dataCat->read = 0;
-        $dataCat->update = 1;
-        $dataCat->delete = 1;
-        $dataCat->save();
-
-        /* menu label */
-        $dataTag = new Menu;
-        $dataTag->name = 'Label';
-        $dataTag->description = 'Menu pengaturan label';
-        $dataTag->route_name = 'tags';
-        $dataTag->order = ($dataCat->order + 1);
-        $dataTag->status = 1;
-        $dataTag->parent_id = $data->id;
-        $dataTag->index = 1;
-        $dataTag->create = 1;
-        $dataTag->read = 0;
-        $dataTag->update = 1;
-        $dataTag->delete = 1;
-        $dataTag->save();
-
-        /* menu pelanggan info */
-        $dataSubscriber = new Menu;
-        $dataSubscriber->name = 'Pelanggan Info';
-        $dataSubscriber->description = 'Menu pengaturan pelanggan info';
-        $dataSubscriber->route_name = 'subscribers';
-        $dataSubscriber->order = ($dataTag->order + 1);
-        $dataSubscriber->status = 1;
-        $dataSubscriber->parent_id = $data->id;
-        $dataSubscriber->index = 1;
-        $dataSubscriber->create = 0;
-        $dataSubscriber->read = 0;
-        $dataSubscriber->update = 1;
-        $dataSubscriber->delete = 1;
-        $dataSubscriber->save();
-
-        /* menu situs (grup) */
-        $site = new Menu;
-        $site->name = 'Situs';
-        $site->description = 'Grup menu situs';
-        $site->order = ($data->order + 1);
-        $site->status = 1;
-        $site->index = 1;
-        $site->save();
+        $kontenOrder = 1;
+        /* menu konten (grup) */
+        $konten = new Menu;
+        $konten->name = 'Konten';
+        $konten->description = 'Grup menu konten';
+        $konten->order = $mainOrder++;
+        $konten->status = 1;
+        $konten->index = 1;
+        $konten->save();
 
         /* menu spanduk */
-        /* $siteBanner = new Menu;
-        $siteBanner->name = 'Spanduk';
-        $siteBanner->description = 'Menu pengaturan spanduk';
-        $siteBanner->route_name = 'banners';
-        $siteBanner->order = 1;
-        $siteBanner->status = 1;
-        $siteBanner->parent_id = $site->id;
-        $siteBanner->index = 1;
-        $siteBanner->create = 1;
-        $siteBanner->read = 0;
-        $siteBanner->update = 1;
-        $siteBanner->delete = 1;
-        $siteBanner->save(); */
+        $kontenBanner = new Menu;
+        $kontenBanner->name = 'Spanduk';
+        $kontenBanner->description = 'Menu pengaturan spanduk';
+        $kontenBanner->route_name = 'banners';
+        $kontenBanner->order = $kontenOrder++;
+        $kontenBanner->status = 1;
+        $kontenBanner->parent_id = $konten->id;
+        $kontenBanner->index = 1;
+        $kontenBanner->create = 1;
+        $kontenBanner->read = 0;
+        $kontenBanner->update = 1;
+        $kontenBanner->delete = 1;
+        $kontenBanner->save();
 
         /* menu artikel */
-        $sitePost = new Menu;
-        $sitePost->name = 'Artikel';
-        $sitePost->description = 'Menu pengaturan artikel';
-        $sitePost->route_name = 'posts';
-        $sitePost->order = 1; //($siteBanner->order + 1);
-        $sitePost->status = 1;
-        $sitePost->parent_id = $site->id;
-        $sitePost->index = 1;
-        $sitePost->create = 1;
-        $sitePost->read = 1;
-        $sitePost->update = 1;
-        $sitePost->delete = 1;
-        $sitePost->save();
+        $kontenPost = new Menu;
+        $kontenPost->name = 'Artikel';
+        $kontenPost->description = 'Menu pengaturan artikel';
+        $kontenPost->route_name = 'posts';
+        $kontenPost->order = $kontenOrder++;
+        $kontenPost->status = 1;
+        $kontenPost->parent_id = $konten->id;
+        $kontenPost->index = 1;
+        $kontenPost->create = 1;
+        $kontenPost->read = 1;
+        $kontenPost->update = 1;
+        $kontenPost->delete = 1;
+        $kontenPost->save();
 
         /* menu halaman */
-        $sitePage = new Menu;
-        $sitePage->name = 'Halaman';
-        $sitePage->description = 'Menu pengaturan halaman';
-        $sitePage->route_name = 'pages';
-        $sitePage->order = ($sitePost->order + 1);
-        $sitePage->status = 1;
-        $sitePage->parent_id = $site->id;
-        $sitePage->index = 1;
-        $sitePage->create = 1;
-        $sitePage->read = 1;
-        $sitePage->update = 1;
-        $sitePage->delete = 1;
-        $sitePage->save();
+        $kontenPage = new Menu;
+        $kontenPage->name = 'Halaman';
+        $kontenPage->description = 'Menu pengaturan halaman';
+        $kontenPage->route_name = 'pages';
+        $kontenPage->order = $kontenOrder++;
+        $kontenPage->status = 1;
+        $kontenPage->parent_id = $konten->id;
+        $kontenPage->index = 1;
+        $kontenPage->create = 1;
+        $kontenPage->read = 1;
+        $kontenPage->update = 1;
+        $kontenPage->delete = 1;
+        $kontenPage->save();
 
+        /* menu kategori */
+        $kontenCat = new Menu;
+        $kontenCat->name = 'Kategori';
+        $kontenCat->description = 'Menu pengaturan kategori';
+        $kontenCat->route_name = 'categories';
+        $kontenCat->order = $kontenOrder++;
+        $kontenCat->status = 1;
+        $kontenCat->parent_id = $konten->id;
+        $kontenCat->index = 1;
+        $kontenCat->create = 1;
+        $kontenCat->read = 0;
+        $kontenCat->update = 1;
+        $kontenCat->delete = 1;
+        $kontenCat->save();
+
+        /* menu label */
+        $kontenTag = new Menu;
+        $kontenTag->name = 'Label';
+        $kontenTag->description = 'Menu pengaturan label';
+        $kontenTag->route_name = 'tags';
+        $kontenTag->order = $kontenOrder++;
+        $kontenTag->status = 1;
+        $kontenTag->parent_id = $konten->id;
+        $kontenTag->index = 1;
+        $kontenTag->create = 1;
+        $kontenTag->read = 0;
+        $kontenTag->update = 1;
+        $kontenTag->delete = 1;
+        $kontenTag->save();
+
+        $galOrder = 1;
         /* menu galeri (grup) */
-        /* $gallery = new Menu;
+        $gallery = new Menu;
         $gallery->name = 'Galeri';
         $gallery->description = 'Grup menu galeri';
-        $gallery->order = ($sitePage->order + 1);
+        $gallery->order = $kontenOrder++;
         $gallery->status = 1;
-        $gallery->parent_id = $site->id;
-        $gallery->save(); */
+        $gallery->parent_id = $konten->id;
+        $gallery->save();
 
         /* menu foto */
-        /* $galPhoto = new Menu;
+        $galPhoto = new Menu;
         $galPhoto->name = 'Foto';
         $galPhoto->description = 'Menu pengaturan foto';
         $galPhoto->route_name = 'photos';
-        $galPhoto->order = 1;
+        $galPhoto->order = $galOrder++;
         $galPhoto->status = 1;
         $galPhoto->parent_id = $gallery->id;
         $galPhoto->index = 1;
@@ -237,14 +202,14 @@ class MenuTableSeeder extends Seeder
         $galPhoto->read = 0;
         $galPhoto->update = 1;
         $galPhoto->delete = 1;
-        $galPhoto->save(); */
+        $galPhoto->save();
 
         /* menu video */
-        /* $galVideo = new Menu;
+        $galVideo = new Menu;
         $galVideo->name = 'Video';
         $galVideo->description = 'Menu pengaturan video';
         $galVideo->route_name = 'videos';
-        $galVideo->order = ($galPhoto->order + 1);
+        $galVideo->order = $galOrder++;
         $galVideo->status = 1;
         $galVideo->parent_id = $gallery->id;
         $galVideo->index = 1;
@@ -252,13 +217,14 @@ class MenuTableSeeder extends Seeder
         $galVideo->read = 0;
         $galVideo->update = 1;
         $galVideo->delete = 1;
-        $galVideo->save(); */
+        $galVideo->save();
 
+        $repOrder = 1;
         /* menu laporan (grup) */
         $report = new Menu;
         $report->name = 'Laporan';
         $report->description = 'Grup menu laporan';
-        $report->order = ($site->order + 1);
+        $report->order = $mainOrder++;
         $report->status = 1;
         $report->index = 1;
         $report->save();
@@ -268,7 +234,7 @@ class MenuTableSeeder extends Seeder
         $repInbox->name = 'Kontak Masuk';
         $repInbox->description = 'Menu pengaturan kontak masuk';
         $repInbox->route_name = 'inbox';
-        $repInbox->order = 1;
+        $repInbox->order = $repOrder++;
         $repInbox->status = 1;
         $repInbox->parent_id = $report->id;
         $repInbox->index = 1;
@@ -283,7 +249,7 @@ class MenuTableSeeder extends Seeder
         $repComment->name = 'Komentar';
         $repComment->description = 'Menu pengaturan komentar';
         $repComment->route_name = 'comments';
-        $repComment->order = ($repInbox->order + 1);
+        $repComment->order = $repOrder++;
         $repComment->status = 1;
         $repComment->parent_id = $report->id;
         $repComment->index = 1;
@@ -298,7 +264,7 @@ class MenuTableSeeder extends Seeder
         $repInterm->name = 'Kata Pencarian';
         $repInterm->description = 'Menu pengaturan kata pencarian';
         $repInterm->route_name = 'interms';
-        $repInterm->order = ($repComment->order + 1);
+        $repInterm->order = $repOrder++;
         $repInterm->status = 1;
         $repInterm->parent_id = $report->id;
         $repInterm->index = 1;
@@ -308,11 +274,27 @@ class MenuTableSeeder extends Seeder
         $repInterm->delete = 0;
         $repInterm->save();
 
+        /* menu pelanggan info */
+        $repSubscriber = new Menu;
+        $repSubscriber->name = 'Pelanggan Info';
+        $repSubscriber->description = 'Menu laporan pelanggan info';
+        $repSubscriber->route_name = 'subscribers';
+        $repSubscriber->order = $repOrder++;
+        $repSubscriber->status = 1;
+        $repSubscriber->parent_id = $report->id;
+        $repSubscriber->index = 1;
+        $repSubscriber->create = 0;
+        $repSubscriber->read = 0;
+        $repSubscriber->update = 1;
+        $repSubscriber->delete = 1;
+        $repSubscriber->save();
+
+        $logOrder = 1;
         /* menu catatan (grup) */
         $log = new Menu;
         $log->name = 'Catatan';
         $log->description = 'Grup menu catatan';
-        $log->order = ($site->order + 1);
+        $log->order = $mainOrder++;
         $log->status = 1;
         $log->index = 1;
         $log->save();
@@ -322,7 +304,7 @@ class MenuTableSeeder extends Seeder
         $logActivity->name = 'Aktifitas';
         $logActivity->description = 'Menu catatan aktifitas';
         $logActivity->route_name = 'activity_log';
-        $logActivity->order = 1;
+        $logActivity->order = $logOrder++;
         $logActivity->status = 1;
         $logActivity->parent_id = $log->id;
         $logActivity->index = 1;
@@ -337,7 +319,7 @@ class MenuTableSeeder extends Seeder
         $logError->name = 'Galat';
         $logError->description = 'Menu catatan galat';
         $logError->route_name = 'error_log';
-        $logError->order = ($logActivity->order + 1);
+        $logError->order = $logOrder++;
         $logError->status = 1;
         $logError->parent_id = $log->id;
         $logError->index = 1;

@@ -10,22 +10,22 @@ if (env('APP_DEBUG')) {
 }
 
 Route::middleware('auth')->group(function () {
-    /* api */
-    Route::get('/setting/menus/data', 'Admin\Setting\MenuController@datatable');
-    Route::get('/setting/roles/data', 'Admin\Setting\RoleController@datatable');
-    Route::get('/data/users/data', 'Admin\Data\UserController@datatable');
-    Route::get('/data/categories/data', 'Admin\Data\CategoryController@datatable');
-    Route::get('/data/tags/data', 'Admin\Data\TagController@datatable');
-    Route::get('/data/subscribers/data', 'Admin\Data\SubscriberController@datatable');
-    Route::get('/site/banners/data', 'Admin\Site\BannerController@datatable');
+    /* api datatable */
+    Route::get('/setting/menus/data', 'Admin\Setting\MenuController@datatable')->name('menus.data');
+    Route::get('/setting/roles/data', 'Admin\Setting\RoleController@datatable')->name('roles.data');
+    Route::get('/setting/users/data', 'Admin\Setting\UserController@datatable')->name('users.data');
+    Route::get('/content/banners/data', 'Admin\Content\BannerController@datatable')->name('banners.data');
+    Route::get('/content/categories/data', 'Admin\Content\CategoryController@datatable')->name('categories.data');
+    Route::get('/content/tags/data', 'Admin\Content\TagController@datatable')->name('tags.data');
+    Route::get('/report/subscribers/data', 'Admin\Report\SubscriberController@datatable')->name('subscribers.data');
 
     /* sort menu */
     Route::get('/setting/menus/sort', 'Admin\Setting\MenuController@sort')->name('menus.sort');
-    Route::put('/setting/menus/sort', 'Admin\Setting\MenuController@sortSave');
+    Route::put('/setting/menus/sort', 'Admin\Setting\MenuController@sortSave')->name('menus.sortSave');
 
     /* sort banner */
-    Route::get('/site/banners/sort', 'Admin\Site\BannerController@sort')->name('banners.sort');
-    Route::put('/site/banners/sort', 'Admin\Site\BannerController@sortSave');
+    Route::get('/content/banners/sort', 'Admin\Content\BannerController@sort')->name('banners.sort')->name('banners.sort');
+    Route::put('/content/banners/sort', 'Admin\Content\BannerController@sortSave')->name('banners.sortSave');
 
     Route::middleware('access')->group(function () {
         /* dashboard */
@@ -37,27 +37,20 @@ Route::middleware('auth')->group(function () {
                 '/application' => 'Admin\Setting\ApplicationController',
                 '/menus' => 'Admin\Setting\MenuController',
                 '/roles' => 'Admin\Setting\RoleController',
+                '/users' => 'Admin\Setting\UserController',
             ]);
         });
 
-        /* module data routes */
-        Route::prefix('data')->group(function () {
+        /* module content routes */
+        Route::prefix('content')->group(function () {
             Route::resources([
-                '/users' => 'Admin\Data\UserController',
-                '/categories' => 'Admin\Data\CategoryController',
-                '/tags' => 'Admin\Data\TagController',
-                '/subscribers' => 'Admin\Data\SubscriberController',
-            ]);
-        });
-
-        /* module site routes */
-        Route::prefix('site')->group(function () {
-            Route::resources([
-                '/banners' => 'Admin\Site\BannerController',
-                '/posts' => 'Admin\Site\PostController',
-                '/pages' => 'Admin\Site\PageController',
-                '/photos' => 'Admin\Site\PhotoController',
-                '/videos' => 'Admin\Site\VideoController',
+                '/banners' => 'Admin\Content\BannerController',
+                '/posts' => 'Admin\Content\PostController',
+                '/pages' => 'Admin\Content\PageController',
+                '/categories' => 'Admin\Content\CategoryController',
+                '/tags' => 'Admin\Content\TagController',
+                '/gallery/photos' => 'Admin\Content\PhotoController',
+                '/gallery/videos' => 'Admin\Content\VideoController',
             ]);
         });
 
@@ -67,6 +60,7 @@ Route::middleware('auth')->group(function () {
                 '/inbox' => 'Admin\Report\InboxController',
                 '/comments' => 'Admin\Report\CommentController',
                 '/interms' => 'Admin\Report\IntermController',
+                '/subscribers' => 'Admin\Report\SubscriberController',
             ]);
         });
 

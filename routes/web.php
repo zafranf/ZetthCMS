@@ -29,5 +29,5 @@ Route::get('/', function () {
 Auth::routes();
 if (env('APP_DEBUG')) {
     Route::get('/logout', 'Auth\LoginController@logout');
-    Route::get('/test', 'TestController@index');
+    Route::get('/test', 'TestController@index')->name('test');
 }
