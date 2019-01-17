@@ -152,9 +152,9 @@ if (!function_exists('_get_image')) {
      * @param  string $image [description]
      * @return [type]        [description]
      */
-    function _get_image($image = "", $default = 'assets/images/no-image2.png')
+    function _get_image($image = "", $default = '/images/noimage.png')
     {
-        $img = public_path($image);
+        $img = asset($image);
         if (file_exists($img) && !is_dir($img)) {
             $img = url($image);
         } else {

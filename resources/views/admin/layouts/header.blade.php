@@ -1,27 +1,23 @@
-<!doctype html>
-<html lang="en" dir="ltr">
-  <head>
-    {{-- <base href="{{ url('/') }}"> --}}
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <meta http-equiv="Content-Language" content="en" />
-    <meta name="msapplication-TileColor" content="#2d89ef">
-    <meta name="theme-color" content="#4188c9">
-    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"/>
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="mobile-web-app-capable" content="yes">
-    <meta name="HandheldFriendly" content="True">
-    <meta name="MobileOptimized" content="320">
-    <link rel="icon" href="{{ _get_image('/images/' . $apps->logo) }}" type="image/x-icon"/>
-    <link rel="shortcut icon" type="image/x-icon" href="{{ _get_image('/images/' . $apps->logo) }}" />
-    <title>{{ $page_title }} | {{ $apps->name }}</title>
-    {!! _load_css('/admin/css/font-awesome.min.css') !!}
-    {!! _load_css('/admin/css/sourcesanspro.css') !!}
-    {{-- Dashboard Core --}}
-    {!! _load_css('/admin/css/dashboard.css') !!}
-    {!! _load_css('/admin/css/navbar.css') !!}
-    @yield('css')
-  </head>
-  <body class="">
-    <div class="page">
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta http-equiv="content-type" content="text/html;charset=UTF-8" />
+  <meta charset="utf-8" />
+  <title>Pages - Admin Dashboard UI Kit - Blank Page</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no" />
+  {{-- <link rel="apple-touch-icon" href="pages/ico/60.png">
+  <link rel="apple-touch-icon" sizes="76x76" href="pages/ico/76.png">
+  <link rel="apple-touch-icon" sizes="120x120" href="pages/ico/120.png">
+  <link rel="apple-touch-icon" sizes="152x152" href="pages/ico/152.png"> --}}
+  <link rel="icon" type="image/x-icon" href="{{ _get_image('/images/' . $apps->icon) }}" />
+  {{-- <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-touch-fullscreen" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <meta content="" name="description" />
+  <meta content="" name="author" /> --}}
+  <link href="{{ url(mix('/css/admin.css')) }}" rel="stylesheet">
+  @yield('styles')
+</head>
+
+<body class="fixed-header ">
