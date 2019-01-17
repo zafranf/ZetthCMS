@@ -11,13 +11,13 @@ if (env('APP_DEBUG')) {
 
 Route::middleware('auth')->group(function () {
     /* api datatable */
-    Route::get('/setting/menus/data', 'Admin\Setting\MenuController@datatable')->name('menus.data');
+    /* Route::get('/setting/menus/data', 'Admin\Setting\MenuController@datatable')->name('menus.data');
     Route::get('/setting/roles/data', 'Admin\Setting\RoleController@datatable')->name('roles.data');
     Route::get('/setting/users/data', 'Admin\Setting\UserController@datatable')->name('users.data');
     Route::get('/content/banners/data', 'Admin\Content\BannerController@datatable')->name('banners.data');
     Route::get('/content/categories/data', 'Admin\Content\CategoryController@datatable')->name('categories.data');
     Route::get('/content/tags/data', 'Admin\Content\TagController@datatable')->name('tags.data');
-    Route::get('/report/subscribers/data', 'Admin\Report\SubscriberController@datatable')->name('subscribers.data');
+    Route::get('/report/subscribers/data', 'Admin\Report\SubscriberController@datatable')->name('subscribers.data'); */
 
     /* sort menu */
     Route::get('/setting/menus/sort', 'Admin\Setting\MenuController@sort')->name('menus.sort');

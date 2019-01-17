@@ -1,8 +1,8 @@
 <?php
 
-use Illuminate\Support\Facades\Schema;
-use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
 
 class CreateUsersTable extends Migration
 {
@@ -29,6 +29,7 @@ class CreateUsersTable extends Migration
             $table->boolean('is_admin')->comment('0=no, 1=yes')->unsigned()->default(1);
             $table->boolean('status')->comment('0=inactive, 1=active')->unsigned();
             $table->rememberToken();
+            $table->timestamp('email_verified_at')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });

@@ -26,7 +26,7 @@ Route::get('/', function () {
 });
 
 /* authentication routes */
-Auth::routes();
+Auth::routes(['verify' => true]);
 if (env('APP_DEBUG')) {
     Route::get('/logout', 'Auth\LoginController@logout');
     Route::get('/test', 'TestController@index')->name('test');
