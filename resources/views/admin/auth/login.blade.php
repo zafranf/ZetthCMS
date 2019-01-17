@@ -22,12 +22,13 @@
       <img src="assets/img/logo.png" alt="logo" data-src="assets/img/logo.png" data-src-retina="assets/img/logo_2x.png" width="78" height="22">
       <p class="p-t-35">Sign into your pages account</p>
       <!-- START Login Form -->
-      <form id="form-login" class="p-t-15" role="form" action="index.html">
+      <form id="form-login" class="p-t-15" role="form" action="{{ url('/login') }}" method="POST">
+        {{ csrf_field() }}
         <!-- START Form Control-->
         <div class="form-group form-group-default">
           <label>Login</label>
           <div class="controls">
-            <input type="text" name="username" placeholder="User Name" class="form-control" required>
+            <input type="text" name="name" placeholder="User Name" class="form-control" required>
           </div>
         </div>
         <!-- END Form Control-->

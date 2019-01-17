@@ -20,8 +20,8 @@ mix.styles([
     'resources/assets/admin/plugins/select2/css/select2.min.css',
     'resources/assets/admin/plugins/switchery/css/switchery.min.css',
     'resources/assets/admin/pages/css/pages-icons.css',
-    'resources/assets/admin/pages/css/pages.min.css',
-], 'public/css/admin.css').version();
+    'resources/assets/admin/pages/css/pages.css',
+], 'public/admin/css/app.css').version();
 
 /* js */
 mix.styles([
@@ -41,4 +41,4 @@ mix.styles([
     'resources/assets/admin/plugins/switchery/js/switchery.min.js',
     'resources/assets/admin/pages/js/pages.js',
     'resources/assets/admin/js/scripts.js',
-], 'public/js/admin.js').version();
+], 'public/admin/js/app.js').version();

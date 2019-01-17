@@ -16,8 +16,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="default">
   <meta content="" name="description" />
   <meta content="" name="author" /> --}}
-  <link href="{{ url(mix('/css/admin.css')) }}" rel="stylesheet">
+  <link href="{{ url(mix('/admin/css/app.css')) }}" rel="stylesheet">
   @yield('styles')
 </head>
 
-<body class="fixed-header ">
+<body class="fixed-header menu-behind">
