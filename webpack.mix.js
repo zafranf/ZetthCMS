@@ -11,7 +11,7 @@ let mix = require('laravel-mix');
  |
  */
 
-/* css */
+/* admin css */
 mix.styles([
     'resources/assets/admin/plugins/pace/pace-theme-flash.css',
     'resources/assets/admin/plugins/bootstrap/css/bootstrap.min.css',
@@ -23,8 +23,8 @@ mix.styles([
     'resources/assets/admin/pages/css/pages.css',
 ], 'public/admin/css/app.css').version();
 
-/* js */
-mix.styles([
+/* admin js */
+mix.scripts([
     'resources/assets/admin/plugins/pace/pace.min.js',
     'resources/assets/admin/plugins/jquery/jquery-3.2.1.min.js',
     'resources/assets/admin/plugins/modernizr.custom.js',

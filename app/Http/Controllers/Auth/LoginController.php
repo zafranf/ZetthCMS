@@ -46,7 +46,11 @@ class LoginController extends Controller
      */
     public function showLoginForm()
     {
-        return view('admin.auth.login');
+        if ($this->isAdminSubdomain) {
+            return view('admin.auth.login');
+        } else {
+            return view('auth.login');
+        }
     }
 
     /**

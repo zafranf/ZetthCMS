@@ -98,7 +98,7 @@ class ApplicationController extends AdminController
         /* save data */
         $app->name = str_sanitize($r->input('name'));
         $app->description = str_sanitize($r->input('description'));
-        $app->status = bool($r->input('status') )? 1 : 0;
+        $app->status = bool($r->input('status')) ? 1 : 0;
         $app->save();
 
         /* upload logo */
@@ -106,7 +106,7 @@ class ApplicationController extends AdminController
             $file = $r->file('logo');
             $par = [
                 'file' => $file,
-                'folder' => '/images/',
+                'folder' => '/admin/images/',
                 'name' => 'logo',
                 'type' => $file->getMimeType(),
                 'ext' => $file->getClientOriginalExtension(),
@@ -114,6 +114,23 @@ class ApplicationController extends AdminController
 
             if ($this->uploadImage($par)) {
                 $app->logo = $par['name'] . '.' . $par['ext'];
+                $app->save();
+            }
+        }
+
+        /* upload icon */
+        if ($r->hasFile('icon')) {
+            $file = $r->file('icon');
+            $par = [
+                'file' => $file,
+                'folder' => '/admin/images/',
+                'name' => 'icon',
+                'type' => $file->getMimeType(),
+                'ext' => $file->getClientOriginalExtension(),
+            ];
+
+            if ($this->uploadImage($par)) {
+                $app->icon = $par['name'] . '.' . $par['ext'];
                 $app->save();
             }
         }

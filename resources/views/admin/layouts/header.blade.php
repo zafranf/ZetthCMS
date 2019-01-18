@@ -10,7 +10,7 @@
   <link rel="apple-touch-icon" sizes="76x76" href="pages/ico/76.png">
   <link rel="apple-touch-icon" sizes="120x120" href="pages/ico/120.png">
   <link rel="apple-touch-icon" sizes="152x152" href="pages/ico/152.png"> --}}
-  <link rel="icon" type="image/x-icon" href="{{ _get_image('/images/' . $apps->icon) }}" />
+  <link rel="icon" type="image/x-icon" href="{{ _get_image('/admin/images/' . $apps->icon) }}" />
   {{-- <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-touch-fullscreen" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="default">

@@ -154,9 +154,12 @@ if (!function_exists('_get_image')) {
      */
     function _get_image($image = "", $default = '/images/noimage.png')
     {
-        $img = asset($image);
+        $img = public_path($image);
+
         if (file_exists($img) && !is_dir($img)) {
             $img = url($image);
+        } else if (\Storage::exists($image)) {
+            $img = asset($image);
         } else {
             $img = url($default);
         }
