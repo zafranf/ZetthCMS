@@ -5,7 +5,7 @@
       {{-- END MOBILE SIDEBAR TOGGLE --}}
       <div class="">
         <div class="brand inline">
-          <img src="{{ _get_image('/admin/images/' . $apps->logo) }}" alt="logo" data-src="{{ _get_image('/admin/images/' . $apps->logo) }}" data-src-retina="{{ _get_image('/admin/images/' . $apps->logo) }}" width="78" height="22">
+          <img src="{{ _get_image('/admin/images/' . $apps->logo) }}" alt="{{ $apps->name }} logo" data-src="{{ _get_image('/admin/images/' . $apps->logo) }}" data-src-retina="{{ _get_image('/admin/images/' . $apps->logo) }}" width="78" height="22">
         </div>
         {{-- START NOTIFICATION LIST --}}
         <ul class="d-lg-inline-block d-none notification-list no-margin d-lg-inline-block b-grey b-l b-r no-style p-l-30 p-r-20">
@@ -27,7 +27,7 @@
                         <a href="#" class="text-complete pull-left">
                           <i class="pg-map fs-16 m-r-10"></i>
                           <span class="bold">Carrot Design</span>
-                          <span class="fs-12 m-l-10">David Nester</span>
+                          <span class="fs-12 m-l-10">{{ Auth::user()->fullname }}</span>
                         </a>
                         <div class="pull-right">
                           <div class="thumbnail-wrapper d16 circular inline m-t-15 m-r-10 toggle-more-details">
@@ -127,24 +127,28 @@
           </li>
         </ul>
         {{-- END NOTIFICATIONS LIST --}}
-        <a href="#" class="search-link d-lg-inline-block d-none" data-toggle="search"><i class="pg-search"></i>Type anywhere to <span class="bold">search</span></a>
+        {{-- <a href="#" class="search-link d-lg-inline-block d-none" data-toggle="search"><i class="pg-search"></i>Type anywhere to <span class="bold">search</span></a> --}}
       </div>
       <div class="d-flex align-items-center">
         {{-- START User Info--}}
-        <div class="pull-left p-r-10 fs-14 font-heading d-lg-block d-none">
-          <span class="semi-bold">David</span> <span class="text-master">Nest</span>
+        <div class="pull-left p-r-10 fs-14 font-heading d-lg-block d-nonex">
+          {{-- <span class="semi-bold">David</span> <span class="text-master">Nest</span> --}}
+          <span class="semi-bold">{{ Auth::user()->fullname }}</span>
         </div>
-        <div class="dropdown pull-right d-lg-block d-none">
+        <div class="dropdown pull-right d-lg-block d-nonex">
           <button class="profile-dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
             <span class="thumbnail-wrapper d32 circular inline">
-            <img src="assets/img/profiles/avatar.jpg" alt="" data-src="assets/img/profiles/avatar.jpg" data-src-retina="assets/img/profiles/avatar_small2x.jpg" width="32" height="32">
+            <img src="{{ _get_image('/admin/images/avatar.png') }}" alt="" data-src="{{ _get_image('/admin/images/avatar.png') }}" data-src-retina="{{ _get_image('/admin/images/avatar.png') }}" width="32" height="32">
             </span>
           </button>
           <div class="dropdown-menu dropdown-menu-right profile-dropdown" role="menu">
             <a href="#" class="dropdown-item"><i class="pg-settings_small"></i> Settings</a>
             <a href="#" class="dropdown-item"><i class="pg-outdent"></i> Feedback</a>
             <a href="#" class="dropdown-item"><i class="pg-signals"></i> Help</a>
-            <a href="#" class="clearfix bg-master-lighter dropdown-item">
+            <a href="#" class="clearfix bg-master-lighter dropdown-item" onclick="logout()">
+              <form id="form-logout" action="{{ url('/logout') }}" method="POST" style="display:none;">
+              @csrf
+              </form>
               <span class="pull-left">Logout</span>
               <span class="pull-right"><i class="pg-power"></i></span>
             </a>
@@ -155,3 +159,8 @@
       </div>
     </div>
     {{-- END HEADER --}}
+    <script>
+    function logout() {
+      $('#form-logout').submit();
+    }
+    </script>
