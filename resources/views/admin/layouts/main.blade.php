@@ -208,4 +208,6 @@
     {{-- END PAGE CONTENT WRAPPER --}}
   </div>
   {{-- END PAGE CONTAINER --}}
+  @include('admin.layouts.quickview')
+  @include('admin.layouts.overlay')
 @include('admin.layouts.footer')
