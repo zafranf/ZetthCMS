@@ -131,7 +131,7 @@
       </div>
       <div class="d-flex align-items-center">
         {{-- START User Info--}}
-        <div class="pull-left p-r-10 fs-14 font-heading d-lg-block d-nonex">
+        <div class="pull-left fs-14 font-heading d-lg-block d-nonex">
           {{-- <span class="semi-bold">David</span> <span class="text-master">Nest</span> --}}
           <span class="semi-bold">{{ Auth::user()->fullname }}</span>
         </div>

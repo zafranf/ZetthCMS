@@ -52,5 +52,5 @@
   </div>
   {{-- END PAGE CONTAINER --}}
   @include('admin.layouts.quickview')
-  @include('admin.layouts.overlay')
+  {{-- @include('admin.layouts.overlay') --}}
 @include('admin.layouts.footer')
