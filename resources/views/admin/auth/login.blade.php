@@ -4,25 +4,25 @@
     <img src="{{ _get_image('/admin/images/' . $apps->logo) }}" alt="{{ $apps->name }} logo" data-src="{{ _get_image('/admin/images/' . $apps->logo) }}" data-src-retina="{{ _get_image('/admin/images/' . $apps->logo) }}" width="78" height="22">
     {{-- <h3>Pages makes it easy to enjoy what matters the most in your life</h3> --}}
     <p class="p-t-35">Masuk ke halaman admin {{ $apps->name }}</p>
-    <!-- START Login Form -->
+    {{-- START Login Form --}}
     <form id="form-login" class="p-t-15" role="form" action="{{ url('/login') }}" method="POST">
       {{ csrf_field() }}
-      <!-- START Form Control-->
+      {{-- START Form Control--}}
       <div class="form-group form-group-default">
         <label>Nama pengguna</label>
         <div class="controls">
           <input type="text" name="name" placeholder="Masukkan nama pengguna" class="form-control" required>
         </div>
       </div>
-      <!-- END Form Control-->
-      <!-- START Form Control-->
+      {{-- END Form Control--}}
+      {{-- START Form Control--}}
       <div class="form-group form-group-default">
         <label>Kata sandi</label>
         <div class="controls">
           <input type="password" class="form-control" name="password" placeholder="Masukkan kata sandi" required>
         </div>
       </div>
-      <!-- START Form Control-->
+      {{-- START Form Control--}}
       <div class="row">
         <div class="col-md-6 no-padding sm-p-l-10">
           <div class="checkbox ">
@@ -34,10 +34,10 @@
           <a href="#" class="text-info small">Help? Contact Support</a>
         </div> --}}
       </div>
-      <!-- END Form Control-->
+      {{-- END Form Control--}}
       <button class="btn btn-primary btn-cons m-t-10" type="submit">Masuk</button>
     </form>
-    <!--END Login Form-->
+    {{--END Login Form--}}
   </div>
 </div>
 @include('admin.layouts.footer')

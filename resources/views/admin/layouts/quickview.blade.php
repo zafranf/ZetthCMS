@@ -1,6 +1,6 @@
-    <!--START QUICKVIEW -->
+    {{--START QUICKVIEW --}}
     <div id="quickview" class="quickview-wrapper" data-pages="quickview">
-      <!-- Nav tabs -->
+      {{-- Nav tabs --}}
       <ul class="nav nav-tabs" role="tablist">
           <li class="">
               <a href="#quickview-notes" data-target="#quickview-notes" data-toggle="tab" role="tab">Notes</a>
@@ -13,12 +13,12 @@
           </li>
       </ul>
       <a class="btn-link quickview-toggle" data-toggle-element="#quickview" data-toggle="quickview"><i class="pg-close"></i></a>
-      <!-- Tab panes -->
+      {{-- Tab panes --}}
       <div class="tab-content">
-          <!-- BEGIN Notes !-->
+          {{-- BEGIN Notes !--}}
           <div class="tab-pane no-padding" id="quickview-notes">
               <div class="view-port clearfix quickview-notes" id="note-views">
-                  <!-- BEGIN Note List !-->
+                  {{-- BEGIN Note List !--}}
                   <div class="view list" id="quick-note-list">
                       <div class="toolbar clearfix">
                           <ul class="pull-right ">
@@ -32,124 +32,124 @@
                           <button class="btn-remove-notes btn btn-xs btn-block hide"><i class="fa fa-times"></i> Delete</button>
                       </div>
                       <ul>
-                          <!-- BEGIN Note Item !-->
+                          {{-- BEGIN Note Item !--}}
                           <li data-noteid="1">
                               <div class="left">
-                                  <!-- BEGIN Note Action !-->
+                                  {{-- BEGIN Note Action !--}}
                                   <div class="checkbox check-warning no-margin">
                                       <input id="qncheckbox1" type="checkbox" value="1">
                                       <label for="qncheckbox1"></label>
                                   </div>
-                                  <!-- END Note Action !-->
-                                  <!-- BEGIN Note Preview Text !-->
+                                  {{-- END Note Action !--}}
+                                  {{-- BEGIN Note Preview Text !--}}
                                   <p class="note-preview">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam</p>
-                                  <!-- BEGIN Note Preview Text !-->
+                                  {{-- BEGIN Note Preview Text !--}}
                               </div>
-                              <!-- BEGIN Note Details !-->
+                              {{-- BEGIN Note Details !--}}
                               <div class="right pull-right">
-                                  <!-- BEGIN Note Date !-->
+                                  {{-- BEGIN Note Date !--}}
                                   <span class="date">12/12/14</span>
                                   <a href="#" data-navigate="view" data-view-port="#note-views" data-view-animation="push"><i class="fa fa-chevron-right"></i></a>
-                                  <!-- END Note Date !-->
+                                  {{-- END Note Date !--}}
                               </div>
-                              <!-- END Note Details !-->
+                              {{-- END Note Details !--}}
                           </li>
-                          <!-- END Note List !-->
-                          <!-- BEGIN Note Item !-->
+                          {{-- END Note List !--}}
+                          {{-- BEGIN Note Item !--}}
                           <li data-noteid="2">
                               <div class="left">
-                                  <!-- BEGIN Note Action !-->
+                                  {{-- BEGIN Note Action !--}}
                                   <div class="checkbox check-warning no-margin">
                                       <input id="qncheckbox2" type="checkbox" value="1">
                                       <label for="qncheckbox2"></label>
                                   </div>
-                                  <!-- END Note Action !-->
-                                  <!-- BEGIN Note Preview Text !-->
+                                  {{-- END Note Action !--}}
+                                  {{-- BEGIN Note Preview Text !--}}
                                   <p class="note-preview">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam</p>
-                                  <!-- BEGIN Note Preview Text !-->
+                                  {{-- BEGIN Note Preview Text !--}}
                               </div>
-                              <!-- BEGIN Note Details !-->
+                              {{-- BEGIN Note Details !--}}
                               <div class="right pull-right">
-                                  <!-- BEGIN Note Date !-->
+                                  {{-- BEGIN Note Date !--}}
                                   <span class="date">12/12/14</span>
                                   <a href="#"><i class="fa fa-chevron-right"></i></a>
-                                  <!-- END Note Date !-->
+                                  {{-- END Note Date !--}}
                               </div>
-                              <!-- END Note Details !-->
+                              {{-- END Note Details !--}}
                           </li>
-                          <!-- END Note List !-->
-                          <!-- BEGIN Note Item !-->
+                          {{-- END Note List !--}}
+                          {{-- BEGIN Note Item !--}}
                           <li data-noteid="2">
                               <div class="left">
-                                  <!-- BEGIN Note Action !-->
+                                  {{-- BEGIN Note Action !--}}
                                   <div class="checkbox check-warning no-margin">
                                       <input id="qncheckbox3" type="checkbox" value="1">
                                       <label for="qncheckbox3"></label>
                                   </div>
-                                  <!-- END Note Action !-->
-                                  <!-- BEGIN Note Preview Text !-->
+                                  {{-- END Note Action !--}}
+                                  {{-- BEGIN Note Preview Text !--}}
                                   <p class="note-preview">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam</p>
-                                  <!-- BEGIN Note Preview Text !-->
+                                  {{-- BEGIN Note Preview Text !--}}
                               </div>
-                              <!-- BEGIN Note Details !-->
+                              {{-- BEGIN Note Details !--}}
                               <div class="right pull-right">
-                                  <!-- BEGIN Note Date !-->
+                                  {{-- BEGIN Note Date !--}}
                                   <span class="date">12/12/14</span>
                                   <a href="#"><i class="fa fa-chevron-right"></i></a>
-                                  <!-- END Note Date !-->
+                                  {{-- END Note Date !--}}
                               </div>
-                              <!-- END Note Details !-->
+                              {{-- END Note Details !--}}
                           </li>
-                          <!-- END Note List !-->
-                          <!-- BEGIN Note Item !-->
+                          {{-- END Note List !--}}
+                          {{-- BEGIN Note Item !--}}
                           <li data-noteid="3">
                               <div class="left">
-                                  <!-- BEGIN Note Action !-->
+                                  {{-- BEGIN Note Action !--}}
                                   <div class="checkbox check-warning no-margin">
                                       <input id="qncheckbox4" type="checkbox" value="1">
                                       <label for="qncheckbox4"></label>
                                   </div>
-                                  <!-- END Note Action !-->
-                                  <!-- BEGIN Note Preview Text !-->
+                                  {{-- END Note Action !--}}
+                                  {{-- BEGIN Note Preview Text !--}}
                                   <p class="note-preview">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam</p>
-                                  <!-- BEGIN Note Preview Text !-->
+                                  {{-- BEGIN Note Preview Text !--}}
                               </div>
-                              <!-- BEGIN Note Details !-->
+                              {{-- BEGIN Note Details !--}}
                               <div class="right pull-right">
-                                  <!-- BEGIN Note Date !-->
+                                  {{-- BEGIN Note Date !--}}
                                   <span class="date">12/12/14</span>
                                   <a href="#"><i class="fa fa-chevron-right"></i></a>
-                                  <!-- END Note Date !-->
+                                  {{-- END Note Date !--}}
                               </div>
-                              <!-- END Note Details !-->
+                              {{-- END Note Details !--}}
                           </li>
-                          <!-- END Note List !-->
-                          <!-- BEGIN Note Item !-->
+                          {{-- END Note List !--}}
+                          {{-- BEGIN Note Item !--}}
                           <li data-noteid="4">
                               <div class="left">
-                                  <!-- BEGIN Note Action !-->
+                                  {{-- BEGIN Note Action !--}}
                                   <div class="checkbox check-warning no-margin">
                                       <input id="qncheckbox5" type="checkbox" value="1">
                                       <label for="qncheckbox5"></label>
                                   </div>
-                                  <!-- END Note Action !-->
-                                  <!-- BEGIN Note Preview Text !-->
+                                  {{-- END Note Action !--}}
+                                  {{-- BEGIN Note Preview Text !--}}
                                   <p class="note-preview">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam</p>
-                                  <!-- BEGIN Note Preview Text !-->
+                                  {{-- BEGIN Note Preview Text !--}}
                               </div>
-                              <!-- BEGIN Note Details !-->
+                              {{-- BEGIN Note Details !--}}
                               <div class="right pull-right">
-                                  <!-- BEGIN Note Date !-->
+                                  {{-- BEGIN Note Date !--}}
                                   <span class="date">12/12/14</span>
                                   <a href="#"><i class="fa fa-chevron-right"></i></a>
-                                  <!-- END Note Date !-->
+                                  {{-- END Note Date !--}}
                               </div>
-                              <!-- END Note Details !-->
+                              {{-- END Note Details !--}}
                           </li>
-                          <!-- END Note List !-->
+                          {{-- END Note List !--}}
                       </ul>
                   </div>
-                  <!-- END Note List !-->
+                  {{-- END Note List !--}}
                   <div class="view note" id="quick-note">
                       <div>
                           <ul class="toolbar">
@@ -176,44 +176,44 @@
                   </div>
               </div>
           </div>
-          <!-- END Notes !-->
-          <!-- BEGIN Alerts !-->
+          {{-- END Notes !--}}
+          {{-- BEGIN Alerts !--}}
           <div class="tab-pane no-padding" id="quickview-alerts">
               <div class="view-port clearfix" id="alerts">
-                  <!-- BEGIN Alerts View !-->
+                  {{-- BEGIN Alerts View !--}}
                   <div class="view bg-white">
-                      <!-- BEGIN View Header !-->
+                      {{-- BEGIN View Header !--}}
                       <div class="navbar navbar-default navbar-sm">
                           <div class="navbar-inner">
-                              <!-- BEGIN Header Controler !-->
+                              {{-- BEGIN Header Controler !--}}
                               <a href="javascript:;" class="inline action p-l-10 link text-master" data-navigate="view" data-view-port="#chat" data-view-animation="push-parrallax">
                                   <i class="pg-more"></i>
                               </a>
-                              <!-- END Header Controler !-->
+                              {{-- END Header Controler !--}}
                               <div class="view-heading">
                                   Notications
                               </div>
-                              <!-- BEGIN Header Controler !-->
+                              {{-- BEGIN Header Controler !--}}
                               <a href="#" class="inline action p-r-10 pull-right link text-master">
                                   <i class="pg-search"></i>
                               </a>
-                              <!-- END Header Controler !-->
+                              {{-- END Header Controler !--}}
                           </div>
                       </div>
-                      <!-- END View Header !-->
-                      <!-- BEGIN Alert List !-->
+                      {{-- END View Header !--}}
+                      {{-- BEGIN Alert List !--}}
                       <div data-init-list-view="ioslist" class="list-view boreded no-top-border">
-                          <!-- BEGIN List Group !-->
+                          {{-- BEGIN List Group !--}}
                           <div class="list-view-group-container">
-                              <!-- BEGIN List Group Header!-->
+                              {{-- BEGIN List Group Header!--}}
                               <div class="list-view-group-header text-uppercase">
                                   Calendar
                               </div>
-                              <!-- END List Group Header!-->
+                              {{-- END List Group Header!--}}
                               <ul>
-                                  <!-- BEGIN List Group Item!-->
+                                  {{-- BEGIN List Group Item!--}}
                                   <li class="alert-list">
-                                      <!-- BEGIN Alert Item Set Animation using data-view-animation !-->
+                                      {{-- BEGIN Alert Item Set Animation using data-view-animation !--}}
                                       <a href="javascript:;" class="align-items-center" data-navigate="view" data-view-port="#chat" data-view-animation="push-parrallax">
                                           <p class="">
                                               <span class="text-warning fs-10"><i class="fa fa-circle"></i></span>
@@ -226,13 +226,13 @@
                                               <span class="text-master">All Day</span>
                                           </p>
                                       </a>
-                                      <!-- END Alert Item!-->
-                                      <!-- BEGIN List Group Item!-->
+                                      {{-- END Alert Item!--}}
+                                      {{-- BEGIN List Group Item!--}}
                                   </li>
-                                  <!-- END List Group Item!-->
-                                  <!-- BEGIN List Group Item!-->
+                                  {{-- END List Group Item!--}}
+                                  {{-- BEGIN List Group Item!--}}
                                   <li class="alert-list">
-                                      <!-- BEGIN Alert Item Set Animation using data-view-animation !-->
+                                      {{-- BEGIN Alert Item Set Animation using data-view-animation !--}}
                                       <a href="#" class="align-items-center" data-navigate="view" data-view-port="#chat" data-view-animation="push-parrallax">
                                           <p class="">
                                               <span class="text-warning fs-10"><i class="fa fa-circle"></i></span>
@@ -244,22 +244,22 @@
                                               <span class="text-warning">Today</span>
                                           </p>
                                       </a>
-                                      <!-- END Alert Item!-->
+                                      {{-- END Alert Item!--}}
                                   </li>
-                                  <!-- END List Group Item!-->
+                                  {{-- END List Group Item!--}}
                               </ul>
                           </div>
-                          <!-- END List Group !-->
+                          {{-- END List Group !--}}
                           <div class="list-view-group-container">
-                              <!-- BEGIN List Group Header!-->
+                              {{-- BEGIN List Group Header!--}}
                               <div class="list-view-group-header text-uppercase">
                                   Social
                               </div>
-                              <!-- END List Group Header!-->
+                              {{-- END List Group Header!--}}
                               <ul>
-                                  <!-- BEGIN List Group Item!-->
+                                  {{-- BEGIN List Group Item!--}}
                                   <li class="alert-list">
-                                      <!-- BEGIN Alert Item Set Animation using data-view-animation !-->
+                                      {{-- BEGIN Alert Item Set Animation using data-view-animation !--}}
                                       <a href="javascript:;" class="p-t-10 p-b-10 align-items-center" data-navigate="view" data-view-port="#chat" data-view-animation="push-parrallax">
                                           <p class="">
                                               <span class="text-complete fs-10"><i class="fa fa-circle"></i></span>
@@ -269,12 +269,12 @@
                                               <span class="text-master">“Perfection Simplified - Company Revox"</span>
                                           </p>
                                       </a>
-                                      <!-- END Alert Item!-->
+                                      {{-- END Alert Item!--}}
                                   </li>
-                                  <!-- END List Group Item!-->
-                                  <!-- BEGIN List Group Item!-->
+                                  {{-- END List Group Item!--}}
+                                  {{-- BEGIN List Group Item!--}}
                                   <li class="alert-list">
-                                      <!-- BEGIN Alert Item Set Animation using data-view-animation !-->
+                                      {{-- BEGIN Alert Item Set Animation using data-view-animation !--}}
                                       <a href="javascript:;" class="p-t-10 p-b-10 align-items-center" data-navigate="view" data-view-port="#chat" data-view-animation="push-parrallax">
                                           <p class="">
                                               <span class="text-complete fs-10"><i class="fa fa-circle"></i></span>
@@ -284,21 +284,21 @@
                                               <span class="text-master">“Perfection Simplified - Company Revox"</span>
                                           </p>
                                       </a>
-                                      <!-- END Alert Item!-->
+                                      {{-- END Alert Item!--}}
                                   </li>
-                                  <!-- END List Group Item!-->
+                                  {{-- END List Group Item!--}}
                               </ul>
                           </div>
                           <div class="list-view-group-container">
-                              <!-- BEGIN List Group Header!-->
+                              {{-- BEGIN List Group Header!--}}
                               <div class="list-view-group-header text-uppercase">
                                   Sever Status
                               </div>
-                              <!-- END List Group Header!-->
+                              {{-- END List Group Header!--}}
                               <ul>
-                                  <!-- BEGIN List Group Item!-->
+                                  {{-- BEGIN List Group Item!--}}
                                   <li class="alert-list">
-                                      <!-- BEGIN Alert Item Set Animation using data-view-animation !-->
+                                      {{-- BEGIN Alert Item Set Animation using data-view-animation !--}}
                                       <a href="#" class="p-t-10 p-b-10 align-items-center" data-navigate="view" data-view-port="#chat" data-view-animation="push-parrallax">
                                           <p class="">
                                               <span class="text-danger fs-10"><i class="fa fa-circle"></i></span>
@@ -308,47 +308,47 @@
                                               <span class="text-master">Server Load Exceeted. Take action</span>
                                           </p>
                                       </a>
-                                      <!-- END Alert Item!-->
+                                      {{-- END Alert Item!--}}
                                   </li>
-                                  <!-- END List Group Item!-->
+                                  {{-- END List Group Item!--}}
                               </ul>
                           </div>
                       </div>
-                      <!-- END Alert List !-->
+                      {{-- END Alert List !--}}
                   </div>
-                  <!-- EEND Alerts View !-->
+                  {{-- EEND Alerts View !--}}
               </div>
           </div>
-          <!-- END Alerts !-->
+          {{-- END Alerts !--}}
           <div class="tab-pane active no-padding" id="quickview-chat">
               <div class="view-port clearfix" id="chat">
                   <div class="view bg-white">
-                      <!-- BEGIN View Header !-->
+                      {{-- BEGIN View Header !--}}
                       <div class="navbar navbar-default">
                           <div class="navbar-inner">
-                              <!-- BEGIN Header Controler !-->
+                              {{-- BEGIN Header Controler !--}}
                               <a href="javascript:;" class="inline action p-l-10 link text-master" data-navigate="view" data-view-port="#chat" data-view-animation="push-parrallax">
                                   <i class="pg-plus"></i>
                               </a>
-                              <!-- END Header Controler !-->
+                              {{-- END Header Controler !--}}
                               <div class="view-heading">
                                   Chat List
                                   <div class="fs-11">Show All</div>
                               </div>
-                              <!-- BEGIN Header Controler !-->
+                              {{-- BEGIN Header Controler !--}}
                               <a href="#" class="inline action p-r-10 pull-right link text-master">
                                   <i class="pg-more"></i>
                               </a>
-                              <!-- END Header Controler !-->
+                              {{-- END Header Controler !--}}
                           </div>
                       </div>
-                      <!-- END View Header !-->
+                      {{-- END View Header !--}}
                       <div data-init-list-view="ioslist" class="list-view boreded no-top-border">
                           <div class="list-view-group-container">
                               <div class="list-view-group-header text-uppercase">
                                   a</div>
                               <ul>
-                                  <!-- BEGIN Chat User List Item  !-->
+                                  {{-- BEGIN Chat User List Item  !--}}
                                   <li class="chat-user-list clearfix">
                                       <a data-view-animation="push-parrallax" data-view-port="#chat" data-navigate="view" class="" href="#">
                                           <span class="thumbnail-wrapper d32 circular bg-success">
@@ -360,13 +360,13 @@
                                           </p>
                                       </a>
                                   </li>
-                                  <!-- END Chat User List Item  !-->
+                                  {{-- END Chat User List Item  !--}}
                               </ul>
                           </div>
                           <div class="list-view-group-container">
                               <div class="list-view-group-header text-uppercase">b</div>
                               <ul>
-                                  <!-- BEGIN Chat User List Item  !-->
+                                  {{-- BEGIN Chat User List Item  !--}}
                                   <li class="chat-user-list clearfix">
                                       <a data-view-animation="push-parrallax" data-view-port="#chat" data-navigate="view" class="" href="#">
                                           <span class="thumbnail-wrapper d32 circular bg-success">
@@ -378,8 +378,8 @@
                                           </p>
                                       </a>
                                   </li>
-                                  <!-- END Chat User List Item  !-->
-                                  <!-- BEGIN Chat User List Item  !-->
+                                  {{-- END Chat User List Item  !--}}
+                                  {{-- BEGIN Chat User List Item  !--}}
                                   <li class="chat-user-list clearfix">
                                       <a data-view-animation="push-parrallax" data-view-port="#chat" data-navigate="view" class="" href="#">
                                           <span class="thumbnail-wrapper d32 circular bg-success">
@@ -391,13 +391,13 @@
                                           </p>
                                       </a>
                                   </li>
-                                  <!-- END Chat User List Item  !-->
+                                  {{-- END Chat User List Item  !--}}
                               </ul>
                           </div>
                           <div class="list-view-group-container">
                               <div class="list-view-group-header text-uppercase">c</div>
                               <ul>
-                                  <!-- BEGIN Chat User List Item  !-->
+                                  {{-- BEGIN Chat User List Item  !--}}
                                   <li class="chat-user-list clearfix">
                                       <a data-view-animation="push-parrallax" data-view-port="#chat" data-navigate="view" class="" href="#">
                                           <span class="thumbnail-wrapper d32 circular bg-success">
@@ -409,8 +409,8 @@
                                           </p>
                                       </a>
                                   </li>
-                                  <!-- END Chat User List Item  !-->
-                                  <!-- BEGIN Chat User List Item  !-->
+                                  {{-- END Chat User List Item  !--}}
+                                  {{-- BEGIN Chat User List Item  !--}}
                                   <li class="chat-user-list clearfix">
                                       <a data-view-animation="push-parrallax" data-view-port="#chat" data-navigate="view" class="" href="#">
                                           <span class="thumbnail-wrapper d32 circular bg-success">
@@ -422,13 +422,13 @@
                                           </p>
                                       </a>
                                   </li>
-                                  <!-- END Chat User List Item  !-->
+                                  {{-- END Chat User List Item  !--}}
                               </ul>
                           </div>
                           <div class="list-view-group-container">
                               <div class="list-view-group-header text-uppercase">d</div>
                               <ul>
-                                  <!-- BEGIN Chat User List Item  !-->
+                                  {{-- BEGIN Chat User List Item  !--}}
                                   <li class="chat-user-list clearfix">
                                       <a data-view-animation="push-parrallax" data-view-port="#chat" data-navigate="view" class="" href="#">
                                           <span class="thumbnail-wrapper d32 circular bg-success">
@@ -440,8 +440,8 @@
                                           </p>
                                       </a>
                                   </li>
-                                  <!-- END Chat User List Item  !-->
-                                  <!-- BEGIN Chat User List Item  !-->
+                                  {{-- END Chat User List Item  !--}}
+                                  {{-- BEGIN Chat User List Item  !--}}
                                   <li class="chat-user-list clearfix">
                                       <a data-view-animation="push-parrallax" data-view-port="#chat" data-navigate="view" class="" href="#">
                                           <span class="thumbnail-wrapper d32 circular bg-success">
@@ -453,13 +453,13 @@
                                           </p>
                                       </a>
                                   </li>
-                                  <!-- END Chat User List Item  !-->
+                                  {{-- END Chat User List Item  !--}}
                               </ul>
                           </div>
                           <div class="list-view-group-container">
                               <div class="list-view-group-header text-uppercase">e</div>
                               <ul>
-                                  <!-- BEGIN Chat User List Item  !-->
+                                  {{-- BEGIN Chat User List Item  !--}}
                                   <li class="chat-user-list clearfix">
                                       <a data-view-animation="push-parrallax" data-view-port="#chat" data-navigate="view" class="" href="#">
                                           <span class="thumbnail-wrapper d32 circular bg-success">
@@ -471,8 +471,8 @@
                                           </p>
                                       </a>
                                   </li>
-                                  <!-- END Chat User List Item  !-->
-                                  <!-- BEGIN Chat User List Item  !-->
+                                  {{-- END Chat User List Item  !--}}
+                                  {{-- BEGIN Chat User List Item  !--}}
                                   <li class="chat-user-list clearfix">
                                       <a data-view-animation="push-parrallax" data-view-port="#chat" data-navigate="view" class="" href="#">
                                           <span class="thumbnail-wrapper d32 circular bg-success">
@@ -484,8 +484,8 @@
                                           </p>
                                       </a>
                                   </li>
-                                  <!-- END Chat User List Item  !-->
-                                  <!-- BEGIN Chat User List Item  !-->
+                                  {{-- END Chat User List Item  !--}}
+                                  {{-- BEGIN Chat User List Item  !--}}
                                   <li class="chat-user-list clearfix">
                                       <a data-view-animation="push-parrallax" data-view-port="#chat" data-navigate="view" class="" href="#">
                                           <span class="thumbnail-wrapper d32 circular bg-success">
@@ -497,8 +497,8 @@
                                           </p>
                                       </a>
                                   </li>
-                                  <!-- END Chat User List Item  !-->
-                                  <!-- BEGIN Chat User List Item  !-->
+                                  {{-- END Chat User List Item  !--}}
+                                  {{-- BEGIN Chat User List Item  !--}}
                                   <li class="chat-user-list clearfix">
                                       <a data-view-animation="push-parrallax" data-view-port="#chat" data-navigate="view" class="" href="#">
                                           <span class="thumbnail-wrapper d32 circular bg-success">
@@ -510,8 +510,8 @@
                                           </p>
                                       </a>
                                   </li>
-                                  <!-- END Chat User List Item  !-->
-                                  <!-- BEGIN Chat User List Item  !-->
+                                  {{-- END Chat User List Item  !--}}
+                                  {{-- BEGIN Chat User List Item  !--}}
                                   <li class="chat-user-list clearfix">
                                       <a data-view-animation="push-parrallax" data-view-port="#chat" data-navigate="view" class="" href="#">
                                           <span class="thumbnail-wrapper d32 circular bg-success">
@@ -523,13 +523,13 @@
                                           </p>
                                       </a>
                                   </li>
-                                  <!-- END Chat User List Item  !-->
+                                  {{-- END Chat User List Item  !--}}
                               </ul>
                           </div>
                           <div class="list-view-group-container">
                               <div class="list-view-group-header text-uppercase">f</div>
                               <ul>
-                                  <!-- BEGIN Chat User List Item  !-->
+                                  {{-- BEGIN Chat User List Item  !--}}
                                   <li class="chat-user-list clearfix">
                                       <a data-view-animation="push-parrallax" data-view-port="#chat" data-navigate="view" class="" href="#">
                                           <span class="thumbnail-wrapper d32 circular bg-success">
@@ -541,13 +541,13 @@
                                           </p>
                                       </a>
                                   </li>
-                                  <!-- END Chat User List Item  !-->
+                                  {{-- END Chat User List Item  !--}}
                               </ul>
                           </div>
                           <div class="list-view-group-container">
                               <div class="list-view-group-header text-uppercase">g</div>
                               <ul>
-                                  <!-- BEGIN Chat User List Item  !-->
+                                  {{-- BEGIN Chat User List Item  !--}}
                                   <li class="chat-user-list clearfix">
                                       <a data-view-animation="push-parrallax" data-view-port="#chat" data-navigate="view" class="" href="#">
                                           <span class="thumbnail-wrapper d32 circular bg-success">
@@ -559,8 +559,8 @@
                                           </p>
                                       </a>
                                   </li>
-                                  <!-- END Chat User List Item  !-->
-                                  <!-- BEGIN Chat User List Item  !-->
+                                  {{-- END Chat User List Item  !--}}
+                                  {{-- BEGIN Chat User List Item  !--}}
                                   <li class="chat-user-list clearfix">
                                       <a data-view-animation="push-parrallax" data-view-port="#chat" data-navigate="view" class="" href="#">
                                           <span class="thumbnail-wrapper d32 circular bg-success">
@@ -572,13 +572,13 @@
                                           </p>
                                       </a>
                                   </li>
-                                  <!-- END Chat User List Item  !-->
+                                  {{-- END Chat User List Item  !--}}
                               </ul>
                           </div>
                           <div class="list-view-group-container">
                               <div class="list-view-group-header text-uppercase">j</div>
                               <ul>
-                                  <!-- BEGIN Chat User List Item  !-->
+                                  {{-- BEGIN Chat User List Item  !--}}
                                   <li class="chat-user-list clearfix">
                                       <a data-view-animation="push-parrallax" data-view-port="#chat" data-navigate="view" class="" href="#">
                                           <span class="thumbnail-wrapper d32 circular bg-success">
@@ -590,13 +590,13 @@
                                           </p>
                                       </a>
                                   </li>
-                                  <!-- END Chat User List Item  !-->
+                                  {{-- END Chat User List Item  !--}}
                               </ul>
                           </div>
                           <div class="list-view-group-container">
                               <div class="list-view-group-header text-uppercase">k</div>
                               <ul>
-                                  <!-- BEGIN Chat User List Item  !-->
+                                  {{-- BEGIN Chat User List Item  !--}}
                                   <li class="chat-user-list clearfix">
                                       <a data-view-animation="push-parrallax" data-view-port="#chat" data-navigate="view" class="" href="#">
                                           <span class="thumbnail-wrapper d32 circular bg-success">
@@ -608,13 +608,13 @@
                                           </p>
                                       </a>
                                   </li>
-                                  <!-- END Chat User List Item  !-->
+                                  {{-- END Chat User List Item  !--}}
                               </ul>
                           </div>
                           <div class="list-view-group-container">
                               <div class="list-view-group-header text-uppercase">l</div>
                               <ul>
-                                  <!-- BEGIN Chat User List Item  !-->
+                                  {{-- BEGIN Chat User List Item  !--}}
                                   <li class="chat-user-list clearfix">
                                       <a data-view-animation="push-parrallax" data-view-port="#chat" data-navigate="view" class="" href="#">
                                           <span class="thumbnail-wrapper d32 circular bg-success">
@@ -626,8 +626,8 @@
                                           </p>
                                       </a>
                                   </li>
-                                  <!-- END Chat User List Item  !-->
-                                  <!-- BEGIN Chat User List Item  !-->
+                                  {{-- END Chat User List Item  !--}}
+                                  {{-- BEGIN Chat User List Item  !--}}
                                   <li class="chat-user-list clearfix">
                                       <a data-view-animation="push-parrallax" data-view-port="#chat" data-navigate="view" class="" href="#">
                                           <span class="thumbnail-wrapper d32 circular bg-success">
@@ -639,8 +639,8 @@
                                           </p>
                                       </a>
                                   </li>
-                                  <!-- END Chat User List Item  !-->
-                                  <!-- BEGIN Chat User List Item  !-->
+                                  {{-- END Chat User List Item  !--}}
+                                  {{-- BEGIN Chat User List Item  !--}}
                                   <li class="chat-user-list clearfix">
                                       <a data-view-animation="push-parrallax" data-view-port="#chat" data-navigate="view" class="" href="#">
                                           <span class="thumbnail-wrapper d32 circular bg-success">
@@ -652,8 +652,8 @@
                                           </p>
                                       </a>
                                   </li>
-                                  <!-- END Chat User List Item  !-->
-                                  <!-- BEGIN Chat User List Item  !-->
+                                  {{-- END Chat User List Item  !--}}
+                                  {{-- BEGIN Chat User List Item  !--}}
                                   <li class="chat-user-list clearfix">
                                       <a data-view-animation="push-parrallax" data-view-port="#chat" data-navigate="view" class="" href="#">
                                           <span class="thumbnail-wrapper d32 circular bg-success">
@@ -665,13 +665,13 @@
                                           </p>
                                       </a>
                                   </li>
-                                  <!-- END Chat User List Item  !-->
+                                  {{-- END Chat User List Item  !--}}
                               </ul>
                           </div>
                           <div class="list-view-group-container">
                               <div class="list-view-group-header text-uppercase">m</div>
                               <ul>
-                                  <!-- BEGIN Chat User List Item  !-->
+                                  {{-- BEGIN Chat User List Item  !--}}
                                   <li class="chat-user-list clearfix">
                                       <a data-view-animation="push-parrallax" data-view-port="#chat" data-navigate="view" class="" href="#">
                                           <span class="thumbnail-wrapper d32 circular bg-success">
@@ -683,8 +683,8 @@
                                           </p>
                                       </a>
                                   </li>
-                                  <!-- END Chat User List Item  !-->
-                                  <!-- BEGIN Chat User List Item  !-->
+                                  {{-- END Chat User List Item  !--}}
+                                  {{-- BEGIN Chat User List Item  !--}}
                                   <li class="chat-user-list clearfix">
                                       <a data-view-animation="push-parrallax" data-view-port="#chat" data-navigate="view" class="" href="#">
                                           <span class="thumbnail-wrapper d32 circular bg-success">
@@ -696,8 +696,8 @@
                                           </p>
                                       </a>
                                   </li>
-                                  <!-- END Chat User List Item  !-->
-                                  <!-- BEGIN Chat User List Item  !-->
+                                  {{-- END Chat User List Item  !--}}
+                                  {{-- BEGIN Chat User List Item  !--}}
                                   <li class="chat-user-list clearfix">
                                       <a data-view-animation="push-parrallax" data-view-port="#chat" data-navigate="view" class="" href="#">
                                           <span class="thumbnail-wrapper d32 circular bg-success">
@@ -709,8 +709,8 @@
                                           </p>
                                       </a>
                                   </li>
-                                  <!-- END Chat User List Item  !-->
-                                  <!-- BEGIN Chat User List Item  !-->
+                                  {{-- END Chat User List Item  !--}}
+                                  {{-- BEGIN Chat User List Item  !--}}
                                   <li class="chat-user-list clearfix">
                                       <a data-view-animation="push-parrallax" data-view-port="#chat" data-navigate="view" class="" href="#">
                                           <span class="thumbnail-wrapper d32 circular bg-success">
@@ -722,8 +722,8 @@
                                           </p>
                                       </a>
                                   </li>
-                                  <!-- END Chat User List Item  !-->
-                                  <!-- BEGIN Chat User List Item  !-->
+                                  {{-- END Chat User List Item  !--}}
+                                  {{-- BEGIN Chat User List Item  !--}}
                                   <li class="chat-user-list clearfix">
                                       <a data-view-animation="push-parrallax" data-view-port="#chat" data-navigate="view" class="" href="#">
                                           <span class="thumbnail-wrapper d32 circular bg-success">
@@ -735,8 +735,8 @@
                                           </p>
                                       </a>
                                   </li>
-                                  <!-- END Chat User List Item  !-->
-                                  <!-- BEGIN Chat User List Item  !-->
+                                  {{-- END Chat User List Item  !--}}
+                                  {{-- BEGIN Chat User List Item  !--}}
                                   <li class="chat-user-list clearfix">
                                       <a data-view-animation="push-parrallax" data-view-port="#chat" data-navigate="view" class="" href="#">
                                           <span class="thumbnail-wrapper d32 circular bg-success">
@@ -748,14 +748,14 @@
                                           </p>
                                       </a>
                                   </li>
-                                  <!-- END Chat User List Item  !-->
+                                  {{-- END Chat User List Item  !--}}
                               </ul>
                           </div>
                           <div class="list-view-group-container">
                               <div class="list-view-group-header text-uppercase">n</div>
                               <ul>
-                                  <!-- BEGIN Chat User List Item  !-->
-                                  <!-- BEGIN Chat User List Item  !-->
+                                  {{-- BEGIN Chat User List Item  !--}}
+                                  {{-- BEGIN Chat User List Item  !--}}
                                   <li class="chat-user-list clearfix">
                                       <a data-view-animation="push-parrallax" data-view-port="#chat" data-navigate="view" class="" href="#">
                                           <span class="thumbnail-wrapper d32 circular bg-success">
@@ -767,13 +767,13 @@
                                           </p>
                                       </a>
                                   </li>
-                                  <!-- END Chat User List Item  !-->
+                                  {{-- END Chat User List Item  !--}}
                               </ul>
                           </div>
                           <div class="list-view-group-container">
                               <div class="list-view-group-header text-uppercase">p</div>
                               <ul>
-                                  <!-- BEGIN Chat User List Item  !-->
+                                  {{-- BEGIN Chat User List Item  !--}}
                                   <li class="chat-user-list clearfix">
                                       <a data-view-animation="push-parrallax" data-view-port="#chat" data-navigate="view" class="" href="#">
                                           <span class="thumbnail-wrapper d32 circular bg-success">
@@ -785,13 +785,13 @@
                                           </p>
                                       </a>
                                   </li>
-                                  <!-- END Chat User List Item  !-->
+                                  {{-- END Chat User List Item  !--}}
                               </ul>
                           </div>
                           <div class="list-view-group-container">
                               <div class="list-view-group-header text-uppercase">r</div>
                               <ul>
-                                  <!-- BEGIN Chat User List Item  !-->
+                                  {{-- BEGIN Chat User List Item  !--}}
                                   <li class="chat-user-list clearfix">
                                       <a data-view-animation="push-parrallax" data-view-port="#chat" data-navigate="view" class="" href="#">
                                           <span class="thumbnail-wrapper d32 circular bg-success">
@@ -803,8 +803,8 @@
                                           </p>
                                       </a>
                                   </li>
-                                  <!-- END Chat User List Item  !-->
-                                  <!-- BEGIN Chat User List Item  !-->
+                                  {{-- END Chat User List Item  !--}}
+                                  {{-- BEGIN Chat User List Item  !--}}
                                   <li class="chat-user-list clearfix">
                                       <a data-view-animation="push-parrallax" data-view-port="#chat" data-navigate="view" class="" href="#">
                                           <span class="thumbnail-wrapper d32 circular bg-success">
@@ -816,8 +816,8 @@
                                           </p>
                                       </a>
                                   </li>
-                                  <!-- END Chat User List Item  !-->
-                                  <!-- BEGIN Chat User List Item  !-->
+                                  {{-- END Chat User List Item  !--}}
+                                  {{-- BEGIN Chat User List Item  !--}}
                                   <li class="chat-user-list clearfix">
                                       <a data-view-animation="push-parrallax" data-view-port="#chat" data-navigate="view" class="" href="#">
                                           <span class="thumbnail-wrapper d32 circular bg-success">
@@ -829,13 +829,13 @@
                                           </p>
                                       </a>
                                   </li>
-                                  <!-- END Chat User List Item  !-->
+                                  {{-- END Chat User List Item  !--}}
                               </ul>
                           </div>
                           <div class="list-view-group-container">
                               <div class="list-view-group-header text-uppercase">s</div>
                               <ul>
-                                  <!-- BEGIN Chat User List Item  !-->
+                                  {{-- BEGIN Chat User List Item  !--}}
                                   <li class="chat-user-list clearfix">
                                       <a data-view-animation="push-parrallax" data-view-port="#chat" data-navigate="view" class="" href="#">
                                           <span class="thumbnail-wrapper d32 circular bg-success">
@@ -847,8 +847,8 @@
                                           </p>
                                       </a>
                                   </li>
-                                  <!-- END Chat User List Item  !-->
-                                  <!-- BEGIN Chat User List Item  !-->
+                                  {{-- END Chat User List Item  !--}}
+                                  {{-- BEGIN Chat User List Item  !--}}
                                   <li class="chat-user-list clearfix">
                                       <a data-view-animation="push-parrallax" data-view-port="#chat" data-navigate="view" class="" href="#">
                                           <span class="thumbnail-wrapper d32 circular bg-success">
@@ -860,8 +860,8 @@
                                           </p>
                                       </a>
                                   </li>
-                                  <!-- END Chat User List Item  !-->
-                                  <!-- BEGIN Chat User List Item  !-->
+                                  {{-- END Chat User List Item  !--}}
+                                  {{-- BEGIN Chat User List Item  !--}}
                                   <li class="chat-user-list clearfix">
                                       <a data-view-animation="push-parrallax" data-view-port="#chat" data-navigate="view" class="" href="#">
                                           <span class="thumbnail-wrapper d32 circular bg-success">
@@ -873,13 +873,13 @@
                                           </p>
                                       </a>
                                   </li>
-                                  <!-- END Chat User List Item  !-->
+                                  {{-- END Chat User List Item  !--}}
                               </ul>
                           </div>
                           <div class="list-view-group-container">
                               <div class="list-view-group-header text-uppercase">t</div>
                               <ul>
-                                  <!-- BEGIN Chat User List Item  !-->
+                                  {{-- BEGIN Chat User List Item  !--}}
                                   <li class="chat-user-list clearfix">
                                       <a data-view-animation="push-parrallax" data-view-port="#chat" data-navigate="view" class="" href="#">
                                           <span class="thumbnail-wrapper d32 circular bg-success">
@@ -891,8 +891,8 @@
                                           </p>
                                       </a>
                                   </li>
-                                  <!-- END Chat User List Item  !-->
-                                  <!-- BEGIN Chat User List Item  !-->
+                                  {{-- END Chat User List Item  !--}}
+                                  {{-- BEGIN Chat User List Item  !--}}
                                   <li class="chat-user-list clearfix">
                                       <a data-view-animation="push-parrallax" data-view-port="#chat" data-navigate="view" class="" href="#">
                                           <span class="thumbnail-wrapper d32 circular bg-success">
@@ -904,8 +904,8 @@
                                           </p>
                                       </a>
                                   </li>
-                                  <!-- END Chat User List Item  !-->
-                                  <!-- BEGIN Chat User List Item  !-->
+                                  {{-- END Chat User List Item  !--}}
+                                  {{-- BEGIN Chat User List Item  !--}}
                                   <li class="chat-user-list clearfix">
                                       <a data-view-animation="push-parrallax" data-view-port="#chat" data-navigate="view" class="" href="#">
                                           <span class="thumbnail-wrapper d32 circular bg-success">
@@ -917,8 +917,8 @@
                                           </p>
                                       </a>
                                   </li>
-                                  <!-- END Chat User List Item  !-->
-                                  <!-- BEGIN Chat User List Item  !-->
+                                  {{-- END Chat User List Item  !--}}
+                                  {{-- BEGIN Chat User List Item  !--}}
                                   <li class="chat-user-list clearfix">
                                       <a data-view-animation="push-parrallax" data-view-port="#chat" data-navigate="view" class="" href="#">
                                           <span class="thumbnail-wrapper d32 circular bg-success">
@@ -930,13 +930,13 @@
                                           </p>
                                       </a>
                                   </li>
-                                  <!-- END Chat User List Item  !-->
+                                  {{-- END Chat User List Item  !--}}
                               </ul>
                           </div>
                           <div class="list-view-group-container">
                               <div class="list-view-group-header text-uppercase">w</div>
                               <ul>
-                                  <!-- BEGIN Chat User List Item  !-->
+                                  {{-- BEGIN Chat User List Item  !--}}
                                   <li class="chat-user-list clearfix">
                                       <a data-view-animation="push-parrallax" data-view-port="#chat" data-navigate="view" class="" href="#">
                                           <span class="thumbnail-wrapper d32 circular bg-success">
@@ -948,14 +948,14 @@
                                           </p>
                                       </a>
                                   </li>
-                                  <!-- END Chat User List Item  !-->
+                                  {{-- END Chat User List Item  !--}}
                               </ul>
                           </div>
                       </div>
                   </div>
-                  <!-- BEGIN Conversation View  !-->
+                  {{-- BEGIN Conversation View  !--}}
                   <div class="view chat-view bg-white clearfix">
-                      <!-- BEGIN Header  !-->
+                      {{-- BEGIN Header  !--}}
                       <div class="navbar navbar-default">
                           <div class="navbar-inner">
                               <a href="javascript:;" class="link text-master inline action p-l-10 p-r-10" data-navigate="view" data-view-port="#chat" data-view-animation="push-parrallax">
@@ -970,17 +970,17 @@
                               </a>
                           </div>
                       </div>
-                      <!-- END Header  !-->
-                      <!-- BEGIN Conversation  !-->
+                      {{-- END Header  !--}}
+                      {{-- BEGIN Conversation  !--}}
                       <div class="chat-inner" id="my-conversation">
-                          <!-- BEGIN From Me Message  !-->
+                          {{-- BEGIN From Me Message  !--}}
                           <div class="message clearfix">
                               <div class="chat-bubble from-me">
                                   Hello there
                               </div>
                           </div>
-                          <!-- END From Me Message  !-->
-                          <!-- BEGIN From Them Message  !-->
+                          {{-- END From Me Message  !--}}
+                          {{-- BEGIN From Them Message  !--}}
                           <div class="message clearfix">
                               <div class="profile-img-wrapper m-t-5 inline">
                                   <img class="col-top" width="30" height="30" src="assets/img/profiles/avatar_small.jpg" alt="" data-src="assets/img/profiles/avatar_small.jpg" data-src-retina="assets/img/profiles/avatar_small2x.jpg">
@@ -989,22 +989,22 @@
                                   Hey
                               </div>
                           </div>
-                          <!-- END From Them Message  !-->
-                          <!-- BEGIN From Me Message  !-->
+                          {{-- END From Them Message  !--}}
+                          {{-- BEGIN From Me Message  !--}}
                           <div class="message clearfix">
                               <div class="chat-bubble from-me">
                                   Did you check out Pages framework ?
                               </div>
                           </div>
-                          <!-- END From Me Message  !-->
-                          <!-- BEGIN From Me Message  !-->
+                          {{-- END From Me Message  !--}}
+                          {{-- BEGIN From Me Message  !--}}
                           <div class="message clearfix">
                               <div class="chat-bubble from-me">
                                   Its an awesome chat
                               </div>
                           </div>
-                          <!-- END From Me Message  !-->
-                          <!-- BEGIN From Them Message  !-->
+                          {{-- END From Me Message  !--}}
+                          {{-- BEGIN From Them Message  !--}}
                           <div class="message clearfix">
                               <div class="profile-img-wrapper m-t-5 inline">
                                   <img class="col-top" width="30" height="30" src="assets/img/profiles/avatar_small.jpg" alt="" data-src="assets/img/profiles/avatar_small.jpg" data-src-retina="assets/img/profiles/avatar_small2x.jpg">
@@ -1013,10 +1013,10 @@
                                   Yea
                               </div>
                           </div>
-                          <!-- END From Them Message  !-->
+                          {{-- END From Them Message  !--}}
                       </div>
-                      <!-- BEGIN Conversation  !-->
-                      <!-- BEGIN Chat Input  !-->
+                      {{-- BEGIN Conversation  !--}}
+                      {{-- BEGIN Chat Input  !--}}
                       <div class="b-t b-grey bg-white clearfix p-l-10 p-r-10">
                           <div class="row">
                               <div class="col-1 p-t-15">
@@ -1030,11 +1030,11 @@
                               </div>
                           </div>
                       </div>
-                      <!-- END Chat Input  !-->
+                      {{-- END Chat Input  !--}}
                   </div>
-                  <!-- END Conversation View  !-->
+                  {{-- END Conversation View  !--}}
               </div>
           </div>
       </div>
     </div>
-    <!-- END QUICKVIEW-->
+    {{-- END QUICKVIEW--}}
