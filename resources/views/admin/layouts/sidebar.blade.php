@@ -36,41 +36,7 @@
     {{-- START SIDEBAR MENU --}}
     <div class="sidebar-menu">
       {{-- BEGIN SIDEBAR MENU ITEMS--}}
-      <ul class="menu-items">
-        <li class="m-t-30 ">
-          <a href="index.html" class="detailed">
-            <span class="title">Dashboard</span>
-            <span class="details">12 New Updates</span>
-          </a>
-          <span class="bg-success icon-thumbnail">
-            <i class="pg-home"></i>
-          </span>
-        </li>
-        <li class="">
-          <a href="javascript:;"><span class="title">Menu Levels</span><span class="arrow"></span></a>
-          <span class="icon-thumbnail"><i class="pg-menu_lv"></i></span>
-          <ul class="sub-menu">
-            <li>
-              <a href="javascript:;">Level 1</a>
-              <span class="icon-thumbnail">L1</span>
-            </li>
-            <li>
-              <a href="javascript:;"><span class="title">Level 2</span><span class="arrow"></span></a>
-              <span class="icon-thumbnail">L2</span>
-              <ul class="sub-menu">
-                <li>
-                  <a href="javascript:;">Sub Menu</a>
-                  <span class="icon-thumbnail">Sm</span>
-                </li>
-                <li>
-                  <a href="ujavascript:;">Sub Menu</a>
-                  <span class="icon-thumbnail">Sm</span>
-                </li>
-              </ul>
-            </li>
-          </ul>
-        </li>
-      </ul>
+      {{ generateMenu(getMenu('admin')) }}
       <div class="clearfix"></div>
     </div>
     {{-- END SIDEBAR MENU --}}

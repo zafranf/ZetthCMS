@@ -11,7 +11,7 @@
       <div class="form-group form-group-default">
         <label>Nama pengguna</label>
         <div class="controls">
-          <input type="text" name="name" placeholder="Masukkan nama pengguna" class="form-control" required>
+          <input type="text" name="name" placeholder="Masukkan nama pengguna" class="form-control" required autofocus>
         </div>
       </div>
       {{-- END Form Control--}}

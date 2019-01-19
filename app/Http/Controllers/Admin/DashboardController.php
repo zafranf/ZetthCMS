@@ -16,6 +16,11 @@ class DashboardController extends AdminController
     {
         $this->current_url = url('/setting/roles');
         $this->page_title = 'Dashboard Admin';
+        $this->breadcrumbs[] = [
+            'page' => 'Dashboard',
+            'url' => '',
+            'icon' => '',
+        ];
     }
 
     /**
@@ -29,6 +34,7 @@ class DashboardController extends AdminController
             'current_url' => $this->current_url,
             'page_title' => $this->page_title,
             'page_subtitle' => 'Dashboard',
+            'breadcrumbs' => $this->breadcrumbs,
         ];
 
         return view('admin.layouts.main', $data);

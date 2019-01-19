@@ -36,6 +36,8 @@ class LoginController extends Controller
     public function __construct()
     {
         parent::__construct();
+        $this->current_url = url('/login');
+        $this->page_title = 'Masuk';
         $this->middleware('guest')->except('logout');
     }
 
@@ -46,10 +48,18 @@ class LoginController extends Controller
      */
     public function showLoginForm()
     {
+        $data = [
+            'current_url' => $this->current_url,
+            'page_title' => $this->page_title,
+            'page_subtitle' => 'Masuk aplikasi',
+        ];
+
         if ($this->isAdminSubdomain) {
-            return view('admin.auth.login');
+            $data['page_title'] = 'Masuk Halaman Admin';
+
+            return view('admin.auth.login', $data);
         } else {
-            return view('auth.login');
+            return view('auth.login', $data);
         }
     }
 
@@ -62,15 +72,19 @@ class LoginController extends Controller
     {
         /* set variable */
         $field = 'name';
-        $name = request()->get($field);
+        $value = request()->get($field);
 
         /* check input email */
-        if (filter_var($name, FILTER_VALIDATE_EMAIL)) {
+        if (filter_var($value, FILTER_VALIDATE_EMAIL)) {
             $field = 'email';
         }
 
         /* merge request */
-        request()->merge([$field => $name]);
+        request()->merge([
+            $field => $value,
+            'remember_me' => bool(request()->get('remember_me')),
+        ]);
+        // dd(request()->input());
 
         return $field;
     }
@@ -111,9 +125,13 @@ class LoginController extends Controller
      */
     public function logout(Request $r)
     {
+        $user = \Auth::user();
+        \Cache::forget('cache-roleid-user' . $user->id);
+        \Cache::forget('cache-menu-user' . $user->id);
+
         /* set redirect */
         $redirect = '/';
-        if (\Auth::user()->is_admin) {
+        if ($user->is_admin) {
             if ($this->isAdminSubdomain) {
                 $redirect = '/login';
             } else {
@@ -122,7 +140,7 @@ class LoginController extends Controller
         }
 
         /* log aktifitas */
-        $this->activityLog('<b>' . \Auth::user()->fullname . '</b> keluar dari aplikasi');
+        $this->activityLog('<b>' . $user->fullname . '</b> keluar dari aplikasi');
 
         $this->guard()->logout();
 

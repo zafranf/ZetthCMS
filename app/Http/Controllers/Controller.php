@@ -17,6 +17,13 @@ class Controller extends BaseController
 
     private $mail_id;
     public $isAdminSubdomain = false;
+    /* public $breadcrumbs = [
+    [
+    'icon' => 'fa fa-home',
+    'page' => 'Home',
+    'url' => '/dashboard',
+    ],
+    ]; */
 
     public function __construct()
     {

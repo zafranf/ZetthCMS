@@ -532,7 +532,7 @@ if (!function_exists('getMenu')) {
             \Cache::put($cacheRoleIdName, $roles_id, 10);
         }
 
-        $cacheMenuName = 'cacheMenu-menu-user' . $user->id;
+        $cacheMenuName = 'cache-menu-user' . $user->id;
         $cacheMenu = \Cache::get($cacheMenuName);
         if ($cacheMenu) {
             $menus = $cacheMenu;
@@ -562,7 +562,69 @@ if (!function_exists('generateMenu')) {
      *
      * @return void
      */
-    function generateMenu($group = 'admin')
+    function generateMenu($menus, $level = 0)
+    {
+        $ulclass = $level ? 'sub-menu' : 'menu-items';
+        echo '<ul class="' . $ulclass . '">';
+        foreach ($menus as $menu) {
+            $href = !empty($menu->route_name) ? 'href="' . route($menu->route_name) . '"' : null;
+            if (!$href) {
+                $href = !empty($menu->url) ? 'href="' . url($menu->url) . '"' : null;
+            }
+            $title = count($menu->submenu) ? '<span class="title">' . $menu->name . '</span>' : $menu->name;
+            $arrow = count($menu->submenu) ? '<span class="arrow"></span>' : '';
+            $icon = ($menu->icon) ? '<i class="' . $menu->icon . '"></i>' : _get_initial($menu->name, 2);
+            echo '<li>';
+            echo '<a ' . ($href ?? 'href="javascript:;"') . '>' . $title . $arrow . '</a>';
+            echo '<span class="icon-thumbnail">';
+            echo $icon;
+            echo '</span>';
+            if (count($menu->submenu) > 0) {
+                generateMenu($menu->submenu, $level + 1);
+            }
+            echo '</li>';
+        }
+        echo '</ul>';
+    }
+}
+
+if (!function_exists('generateSubmenu')) {
+    /**
+     * Generate Top Submenu
+     *
+     * @return void
+     */
+    function generateSubmenu($menus, $level = 0)
+    {
+        echo '<ul class="sub-menu">';
+        foreach ($menus as $menu) {
+            $href = !empty($menu->route_name) ? 'href="' . route($menu->route_name . '.index') . '"' : null;
+            if (!$href) {
+                $href = !empty($menu->url) ? 'href="' . url($menu->url) . '"' : null;
+            }
+            $arrow = count($menu->submenu) ? '<span class="arrow"></span>' : '';
+            $icon = ($menu->icon) ? '<i class="' . $menu->icon . '"></i>' : _get_initial($menu->name, 2);
+            echo '<li>';
+            echo '<a ' . ($href ?? 'href="javascript:;"') . '>' . $menu->name . '' . $arrow . '</a>';
+            echo '<span class="icon-thumbnail">';
+            echo $icon;
+            echo '</span>';
+            if (count($menu->submenu) > 0) {
+                generateSubmenu($menu->submenu, $level + 1);
+            }
+            echo '</li>';
+        }
+        echo '</ul>';
+    }
+}
+
+if (!function_exists('generateMenu_old')) {
+    /**
+     * Generate Top Menu
+     *
+     * @return void
+     */
+    function generateMenu_old($group = 'admin')
     {
         $menus = getMenu($group);
 
@@ -584,13 +646,13 @@ if (!function_exists('generateMenu')) {
     }
 }
 
-if (!function_exists('generateSubmenu')) {
+if (!function_exists('generateSubmenu_old')) {
     /**
      * Generate Top Submenu
      *
      * @return void
      */
-    function generateSubmenu($data, $level = 0)
+    function generateSubmenu_old($data, $level = 0)
     {
         $sublevel = ($level > 0) ? 'dropdown-menu-side' : 'dropdown-menu-arrow';
         echo '<ul class="dropdown-menu">';
@@ -629,5 +691,46 @@ if (!function_exists('generateMenuArray')) {
         }
 
         return $array;
+    }
+}
+
+if (!function_exists('generateBreadcrumbs')) {
+    function generateBreadcrumbs($breadcrumbs = [])
+    {
+        $count = count($breadcrumbs);
+        echo '<ol class="breadcrumb">';
+        foreach ($breadcrumbs as $n => $bread) {
+            $icon = ($bread['icon'] != '') ? '<i class="' . $bread['icon'] . '"></i>' : '';
+            $crumb = $icon . ' ' . $bread['page'];
+            if ($n != ($count - 1)) {
+                $crumb = '<a href="' . $bread['url'] . '">' . $crumb . '</a>';
+            }
+            echo '<li class="breadcrumb-item active">' . $crumb . '</li>';
+        }
+        echo '</ol>';
+    }
+}
+
+if (!function_exists('_get_initial')) {
+    /**
+     * Undocumented function
+     *
+     * @param string $str
+     * @return void
+     */
+    function _get_initial($str, $length = 3)
+    {
+        $initial = '';
+        $strings = explode(' ', $str);
+
+        if (is_array($strings) && count($strings) > 1) {
+            foreach ($strings as $string) {
+                $initial .= upcase(substr($string, 0, 1));
+            }
+        } else {
+            $initial = ucfirst(substr($strings[0], 0, $length));
+        }
+
+        return $initial;
     }
 }

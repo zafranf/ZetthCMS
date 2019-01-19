@@ -131,7 +131,7 @@
       </div>
       <div class="d-flex align-items-center">
         {{-- START User Info--}}
-        <div class="pull-left fs-14 font-heading d-lg-block d-nonex">
+        <div class="pull-left fs-14 font-heading d-lg-block d-none">
           {{-- <span class="semi-bold">David</span> <span class="text-master">Nest</span> --}}
           <span class="semi-bold">{{ Auth::user()->fullname }}</span>
         </div>
@@ -155,7 +155,7 @@
           </div>
         </div>
         {{-- END User Info--}}
-        <a href="#" class="header-icon pg pg-alt_menu btn-link m-l-10 sm-no-margin d-inline-block" data-toggle="quickview" data-toggle-element="#quickview"></a>
+        {{-- <a href="#" class="header-icon pg pg-alt_menu btn-link m-l-10 sm-no-margin d-inline-block" data-toggle="quickview" data-toggle-element="#quickview"></a> --}}
       </div>
     </div>
     {{-- END HEADER --}}

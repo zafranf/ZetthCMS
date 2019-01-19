@@ -17,7 +17,8 @@ class MenuTableSeeder extends Seeder
         $dash = new Menu;
         $dash->name = 'Beranda';
         $dash->description = 'Halaman utama aplikasi';
-        $dash->route_name = 'dashboard';
+        $dash->route_name = 'dashboard.index';
+        $dash->icon = 'pg-home';
         $dash->target = '_self';
         $dash->order = $mainOrder++;
         $dash->status = 1;
@@ -29,6 +30,7 @@ class MenuTableSeeder extends Seeder
         $set = new Menu;
         $set->name = 'Pengaturan';
         $set->description = 'Grup menu pegaturan';
+        $set->icon = 'pg-settings';
         $set->order = $mainOrder++;
         $set->status = 1;
         $set->index = 1;
@@ -38,7 +40,8 @@ class MenuTableSeeder extends Seeder
         $setApl = new Menu;
         $setApl->name = 'Aplikasi';
         $setApl->description = 'Menu pengaturan aplikasi';
-        $setApl->route_name = 'application';
+        $setApl->route_name = 'application.index';
+        $setApl->icon = 'pg-desktop';
         $setApl->order = $setOrder++;
         $setApl->status = 1;
         $setApl->parent_id = $set->id;
@@ -53,7 +56,8 @@ class MenuTableSeeder extends Seeder
         $setMenu = new Menu;
         $setMenu->name = 'Menu';
         $setMenu->description = 'Menu pengaturan menu';
-        $setMenu->route_name = 'menus';
+        $setMenu->route_name = 'menus.index';
+        $setMenu->icon = 'pg-menu';
         $setMenu->order = $setOrder++;
         $setMenu->status = 1;
         $setMenu->parent_id = $set->id;
@@ -68,7 +72,8 @@ class MenuTableSeeder extends Seeder
         $setRole = new Menu;
         $setRole->name = 'Peran dan Akses';
         $setRole->description = 'Menu pengaturan peran dan akses';
-        $setRole->route_name = 'roles';
+        $setRole->route_name = 'roles.index';
+        $setRole->icon = 'fa fa-key';
         $setRole->order = $setOrder++;
         $setRole->status = 1;
         $setRole->parent_id = $set->id;
@@ -83,7 +88,8 @@ class MenuTableSeeder extends Seeder
         $setUser = new Menu;
         $setUser->name = 'Pengguna';
         $setUser->description = 'Menu pengaturan pengguna';
-        $setUser->route_name = 'users';
+        $setUser->route_name = 'users.index';
+        $setUser->icon = 'fa fa-user';
         $setUser->order = $setOrder++;
         $setUser->status = 1;
         $setUser->parent_id = $set->id;
@@ -99,6 +105,7 @@ class MenuTableSeeder extends Seeder
         $konten = new Menu;
         $konten->name = 'Konten';
         $konten->description = 'Grup menu konten';
+        $konten->icon = 'fa fa-edit';
         $konten->order = $mainOrder++;
         $konten->status = 1;
         $konten->index = 1;
@@ -108,7 +115,8 @@ class MenuTableSeeder extends Seeder
         $kontenBanner = new Menu;
         $kontenBanner->name = 'Spanduk';
         $kontenBanner->description = 'Menu pengaturan spanduk';
-        $kontenBanner->route_name = 'banners';
+        $kontenBanner->route_name = 'banners.index';
+        $kontenBanner->icon = 'pg-tablet';
         $kontenBanner->order = $kontenOrder++;
         $kontenBanner->status = 1;
         $kontenBanner->parent_id = $konten->id;
@@ -123,7 +131,8 @@ class MenuTableSeeder extends Seeder
         $kontenPost = new Menu;
         $kontenPost->name = 'Artikel';
         $kontenPost->description = 'Menu pengaturan artikel';
-        $kontenPost->route_name = 'posts';
+        $kontenPost->route_name = 'posts.index';
+        $kontenPost->icon = 'fa fa-newspaper-o';
         $kontenPost->order = $kontenOrder++;
         $kontenPost->status = 1;
         $kontenPost->parent_id = $konten->id;
@@ -138,7 +147,8 @@ class MenuTableSeeder extends Seeder
         $kontenPage = new Menu;
         $kontenPage->name = 'Halaman';
         $kontenPage->description = 'Menu pengaturan halaman';
-        $kontenPage->route_name = 'pages';
+        $kontenPage->route_name = 'pages.index';
+        $kontenPage->icon = 'fa fa-file-text';
         $kontenPage->order = $kontenOrder++;
         $kontenPage->status = 1;
         $kontenPage->parent_id = $konten->id;
@@ -153,7 +163,8 @@ class MenuTableSeeder extends Seeder
         $kontenCat = new Menu;
         $kontenCat->name = 'Kategori';
         $kontenCat->description = 'Menu pengaturan kategori';
-        $kontenCat->route_name = 'categories';
+        $kontenCat->route_name = 'categories.index';
+        $kontenCat->icon = 'pg-unordered_list';
         $kontenCat->order = $kontenOrder++;
         $kontenCat->status = 1;
         $kontenCat->parent_id = $konten->id;
@@ -168,7 +179,8 @@ class MenuTableSeeder extends Seeder
         $kontenTag = new Menu;
         $kontenTag->name = 'Label';
         $kontenTag->description = 'Menu pengaturan label';
-        $kontenTag->route_name = 'tags';
+        $kontenTag->route_name = 'tags.index';
+        $kontenTag->icon = 'fa fa-list';
         $kontenTag->order = $kontenOrder++;
         $kontenTag->status = 1;
         $kontenTag->parent_id = $konten->id;
@@ -184,6 +196,7 @@ class MenuTableSeeder extends Seeder
         $gallery = new Menu;
         $gallery->name = 'Galeri';
         $gallery->description = 'Grup menu galeri';
+        $gallery->icon = 'fa fa-camera';
         $gallery->order = $kontenOrder++;
         $gallery->status = 1;
         $gallery->parent_id = $konten->id;
@@ -194,7 +207,8 @@ class MenuTableSeeder extends Seeder
         $galPhoto = new Menu;
         $galPhoto->name = 'Foto';
         $galPhoto->description = 'Menu pengaturan foto';
-        $galPhoto->route_name = 'photos';
+        $galPhoto->route_name = 'photos.index';
+        $galPhoto->icon = 'fa fa-photo';
         $galPhoto->order = $galOrder++;
         $galPhoto->status = 1;
         $galPhoto->parent_id = $gallery->id;
@@ -209,7 +223,8 @@ class MenuTableSeeder extends Seeder
         $galVideo = new Menu;
         $galVideo->name = 'Video';
         $galVideo->description = 'Menu pengaturan video';
-        $galVideo->route_name = 'videos';
+        $galVideo->route_name = 'videos.index';
+        $galVideo->icon = 'pg-video';
         $galVideo->order = $galOrder++;
         $galVideo->status = 1;
         $galVideo->parent_id = $gallery->id;
@@ -225,6 +240,7 @@ class MenuTableSeeder extends Seeder
         $product = new Menu;
         $product->name = 'Produk';
         $product->description = 'Grup menu produk';
+        $product->icon = 'fa fa-shopping-cart';
         $product->order = $kontenOrder++;
         $product->status = 1;
         $product->parent_id = $konten->id;
@@ -235,7 +251,8 @@ class MenuTableSeeder extends Seeder
         $prodAll = new Menu;
         $prodAll->name = 'Semua Produk';
         $prodAll->description = 'Menu pengaturan semua produk';
-        $prodAll->route_name = 'products';
+        $prodAll->route_name = 'products.index';
+        $prodAll->icon = 'pg-shopping_cart';
         $prodAll->order = $prodOrder++;
         $prodAll->status = 1;
         $prodAll->parent_id = $product->id;
@@ -250,7 +267,8 @@ class MenuTableSeeder extends Seeder
         $prodCat = new Menu;
         $prodCat->name = 'Kategori';
         $prodCat->description = 'Menu pengaturan produk kategori';
-        $prodCat->route_name = 'products.categories';
+        $prodCat->route_name = 'products.categories.index';
+        $prodCat->icon = 'pg-unordered_list';
         $prodCat->order = $prodOrder++;
         $prodCat->status = 1;
         $prodCat->parent_id = $product->id;
@@ -265,7 +283,8 @@ class MenuTableSeeder extends Seeder
         $prodTag = new Menu;
         $prodTag->name = 'Label';
         $prodTag->description = 'Menu pengaturan produk label';
-        $prodTag->route_name = 'products.tags';
+        $prodTag->route_name = 'products.tags.index';
+        $prodTag->icon = 'fa fa-list';
         $prodTag->order = $prodOrder++;
         $prodTag->status = 1;
         $prodTag->parent_id = $product->id;
@@ -281,6 +300,7 @@ class MenuTableSeeder extends Seeder
         $report = new Menu;
         $report->name = 'Laporan';
         $report->description = 'Grup menu laporan';
+        $report->icon = 'pg-charts';
         $report->order = $mainOrder++;
         $report->status = 1;
         $report->index = 1;
@@ -290,7 +310,8 @@ class MenuTableSeeder extends Seeder
         $repInbox = new Menu;
         $repInbox->name = 'Kontak Masuk';
         $repInbox->description = 'Menu pengaturan kontak masuk';
-        $repInbox->route_name = 'inbox';
+        $repInbox->route_name = 'inbox.index';
+        $repInbox->icon = 'pg-mail';
         $repInbox->order = $repOrder++;
         $repInbox->status = 1;
         $repInbox->parent_id = $report->id;
@@ -305,7 +326,8 @@ class MenuTableSeeder extends Seeder
         $repComment = new Menu;
         $repComment->name = 'Komentar';
         $repComment->description = 'Menu pengaturan komentar';
-        $repComment->route_name = 'comments';
+        $repComment->route_name = 'comments.index';
+        $repComment->icon = 'fa fa-comments';
         $repComment->order = $repOrder++;
         $repComment->status = 1;
         $repComment->parent_id = $report->id;
@@ -320,7 +342,8 @@ class MenuTableSeeder extends Seeder
         $repInterm = new Menu;
         $repInterm->name = 'Kata Pencarian';
         $repInterm->description = 'Menu pengaturan kata pencarian';
-        $repInterm->route_name = 'interms';
+        $repInterm->route_name = 'interms.index';
+        $repInterm->icon = 'pg-search';
         $repInterm->order = $repOrder++;
         $repInterm->status = 1;
         $repInterm->parent_id = $report->id;
@@ -335,7 +358,8 @@ class MenuTableSeeder extends Seeder
         $repSubscriber = new Menu;
         $repSubscriber->name = 'Pelanggan Info';
         $repSubscriber->description = 'Menu laporan pelanggan info';
-        $repSubscriber->route_name = 'subscribers';
+        $repSubscriber->route_name = 'subscribers.index';
+        $repSubscriber->icon = 'fa fa-users';
         $repSubscriber->order = $repOrder++;
         $repSubscriber->status = 1;
         $repSubscriber->parent_id = $report->id;
@@ -351,6 +375,7 @@ class MenuTableSeeder extends Seeder
         $log = new Menu;
         $log->name = 'Catatan';
         $log->description = 'Grup menu catatan';
+        $log->icon = 'pg-note';
         $log->order = $mainOrder++;
         $log->status = 1;
         $log->index = 1;
@@ -360,7 +385,8 @@ class MenuTableSeeder extends Seeder
         $logActivity = new Menu;
         $logActivity->name = 'Aktifitas';
         $logActivity->description = 'Menu catatan aktifitas';
-        $logActivity->route_name = 'activities';
+        $logActivity->route_name = 'activities.index';
+        $logActivity->icon = 'fa fa-list';
         $logActivity->order = $logOrder++;
         $logActivity->status = 1;
         $logActivity->parent_id = $log->id;
@@ -375,7 +401,8 @@ class MenuTableSeeder extends Seeder
         $logError = new Menu;
         $logError->name = 'Galat';
         $logError->description = 'Menu catatan galat';
-        $logError->route_name = 'errors';
+        $logError->route_name = 'errors.index';
+        $logError->icon = 'fa fa-list-ul';
         $logError->order = $logOrder++;
         $logError->status = 1;
         $logError->parent_id = $log->id;
