@@ -18,6 +18,11 @@ class ApplicationController extends AdminController
     {
         $this->current_url = url('/setting/application');
         $this->page_title = 'Pengaturan Aplikasi';
+        $this->breadcrumbs[] = [
+            'page' => 'Pengaturan',
+            'url' => '',
+            'icon' => '',
+        ];
     }
 
     /**
@@ -27,11 +32,18 @@ class ApplicationController extends AdminController
      */
     public function index()
     {
+        $this->breadcrumbs[] = [
+            'page' => 'Aplikasi',
+            'url' => '',
+            'icon' => '',
+        ];
+
         $data = [
             'current_url' => $this->current_url,
             'page_title' => $this->page_title,
             'page_subtitle' => 'Sunting Aplikasi',
             'data' => Application::find(1),
+            'breadcrumbs' => $this->breadcrumbs,
         ];
 
         return view('admin.setting.application', $data);

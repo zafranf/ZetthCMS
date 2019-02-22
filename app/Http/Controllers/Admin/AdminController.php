@@ -9,7 +9,7 @@ class AdminController extends Controller
     public $breadcrumbs = [
         [
             'icon' => 'fa fa-home',
-            'page' => 'Home',
+            'page' => 'Beranda',
             'url' => '/',
         ],
     ];
