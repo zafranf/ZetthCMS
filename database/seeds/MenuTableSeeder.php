@@ -100,96 +100,113 @@ class MenuTableSeeder extends Seeder
         $setUser->delete = 1;
         $setUser->save();
 
-        $kontenOrder = 1;
+        $contentOrder = 1;
         /* menu konten (grup) */
-        $konten = new Menu;
-        $konten->name = 'Konten';
-        $konten->description = 'Grup menu konten';
-        $konten->icon = 'fa fa-edit';
-        $konten->order = $mainOrder++;
-        $konten->status = 1;
-        $konten->index = 1;
-        $konten->save();
+        $content = new Menu;
+        $content->name = 'Konten';
+        $content->description = 'Grup menu konten';
+        $content->icon = 'fa fa-edit';
+        $content->order = $mainOrder++;
+        $content->status = 1;
+        $content->index = 1;
+        $content->save();
 
         /* menu spanduk */
-        $kontenBanner = new Menu;
-        $kontenBanner->name = 'Spanduk';
-        $kontenBanner->description = 'Menu pengaturan spanduk';
-        $kontenBanner->route_name = 'banners.index';
-        $kontenBanner->icon = 'pg-tablet';
-        $kontenBanner->order = $kontenOrder++;
-        $kontenBanner->status = 1;
-        $kontenBanner->parent_id = $konten->id;
-        $kontenBanner->index = 1;
-        $kontenBanner->create = 1;
-        $kontenBanner->read = 0;
-        $kontenBanner->update = 1;
-        $kontenBanner->delete = 1;
-        $kontenBanner->save();
-
-        /* menu artikel */
-        $kontenPost = new Menu;
-        $kontenPost->name = 'Artikel';
-        $kontenPost->description = 'Menu pengaturan artikel';
-        $kontenPost->route_name = 'posts.index';
-        $kontenPost->icon = 'fa fa-newspaper-o';
-        $kontenPost->order = $kontenOrder++;
-        $kontenPost->status = 1;
-        $kontenPost->parent_id = $konten->id;
-        $kontenPost->index = 1;
-        $kontenPost->create = 1;
-        $kontenPost->read = 1;
-        $kontenPost->update = 1;
-        $kontenPost->delete = 1;
-        $kontenPost->save();
+        $contentBanner = new Menu;
+        $contentBanner->name = 'Spanduk';
+        $contentBanner->description = 'Menu pengaturan spanduk';
+        $contentBanner->route_name = 'banners.index';
+        $contentBanner->icon = 'pg-tablet';
+        $contentBanner->order = $contentOrder++;
+        $contentBanner->status = 1;
+        $contentBanner->parent_id = $content->id;
+        $contentBanner->index = 1;
+        $contentBanner->create = 1;
+        $contentBanner->read = 0;
+        $contentBanner->update = 1;
+        $contentBanner->delete = 1;
+        $contentBanner->save();
 
         /* menu halaman */
-        $kontenPage = new Menu;
-        $kontenPage->name = 'Halaman';
-        $kontenPage->description = 'Menu pengaturan halaman';
-        $kontenPage->route_name = 'pages.index';
-        $kontenPage->icon = 'fa fa-file-text';
-        $kontenPage->order = $kontenOrder++;
-        $kontenPage->status = 1;
-        $kontenPage->parent_id = $konten->id;
-        $kontenPage->index = 1;
-        $kontenPage->create = 1;
-        $kontenPage->read = 1;
-        $kontenPage->update = 1;
-        $kontenPage->delete = 1;
-        $kontenPage->save();
+        $contentPage = new Menu;
+        $contentPage->name = 'Halaman';
+        $contentPage->description = 'Menu pengaturan halaman';
+        $contentPage->route_name = 'pages.index';
+        $contentPage->icon = 'fa fa-file-text';
+        $contentPage->order = $contentOrder++;
+        $contentPage->status = 1;
+        $contentPage->parent_id = $content->id;
+        $contentPage->index = 1;
+        $contentPage->create = 1;
+        $contentPage->read = 1;
+        $contentPage->update = 1;
+        $contentPage->delete = 1;
+        $contentPage->save();
+
+        $postOrder = 1;
+        /* menu artikel (grup) */
+        $post = new Menu;
+        $post->name = 'Artikel';
+        $post->description = 'Menu pengaturan artikel';
+        // $post->route_name = 'posts.index';
+        $post->icon = 'fa fa-newspaper-o';
+        $post->order = $contentOrder++;
+        $post->status = 1;
+        $post->parent_id = $content->id;
+        $post->index = 1;
+        // $post->create = 1;
+        // $post->read = 1;
+        // $post->update = 1;
+        // $post->delete = 1;
+        $post->save();
+
+        /* menu semua artikel */
+        $postAll = new Menu;
+        $postAll->name = 'Semua Artikel';
+        $postAll->description = 'Menu pengaturan semua artikel';
+        $postAll->route_name = 'posts.index';
+        $postAll->icon = 'fa fa-newspaper-o';
+        $postAll->order = $postOrder++;
+        $postAll->status = 1;
+        $postAll->parent_id = $post->id;
+        $postAll->index = 1;
+        $postAll->create = 1;
+        $postAll->read = 1;
+        $postAll->update = 1;
+        $postAll->delete = 1;
+        $postAll->save();
 
         /* menu kategori */
-        $kontenCat = new Menu;
-        $kontenCat->name = 'Kategori';
-        $kontenCat->description = 'Menu pengaturan kategori';
-        $kontenCat->route_name = 'categories.index';
-        $kontenCat->icon = 'pg-unordered_list';
-        $kontenCat->order = $kontenOrder++;
-        $kontenCat->status = 1;
-        $kontenCat->parent_id = $konten->id;
-        $kontenCat->index = 1;
-        $kontenCat->create = 1;
-        $kontenCat->read = 0;
-        $kontenCat->update = 1;
-        $kontenCat->delete = 1;
-        $kontenCat->save();
+        $postCat = new Menu;
+        $postCat->name = 'Kategori';
+        $postCat->description = 'Menu pengaturan kategori';
+        $postCat->route_name = 'categories.index';
+        $postCat->icon = 'pg-unordered_list';
+        $postCat->order = $postOrder++;
+        $postCat->status = 1;
+        $postCat->parent_id = $post->id;
+        $postCat->index = 1;
+        $postCat->create = 1;
+        $postCat->read = 0;
+        $postCat->update = 1;
+        $postCat->delete = 1;
+        $postCat->save();
 
         /* menu label */
-        $kontenTag = new Menu;
-        $kontenTag->name = 'Label';
-        $kontenTag->description = 'Menu pengaturan label';
-        $kontenTag->route_name = 'tags.index';
-        $kontenTag->icon = 'fa fa-list';
-        $kontenTag->order = $kontenOrder++;
-        $kontenTag->status = 1;
-        $kontenTag->parent_id = $konten->id;
-        $kontenTag->index = 1;
-        $kontenTag->create = 1;
-        $kontenTag->read = 0;
-        $kontenTag->update = 1;
-        $kontenTag->delete = 1;
-        $kontenTag->save();
+        $postTag = new Menu;
+        $postTag->name = 'Label';
+        $postTag->description = 'Menu pengaturan label';
+        $postTag->route_name = 'tags.index';
+        $postTag->icon = 'fa fa-list';
+        $postTag->order = $postOrder++;
+        $postTag->status = 1;
+        $postTag->parent_id = $post->id;
+        $postTag->index = 1;
+        $postTag->create = 1;
+        $postTag->read = 0;
+        $postTag->update = 1;
+        $postTag->delete = 1;
+        $postTag->save();
 
         $galOrder = 1;
         /* menu galeri (grup) */
@@ -197,9 +214,9 @@ class MenuTableSeeder extends Seeder
         $gallery->name = 'Galeri';
         $gallery->description = 'Grup menu galeri';
         $gallery->icon = 'fa fa-camera';
-        $gallery->order = $kontenOrder++;
+        $gallery->order = $contentOrder++;
         $gallery->status = 1;
-        $gallery->parent_id = $konten->id;
+        $gallery->parent_id = $content->id;
         $gallery->index = 1;
         $gallery->save();
 
@@ -235,20 +252,20 @@ class MenuTableSeeder extends Seeder
         $galVideo->delete = 1;
         $galVideo->save();
 
-        $prodOrder = 1;
+        // $prodOrder = 1;
         /* menu produk (grup) */
-        $product = new Menu;
+        /* $product = new Menu;
         $product->name = 'Produk';
         $product->description = 'Grup menu produk';
         $product->icon = 'fa fa-shopping-cart';
-        $product->order = $kontenOrder++;
+        $product->order = $contentOrder++;
         $product->status = 1;
-        $product->parent_id = $konten->id;
+        $product->parent_id = $content->id;
         $product->index = 1;
-        $product->save();
+        $product->save(); */
 
         /* menu semua produk */
-        $prodAll = new Menu;
+        /* $prodAll = new Menu;
         $prodAll->name = 'Semua Produk';
         $prodAll->description = 'Menu pengaturan semua produk';
         $prodAll->route_name = 'products.index';
@@ -261,10 +278,10 @@ class MenuTableSeeder extends Seeder
         $prodAll->read = 1;
         $prodAll->update = 1;
         $prodAll->delete = 1;
-        $prodAll->save();
+        $prodAll->save(); */
 
         /* menu produk kategori */
-        $prodCat = new Menu;
+        /* $prodCat = new Menu;
         $prodCat->name = 'Kategori';
         $prodCat->description = 'Menu pengaturan produk kategori';
         $prodCat->route_name = 'products.categories.index';
@@ -277,10 +294,10 @@ class MenuTableSeeder extends Seeder
         $prodCat->read = 0;
         $prodCat->update = 1;
         $prodCat->delete = 1;
-        $prodCat->save();
+        $prodCat->save(); */
 
         /* menu produk label */
-        $prodTag = new Menu;
+        /* $prodTag = new Menu;
         $prodTag->name = 'Label';
         $prodTag->description = 'Menu pengaturan produk label';
         $prodTag->route_name = 'products.tags.index';
@@ -293,7 +310,7 @@ class MenuTableSeeder extends Seeder
         $prodTag->read = 0;
         $prodTag->update = 1;
         $prodTag->delete = 1;
-        $prodTag->save();
+        $prodTag->save(); */
 
         $repOrder = 1;
         /* menu laporan (grup) */
