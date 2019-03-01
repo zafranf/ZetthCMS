@@ -54,7 +54,7 @@ class LoginController extends Controller
             'page_subtitle' => 'Masuk aplikasi',
         ];
 
-        if ($this->isAdminPage) {
+        if ($this->isAdminSubdomain || $this->isAdminPath) {
             $data['page_title'] = 'Masuk Halaman Admin';
 
             return view('admin.auth.login', $data);
@@ -106,7 +106,7 @@ class LoginController extends Controller
 
         /* set redirect for user admin */
         if (\Auth::user()->is_admin) {
-            if ($this->isAdminPage) {
+            if ($this->isAdminSubdomain) {
                 $this->redirectTo = '/dashboard';
             } else {
                 $this->redirectTo = '/admin/dashboard';
@@ -132,7 +132,7 @@ class LoginController extends Controller
         /* set redirect */
         $redirect = '/';
         if ($user->is_admin) {
-            if ($this->isAdminPage) {
+            if ($this->isAdminSubdomain) {
                 $redirect = '/login';
             } else {
                 $redirect = '/admin/login';

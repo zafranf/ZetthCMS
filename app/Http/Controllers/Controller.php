@@ -16,7 +16,8 @@ class Controller extends BaseController
     use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
 
     private $mail_id;
-    public $isAdminPage = false;
+    public $isAdminPath = true;
+    public $isAdminSubdomain = false;
     /* public $breadcrumbs = [
     [
     'icon' => 'fa fa-home',
@@ -27,19 +28,12 @@ class Controller extends BaseController
 
     public function __construct()
     {
-        $current_url = url()->current();
-        $url = str_replace(['http://', 'https://'], "", $current_url);
-        $admin_path = explode('/', $url)[1];
-        $host = parse_url($current_url)['host'];
-        if (strpos($host, 'admin') !== false || $admin_path === 'admin') {
-            $this->isAdminPage = true;
-        }
+        $this->isAdminPath = (env('ADMIN_ROUTE', 'path') == 'path');
+        $this->isAdminSubdomain = !$this->isAdminPath;
     }
 
     public function sendMail($par)
     {
-        $status = false;
-
         $mail = \Mail::send($par['view'], $par['data'], function ($mail) use ($par) {
             /* Set Sender */
             if (isset($par['from'])) {
@@ -174,11 +168,7 @@ class Controller extends BaseController
             $this->mail_id = $mail->getId();
         });
 
-        if ($mail) {
-            $status = true;
-        }
-
-        return $status;
+        return $mail ? true : false;
     }
 
     public function activityLog($description)

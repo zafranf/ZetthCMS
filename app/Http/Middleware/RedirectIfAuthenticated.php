@@ -18,12 +18,20 @@ class RedirectIfAuthenticated
     public function handle($request, Closure $next, $guard = null)
     {
         if (Auth::guard($guard)->check()) {
-            $host = parse_url(url('/'))['host'];
+            /* $host = parse_url(url('/'))['host'];
             if (strpos($host, 'admin') !== false) {
-                return redirect('/dashboard');
+            return redirect('/dashboard');
             }
 
-            return redirect('/admin/dashboard');
+            return redirect('/admin/dashboard'); */
+            $adminroute = env('ADMIN_ROUTE', 'subdomain');
+            if ($adminroute == 'subdomain') {
+                return redirect('/dashboard');
+            } else if ($adminroute == 'path') {
+                return redirect('/admin/dashboard');
+            } else {
+                return redirect('/');
+            }
         }
 
         return $next($request);

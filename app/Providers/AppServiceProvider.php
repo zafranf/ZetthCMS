@@ -28,12 +28,11 @@ class AppServiceProvider extends ServiceProvider
             }
 
             /* check admin page */
-            $isAdminPage = false;
-            $host = parse_url(url('/'))['host'];
-            if (strpos($host, 'admin') !== false) {
-                $isAdminPage = true;
-            }
-            View::share('isAdminPage', $isAdminPage);
+            $isAdminPath = (env('ADMIN_ROUTE', 'path') == 'path');
+            View::share('isAdminPath', $isAdminPath);
+
+            $isAdminSubdomain = !$isAdminPath;
+            View::share('isAdminSubdomain', $isAdminSubdomain);
         }
 
         /* send application data to all views */

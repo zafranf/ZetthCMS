@@ -734,3 +734,19 @@ if (!function_exists('_get_initial')) {
         return $initial;
     }
 }
+
+/* if (!function_exists('_get_admin_path')) {
+function _get_admin_path($url = '') {
+if (empty($url)) {
+$url = url()->current();
+}
+
+$current_url = url()->current();
+$url = str_replace(['http://', 'https://'], "", $current_url);
+$admin_path = explode('/', $url)[1];
+$host = parse_url($current_url)['host'];
+if (strpos($host, 'admin') !== false || $admin_path === 'admin') {
+$isAdminPage = true;
+}
+}
+} */
