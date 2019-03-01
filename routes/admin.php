@@ -45,33 +45,33 @@ Route::middleware('auth')->group(function () {
         Route::prefix('content')->group(function () {
             Route::resources([
                 '/banners' => 'Admin\Content\BannerController',
-                '/posts' => 'Admin\Content\PostController',
-                '/pages' => 'Admin\Content\PageController',
-                '/categories' => 'Admin\Content\CategoryController',
-                '/tags' => 'Admin\Content\TagController',
-                '/gallery/photos' => 'Admin\Content\Gallery\PhotoController',
-                '/gallery/videos' => 'Admin\Content\Gallery\VideoController',
-                '/products' => 'Admin\Content\Product\ProductController',
+                // '/posts' => 'Admin\Content\PostController',
+                // '/pages' => 'Admin\Content\PageController',
+                // '/categories' => 'Admin\Content\CategoryController',
+                // '/tags' => 'Admin\Content\TagController',
+                // '/gallery/photos' => 'Admin\Content\Gallery\PhotoController',
+                // '/gallery/videos' => 'Admin\Content\Gallery\VideoController',
+                // '/products' => 'Admin\Content\Product\ProductController',
             ]);
-            Route::resource('/products/categories', 'Admin\Content\Product\CategoryController')->names('products.categories');
-            Route::resource('/products/tags', 'Admin\Content\Product\TagController')->names('products.tags');
+            // Route::resource('/products/categories', 'Admin\Content\Product\CategoryController')->names('products.categories');
+            // Route::resource('/products/tags', 'Admin\Content\Product\TagController')->names('products.tags');
         });
 
         /* module report routes */
         Route::prefix('report')->group(function () {
             Route::resources([
-                '/inbox' => 'Admin\Report\InboxController',
-                '/comments' => 'Admin\Report\CommentController',
-                '/interms' => 'Admin\Report\IntermController',
-                '/subscribers' => 'Admin\Report\SubscriberController',
+                // '/inbox' => 'Admin\Report\InboxController',
+                // '/comments' => 'Admin\Report\CommentController',
+                // '/interms' => 'Admin\Report\IntermController',
+                // '/subscribers' => 'Admin\Report\SubscriberController',
             ]);
         });
 
         /* module log routes */
         Route::prefix('log')->group(function () {
             Route::resources([
-                '/activities' => 'Admin\Log\ActivityController',
-                '/errors' => 'Admin\Log\ErrorController',
+                // '/activities' => 'Admin\Log\ActivityController',
+                // '/errors' => 'Admin\Log\ErrorController',
             ]);
         });
 
