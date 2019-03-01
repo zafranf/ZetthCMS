@@ -11,9 +11,10 @@
         "jenssegers/agent": "^2.6",
         "laravel/framework": "5.7.*",
         "laravel/tinker": "^1.0",
+        "predis/predis": "^1.1",
         "renatomarinho/laravel-page-speed": "^1.8",
         "santigarcor/laratrust": "5.0.*",
-        "yajra/laravel-datatables-oracle": "dev-master"
+        "yajra/laravel-datatables-oracle": "8.13.*"
     },
     "require-dev": {
         "barryvdh/laravel-debugbar": "^3.1",

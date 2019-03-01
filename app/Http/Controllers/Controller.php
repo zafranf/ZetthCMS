@@ -16,7 +16,7 @@ class Controller extends BaseController
     use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
 
     private $mail_id;
-    public $isAdminSubdomain = false;
+    public $isAdminPage = false;
     /* public $breadcrumbs = [
     [
     'icon' => 'fa fa-home',
@@ -27,9 +27,12 @@ class Controller extends BaseController
 
     public function __construct()
     {
-        $host = parse_url(url('/'))['host'];
-        if (strpos($host, 'admin') !== false) {
-            $this->isAdminSubdomain = true;
+        $current_url = url()->current();
+        $url = str_replace(['http://', 'https://'], "", $current_url);
+        $admin_path = explode('/', $url)[1];
+        $host = parse_url($current_url)['host'];
+        if (strpos($host, 'admin') !== false || $admin_path === 'admin') {
+            $this->isAdminPage = true;
         }
     }
 
