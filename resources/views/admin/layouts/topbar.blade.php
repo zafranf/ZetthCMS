@@ -11,7 +11,7 @@
       </div>
       <div class="d-flex align-items-center">
         {{-- START NOTIFICATION LIST --}}
-        <ul class="d-lg-inline-block d-none notification-list no-margin d-lg-inline-block b-grey b-r no-style p-r-5" style="margin-right:10px!important">
+        <ul class="d-lg-inline-block notification-list no-margin d-lg-inline-block b-grey b-r no-style p-r-5" style="margin-right:10px!important">
           <li class="p-r-10 inline">
             <div class="dropdown">
               <a href="javascript:;" id="notification-center" class="header-icon pg pg-world" data-toggle="dropdown">
