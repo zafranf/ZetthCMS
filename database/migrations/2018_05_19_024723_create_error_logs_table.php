@@ -1,8 +1,8 @@
 <?php
 
-use Illuminate\Support\Facades\Schema;
-use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
 
 class CreateErrorLogsTable extends Migration
 {
@@ -19,9 +19,14 @@ class CreateErrorLogsTable extends Migration
             $table->string('file');
             $table->string('line');
             $table->string('path');
-            $table->integer('count')->unsigned()->default(1);
+            $table->json('params')->nullable();
+            $table->json('trace')->nullable();
+            $table->json('data')->nullable();
+            $table->integer('count')->unsigned()->default(0);
             $table->text('time_history')->nullable();
             $table->timestamps();
+
+            $table->primary(['file', 'line', 'path', 'code']);
         });
     }
 

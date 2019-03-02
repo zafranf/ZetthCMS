@@ -2,7 +2,7 @@
 
 @section('menu-sort')
   @if (\Auth::user()->can('update-menus'))
-    <a href="{{ url('/setting/menus/sort') }}" class="btn btn-info" data-toggle="tooltip" data-original-title="Urutkan"><i class="fa fa-sort"></i></a>
+    <a href="{{ url($adminPath . '/setting/menus/sort') }}" class="btn btn-info" data-toggle="tooltip" data-original-title="Urutkan"><i class="fa fa-sort"></i></a>
   @endif
 @endsection
 
@@ -35,7 +35,7 @@
     var table = $('#list').DataTable({
       "processing": true,
       "serverSide": true,
-      "ajax": SITE_URL + "/setting/menus/data",
+      "ajax": SITE_URL + "{{ $adminPath }}/setting/menus/data",
       "columns": [
           { "data": "no", "width": "30px" },
           { "data": "name", "width": "200px" },
@@ -49,7 +49,7 @@
         "data": 'id',
         "render": function (data, type, row, meta) {
           var actions = '';
-          var url = SITE_URL + '/setting/menus/' + data;
+          var url = SITE_URL + "{{ $adminPath }}/setting/menus/" + data;
           var del = "_delete('" + url + "')";
           {!! _get_access_buttons() !!}
           $('[data-toggle="tooltip"]').tooltip();

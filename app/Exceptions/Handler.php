@@ -35,32 +35,42 @@ class Handler extends ExceptionHandler
      * @param  \Exception  $exception
      * @return void
      */
-    public function report(Exception $exception)
+    public function report(Exception $e)
     {
         $log = [
-            'code' => $exception->getCode(),
-            'file' => $exception->getFile(),
-            'line' => $exception->getLine(),
-            'message' => $exception->getMessage(),
-            'params' => \Request::all(),
+            'code' => $e->getCode(),
+            'file' => $e->getFile(),
+            'line' => $e->getLine(),
+            'message' => $e->getMessage(),
+            'params' => json_encode(\Request::all()),
             'path' => \Request::path(),
-            'trace' => $exception->getTrace(),
+            'trace' => json_encode($e->getTrace()),
         ];
-        if (isset($exception->data)) {
-            $log['data'] = $exception->data;
+        if (isset($e->data)) {
+            $log['data'] = $e->data;
         }
-        if ($exception->getMessage()) {
+
+        if ($e->getMessage()) {
             if (Schema::hasTable('applications')) {
-                \App\Models\ErrorLog::create([
-                    'code' => $log['code'],
-                    'path' => $log['path'],
-                    'file' => $log['file'],
-                    'line' => $log['line'],
-                    'message' => $log['message'],
-                ]);
+                \App\Models\ErrorLog::updateOrCreate(
+                    [
+                        'code' => $log['code'],
+                        'message' => $log['message'],
+                        'file' => $log['file'],
+                        'line' => $log['line'],
+                        'path' => $log['path'],
+                    ],
+                    [
+                        'params' => $log['params'],
+                        'trace' => $log['trace'],
+                        'data' => $log['data'] ?? null,
+                        'count' => \DB::raw('count+1'),
+                    ]
+                );
             }
         }
-        parent::report($exception);
+
+        parent::report($e);
     }
 
     /**

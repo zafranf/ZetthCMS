@@ -565,7 +565,7 @@ if (!function_exists('generateMenu')) {
 
         echo '<ul class="navbar-nav">';
         foreach ($menus as $menu) {
-            $href = !empty($menu->route_name) ? 'href="' . route($menu->route_name . '.index') . '"' : '';
+            $href = !empty($menu->route_name) ? 'href="' . route($menu->route_name) . '"' : '';
             $sub = count($menu->submenu) ? ' dropdown' : '';
             $sublink = count($menu->submenu) ? ' dropdown-toggle' : '';
             $subtoggle = count($menu->submenu) ? ' data-toggle="dropdown"' : '';
@@ -592,7 +592,7 @@ if (!function_exists('generateSubmenu')) {
         $sublevel = ($level > 0) ? 'dropdown-menu-side' : 'dropdown-menu-arrow';
         echo '<ul class="dropdown-menu">';
         foreach ($data as $submenu) {
-            $href = !empty($submenu->route_name) ? 'href="' . route($submenu->route_name . '.index') . '"' : '';
+            $href = !empty($submenu->route_name) ? 'href="' . route($submenu->route_name) . '"' : '';
             $sublink = count($submenu->submenu) ? ' dropdown-toggle' : '';
             $icon = ($submenu->icon != '') ? '<i class="' . $submenu->icon . '"></i>' : '';
             echo '<li>';

@@ -28,7 +28,7 @@
     var table = $('#list').DataTable({
       "processing": true,
       "serverSide": true,
-      "ajax": SITE_URL + "/report/subscribers/data",
+      "ajax": SITE_URL + "{{ $adminPath }}/report/subscribers/data",
       "columns": [
           { "data": "no", "width": "30px" },
           { "data": "email" },
@@ -41,7 +41,7 @@
         "data": 'id',
         "render": function (data, type, row, meta) {
           var actions = '';
-          var url = SITE_URL + '/report/subscribers/' + data;
+          var url = SITE_URL + "{{ $adminPath }}/report/subscribers/" + data;
           var del = "_delete('" + url + "')";
           {!! _get_access_buttons() !!}
           $('[data-toggle="tooltip"]').tooltip();

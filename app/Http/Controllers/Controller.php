@@ -17,12 +17,14 @@ class Controller extends BaseController
 
     private $mail_id;
     public $isAdminSubdomain = false;
+    public $adminPath = '/admin';
 
     public function __construct()
     {
         $host = parse_url(url('/'))['host'];
         if (strpos($host, 'admin') !== false) {
             $this->isAdminSubdomain = true;
+            $this->adminPath = '';
         }
     }
 
@@ -204,9 +206,9 @@ class Controller extends BaseController
             'file' => $e->getFile(),
             'line' => $e->getLine(),
             'message' => $e->getMessage(),
-            'params' => \Request::all(),
+            'params' => json_encode(\Request::all()),
             'path' => \Request::path(),
-            'trace' => $e->getTrace(),
+            'trace' => json_encode($e->getTrace()),
         ];
         if (isset($e->data)) {
             $log['data'] = $e->data;
@@ -216,13 +218,21 @@ class Controller extends BaseController
         \Log::error('error_catch', $log);
 
         /* save to database */
-        ErrorLog::create([
-            'code' => $log['code'],
-            'path' => $log['path'],
-            'file' => $log['file'],
-            'line' => $log['line'],
-            'message' => $log['message'],
-        ]);
+        ErrorLog::firstOrCreate(
+            [
+                'code' => $log['code'],
+                'message' => $log['message'],
+                'file' => $log['file'],
+                'line' => $log['line'],
+                'path' => $log['path'],
+            ],
+            [
+                'params' => $log['params'],
+                'trace' => $log['trace'],
+                'data' => $log['data'] ?? null,
+                'count' => \DB::raw('count+1'),
+            ]
+        );
 
         /* return error */
         $error = ($e->getCode() != 0) ? $e->getMessage() : 'Error :(';
@@ -313,31 +323,31 @@ class Controller extends BaseController
         /* set 5 menit */
         ini_set('max_execution_time', 300);
 
-        /* ukuran gambar */
+        /* dimensi dan blur gambar, (w)idth, (h)eight, (b)lur */
         $imageconfig = array(
             'thumbnail' => array(
-                'x' => 100,
-                'y' => 75,
+                'w' => 100,
+                'h' => 75,
                 'b' => 2,
             ),
             'small' => array(
-                'x' => 200,
-                'y' => 150,
+                'w' => 200,
+                'h' => 150,
                 'b' => 4,
             ),
             'medium' => array(
-                'x' => 400,
-                'y' => 300,
+                'w' => 400,
+                'h' => 300,
                 'b' => 8,
             ),
             'large' => array(
-                'x' => 800,
-                'y' => 600,
+                'w' => 800,
+                'h' => 600,
                 'b' => 16,
             ),
             'opengraph' => array(
-                'x' => 1200,
-                'y' => 630,
+                'w' => 1200,
+                'h' => 630,
                 'b' => 18,
             ),
         );
@@ -357,12 +367,12 @@ class Controller extends BaseController
             $save = $nfolder . "/" . $par['name'] . '.' . $par['ext'];
 
             /* hitung aspek rasio gambar */
-            $or = $config['x'] / $config['y'];
+            $or = $config['w'] / $config['h'];
 
             /* clone objek gambar dasar untuk dijadikan gambar utama,
             lalu ubah ukurannya */
             $mainimage = \Image::make($file);
-            $mainimage->resize($config['x'], $config['y'], function ($constraint) {
+            $mainimage->resize($config['w'], $config['h'], function ($constraint) {
                 $constraint->aspectRatio();
             });
             $w = $mainimage->width();
@@ -373,7 +383,7 @@ class Controller extends BaseController
             kita bisa membuat gambar latar blur untuk mengisi ruang kosong di sekitar gambar */
             if ($r != $or) {
                 /* buat kanvas baru */
-                $compimage = \Image::canvas($config['x'], $config['y'], '#fff');
+                $compimage = \Image::canvas($config['w'], $config['h'], '#fff');
                 $compimage->encode('jpg');
 
                 /* Ambil dimensi baru dari gambar utama yang telah diubah ukurannya */
@@ -381,8 +391,8 @@ class Controller extends BaseController
                 $nh = $mainimage->height();
 
                 /* set ukuran gambar latar */
-                $bgw = $r < $or ? $config['x'] : ceil($config['y'] * $r);
-                $bgh = $r < $or ? ceil($config['x'] * $h / $w) : $config['y'];
+                $bgw = $r < $or ? $config['w'] : ceil($config['h'] * $r);
+                $bgh = $r < $or ? ceil($config['w'] * $h / $w) : $config['h'];
 
                 /* Lalu clone gambar dasar untuk dijadikan gambar latar,
                 ubah ukurannya, lalu blur dan set opacity-nya */
