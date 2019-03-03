@@ -1,134 +1,127 @@
-@extends('admin.layouts.main')
+@extends('admin.layout')
 
-@section('menu-sort')
-  @if (\Auth::user()->can('update-menus'))
-    <a href="{{ url('/setting/menus/sort') }}" class="btn btn-info" data-toggle="tooltip" data-original-title="Urutkan"><i class="fa fa-sort"></i></a>
-  @endif
+@section('styles')
+{!! _load_select2('css') !!}
 @endsection
 
 @section('content')
-  <div class="card-body">
-    <form action="{{ url('/setting/menus') }}{{ isset($data->id) ? '/' . $data->id : '' }}" method="post" enctype="multipart/form-data">
-      @csrf
-      @if (isset($data->id))
-        {{ method_field('put') }}
-      @endif
-      <div class="form-group row">
-        <label for="name" class="col-sm-2 col-form-label">Nama</label>
-        <div class="col-sm-10">
-          <input type="text" class="form-control" id="name" name="name" placeholder="Nama Menu" value="{{ isset($data->id) ? $data->name : '' }}">
-        </div>
-      </div>
-      <div class="form-group row">
-        <label for="description" class="col-sm-2 col-form-label">Deskripsi</label>
-        <div class="col-sm-10">
-          <textarea class="form-control" name="description" rows="3" placeholder="Penjelasan singkat menu">{{ isset($data->id) ? $data->description : '' }}</textarea>
-        </div>
-      </div>
-      {{-- <div class="form-group row">
-        <label for="url" class="col-sm-2 col-form-label">URL</label>
-        <div class="col-sm-10">
-          <input type="text" class="form-control" id="url" name="url" placeholder="URL" value="{{ isset($data->id) ? $data->url : '' }}">
-        </div>
-      </div> --}}
-      <div class="form-group row">
-        <label for="route_name" class="col-sm-2 col-form-label">Route</label>
-        <div class="col-sm-10">
-          <input type="text" class="form-control" id="route_name" name="route_name" placeholder="Nama Route" value="{{ isset($data->id) ? $data->route_name : '' }}">
-        </div>
-      </div>
-      <div class="form-group row">
-        <label for="target" class="col-sm-2 col-form-label">Target</label>
-        <div class="col-sm-10">
-          <select class="form-control custom-select" name="target" id="target">
-            <option value="_self" {{ isset($data->id) && ($data->target == "_self") ? 'selected' : '' }}>Tab Sendiri</option>
-            <option value="_blank" {{ isset($data->id) && ($data->target == "_blank") ? 'selected' : '' }}>Tab Baru</option>
-          </select>
-        </div>
-      </div>
-      <div class="form-group row">
-        <label for="icon" class="col-sm-2 col-form-label">Ikon</label>
-        <div class="col-sm-10">
-          <input type="text" class="form-control" id="icon" name="icon" placeholder="Ikon Menu" value="{{ isset($data->id) ? $data->icon : '' }}">
-        </div>
-      </div>
-      {{-- <div class="form-group row">
-        <label for="order" class="col-sm-2 col-form-label">Urutan</label>
-        <div class="col-sm-10">
-          <input type="text" class="form-control" id="order" name="order" placeholder="Urutan Menu" value="{{ isset($data->id) ? $data->order : '' }}">
-        </div>
-      </div> --}}
-      <div class="form-group row">
-        <label for="parent" class="col-sm-2 col-form-label">Grup</label>
-        <div class="col-sm-10">
-          <select class="form-control" name="parent" id="parent">
-              <option value="0">--Pilih--</option>
-              @foreach (generateMenuArray($menus) as $menu)
-                <option value="{{ $menu->id }}" {{ isset($data->id) && ($data->parent_id == $menu->id) ? 'selected' : '' }}>{!! $menu->name !!}</option>
-              @endforeach
-          </select>
-        </div>
-      </div>
-      <div class="form-group row">
-        <label for="status" class="col-sm-2 col-form-label">Akses</label>
-          <div class="selectgroup selectgroup-pills" style="margin-left: 10px;">
-            <label class="selectgroup-item">
-              <input type="checkbox" name="index" class="selectgroup-input" {{ isset($data->id) && $data->index ? 'checked' : '' }}>
-              <span class="selectgroup-button">Indeks</span>
-            </label>
-            <label class="selectgroup-item">
-              <input type="checkbox" name="create" class="selectgroup-input" {{ isset($data->id) && $data->create ? 'checked' : '' }}>
-              <span class="selectgroup-button">Tambah</span>
-            </label>
-            <label class="selectgroup-item">
-              <input type="checkbox" name="read" class="selectgroup-input" {{ isset($data->id) && $data->read ? 'checked' : '' }}>
-              <span class="selectgroup-button">Detail</span>
-            </label>
-            <label class="selectgroup-item">
-              <input type="checkbox" name="update" class="selectgroup-input" {{ isset($data->id) && $data->update ? 'checked' : '' }}>
-              <span class="selectgroup-button">Edit</span>
-            </label>
-            <label class="selectgroup-item">
-              <input type="checkbox" name="delete" class="selectgroup-input" {{ isset($data->id) && $data->delete ? 'checked' : '' }}>
-              <span class="selectgroup-button">Hapus</span>
-            </label>
-          </div>
-      </div>
-      <div class="form-group row">
-        <label for="status" class="col-sm-2 col-form-label">Status</label>
-        {{-- <div class="col-sm-10"> --}}
-          <label class="custom-switch" style="margin-left: 10px;">
-            <input type="checkbox" id="status" name="status" class="custom-switch-input" {{ (isset($data->id) && !$data->status) ? '' : 'checked' }}>
-            <span class="custom-switch-indicator"></span>
-            <span class="custom-switch-description">Aktif</span>
-          </label>
-        {{-- </div> --}}
-      </div>
-      <div class="form-group row">
-        <div class="offset-sm-2 col-sm-10">
-          <button type="submit" class="btn btn-success">Simpan</button>
-          <a href="{{ url()->previous() }}" class="btn btn-secondary">Batal</a>
-        </div>
-      </div>
-    </form>
-  </div>
+    <div class="panel-body">
+        <form class="form-horizontal" action="{{ url(Session::get('current_url')) }}{{ isset($menu->menu_id)?'/'.$menu->menu_id:'' }}" method="post" enctype="multipart/form-data">
+            {{ isset($menu->menu_id)?method_field('PUT'):'' }}
+            {{ csrf_field() }}
+            <div class="form-group">
+                <label for="menu_name" class="col-sm-2 control-label">Menu Name</label>
+                <div class="col-sm-4">
+                    <input type="text" class="form-control" id="menu_name" name="menu_name" value="{{ isset($menu->menu_id)?$menu->menu_name:'' }}" autofocus onfocus="this.value = this.value;" maxlength="100" placeholder="Menu Name">
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="menu_description" class="col-sm-2 control-label">Description</label>
+                <div class="col-sm-4">
+                    <textarea id="menu_description" name="menu_description" class="form-control" placeholder="Description">{{ isset($menu->menu_id)?$menu->menu_description:'' }}</textarea>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="menu_url" class="col-sm-2 control-label">URL</label>
+                <div class="col-sm-4">
+                    <select id="menu_url" name="menu_url" class="form-control select2">
+                        <option value="#">[None]</option>
+                        <option value="/">Home</option>
+                        <option value="articles">Articles</option>
+                        <option value="pages">Pages</option>
+                        <option value="albums">Albums</option>
+                        <option value="videos">Videos</option>
+                        <option value="external" {{ (isset($menu->menu_id) && $menu->menu_url_ext)?'selected':'' }}>External Link</option>
+                        <?php $type = ''; ?>
+                        @foreach($post_opt as $n => $post)
+                            @if ($type!=$post->post_type)
+                                {!! ($n>0)?'</optgroup>':'' !!}
+                                @php $type=($post->post_type=="video")?"Video":$post->post_type; @endphp
+                                <optgroup label="{{ ucfirst($type) }}">
+                            @endif
+                            @if ($post->post_type=="video")
+                                <option value="{{ $post->post_slug }}" {{ $post->post_slug=="#"?'disabled':'' }}  {{ (isset($menu->menu_id) && $post->post_slug==$menu->menu_url)?'selected':'' }}>{{ $post->post_title }}</option>
+                            @endif
+                            @if ($post->post_type=="page")
+                                <option value="{{ $post->post_slug }}" {{ $post->post_slug=="#"?'disabled':'' }}  {{ (isset($menu->menu_id) && $post->post_slug==$menu->menu_url)?'selected':'' }}>{{ $post->post_title }}</option>
+                            @endif
+                            @if ($post->post_type=="article")
+                                <option value="{{ 'blog/'.$post->post_slug }}" {{ $post->post_slug=="#"?'disabled':'' }}  {{ (isset($menu->menu_id) && 'blog/'.$post->post_slug==$menu->menu_url)?'selected':'' }}>{{ $post->post_title }}</option>
+                            @endif
+                            <?php $type = $post->post_type; ?>
+                        @endforeach
+                    </select>
+                    <input type="text" class="form-control" id="menu_url_ext" name="menu_url_ext" value="{{ isset($menu->menu_id)?($menu->menu_url=="#")?'':$menu->menu_url:'' }}" placeholder="http://example.com" {!! (isset($menu->menu_id) && ($menu->menu_url_ext))?'style="margin-top:5px;"':'style="margin-top:5px;display:none;" disabled' !!}>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="menu_target" class="col-sm-2 control-label">Target</label>
+                <div class="col-sm-4">
+                    <select name="menu_target" class="form-control select2">
+                        @foreach(_option_target() as $key => $value)
+                            <option {{ (isset($menu->menu_id) && $value==$menu->menu_target)?'selected':'' }} value="{{ $key }}">{{ $value }}</option>
+                        @endforeach
+                    </select>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="menu_parent" class="col-sm-2 control-label">Parent</label>
+                <div class="col-sm-4">
+                    <select name="menu_parent" class="form-control select2">
+                        <option value="0">[None]</option>
+                        @if (count($menus)>0)
+                            @php
+                                $par = [
+                                    'id'        => 'menu_id',
+                                    'parent'    => 'menu_parent',
+                                    'name'      => 'menu_name', 
+                                    'print'     => 'menu_tree',
+                                    'sl'        => isset($menu->menu_id)?$menu->menu_parent:0
+                                ]
+                            @endphp
+                            {{ _build_tree($menus, $par) }}
+                        @endif
+                    </select>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-sm-offset-2 col-sm-4">
+                    <div class="checkbox">
+                        <label>
+                            <input type="checkbox" name="menu_status" {{ (isset($menu->menu_status) && $menu->menu_status==0)?'':'checked' }}> Active
+                        </label>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-sm-offset-2 col-sm-4">
+                    {{ _get_button_post() }}
+                </div>
+            </div>
+        </form>
+    </div>
 @endsection
 
-{{-- include css --}}
-@section('css')
-<style>
-  .selectgroup-button {
-    padding: 0.1rem 1rem;
-  }
-</style>
-@endsection
-
-{{-- include js --}}
-@section('js')
-{!! _load_js('/admin/js/vendors/selectize.min.js') !!}
+@section('scripts')
+{!! _load_select2('js') !!}
 <script>
-  $('document').ready(function(){
-      $('#target, #parent').selectize();
-  });
+$(function(){
+    $(".select2").select2({
+        placeholder: "[None]"
+    });
+    /*$(".pwd-select").select2({
+        minimumResultsForSearch: Infinity
+    });*/
+});
+
+$(document).ready(function(){
+    $('.select2').on('change',function(){
+        if ($('#menu_url').val()=="external"){
+            $('#menu_url_ext').attr("disabled", false).show();
+        }else{
+            $('#menu_url_ext').attr("disabled", true).hide();
+        }
+    });
+});
 </script>
 @endsection

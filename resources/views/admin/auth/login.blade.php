@@ -2,36 +2,74 @@
 $page_title = 'Masuk Aplikasi';
 @endphp
 @include('admin.layouts.header')
-
-<div class="page-single">
   <div class="container">
     <div class="row">
-      <div class="col col-login mx-auto">
-        <div class="text-center mb-6">
-          <img src="{{ url('/assets/images/logo.jpg') }}" class="h-9" alt="{{ $apps->name }} Logo">
-        </div>
-        <form class="card" action="{{ url($adminPath . '/login') }}" method="post">
-          @csrf
-          <div class="card-body p-6">
-            <div class="card-title">Masuk ke aplikasi {{ $apps->name }}</div>
-            <div class="form-group">
-              <label class="form-label">Pengguna/Email</label>
-              <input type="text" class="form-control" id="name" name="name" placeholder="Nama Pengguna/Alamat Email" autofocus>
-            </div>
-            <div class="form-group">
-              <label class="form-label">
-                Sandi
-              </label>
-              <input type="password" class="form-control" id="password" name="password" placeholder="Kata Sandi">
-            </div>
-            <div class="form-footer">
-              <button type="submit" class="btn btn-primary btn-block">Masuk</button>
-            </div>
+      <div class="col-md-6 col-md-offset-3">
+        <div class="panel panel-default">
+          <!-- <div class="panel-heading">Login Form</div> -->
+          <div class="panel-body">
+            @php
+              $w = 250;
+              if (Session::get('is_mobile')) {
+                $w = 150;
+              }
+            @endphp
+            <center>
+              <img src="{{ _get_image("assets/images/".$apps->logo, '/assets/images/logo.jpg') }}" alt="{{ $apps->name }} Logo" style="margin-bottom: 20px;">
+            </center>
+            <form class="form-horizontal" role="form" method="POST" action="{{ url($adminPath . '/login') }}">
+              {!! csrf_field() !!}
+
+              <div class="form-group{{ $errors->has('name') ? ' has-error' : '' }}">
+                <label class="col-md-4 control-label">Username</label>
+                <div class="col-md-6">
+                  <input type="name" class="form-control" name="name" value="{{ old('name') }}" placeholder="Username" autofocus>
+                  @if ($errors->has('name'))
+                    <span class="help-block">
+                      <strong>{{ $errors->first('name') }}</strong>
+                    </span>
+                  @endif
+                </div>
+              </div>
+
+              <div class="form-group{{ $errors->has('password') ? ' has-error' : '' }}">
+                <label class="col-md-4 control-label">Password</label>
+                <div class="col-md-6">
+                  <input type="password" class="form-control" name="password" placeholder="Password">
+                  @if ($errors->has('password'))
+                    <span class="help-block">
+                      <strong>{{ $errors->first('password') }}</strong>
+                    </span>
+                  @endif
+                </div>
+              </div>
+
+              <div class="form-group">
+                <div class="col-md-6 col-md-offset-4">
+                  <div class="checkbox">
+                    <label>
+                      <input type="checkbox" name="remember"> Remember Me
+                    </label>
+                  </div>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <div class="col-md-7 col-md-offset-4">
+                  <button type="submit" class="btn btn-default">
+                    <i class="fa fa-btn fa-sign-in"></i>Login
+                  </button>
+                  <a class="btn btn-link" href="{{ url('/password/reset') }}">Forgot Your Password?</a>
+                </div>
+              </div>
+            </form>
           </div>
-        </form>
+        </div>
       </div>
     </div>
   </div>
-</div>
 
+  <div class="copyright" style="padding-left: 10px;">
+    Powered by <a href="https://porisweb.id" target="_blank">Poris Webdev</a>
+  </div>
 @include('admin.layouts.footer')

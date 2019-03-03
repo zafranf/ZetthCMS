@@ -31,6 +31,6 @@ class DashboardController extends AdminController
             'page_subtitle' => 'Dashboard',
         ];
 
-        return view('admin.layouts.main', $data);
+        return view('admin.dashboard', $data);
     }
 }

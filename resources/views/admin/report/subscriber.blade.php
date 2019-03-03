@@ -1,60 +1,52 @@
-@extends('admin.layouts.main')
+@php $no=1 @endphp
+@extends('admin.layout')
+
+@section('styles')
+{!! _load_sweetalert('css') !!}
+{!! _load_datatables('css') !!}
+@endsection
 
 @section('content')
-  <div class="card-body">
-    <table id="list">
-      <thead>
-        <tr>
-            <th>No.</th>
-            <th>Email</th>
-            <th>Status</th>
-            <th>Aksi</th>
-        </tr>
-      </thead>
-    </table>
-  </div>
+    <div class="panel-body no-padding-right-left">
+        <table id="table-data" class="row-border hover">
+            <thead>
+                <tr>
+                    <td width="25">No.</td>
+                    @if (Session::get('is_desktop'))
+                        <td>Email</td>
+                        <td width="80">Status</td>
+                    @else
+                        <td width="250">Subscriber</td>
+                    @endif
+                    <td width="50">Action</td>
+                </tr>
+            </thead>
+            <tbody>
+                @if (count($subscribers)>0)
+                    @foreach($subscribers as $subscriber)
+                        <tr>
+                            <td align="center">{{ $no++ }}</td>
+                            @if (Session::get('is_desktop'))
+                                <td>{{ $subscriber->subscriber_email }}</td>
+                                <td>{{ _get_status_text($subscriber->subscriber_status) }}</td>
+                            @else
+                                <td>
+                                    {{ $subscriber->subscriber_email }}<br>
+                                    <small>{{ _get_status_text($subscriber->subscriber_status) }}</small>
+                                </td>
+                            @endif
+                            <td>
+                                {{ _get_button_access($subscriber->subscriber_id, Session::get('current_url')) }}
+                            </td>
+                        </tr>
+                    @endforeach
+                @endif
+            </tbody>
+        </table>
+    </div>
 @endsection
 
-{{-- include css --}}
-@section('css')
-{!! _load_css('/admin/plugins/DataTables/datatables.min.css') !!}
-@endsection
-
-{{-- include js --}}
-@section('js')
-{!! _load_js('/admin/plugins/DataTables/datatables.min.js') !!}
-<script>
-  $(document).ready(function() {
-    var table = $('#list').DataTable({
-      "processing": true,
-      "serverSide": true,
-      "ajax": SITE_URL + "{{ $adminPath }}/report/subscribers/data",
-      "columns": [
-          { "data": "no", "width": "30px" },
-          { "data": "email" },
-          { "data": "status", "width": "50px" },
-          { "width": "100px" },
-      ],
-      "lengthMenu": [ [20, 50, 100, -1], [20, 50, 100, "All"] ],
-      "columnDefs": [{
-        "targets": 3,
-        "data": 'id',
-        "render": function (data, type, row, meta) {
-          var actions = '';
-          var url = SITE_URL + "{{ $adminPath }}/report/subscribers/" + data;
-          var del = "_delete('" + url + "')";
-          {!! _get_access_buttons() !!}
-          $('[data-toggle="tooltip"]').tooltip();
-          return actions;
-        }
-      }, {
-        "targets": 2,
-        "data": 'status',
-        "render": function (data, type, row, meta) {
-          return _get_status_text(data);
-        }
-      }],
-    });
-  });
-</script>
+@section('scripts')
+{!! _load_sweetalert('js') !!}
+{!! _load_datatables('js') !!}
 @endsection
