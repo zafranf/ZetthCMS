@@ -45,16 +45,16 @@ Route::middleware('auth')->group(function () {
         Route::prefix('content')->group(function () {
             Route::resources([
                 '/banners' => 'Admin\Content\BannerController',
-                '/posts' => 'Admin\Content\PostController',
                 '/pages' => 'Admin\Content\PageController',
-                '/categories' => 'Admin\Content\CategoryController',
-                '/tags' => 'Admin\Content\TagController',
+                '/article/posts' => 'Admin\Content\Article\PostController',
+                '/article/categories' => 'Admin\Content\Article\CategoryController',
+                '/article/tags' => 'Admin\Content\Article\TagController',
                 '/gallery/photos' => 'Admin\Content\Gallery\PhotoController',
                 '/gallery/videos' => 'Admin\Content\Gallery\VideoController',
-                '/products' => 'Admin\Content\Product\ProductController',
+                // '/products' => 'Admin\Content\Product\ProductController',
             ]);
-            Route::resource('/products/categories', 'Admin\Content\Product\CategoryController')->names('products.categories');
-            Route::resource('/products/tags', 'Admin\Content\Product\TagController')->names('products.tags');
+            // Route::resource('/products/categories', 'Admin\Content\Product\CategoryController')->names('products.categories');
+            // Route::resource('/products/tags', 'Admin\Content\Product\TagController')->names('products.tags');
         });
 
         /* module report routes */
@@ -62,7 +62,7 @@ Route::middleware('auth')->group(function () {
             Route::resources([
                 '/inbox' => 'Admin\Report\InboxController',
                 '/comments' => 'Admin\Report\CommentController',
-                '/interms' => 'Admin\Report\IntermController',
+                '/incoming-terms' => 'Admin\Report\IntermController',
                 '/subscribers' => 'Admin\Report\SubscriberController',
             ]);
         });
@@ -72,6 +72,7 @@ Route::middleware('auth')->group(function () {
             Route::resources([
                 '/activities' => 'Admin\Log\ActivityController',
                 '/errors' => 'Admin\Log\ErrorController',
+                '/visitors' => 'Admin\Log\VisitorController',
             ]);
         });
 

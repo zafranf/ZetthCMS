@@ -359,7 +359,7 @@ class MenuTableSeeder extends Seeder
         $repInterm = new Menu;
         $repInterm->name = 'Kata Pencarian';
         $repInterm->description = 'Menu pengaturan kata pencarian';
-        $repInterm->route_name = 'interms.index';
+        $repInterm->route_name = 'incoming-terms.index';
         $repInterm->icon = 'pg-search';
         $repInterm->order = $repOrder++;
         $repInterm->status = 1;
@@ -419,6 +419,22 @@ class MenuTableSeeder extends Seeder
         $logError->name = 'Galat';
         $logError->description = 'Menu catatan galat';
         $logError->route_name = 'errors.index';
+        $logError->icon = 'fa fa-list-ul';
+        $logError->order = $logOrder++;
+        $logError->status = 1;
+        $logError->parent_id = $log->id;
+        $logError->index = 1;
+        $logError->create = 0;
+        $logError->read = 1;
+        $logError->update = 0;
+        $logError->delete = 0;
+        $logError->save();
+
+        /* menu catatan pengunjung */
+        $logError = new Menu;
+        $logError->name = 'Pengunjung';
+        $logError->description = 'Menu catatan pengunjung';
+        $logError->route_name = 'visitors.index';
         $logError->icon = 'fa fa-list-ul';
         $logError->order = $logOrder++;
         $logError->status = 1;

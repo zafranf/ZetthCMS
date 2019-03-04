@@ -12,25 +12,14 @@
         </button>
 
         {{-- Branding Image --}}
-        <a class="navbar-brand" href="{{ url('/dashboard') }}">
-          <img src="{{ _get_image("assets/images/".$apps->logo, '/assets/images/logo.jpg') }}">
+        <a class="navbar-brand" href="{{ url($adminPath . '/dashboard') }}">
+          <img src="{{ _get_image("assets/images/" . $apps->logo, '/assets/images/logo.jpg') }}">
         </a>
       </div>
 
       <div class="collapse navbar-collapse" id="app-navbar-collapse">
         {{-- Left Side Of Navbar --}}
-        <ul class="nav navbar-nav">
-          @php
-            $par = [
-              'id'        => 'menu_id',
-              'parent'    => 'menu_parent',
-              'name'      => 'menu_name', 
-              'print'     => 'top_menu',
-              'sl'        => Session::get('current_menu')!==null?Session::get('current_menu'):''
-            ]
-          @endphp
-          {{ generateMenu() }}
-        </ul>
+        {{ generateMenu() }}
         {{-- Right Side Of Navbar --}}
         <ul class="nav navbar-nav navbar-right">
           <li><a href="{{ url('admin/help') }}" title="Help"><i class="fa fa-question-circle-o"></i></a></li>
@@ -120,7 +109,7 @@
     var CURRENT_URL = '{{ url('/') }}';
     var TOKEN = '{{ csrf_token() }}';
     var CONNECT = true;
-    var IS_MOBILE = {{ Session::get('is_mobile')?'true':'false' }};
+    var IS_MOBILE = {{ $isMobile ? 'true' : 'false' }};
   </script>
   {!! _load_js('themes/admin/AdminSC/plugins/jquery/2.2.4/js/jquery.min.js') !!}
   {!! _load_js('themes/admin/AdminSC/plugins/bootstrap/3.3.6/js/bootstrap.min.js') !!}

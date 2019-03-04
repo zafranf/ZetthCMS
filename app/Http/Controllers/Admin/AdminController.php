@@ -13,7 +13,7 @@ class AdminController extends Controller
         $this->breadcrumbs[] = [
             'page' => 'Beranda',
             'icon' => 'fa fa-home',
-            'url' => url('/dashboard'),
+            'url' => url($this->adminPath . '/dashboard'),
         ];
     }
 }

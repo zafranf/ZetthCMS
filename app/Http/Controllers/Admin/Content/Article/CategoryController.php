@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Admin\Content;
+namespace App\Http\Controllers\Admin\Content\Article;
 
 use App\Http\Controllers\Admin\AdminController;
 use App\Models\Term;

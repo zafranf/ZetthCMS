@@ -16,7 +16,7 @@ class DashboardController extends AdminController
     {
         parent::__construct();
         $this->current_url = url('/setting/roles');
-        $this->page_title = 'Dashboard Admin';
+        $this->page_title = 'Dashboard';
     }
 
     /**

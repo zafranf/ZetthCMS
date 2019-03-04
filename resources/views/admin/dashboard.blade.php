@@ -123,7 +123,7 @@
         <div class="panel panel-default">
           <div class="panel-heading">
             Popular Post
-            <a href="{{ url('admin/posts') }}" class="btn btn-default btn-sm pull-right"><i class="fa fa-eye"></i> All</a>
+            <a href="{{ url($adminPath.'/content/article/posts') }}" class="btn btn-default btn-sm pull-right"><i class="fa fa-eye"></i> All</a>
           </div>
           <div class="panel-body no-padding">
             <table id="table-data-popular" class="table table-hover no-margin-bottom">
@@ -143,7 +143,7 @@
       <div class="panel panel-default">
         <div class="panel-heading">
           Recent Comment
-          <a href="{{ url('admin/comments') }}" class="btn btn-default btn-sm pull-right"><i class="fa fa-eye"></i> All</a>
+          <a href="{{ url($adminPath.'/report/comments') }}" class="btn btn-default btn-sm pull-right"><i class="fa fa-eye"></i> All</a>
         </div>
         <div class="panel-body no-padding">
           <table id="table-data-comment" class="table table-hover no-margin-bottom">

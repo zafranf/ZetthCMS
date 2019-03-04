@@ -563,15 +563,16 @@ if (!function_exists('generateMenu')) {
     {
         $menus = getMenu($group);
 
-        echo '<ul class="navbar-nav">';
+        echo '<ul class="nav navbar-nav">';
         foreach ($menus as $menu) {
             $href = !empty($menu->route_name) ? 'href="' . route($menu->route_name) . '"' : '';
             $sub = count($menu->submenu) ? ' dropdown' : '';
             $sublink = count($menu->submenu) ? ' dropdown-toggle' : '';
-            $subtoggle = count($menu->submenu) ? ' data-toggle="dropdown"' : '';
+            $subtoggle = count($menu->submenu) ? ' data-toggle="dropdown" role="button"' : '';
             $icon = ($menu->icon != "") ? '<i class="' . $menu->icon . '"></i>' : '';
-            echo '<li class="nav-item' . ($sub ?? '') . '">';
-            echo '<a ' . ($href ?? '') . ' class="nav-link' . ($sublink ?? '') . '"' . ($subtoggle ?? '') . '>' . $icon . ' ' . $menu->name . '</a>';
+            $caret = (count($menu->submenu) > 0) ? '<span class="pull-right"><span class="caret"></span></span>' : '';
+            echo '<li class="' . ($sub ?? '') . '">';
+            echo '<a ' . ($href ?? '') . ' class="' . ($sublink ?? '') . '"' . ($subtoggle ?? '') . '>' . $icon . ' ' . $menu->name . $caret . '</a>';
             if (count($menu->submenu) > 0) {
                 generateSubmenu($menu->submenu);
             }
@@ -589,15 +590,21 @@ if (!function_exists('generateSubmenu')) {
      */
     function generateSubmenu($data, $level = 0)
     {
-        $sublevel = ($level > 0) ? 'dropdown-menu-side' : 'dropdown-menu-arrow';
-        echo '<ul class="dropdown-menu">';
+        $sublevel = ($level > 0) ? 'sub-menu' : '';
+        echo '<ul class="dropdown-menu ' . $sublevel . '" role="menu">';
         foreach ($data as $submenu) {
             $href = !empty($submenu->route_name) ? 'href="' . route($submenu->route_name) . '"' : '';
-            $sublink = count($submenu->submenu) ? ' dropdown-toggle' : '';
+            $dropdown = count($submenu->submenu) ? 'dropdown-submenu' : 'dropdown';
+            $sublink = count($submenu->submenu) ? ' dropdown-toggle submenu' : '';
+            $subtoggle = count($submenu->submenu) ? ' data-toggle="dropdown" role="button"' : '';
             $icon = ($submenu->icon != '') ? '<i class="' . $submenu->icon . '"></i>' : '';
-            echo '<li>';
-            echo '<a ' . ($href ?? '') . ' class="dropdown-item' . ($sublink ?? '') . '">' . $icon . ' ' . $submenu->name . '</a>';
-            if (count($submenu->submenu) > 0) {
+            $caret_class = !isMobile() ? ' style="position: absolute;right: 10px;top: 3px;"' : ' class="pull-right"';
+            $direction = isMobile() ? 'down' : 'right';
+            $caret = !isMobile() ? 'fa fa-caret-' . $direction : 'caret';
+            $caret = (count($submenu->submenu) > 0) ? '<span ' . $caret_class . '><span class="' . $caret . '"></span></span>' : '';
+            echo '<li class="' . $dropdown . '">';
+            echo '<a ' . ($href ?? '') . ' class="dropdown-item' . ($sublink ?? '') . '" ' . ($subtoggle ?? '') . '>' . $icon . ' ' . $submenu->name . $caret . '</a>';
+            if (count($submenu->submenu)) {
                 generateSubmenu($submenu->submenu, $level + 1);
             }
             echo '</li>';
@@ -653,5 +660,43 @@ if (!function_exists('getBreadcrumb')) {
         }
         // echo '<span class="today pull-right">' . _generate_date(date("Y-m-d"), true) . '</span>';
         echo '</ol>';
+    }
+}
+
+if (!function_exists('urls')) {
+    /**
+     *
+     */
+    function urls($url, $secure = false)
+    {
+        if (bool($secure) || env('FORCE_HTTPS', false)) {
+            return url_secure($url);
+        }
+
+        return url($url);
+    }
+}
+
+if (!function_exists('isMobile')) {
+    function isMobile()
+    {
+        $agent = new \Jenssegers\Agent\Agent();
+        return $agent->isMobile();
+    }
+}
+
+if (!function_exists('isTablet')) {
+    function isTablet()
+    {
+        $agent = new \Jenssegers\Agent\Agent();
+        return $agent->isTablet();
+    }
+}
+
+if (!function_exists('isDesktop')) {
+    function isDesktop()
+    {
+        $agent = new \Jenssegers\Agent\Agent();
+        return $agent->isDesktop();
     }
 }
