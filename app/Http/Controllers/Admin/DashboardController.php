@@ -16,7 +16,7 @@ class DashboardController extends AdminController
     {
         parent::__construct();
         $this->current_url = url('/setting/roles');
-        $this->page_title = 'Dashboard';
+        $this->page_title = 'Beranda';
     }
 
     /**
@@ -29,7 +29,7 @@ class DashboardController extends AdminController
         $data = [
             'current_url' => $this->current_url,
             'page_title' => $this->page_title,
-            'page_subtitle' => 'Dashboard',
+            'page_subtitle' => 'Beranda',
             'breadcrumbs' => $this->breadcrumbs,
         ];
 

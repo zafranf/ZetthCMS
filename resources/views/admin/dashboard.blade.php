@@ -65,7 +65,7 @@
             <div class="col-sm-12" title="Create a new Post">
               <i class="fa fa-edit"></i>
               <div class="text">
-                New Post
+                Buat Artikel
               </div>
             </div>
           </div>
@@ -77,7 +77,7 @@
             <div class="col-sm-12" title="Create a new Page">
               <i class="fa fa-file-o"></i>
               <div class="text">
-                New Page
+                Buat Halaman
               </div>
             </div>
           </div>
@@ -89,7 +89,7 @@
             <div class="col-sm-12" title="Check for new comments">
               <i class="fa fa-comment-o"></i>
               <div class="text">
-                Comments
+                Komentar
               </div>
               <span class="btn btn-warning btn-xs btn-xs-top-right no-border-top-right" style="top:-6px;right:3px;"><b>{{ $comment->unread ?? 0 }}</b></span>
             </div>
@@ -102,7 +102,7 @@
             <div class="col-sm-12" title="Get inbox">
               <i class="fa fa-envelope-o"></i>
               <div class="text">
-                Inbox
+                Pesan Masuk
               </div>
               <span class="btn btn-warning btn-xs btn-xs-top-right no-border-top-right" style="top:-6px;right:3px;"><b>{{ $message->unread ?? 0 }}</b></span>
             </div>
@@ -122,15 +122,15 @@
     <div class="col-sm-12 col-md-6" id="box-popular-post">
         <div class="panel panel-default">
           <div class="panel-heading">
-            Popular Post
-            <a href="{{ url($adminPath.'/content/article/posts') }}" class="btn btn-default btn-sm pull-right"><i class="fa fa-eye"></i> All</a>
+            Artikel Populer
+            <a href="{{ url($adminPath . '/content/article/posts') }}" class="btn btn-default btn-sm pull-right"><i class="fa fa-eye"></i> Semua</a>
           </div>
           <div class="panel-body no-padding">
             <table id="table-data-popular" class="table table-hover no-margin-bottom">
               <thead>
                 <tr>
-                  <td><b>Post</b></td>
-                  <td width="80"><b>Views</b></td>
+                  <td><b>Artikel</b></td>
+                  <td width="80"><b>Dilihat</b></td>
                 </tr>
               </thead>
               <tbody id="popular-post">
@@ -142,15 +142,15 @@
     <div class="col-sm-12 col-md-6" id="box-recent-comment">
       <div class="panel panel-default">
         <div class="panel-heading">
-          Recent Comment
-          <a href="{{ url($adminPath.'/report/comments') }}" class="btn btn-default btn-sm pull-right"><i class="fa fa-eye"></i> All</a>
+          Komentar Terbaru
+          <a href="{{ url($adminPath . '/report/comments') }}" class="btn btn-default btn-sm pull-right"><i class="fa fa-eye"></i> Semua</a>
         </div>
         <div class="panel-body no-padding">
           <table id="table-data-comment" class="table table-hover no-margin-bottom">
             <thead>
               <tr>
-                <td><b>Comment</b></td>
-                <td width="120"><b>From</b></td>
+                <td><b>Komentar</b></td>
+                <td width="120"><b>Dari</b></td>
               </tr>
             </thead>
             <tbody id="recent-comment">

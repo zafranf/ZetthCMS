@@ -15,8 +15,8 @@ Route::middleware('auth')->group(function () {
     Route::get('/setting/roles/data', 'Admin\Setting\RoleController@datatable')->name('roles.data');
     Route::get('/setting/users/data', 'Admin\Setting\UserController@datatable')->name('users.data');
     Route::get('/content/banners/data', 'Admin\Content\BannerController@datatable')->name('banners.data');
-    Route::get('/content/categories/data', 'Admin\Content\CategoryController@datatable')->name('categories.data');
-    Route::get('/content/tags/data', 'Admin\Content\TagController@datatable')->name('tags.data');
+    Route::get('/content/article/categories/data', 'Admin\Content\Article\CategoryController@datatable')->name('categories.data');
+    Route::get('/content/article/tags/data', 'Admin\Content\Article\TagController@datatable')->name('tags.data');
     Route::get('/report/subscribers/data', 'Admin\Report\SubscriberController@datatable')->name('subscribers.data');
 
     /* sort menu */

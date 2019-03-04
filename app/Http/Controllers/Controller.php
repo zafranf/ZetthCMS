@@ -206,8 +206,8 @@ class Controller extends BaseController
             'file' => $e->getFile(),
             'line' => $e->getLine(),
             'message' => $e->getMessage(),
-            'params' => json_encode(\Request::all()),
             'path' => \Request::path(),
+            'params' => json_encode(\Request::all()),
             'trace' => json_encode($e->getTrace()),
         ];
         if (isset($e->data)) {
@@ -224,9 +224,9 @@ class Controller extends BaseController
                 'file' => $log['file'],
                 'line' => $log['line'],
                 'path' => $log['path'],
+                'message' => $log['message'],
             ],
             [
-                'message' => $log['message'],
                 'params' => $log['params'],
                 'trace' => $log['trace'],
                 'data' => $log['data'] ?? null,

@@ -430,10 +430,10 @@ class MenuTableSeeder extends Seeder
         $logError->delete = 0;
         $logError->save();
 
-        /* menu catatan pengunjung */
+        /* menu catatan kunjungan */
         $logError = new Menu;
-        $logError->name = 'Pengunjung';
-        $logError->description = 'Menu catatan pengunjung';
+        $logError->name = 'Kunjungan';
+        $logError->description = 'Menu catatan kunjungan';
         $logError->route_name = 'visitors.index';
         $logError->icon = 'fa fa-list-ul';
         $logError->order = $logOrder++;

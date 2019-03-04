@@ -15,7 +15,7 @@ class CreateErrorLogsTable extends Migration
     {
         Schema::create('error_logs', function (Blueprint $table) {
             $table->string('code');
-            $table->text('message');
+            $table->string('message');
             $table->string('file');
             $table->string('line');
             $table->string('path');
@@ -26,7 +26,7 @@ class CreateErrorLogsTable extends Migration
             $table->text('time_history')->nullable();
             $table->timestamps();
 
-            $table->primary(['file', 'line', 'path', 'code']);
+            $table->primary(['file', 'line', 'path', 'code', 'message']);
         });
     }
 
