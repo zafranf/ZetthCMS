@@ -41,9 +41,9 @@ class Handler extends ExceptionHandler
             'code' => $e->getCode(),
             'file' => $e->getFile(),
             'line' => $e->getLine(),
-            'message' => $e->getMessage(),
-            'params' => json_encode(\Request::all()),
+            'message' => substr($e->getMessage(), 0, 191),
             'path' => \Request::path(),
+            'params' => json_encode(\Request::all()),
             'trace' => json_encode($e->getTrace()),
         ];
         if (isset($e->data)) {
@@ -55,10 +55,10 @@ class Handler extends ExceptionHandler
                 \App\Models\ErrorLog::updateOrCreate(
                     [
                         'code' => $log['code'],
-                        'message' => $log['message'],
                         'file' => $log['file'],
                         'line' => $log['line'],
                         'path' => $log['path'],
+                        'message' => $log['message'],
                     ],
                     [
                         'params' => $log['params'],

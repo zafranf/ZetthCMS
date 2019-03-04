@@ -16,8 +16,14 @@ class ApplicationController extends AdminController
      */
     public function __construct()
     {
-        $this->current_url = url('/setting/application');
+        parent::__construct();
+        $this->current_url = url($this->adminPath . '/setting/application');
         $this->page_title = 'Pengaturan Aplikasi';
+        $this->breadcrumbs[] = [
+            'page' => 'Pengaturan',
+            'icon' => '',
+            'url' => $this->current_url,
+        ];
     }
 
     /**
@@ -27,11 +33,18 @@ class ApplicationController extends AdminController
      */
     public function index()
     {
+        $this->breadcrumbs[] = [
+            'page' => 'Aplikasi',
+            'icon' => '',
+            'url' => '',
+        ];
+
         $data = [
             'current_url' => $this->current_url,
             'page_title' => $this->page_title,
             'page_subtitle' => 'Sunting Aplikasi',
             'data' => Application::find(1),
+            'breadcrumbs' => $this->breadcrumbs,
         ];
 
         return view('admin.setting.application', $data);
@@ -98,7 +111,7 @@ class ApplicationController extends AdminController
         /* save data */
         $app->name = str_sanitize($r->input('name'));
         $app->description = str_sanitize($r->input('description'));
-        $app->status = bool($r->input('status') )? 1 : 0;
+        $app->status = bool($r->input('status')) ? 1 : 0;
         $app->save();
 
         /* upload logo */

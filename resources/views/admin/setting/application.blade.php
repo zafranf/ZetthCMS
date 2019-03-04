@@ -1,24 +1,24 @@
-@extends('admin.layout')
+@extends('admin.layouts.main')
 
 @section('styles')
-{!! _load_jasny('css') !!}
-{!! _load_tagsinput('css') !!}
-{!! _load_datetimepicker('css') !!}
-{!! _load_select2('css') !!}
+{!! _load_css('themes/admin/AdminSC/plugins/jasny-bootstrap/3.1.3/css/jasny-bootstrap.min.css') !!}
+{!! _load_css('themes/admin/AdminSC/plugins/bootstrap/tagsinput/0.8.0/css/bootstrap-tagsinput.css') !!}
+{!! _load_css('themes/admin/AdminSC/plugins/bootstrap/datetimepicker/4.17.37/css/bootstrap-datetimepicker.min.css') !!}
+{!! _load_css('themes/admin/AdminSC/plugins/select2/4.0.0/css/select2.min.css') !!}
 <style>
 	.group-socmed {
-		 width:125px;
-		 padding:3px 5px;
-		 text-align:left;
-		 font-size: 12px;
+    width:125px;
+    padding:3px 5px;
+    text-align:left;
+    font-size: 12px;
 	}
 </style>
 @endsection
 
 @section('content')
 	<div class="panel-body">
-		<form class="form-horizontal" action="{{ url("admin/".Session::get('current_menu')) }}/{{ $config->config_id or '' }}" method="post" enctype="multipart/form-data">
-			{{ isset($config->config_id)?method_field('PUT'):'' }}
+		<form class="form-horizontal" action="{{ url($adminPath . '/' . $current_url) }}/{{ $data->id ?? '' }}" method="post" enctype="multipart/form-data">
+			{{ isset($data->id) ? method_field('PUT') : '' }}
 			{{ csrf_field() }}
 			<div class="row">
 				<div class="col-md-6">
@@ -29,14 +29,14 @@
 						<div class="col-md-8">
 							<div class="fileinput fileinput-new" data-provides="fileinput">
 								<div class="fileinput-new thumbnail">
-									<img src="{{ _get_image_temp("assets/images/".$config->config_logo, ["original"], "/assets/images/original/logo-pwd.png") }}">
+									<img src="{{ _get_image("assets/images/".$data->logo, "/assets/images/original/logo-pwd.png") }}">
 								</div>
 								<div class="fileinput-preview fileinput-exists thumbnail"></div>
 								<div>
 									<span class="btn btn-default btn-file">
 										<span class="fileinput-new">Select</span>
 										<span class="fileinput-exists">Change</span>
-										<input name="logo" id="config_logo" type="file" accept="image/*">
+										<input name="logo" id="logo" type="file" accept="image/*">
 									</span>
 									<a href="#" class="btn btn-default fileinput-exists" data-dismiss="fileinput">Remove</a>
 								</div>
@@ -50,13 +50,13 @@
 								<div class="form-control" data-trigger="fileinput">
 									<i class="fa fa-image fileinput-exists"></i>
 									<span class="fileinput-filename">
-										<img style="width:20px;margin-top:-5px;margin-right:2px;" src="{{ _get_image_temp("assets/images/".$config->config_icon, ["original"], "/assets/images/original/icon-pwd.png") }}">
+										<img style="width:20px;margin-top:-5px;margin-right:2px;" src="{{ _get_image("assets/images/".$data->icon, "/assets/images/original/icon-pwd.png") }}">
 									</span>
 								</div>
 								<span class="input-group-addon btn btn-file">
 									<span class="fileinput-new">Select</span>
 									<span class="fileinput-exists">Change</span>
-									<input type="file" name="icon" id="config_icon" accept="image/*">
+									<input type="file" name="icon" id="icon" accept="image/*">
 								</span>
 								<a href="#" class="input-group-addon btn fileinput-exists" data-dismiss="fileinput">Remove</a>
 							</div>
@@ -65,69 +65,69 @@
 					<div class="form-group">
 						<label for="name" class="col-md-4 control-label">Site Name</label>
 						<div class="col-md-8">
-							<input type="text" class="form-control" name="name" value="{{ $config->config_name or '' }}" placeholder="Site Name" maxlength="50">
+							<input type="text" class="form-control" name="name" value="{{ $data->name ?? '' }}" placeholder="Site Name" maxlength="50">
 						</div>
 					</div>
 					<div class="form-group">
-						<label for="config_slogan" class="col-md-4 control-label">Slogan</label>
+						<label for="slogan" class="col-md-4 control-label">Slogan</label>
 						<div class="col-md-8">
-							<input type="text" class="form-control" name="slogan" value="{{ $config->config_slogan or '' }}" placeholder="Your slogan here..">
+							<input type="text" class="form-control" name="slogan" value="{{ $data->slogan ?? '' }}" placeholder="Your slogan here..">
 						</div>
 					</div>
 					<div class="form-group">
 						<label for="email" class="col-md-4 control-label">Email</label>
 						<div class="col-md-8">
-							<input type="text" class="form-control" name="email" value="{{ $config->config_email or '' }}" placeholder="your@email.com">
+							<input type="text" class="form-control" name="email" value="{{ $data->email ?? '' }}" placeholder="your@email.com">
 						</div>
 					</div>
 					<div class="form-group">
 						<label for="phone" class="col-md-4 control-label">Phone</label>
 						<div class="col-md-8">
-							<input type="text" class="form-control" name="phone" value="{{ $config->config_phone or '' }}" placeholder="(123) 12345678">
+							<input type="text" class="form-control" name="phone" value="{{ $data->phone ?? '' }}" placeholder="(123) 12345678">
 						</div>
 					</div>
 					<div class="form-group" {!! (Auth::user()->user_id!=1)?'style="display:none;"':'' !!}>
-						<label for="config_max_login_failed" class="col-md-4 control-label">Max Login Failed</label>
+						<label for="max_login_failed" class="col-md-4 control-label">Max Login Failed</label>
 						<div class="col-md-8">
-							<input type="text" class="form-control" name="max_login_failed" value="{{ $config->config_max_login_failed or '' }}" maxlength="1">
-							<span class="text-danger">{{ ($errors->has('config_max_login_failed'))?$errors->first('config_max_login_failed'):'' }}</span>
+							<input type="text" class="form-control" name="max_login_failed" value="{{ $data->max_login_failed ?? '' }}" maxlength="1">
+							<span class="text-danger">{{ ($errors->has('max_login_failed'))?$errors->first('max_login_failed'):'' }}</span>
 						</div>
 					</div>
 					<div class="form-group" {!! (Auth::user()->user_id!=1)?'style="display:none;"':'' !!}>
-						<label for="config_lockout_time" class="col-md-4 control-label">Lockout Time <small>(in minutes)</small></label>
+						<label for="lockout_time" class="col-md-4 control-label">Lockout Time <small>(in minutes)</small></label>
 						<div class="col-md-8">
-							<input type="text" class="form-control" name="lockout_time" value="{{ $config->config_lockout_time or '' }}" maxlength="2">
-							<span class="text-danger">{{ ($errors->has('config_lockout_time'))?$errors->first('config_lockout_time'):'' }}</span>
+							<input type="text" class="form-control" name="lockout_time" value="{{ $data->lockout_time ?? '' }}" maxlength="2">
+							<span class="text-danger">{{ ($errors->has('lockout_time'))?$errors->first('lockout_time'):'' }}</span>
 						</div>
 					</div>
 					<div class="form-group" {!! (Auth::user()->user_id!=1)?'style="display:none;"':'' !!}>
 						<label for="perpage" class="col-md-4 control-label">Data Perpage</label>
 						<div class="col-md-8">
-							<input id="perpage" name="perpage" class="form-control" value="{{ $config->config_perpage or 0 }}" placeholder="Show data perpage">
+							<input id="perpage" name="perpage" class="form-control" value="{{ $data->perpage ?? 0 }}" placeholder="Show data perpage">
 						</div>
 					</div>
 					<div class="form-group">
-						<label for="config_enable" class="col-md-4 control-label">Enable</label>
+						<label for="enable" class="col-md-4 control-label">Enable</label>
 						<div class="col-md-8">
 							<div class="checkbox">
 								<div class="col-xs-6 col-sm-3">
 									<label>
-										<input type="checkbox" name="enable_subscribe" {{ ($config->config_enable_subscribe==0)?'':'checked' }}> Subscribe
+										<input type="checkbox" name="enable_subscribe" {{ ($data->enable_subscribe==0)?'':'checked' }}> Subscribe
 									</label>
 								</div>
 								<div class="col-xs-6 col-sm-3">
 									<label>
-										<input type="checkbox" name="enable_comment" {{ ($config->config_enable_comment==0)?'':'checked' }}> Comment
+										<input type="checkbox" name="enable_comment" {{ ($data->enable_comment==0)?'':'checked' }}> Comment
 									</label>
 								</div>
 								<div class="col-xs-6 col-sm-3">
 									<label>
-										<input type="checkbox" name="enable_like" {{ ($config->config_enable_like==0)?'':'checked' }}> Like
+										<input type="checkbox" name="enable_like" {{ ($data->enable_like==0)?'':'checked' }}> Like
 									</label>
 								</div>
 								<div class="col-xs-6 col-sm-3">
 									<label>
-										<input type="checkbox" name="enable_share" {{ ($config->config_enable_share==0)?'':'checked' }}> Share
+										<input type="checkbox" name="enable_share" {{ ($data->enable_share==0)?'':'checked' }}> Share
 									</label>
 								</div>
 							</div>
@@ -137,16 +137,16 @@
 						<label for="status" class="col-md-4 control-label">Status</label>
 						<div class="col-md-8">
 							<select id="status" name="status" class="form-control pwd-select">
-								<option value="1" {{ ($config->config_status==1)?'selected':'' }}>Active</option>
-								<option value="0" {{ ($config->config_status==0)?'selected':'' }}>Coming Soon</option>
-								<option value="2" {{ ($config->config_status==2)?'selected':'' }}>Maintenance</option>
+								<option value="1" {{ ($data->status==1)?'selected':'' }}>Active</option>
+								<option value="0" {{ ($data->status==0)?'selected':'' }}>Coming Soon</option>
+								<option value="2" {{ ($data->status==2)?'selected':'' }}>Maintenance</option>
 							</select>
 						</div>
 					</div>
-					<div class="form-group" {!! ($config->config_status==1)?'style="display:none;"':'' !!} id="d_active_at">
+					<div class="form-group" {!! ($data->status==1)?'style="display:none;"':'' !!} id="d_active_at">
 						<label for="active_at" class="col-md-4 control-label">Open at</label>
 						<div class="col-md-8">
-							<input type="text" class="form-control" id="i_active_at" name="active_at" value="{{ isset($config->config_id)?date("Y-m-d", strtotime($config->config_active_at)):'' }}" {!! ($config->config_status==1)?'readonly':'' !!}>
+							<input type="text" class="form-control" id="i_active_at" name="active_at" value="{{ isset($data->id)?date("Y-m-d", strtotime($data->active_at)):'' }}" {!! ($data->status==1)?'readonly':'' !!}>
 						</div>
 					</div>
 				</div>
@@ -156,7 +156,7 @@
 					<div class="form-group">
 						<label for="label" class="col-md-4 control-label">Socmed</label>
 						<div class="col-md-8">
-							@if (count($socmed_data)>0)
+							@if (isset($socmed_data) && count($socmed_data)>0)
 								@foreach($socmed_data as $key => $val)
 								@php
 									$rand = rand(111111111, 999999999);
@@ -164,13 +164,15 @@
 								<div id="div-socmed-{{ $rand }}">
 									<div class="col-md-3 col-xs-6 no-padding">
 										<select name="socmed_id[]" class="form-control pwd-select">
-											<option value="">--Choose--</option>
-											@foreach($socmeds as $socmed)
-												@php 
-													$sl = $socmed->socmed_id==$val->socmed->socmed_id?'selected':''
-												@endphp
-												<option value="{{ $socmed->socmed_id }}" {{ $sl }}>{{ $socmed->socmed_name }}</option>
-											@endforeach
+                      <option value="">--Choose--</option>
+                      @if(isset($socmeds))
+                        @foreach($socmeds as $socmed)
+                          @php 
+                            $sl = $socmed->socmed_id==$val->socmed->socmed_id?'selected':''
+                          @endphp
+                          <option value="{{ $socmed->socmed_id }}" {{ $sl }}>{{ $socmed->socmed_name }}</option>
+                        @endforeach
+                      @endif
 										</select>
 									</div>
 									<div class="col-md-9 col-xs-6 no-padding">
@@ -190,10 +192,12 @@
 							@else
 								<div class="col-md-3 col-xs-6 no-padding">
 									<select name="socmed_id[]" class="form-control pwd-select">
-										<option value="">--Choose--</option>
-										@foreach($socmeds as $socmed)
-											<option value="{{ $socmed->socmed_id }}">{{ $socmed->socmed_name }}</option>
-										@endforeach
+                    <option value="">--Choose--</option>
+                    @if (isset($socmeds))
+                      @foreach($socmeds as $socmed)
+                        <option value="{{ $socmed->socmed_id }}">{{ $socmed->socmed_name }}</option>
+                      @endforeach
+                    @endif
 									</select>
 								</div>
 								<div class="col-md-9 col-xs-6 no-padding">
@@ -208,19 +212,19 @@
 					<div class="form-group">
 						<label for="keyword" class="col-md-4 control-label">Keywords</label>
 						<div class="col-md-8">
-							<input type="text" id="config_keyword" class="form-control" name="keyword" value="{{ $config->config_keyword or '' }}" placeholder="Press enter to confirm">
+							<input type="text" id="keyword" class="form-control" name="keyword" value="{{ $data->keyword ?? '' }}" placeholder="Press enter to confirm">
 						</div>
 					</div>
 					<div class="form-group">
 						<label for="description" class="col-md-4 control-label">Description</label>
 						<div class="col-md-8">
-							<textarea name="description" class="form-control" rows="5" placeholder="Your Site Description">{{ $config->config_description or '' }}</textarea>
+							<textarea name="description" class="form-control" rows="5" placeholder="Your Site Description">{{ $data->description ?? '' }}</textarea>
 						</div>
 					</div>
 					<div class="form-group">
 						<label for="phone" class="col-md-4 control-label">Google Analytics</label>
 						<div class="col-md-8">
-							<input type="text" class="form-control" name="ga" value="{{ $config->config_ga or '' }}" placeholder="Google Analytics Code">
+							<input type="text" class="form-control" name="ga" value="{{ $data->ga ?? '' }}" placeholder="Google Analytics Code">
 						</div>
 					</div>
 					<h4>Location</h4>
@@ -228,20 +232,20 @@
 					<div class="form-group">
 						<label for="address" class="col-md-4 control-label">Address</label>
 						<div class="col-md-8">
-							<textarea name="address" class="form-control" rows="5" placeholder="Complete Address">{{ $config->config_address or '' }}</textarea>
+							<textarea name="address" class="form-control" rows="5" placeholder="Complete Address">{{ $data->address ?? '' }}</textarea>
 						</div>
 					</div>
 					<div class="form-group">
 						<label for="location" class="col-md-4 control-label">Coordinate</label>
 						<div class="col-md-8">
-							<input type="text" class="form-control" name="location" value="{{ $config->config_location or '' }}" placeholder="Latitude, Longitude">
+							<input type="text" class="form-control" name="location" value="{{ $data->location ?? '' }}" placeholder="Latitude, Longitude">
 						</div>
 					</div>
 				</div>
 			</div>
 			<div class="form-group">
 				<div class="col-md-offset-2 col-md-10">
-				  {{ _get_button_post() }}
+				  {{-- {{ _get_button_post() }} --}}
 				</div>
 			</div>
 		</form>
@@ -249,11 +253,11 @@
 @endsection
 
 @section('scripts')
-{!! _load_jasny('js') !!}
-{!! _load_tagsinput('js') !!}
-{!! _load_momentjs() !!}
-{!! _load_datetimepicker('js') !!}
-{!! _load_select2('js') !!}
+{!! _load_js('themes/admin/AdminSC/plugins/jasny-bootstrap/3.1.3/js/jasny-bootstrap.min.js') !!}
+{!! _load_js('themes/admin/AdminSC/plugins/bootstrap/tagsinput/0.8.0/js/bootstrap-tagsinput.js') !!}
+{!! _load_js('themes/admin/AdminSC/plugins/moment/2.13.0/js/moment.min.js') !!}
+{!! _load_js('themes/admin/AdminSC/plugins/bootstrap/datetimepicker/4.17.37/js/bootstrap-datetimepicker.min.js') !!}
+{!! _load_js('themes/admin/AdminSC/plugins/select2/4.0.0/js/select2.min.js') !!}
 <script>
 $(function(){
 	$('#i_active_at').datetimepicker({
@@ -274,7 +278,7 @@ $(document).ready(function(){
 			$('#i_active_at').attr('readonly', true);
 		}
 	});
-	$('#config_keyword').tagsinput({
+	$('#keyword').tagsinput({
 		tagClass: function(item){
 			return 'label label-warning'
 		}
@@ -283,10 +287,12 @@ $(document).ready(function(){
 		socmed_no = (Math.random() * 1000000000).toFixed(0);
 		var html = '<div id="div-socmed-'+socmed_no+'"><div class="col-md-3 col-xs-6 no-padding">'+
 						'<select name="socmed_id[]" class="form-control pwd-select">'+
-							'<option value="">--Choose--</option>'+
-							@foreach($socmeds as $socmed)
-								'<option value="{{ $socmed->socmed_id }}">{{ $socmed->socmed_name }}</option>'+
-							@endforeach
+              '<option value="">--Choose--</option>'+
+              @if (isset($socmeds))
+                @foreach($socmeds as $socmed)
+                  '<option value="{{ $socmed->socmed_id }}">{{ $socmed->socmed_name }}</option>'+
+                @endforeach
+              @endif
 						'</select>'+
 					'</div>'+
 					'<div class="col-md-9 col-xs-6 no-padding">'+

@@ -205,7 +205,7 @@ class Controller extends BaseController
             'code' => $e->getCode(),
             'file' => $e->getFile(),
             'line' => $e->getLine(),
-            'message' => $e->getMessage(),
+            'message' => substr($e->getMessage(), 0, 191),
             'path' => \Request::path(),
             'params' => json_encode(\Request::all()),
             'trace' => json_encode($e->getTrace()),
