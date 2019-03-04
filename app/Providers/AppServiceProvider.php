@@ -27,16 +27,28 @@ class AppServiceProvider extends ServiceProvider
                 // redirect('http://google.com')->send();
             }
 
+            /* check package jenssegers/agent */
+            if (class_exists('Jenssegers\\Agent\\Agent')) {
+                $agent = new \Jenssegers\Agent\Agent();
+                View::share([
+                    'isMobile' => $agent->isMobile(),
+                    'isTablet' => $agent->isTablet(),
+                    'isDesktop' => $agent->isDesktop(),
+                ]);
+            }
+
             /* check admin page */
             $adminPath = '/admin';
             $isAdminSubdomain = false;
             $host = parse_url(url('/'))['host'];
             if (strpos($host, 'admin') !== false) {
-                $isAdminSubdomain = true;
                 $adminPath = '';
+                $isAdminSubdomain = true;
             }
-            View::share('isAdminSubdomain', $isAdminSubdomain);
-            View::share('adminPath', $adminPath);
+            View::share([
+                'adminPath' => $adminPath,
+                'isAdminSubdomain' => $isAdminSubdomain,
+            ]);
         }
 
         /* send application data to all views */

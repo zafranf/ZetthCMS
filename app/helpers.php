@@ -628,3 +628,30 @@ if (!function_exists('generateMenuArray')) {
         return $array;
     }
 }
+
+if (!function_exists('getBreadcrumb')) {
+    /**
+     * [getBreadcrumb description]
+     * @param  [type] $breadcrumb [description]
+     * @return [type]             [description]
+     */
+    function getBreadcrumb($breadcrumb)
+    {
+        echo '<ol class="breadcrumb">';
+        foreach ($breadcrumb as $bread) {
+            if (empty($bread['url'])) {
+                echo '<li class="active">' . $bread['page'] . '</li>';
+            } else {
+                echo '<li><a href="' . url($bread['url']) . '">';
+                if (isset($bread['icon'])) {
+                    echo '<i class="' . $bread['icon'] . '"></i> ';
+                }
+
+                echo $bread['page'];
+                echo '</a></li>';
+            }
+        }
+        // echo '<span class="today pull-right">' . _generate_date(date("Y-m-d"), true) . '</span>';
+        echo '</ol>';
+    }
+}

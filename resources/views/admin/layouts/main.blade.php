@@ -41,7 +41,7 @@
           @else
             <li class="dropdown">
               <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-                {{ Auth::user()->user_fullname }} 
+                {{ Auth::user()->fullname }} 
                 <span class="pull-right">
                   <span class="caret"></span>
                 </span>
@@ -57,7 +57,7 @@
       </div>
     </div>
 
-    {{-- {{ _get_breadcrumb(Session::get('breadcrumb')) }} --}}
+    {{ getBreadcrumb($breadcrumbs) }}
   </nav>
 
   <div class="page-header" id="page-header">
@@ -122,9 +122,9 @@
     var CONNECT = true;
     var IS_MOBILE = {{ Session::get('is_mobile')?'true':'false' }};
   </script>
-  {!! _load_js('themes/admin/AdminSC/plugins/jquery-2.2.4/js/jquery.min.js') !!}
-  {!! _load_js('themes/admin/AdminSC/plugins/bootstrap-3.3.6/js/bootstrap.min.js') !!}
-  @yield('scripts')
+  {!! _load_js('themes/admin/AdminSC/plugins/jquery/2.2.4/js/jquery.min.js') !!}
+  {!! _load_js('themes/admin/AdminSC/plugins/bootstrap/3.3.6/js/bootstrap.min.js') !!}
   {!! _load_js('themes/admin/AdminSC/js/app.js') !!}
+  @yield('scripts')
   <script>_tc();</script>
 @include('admin.layouts.footer')

@@ -1,7 +1,7 @@
 @extends('admin.layouts.main')
 
 @section('styles')
-{{-- {!! _load_daterangepicker('css') !!} --}}
+{!! _load_css('themes/admin/AdminSC/plugins/bootstrap/daterangepicker/2.1.24/daterangepicker.css') !!}
 <style>
     #content-div {
         display:none;
@@ -91,7 +91,7 @@
                             <div class="text">
                                 Comments
                             </div>
-                            <span class="btn btn-warning btn-xs btn-xs-top-right no-border-top-right" style="top:-6px;right:3px;"><b>{{-- {{ $comment->unread }} --}}</b></span>
+                            <span class="btn btn-warning btn-xs btn-xs-top-right no-border-top-right" style="top:-6px;right:3px;"><b>{{ $comment->unread ?? 0 }}</b></span>
                         </div>
                     </div>
                 </a>
@@ -104,7 +104,7 @@
                             <div class="text">
                                 Inbox
                             </div>
-                            <span class="btn btn-warning btn-xs btn-xs-top-right no-border-top-right" style="top:-6px;right:3px;"><b>{{-- {{ $message->unread }} --}}</b></span>
+                            <span class="btn btn-warning btn-xs btn-xs-top-right no-border-top-right" style="top:-6px;right:3px;"><b>{{ $message->unread ?? 0 }}</b></span>
                         </div>
                     </div>
                 </a>
@@ -164,18 +164,14 @@
 @endsection
 
 @section('scripts')
-{{-- {!! _load_momentjs() !!}
-{!! _load_daterangepicker('js') !!}
-{!! _load_highchart() !!} --}}
-
-{!! _load_js('themes/admin/AdminSC/plugins/moment-2.13.0/js/moment.min.js') !!}
-{!! _load_js('themes/admin/AdminSC/plugins/bootstrap-daterangepicker-2.1.24/daterangepicker.js') !!}
-{!! _load_js('themes/admin/AdminSC/plugins/highcharts-4.2.6/highcharts.js') !!}
+{!! _load_js('themes/admin/AdminSC/plugins/moment/2.13.0/js/moment.min.js') !!}
+{!! _load_js('themes/admin/AdminSC/plugins/bootstrap/daterangepicker/2.1.24/daterangepicker.js') !!}
+{!! _load_js('themes/admin/AdminSC/plugins/highcharts/4.2.6/highcharts.js') !!}
 <script>
 $(function(){
     var start = moment();
     var end = moment();
-    var min = moment(); {{-- moment('{{ Session::get('config')->created_at }}'); --}}
+    var min = moment('{{ $apps->created_at }}');
     var max = moment();
     var yr = moment();
     var mn = moment();
@@ -196,7 +192,7 @@ $(function(){
     $('#page-header').append(html);
 
     /* updating combobox */
-    function cb(start, end, label) {
+    function combobox(start, end, label) {
         yr = start.format('YYYY');
         mn = start.format('MM')-1;
         dt = start.format('DD');
@@ -217,7 +213,7 @@ $(function(){
             rangetype = 'daily';
         }
 
-        $('#pageview-chart').html("Loading<img src=\"{{ url('assets/images/loading-flat.gif') }}\">");
+        $('#pageview-chart').html("Loading<img src=\"{{ url('themes/admin/AdminSC/images/loading-flat.gif') }}\">");
         $('#box-popular-post').addClass('hide');
         $('#box-recent-comment').addClass('hide');
         if (CONNECT){
@@ -405,11 +401,11 @@ $(function(){
             format: 'YYYY-MM-DD'
         },
         applyClass: 'btn-warning'
-    }, cb);
-    cb(start, end, label);
+    }, combobox);
+    combobox(start, end, label);
 
     $('#btn-refresh').on("click", function(){
-        cb(start, end, label);
+        combobox(start, end, label);
     });
 });
 </script>

@@ -221,12 +221,12 @@ class Controller extends BaseController
         ErrorLog::firstOrCreate(
             [
                 'code' => $log['code'],
-                'message' => $log['message'],
                 'file' => $log['file'],
                 'line' => $log['line'],
                 'path' => $log['path'],
             ],
             [
+                'message' => $log['message'],
                 'params' => $log['params'],
                 'trace' => $log['trace'],
                 'data' => $log['data'] ?? null,

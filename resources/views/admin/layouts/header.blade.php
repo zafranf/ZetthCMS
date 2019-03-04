@@ -13,12 +13,12 @@
 
   {{-- Fonts --}}
   <link href="https://fonts.googleapis.com/css?family=Lato:100,300,400" rel='stylesheet' type='text/css'>
-  {!! _load_css('themes/admin/AdminSC/plugins/fontawesome-4.6.3/css/bootstrap.min.css') !!}
+  {!! _load_css('themes/admin/AdminSC/plugins/fontawesome/4.6.3/css/font-awesome.min.css') !!}
 
   {{-- Styles --}}
-  {!! _load_css('themes/admin/AdminSC/plugins/bootstrap-3.3.6/css/bootstrap.min.css') !!}
-  @yield('styles')
+  {!! _load_css('themes/admin/AdminSC/plugins/bootstrap/3.3.6/css/bootstrap.min.css') !!}
   {!! _load_css('themes/admin/AdminSC/css/app.css') !!}
+  @yield('styles')
 </head>
 
 <body id="app-layout">
