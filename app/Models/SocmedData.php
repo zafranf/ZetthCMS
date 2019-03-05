@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class MediaSocial extends Model
+class SocmedData extends Model
 {
     use SoftDeletes;
 }

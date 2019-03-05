@@ -1,10 +1,10 @@
 <?php
 
-use Illuminate\Support\Facades\Schema;
-use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
 
-class CreateMediaSocialsTable extends Migration
+class CreateSocmedsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,8 +13,8 @@ class CreateMediaSocialsTable extends Migration
      */
     public function up()
     {
-        Schema::create('media_socials', function (Blueprint $table) {
-            $table->increments('id');
+        Schema::create('socmeds', function (Blueprint $table) {
+            $table->increments('id')->unsigned();
             $table->string('name');
             $table->string('url');
             $table->string('icon');
@@ -32,6 +32,6 @@ class CreateMediaSocialsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('media_socials');
+        Schema::dropIfExists('socmeds');
     }
 }
