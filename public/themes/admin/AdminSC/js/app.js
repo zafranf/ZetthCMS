@@ -24,6 +24,8 @@ $(document).ready(function() {
             return false;
         }
     });
+
+    $('#app-navbar-collapse').find('.active').parent().parent().parent().addClass('active')
 });
 
 function _tc() {
