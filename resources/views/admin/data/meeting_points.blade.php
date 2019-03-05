@@ -12,7 +12,7 @@
             <thead>
                 <tr>
                     <td width="25">No.</td>
-                        @if (Session::get('is_desktop'))
+                        @if ($isDesktop)
                             <td width="250">Point</td>
                             <td>Description</td>
                             <td width="80">Status</td>
@@ -27,7 +27,7 @@
                     @foreach($points as $point)
                         <tr>
                             <td align="center">{{ $no++ }}</td>
-                            @if (Session::get('is_desktop'))
+                            @if ($isDesktop)
                                 <td>{{ $point->point_name }}</td>
                                 <td>{{ $point->point_description }}</td>
                                 <td>{{ _get_status_text($point->point_status) }}</td>

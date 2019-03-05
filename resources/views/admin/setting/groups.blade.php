@@ -12,7 +12,7 @@
             <thead>
                 <tr>
                     <td width="25">No.</td>
-                    @if (Session::get('is_desktop'))
+                    @if ($isDesktop)
                         <td width="200">Group Name</td>
                         <td>Description</td>
                         <td width="80">Status</td>
@@ -27,7 +27,7 @@
                     @foreach($groups as $group)
                         <tr>
                             <td align="center">{{ $no++ }}</td>
-                            @if (Session::get('is_desktop'))
+                            @if ($isDesktop)
                                 <td>{{ $group->group_name }}</td>
                                     <td>{{ $group->group_description }}</td>
                                 <td>{{ _get_status_text($group->group_status) }}</td>

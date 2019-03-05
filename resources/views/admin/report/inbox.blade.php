@@ -12,7 +12,7 @@
             <thead>
                 <tr>
                     <td width="25">No.</td>
-                    @if (Session::get('is_desktop'))
+                    @if ($isDesktop)
                         <td width="200">Name</td>
                         <td width="200">Email</td>
                         <td>Message</td>
@@ -31,7 +31,7 @@
                         )
                         <tr{!! ($inbox->inbox_read)?'':' style="font-weight:400"' !!}>
                             <td align="center">{{ $no++ }}</td>
-                            @if (Session::get('is_desktop'))
+                            @if ($isDesktop)
                                 <td>{{ $inbox->inbox_name }}</td>
                                 <td>{{ $inbox->inbox_email }}</td>
                                 <td>{{ str_limit($inbox->inbox_message, 60) }}</td>

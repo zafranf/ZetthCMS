@@ -29,7 +29,7 @@
 						<div class="col-md-8">
 							<div class="fileinput fileinput-new" data-provides="fileinput">
 								<div class="fileinput-new thumbnail">
-									<img src="{{ _get_image("assets/images/".$data->logo, "/assets/images/original/logo-pwd.png") }}">
+									<img src="{{ _get_image("assets/images/" . $data->logo, "/assets/images/logo.jpg") }}">
 								</div>
 								<div class="fileinput-preview fileinput-exists thumbnail"></div>
 								<div>
@@ -50,7 +50,7 @@
 								<div class="form-control" data-trigger="fileinput">
 									<i class="fa fa-image fileinput-exists"></i>
 									<span class="fileinput-filename">
-										<img style="width:20px;margin-top:-5px;margin-right:2px;" src="{{ _get_image("assets/images/".$data->icon, "/assets/images/original/icon-pwd.png") }}">
+										<img style="width:20px;margin-top:-5px;margin-right:2px;" src="{{ _get_image("assets/images/" . $data->icon, "/assets/images/logo.jpg") }}">
 									</span>
 								</div>
 								<span class="input-group-addon btn btn-file">

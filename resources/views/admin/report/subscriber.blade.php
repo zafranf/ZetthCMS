@@ -12,7 +12,7 @@
             <thead>
                 <tr>
                     <td width="25">No.</td>
-                    @if (Session::get('is_desktop'))
+                    @if ($isDesktop)
                         <td>Email</td>
                         <td width="80">Status</td>
                     @else
@@ -26,7 +26,7 @@
                     @foreach($subscribers as $subscriber)
                         <tr>
                             <td align="center">{{ $no++ }}</td>
-                            @if (Session::get('is_desktop'))
+                            @if ($isDesktop)
                                 <td>{{ $subscriber->subscriber_email }}</td>
                                 <td>{{ _get_status_text($subscriber->subscriber_status) }}</td>
                             @else

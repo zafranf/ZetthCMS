@@ -12,7 +12,7 @@
 			<thead>
 				<tr>
 					<td width="25">No.</td>
-					@if (Session::get('is_desktop'))
+					@if ($isDesktop)
 						<td width="50">Logo</td>
 						<td width="300">Bank Name</td>
 						<td width="300">Account Name</td>
@@ -30,7 +30,7 @@
 					@foreach($banks as $bank)
 						<tr>
 							<td align="center">{{ $no++ }}</td>
-							@if (Session::get('is_desktop'))
+							@if ($isDesktop)
 	                            <td><img src="{{ _get_image_temp("/assets/images/upload/".$bank->bank_logo, [50,50]) }}" class="img-thumbnail" width="50"></td>
 	                            <td>{{ $bank->bank_name }}</td>
 	                            <td>{{ $bank->bank_owner }}</td>

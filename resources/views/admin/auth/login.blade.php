@@ -10,7 +10,7 @@ $page_title = 'Masuk Aplikasi';
           <div class="panel-body">
             @php
               $w = 250;
-              if (Session::get('is_mobile')) {
+              if ($isMobile) {
                 $w = 150;
               }
             @endphp
@@ -21,9 +21,9 @@ $page_title = 'Masuk Aplikasi';
               {!! csrf_field() !!}
 
               <div class="form-group{{ $errors->has('name') ? ' has-error' : '' }}">
-                <label class="col-md-4 control-label">Username</label>
+                <label class="col-md-4 control-label">Pengguna</label>
                 <div class="col-md-6">
-                  <input type="name" class="form-control" name="name" value="{{ old('name') }}" placeholder="Username" autofocus>
+                  <input type="name" class="form-control" name="name" value="{{ old('name') }}" placeholder="Nama atau email" autofocus>
                   @if ($errors->has('name'))
                     <span class="help-block">
                       <strong>{{ $errors->first('name') }}</strong>
@@ -33,9 +33,9 @@ $page_title = 'Masuk Aplikasi';
               </div>
 
               <div class="form-group{{ $errors->has('password') ? ' has-error' : '' }}">
-                <label class="col-md-4 control-label">Password</label>
+                <label class="col-md-4 control-label">Sandi</label>
                 <div class="col-md-6">
-                  <input type="password" class="form-control" name="password" placeholder="Password">
+                  <input type="password" class="form-control" name="password" placeholder="Kata sandi">
                   @if ($errors->has('password'))
                     <span class="help-block">
                       <strong>{{ $errors->first('password') }}</strong>
@@ -59,7 +59,7 @@ $page_title = 'Masuk Aplikasi';
                   <button type="submit" class="btn btn-default">
                     <i class="fa fa-btn fa-sign-in"></i>Login
                   </button>
-                  {{-- <a class="btn btn-link" href="{{ url('/password/reset') }}">Forgot Your Password?</a> --}}
+                  <a class="btn btn-link" href="{{ url($adminPath . '/password/reset') }}">Forgot Your Password?</a>
                 </div>
               </div>
             </form>

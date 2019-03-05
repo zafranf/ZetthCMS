@@ -3,14 +3,14 @@ $tags_ = [];
 $categories_ = [];
 $descriptions_ = [];
 $parents_ = [];
-if (isset($post->post_id)){
-    foreach($post->terms as $term) {
-        if ($term->term_type=="category") {
+if (isset($post->post_id)) {
+    foreach ($post->terms as $term) {
+        if ($term->term_type == "category") {
             $categories_[] = $term->term_name;
             $descriptions_[] = $term->term_description;
             $parents_[] = $term->term_parent;
         }
-        if ($term->term_type=="tag") {
+        if ($term->term_type == "tag") {
             $tags_[] = $term->term_name;
         }
     }
@@ -19,12 +19,12 @@ if (isset($post->post_id)){
 $tags = [];
 $categories = [];
 foreach ($terms_all as $term) {
-        if ($term->term_type=="category") {
-            $categories[] = $term;
-        }
-        if ($term->term_type=="tag") {
-            $tags[] = $term->term_name;
-        }
+    if ($term->term_type == "category") {
+        $categories[] = $term;
+    }
+    if ($term->term_type == "tag") {
+        $tags[] = $term->term_name;
+    }
 }
 
 $_SESSION["RF"]["subfolder"] = "bangzafran/";
@@ -58,7 +58,7 @@ $_SESSION["RF"]["subfolder"] = "bangzafran/";
         background: coral;
         color: #fff!important;
     }
-    /* @if (Session::get('is_desktop'))
+    /* @if ($isDesktop)
         textarea#mceu_34 {
             height: 458px!important;
         }
@@ -258,7 +258,7 @@ $_SESSION["RF"]["subfolder"] = "bangzafran/";
 {!! _load_tinymce() !!}
 
 <script>
-var selected = ['<?php echo isset($post->post_id)?implode("','",$categories_):'' ?>'];
+var selected = ['<?php echo isset($post->post_id) ? implode("','", $categories_) : '' ?>'];
 var lsH,tmH = 0;
 $(function () {
     $('#post_date').datetimepicker({
@@ -277,12 +277,12 @@ function responsive_filemanager_callback(field_id){
     $('.pwd-upload-exists.thumbnail').html(img);
     $('#post_cover_remove').attr("checked", false);
     /*setTimeout(function(){
-        
+
     }, 100);*/
 }
 $(document).ready(function(){
     /*setTimeout(function(){
-        
+
     }, 500);*/
     $('input').on('keypress', function(e){
         key = e.keyCode;
@@ -294,7 +294,7 @@ $(document).ready(function(){
         type      : 'iframe',
         autoScale : false,
         autoSize : false,
-        beforeLoad : function() {     
+        beforeLoad : function() {
             this.width  = 900;
             this.height = 600;
         }/*,
@@ -307,7 +307,7 @@ $(document).ready(function(){
         $('.pwd-upload-new').show();
         $('.pwd-upload-exists').hide();
     });
-    tinymce.init({ 
+    tinymce.init({
         relative_urls: false,
         selector: '#post_content',
         code_dialog_height: 200,
@@ -333,7 +333,7 @@ $(document).ready(function(){
                 $par = [
                     'id'        => 'term_id',
                     'parent'    => 'term_parent',
-                    'name'      => 'term_name', 
+                    'name'      => 'term_name',
                     'print'     => 'term_tree',
                     'sl'        => isset($category->term_id)?$category->term_parent:0
                 ]
@@ -347,7 +347,7 @@ $(document).ready(function(){
             inp+= '<div class="form-group"><label class="control-label col-sm-4" for="category_desc">Description</label><div class="col-sm-6"><textarea id="category_desc" name="category_desc" class="form-control" placeholder="Category Description"></textarea></div></div>';
             inp+= '<div class="form-group"><label class="control-label col-sm-4" for="category_parent">Parent</label><div class="col-sm-6"><select id="category_parent" name="category_parent" class="form-control"><option value="">--Choose--</option>'+categories+'</select></div></div>';
             inp+= '</form>';
-        var btn = '<button type="button" class="btn btn-default" data-dismiss="modal" id="btn-modal-cancel">Cancel</button> <button type="button" class="btn btn-warning" data-dismiss="modal" id="btn-modal-add">Add</button>'; 
+        var btn = '<button type="button" class="btn btn-default" data-dismiss="modal" id="btn-modal-cancel">Cancel</button> <button type="button" class="btn btn-warning" data-dismiss="modal" id="btn-modal-add">Add</button>';
         $('.modal-title').text('Add a new category');
         $('.modal-body').html(inp);
         $('.modal-footer').html(btn);
@@ -409,7 +409,7 @@ $(document).ready(function(){
             cache: false,
             filter: function(list) {
                 return $.map(list, function(category) {
-                    return { name: category }; 
+                    return { name: category };
                 });
             }
         }
@@ -434,7 +434,7 @@ $(document).ready(function(){
             selected.push(val.name);
         }
         $('#post_category').typeahead('val', '');
-        
+
     });*/
     $('#post_category').select2({
         placeholder: "Set Category"
@@ -483,20 +483,20 @@ $(document).ready(function(){
     $.fn.select2.defaults.set('containerCssClass', 'label label-warning');
     /*resize tinymce height when add tags*/
     /*$('#post_tags').on('itemAdded', function(){
-        
+
     });*/
     /*resize tinymce height when remove tags*/
     /*$('#post_tags').on('itemRemoved', function(){
-        
+
     });*/
     /*resize tinymce height when change cover*/
     /*$('.fileinput').on('change.bs.fileinput', function(){
-        
+
     });*/
     /*resize tinymce height when remove cover*/
     /*$('a.fileinput-exists').on('click', function(){
         setTimeout(function(){
-            
+
         }, 0);
     });*/
 });

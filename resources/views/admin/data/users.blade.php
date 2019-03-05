@@ -12,7 +12,7 @@
 			<thead>
 				<tr>
 					<td width="25">No.</td>
-					@if (Session::get('is_desktop'))
+					@if ($isDesktop)
 						<td width="100">Photo</td>
 						<td width="200">Username</td>
 						<td>Full Name</td>
@@ -29,7 +29,7 @@
 					@foreach($users as $user)
 						<tr>
 							<td align="center">{{ $no++ }}</td>
-							@if (Session::get('is_desktop'))
+							@if ($isDesktop)
 								<td><img src="{{ _get_image_temp('assets/images/user/'.Session::get('template').'/'.$user->user_photo, [50]) }}" width="50"></td>
 								<td>{{ $user->user_name }}</td>
 								<td>{{ $user->user_fullname }}</td>

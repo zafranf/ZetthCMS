@@ -89,7 +89,7 @@
 			<thead>
 				<tr>
 					<td width="25">No.</td>
-					@if (Session::get('is_desktop'))
+					@if ($isDesktop)
 						<td width="80">Cover</td>
 						<td>Title</td>
 						<td width="60">Stats</td>
@@ -106,7 +106,7 @@
 						@php $link=url('post/'.$post->post_slug) @endphp
 						<tr>
 							<td align="center">{{ $no++ }}</td>
-							@if (Session::get('is_desktop'))
+							@if ($isDesktop)
 								@php $cat=[] @endphp
 								@foreach($post->categories as $category)
 									@php $cat[]='<a style="text-decoration:none;">'.$category->term_name.'</a>' @endphp

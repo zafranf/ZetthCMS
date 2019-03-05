@@ -12,7 +12,7 @@
             <thead>
                 <tr>
                     <td width="25">No.</td>
-                    @if (Session::get('is_desktop'))
+                    @if ($isDesktop)
                         <td width="100">Photo</td>
                         <td>Video Title</td>
                         <td width="50">Views</td>
@@ -28,7 +28,7 @@
                     @foreach($videos as $video)
                         <tr>
                             <td align="center">{{ $no++ }}</td>
-                            @if (Session::get('is_desktop'))
+                            @if ($isDesktop)
                                 <td><img src="http://i.ytimg.com/vi/{{ $video->post_cover }}/default.jpg" width="50"></td>
                                 <td>{{ $video->post_title }}</td>
                                 <td>{{ $video->post_visited }}</td>

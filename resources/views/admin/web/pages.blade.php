@@ -12,7 +12,7 @@
             <thead>
                 <tr>
                     <td width="25">No.</td>
-                    @if (Session::get('is_desktop'))
+                    @if ($isDesktop)
                         <td>Page Title</td>
                         <td width="300">URL</td>
                         <td width="80">Status</td>
@@ -27,7 +27,7 @@
                     @foreach($pages as $page)
                         <tr>
                             <td align="center">{{ $no++ }}</td>
-                            @if (Session::get('is_desktop'))
+                            @if ($isDesktop)
                                 <td>{{ $page->post_title }}</td>
                                 <td>{{ $page->post_slug }}</td>
                                 <td>{{ _get_status_text($page->post_status) }}</td>

@@ -12,7 +12,7 @@
             <thead>
                 <tr>
                     <td width="25">No.</td>
-                    @if (Session::get('is_desktop'))
+                    @if ($isDesktop)
                         <td>Menu Name</td>
                         <td>URL</td>
                         <td width="100">Target</td>
@@ -29,7 +29,7 @@
                     @foreach($menus as $menu)
                         <tr>
                             <td align="center">{{ $no++ }}</td>
-                            @if (Session::get('is_desktop'))
+                            @if ($isDesktop)
                                 <td>{{ $menu->menu_name }}</td>
                                 <td>{{ $menu->menu_url }}</td>
                                 <td>{{ $menu->menu_target }}</td>

@@ -12,7 +12,7 @@
             <thead>
                 <tr>
                     <td width="25">No.</td>
-                        @if (Session::get('is_desktop'))
+                        @if ($isDesktop)
                             <td width="250">Category</td>
                             <td>Description</td>
                             <td width="200">Parent</td>
@@ -28,7 +28,7 @@
                     @foreach($categories as $category)
                         <tr>
                             <td align="center">{{ $no++ }}</td>
-                            @if (Session::get('is_desktop'))
+                            @if ($isDesktop)
                                 <td>{{ $category->term_name }}</td>
                                 <td>{{ $category->term_description }}</td>
                                 <td>

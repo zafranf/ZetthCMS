@@ -12,7 +12,7 @@
             <thead>
                 <tr>
                     <td width="25">No.</td>
-                    @if (Session::get('is_desktop'))
+                    @if ($isDesktop)
                         <td width="200">Host</td>
                         <td>Text</td>
                         <td width="80">Count</td>
@@ -27,7 +27,7 @@
                     @foreach($interms as $interm)
                         <tr>
                             <td align="center">{{ $no++ }}</td>
-                            @if (Session::get('is_desktop'))
+                            @if ($isDesktop)
                                 <td>{{ $interm->interm_host }}</td>
                                 <td>{{ $interm->interm_text }}</td>
                                 <td>{{ $interm->interm_count }}</td>

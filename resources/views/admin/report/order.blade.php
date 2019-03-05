@@ -12,7 +12,7 @@
             <thead>
                 <tr>
                     <td width="25">No.</td>
-                    @if (Session::get('is_desktop'))
+                    @if ($isDesktop)
                         <td width="150">Name</td>
                         <td width="100">Phone</td>
                         <td width="200">Trip to</td>
@@ -40,7 +40,7 @@
                     @foreach($orders as $order)
                         <tr>
                             <td align="center">{{ $no++ }}</td>
-                            @if (Session::get('is_desktop'))
+                            @if ($isDesktop)
                                 <td>{{ $order->order_name }}</td>
                                 <td>{{ $order->order_phone }}</td>
                                 <td>{{ $order->order_package }}</td>

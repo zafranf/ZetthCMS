@@ -12,7 +12,7 @@
             <thead>
                 <tr>
                     <td width="25">No.</td>
-                    @if (Session::get('is_desktop'))
+                    @if ($isDesktop)
                         <td width="100">Cover</td>
                         <td>Trip Name</td>
                         <td width="200">Meeting Point</td>
@@ -29,7 +29,7 @@
                     @foreach($privates as $private)
                         <tr>
                             <td align="center">{{ $no++ }}</td>
-                            @if (Session::get('is_desktop'))
+                            @if ($isDesktop)
                                 <td><img src="{!! _get_image_temp(isset($private->post_id)?"/assets/images/upload/".$private->post_cover:'', [50]) !!}" class="img-thumbnail" width="50"></td>
                                 <td>{{ $private->post_title }}</td>
                                 <td>

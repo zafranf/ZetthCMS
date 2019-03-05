@@ -169,6 +169,17 @@
 {!! _load_js('themes/admin/AdminSC/plugins/highcharts/4.2.6/highcharts.js') !!}
 <script>
 $(function(){
+  moment.locale('id', {
+    days: [
+      'Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat', 'Sabtu'
+    ],
+    week: {
+      dow: 1,
+    },
+    months: [
+    'Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember',
+  ]
+  });
   var start = moment();
   var end = moment();
   var min = moment('{{ $apps->created_at }}');
@@ -390,23 +401,24 @@ $(function(){
     minDate: min,
     maxDate: max,
     ranges: {
-      'Today': [start, end],
-      'Yesterday': [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
+      'Hari ini': [start, end],
+      'Kemarin': [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
       /*'Last 7 Days': [moment().subtract(6, 'days'), moment()],
       'Last 30 Days': [moment().subtract(29, 'days'), moment()],*/
-      'This Week': [moment().startOf('week'), moment().endOf('week')],
-      'This Month': [moment().startOf('month'), moment().endOf('month')],
-      'All Time': [min, max],
+      'Minggu ini': [moment().startOf('week'), moment().endOf('week')],
+      'Bulan ini': [moment().startOf('month'), moment().endOf('month')],
+      'Semua': [min, max],
       /* 'Last Month': [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')] */
     },
     locale: {
-      /*firstDay: 1,
-      applyLabel: 'Apply',
-      fromLabel: 'From',
-      toLabel: 'To',
-      customRangeLabel: 'Custom Range',
-      daysOfWeek: ['Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa'],
-      monthNames: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],*/
+      firstDay: 1,
+      applyLabel: 'Atur',
+      cancelLabel: 'Batal',
+      fromLabel: 'Dari',
+      toLabel: 'Sampai',
+      customRangeLabel: 'Atur Tanggal',
+      daysOfWeek: ['Mi', 'Se', 'Sl', 'Ra', 'Ka', 'Ju', 'Sa'],
+      monthNames: ['Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember'],
       format: 'YYYY-MM-DD'
     },
     applyClass: 'btn-warning'

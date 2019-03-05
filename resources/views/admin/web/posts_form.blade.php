@@ -27,7 +27,7 @@ if (isset($post->post_id)){
 		position: absolute;
 		right: 10px;
 	}
-	/* @if (Session::get('is_desktop'))
+	/* @if ($isDesktop)
 		textarea#mceu_34 {
 			height: 458px!important;
 		}

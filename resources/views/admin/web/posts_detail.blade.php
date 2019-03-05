@@ -64,7 +64,7 @@
     <div class="panel-body no-padding-top">
         <h2>{{ $post->post_title }}</h2>
         <i class="fa fa-calendar"></i> {{ _generate_date($post->post_time, false, 'id') }} &nbsp;
-        @if (!Session::get('is_desktop'))
+        @if (!$isDesktop)
             <br>
         @endif
         <i class="fa fa-bookmark"></i> 
@@ -76,7 +76,7 @@
         @endforeach
         {{ implode($cat, ", ") }}
         <br>
-        @if (Session::get('is_desktop'))
+        @if ($isDesktop)
             <a class="pwd-share-button" onclick="_open_window('https://www.facebook.com/sharer/sharer.php?u={{ $link }}&amp;src=sdkpreparse')"><i class="fa fa-facebook-square"></i> Share</a>
             <a class="pwd-share-button" onclick="_open_window('https://twitter.com/intent/tweet?text={{ $post->post_title.' '.$link }}')"><i class="fa fa-twitter"></i> Tweet</a>
             <a class="pwd-share-button" onclick="_open_window('https://plus.google.com/share?url={{ $link }}')"><i class="fa fa-google-plus"></i> Share</a>
