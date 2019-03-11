@@ -34,17 +34,17 @@
 								<div class="fileinput-preview fileinput-exists thumbnail"></div>
 								<div>
 									<span class="btn btn-default btn-file">
-										<span class="fileinput-new">Select</span>
-										<span class="fileinput-exists">Change</span>
+										<span class="fileinput-new">Pilih</span>
+										<span class="fileinput-exists">Ganti</span>
 										<input name="logo" id="logo" type="file" accept="image/*">
 									</span>
-									<a href="#" class="btn btn-default fileinput-exists" data-dismiss="fileinput">Remove</a>
+									<a href="#" class="btn btn-default fileinput-exists" data-dismiss="fileinput">Hapus</a>
 								</div>
 							</div>
 						</div>
 					</div>
 					<div class="form-group">
-						<label for="name" class="col-md-4 control-label"><abbr title="Max size 50x50 pixels">Icon</abbr></label>
+						<label for="name" class="col-md-4 control-label"><abbr title="Max size 50x50 pixels">Ikon</abbr></label>
 						<div class="col-md-8">
 							<div class="fileinput fileinput-new input-group" data-provides="fileinput">
 								<div class="form-control" data-trigger="fileinput">
@@ -54,30 +54,30 @@
 									</span>
 								</div>
 								<span class="input-group-addon btn btn-file">
-									<span class="fileinput-new">Select</span>
-									<span class="fileinput-exists">Change</span>
+									<span class="fileinput-new">Pilih</span>
+									<span class="fileinput-exists">Ganti</span>
 									<input type="file" name="icon" id="icon" accept="image/*">
 								</span>
-								<a href="#" class="input-group-addon btn fileinput-exists" data-dismiss="fileinput">Remove</a>
+								<a href="#" class="input-group-addon btn fileinput-exists" data-dismiss="fileinput">Hapus</a>
 							</div>
 						</div>
 					</div>
 					<div class="form-group">
-						<label for="name" class="col-md-4 control-label">Site Name</label>
+						<label for="name" class="col-md-4 control-label">Nama Situs</label>
 						<div class="col-md-8">
-							<input type="text" class="form-control" name="name" value="{{ $data->name ?? '' }}" placeholder="Site Name" maxlength="50">
+							<input type="text" class="form-control" name="name" value="{{ $data->name ?? '' }}" placeholder="Nama situs" maxlength="50">
 						</div>
 					</div>
 					<div class="form-group">
-						<label for="slogan" class="col-md-4 control-label">Slogan</label>
+						<label for="slogan" class="col-md-4 control-label">Tagline</label>
 						<div class="col-md-8">
-							<input type="text" class="form-control" name="slogan" value="{{ $data->slogan ?? '' }}" placeholder="Your slogan here..">
+							<input type="text" class="form-control" name="tagline" value="{{ $data->tagline ?? '' }}" placeholder="Site Tagline">
 						</div>
 					</div>
 					<div class="form-group">
 						<label for="email" class="col-md-4 control-label">Email</label>
 						<div class="col-md-8">
-							<input type="text" class="form-control" name="email" value="{{ $data->email ?? '' }}" placeholder="your@email.com">
+							<input type="text" class="form-control" name="email" value="{{ $data->email ?? '' }}" placeholder="email@domain.com">
 						</div>
 					</div>
 					<div class="form-group">
@@ -86,48 +86,48 @@
 							<input type="text" class="form-control" name="phone" value="{{ $data->phone ?? '' }}" placeholder="(123) 12345678">
 						</div>
 					</div>
-					<div class="form-group" {!! (Auth::user()->user_id!=1)?'style="display:none;"':'' !!}>
+					{{-- <div class="form-group" {!! (Auth::user()->id != 1)?'style="display:none;"':'' !!}>
 						<label for="max_login_failed" class="col-md-4 control-label">Max Login Failed</label>
 						<div class="col-md-8">
 							<input type="text" class="form-control" name="max_login_failed" value="{{ $data->max_login_failed ?? '' }}" maxlength="1">
 							<span class="text-danger">{{ ($errors->has('max_login_failed'))?$errors->first('max_login_failed'):'' }}</span>
 						</div>
-					</div>
-					<div class="form-group" {!! (Auth::user()->user_id!=1)?'style="display:none;"':'' !!}>
+					</div> --}}
+					{{-- <div class="form-group" {!! (Auth::user()->id != 1)?'style="display:none;"':'' !!}>
 						<label for="lockout_time" class="col-md-4 control-label">Lockout Time <small>(in minutes)</small></label>
 						<div class="col-md-8">
 							<input type="text" class="form-control" name="lockout_time" value="{{ $data->lockout_time ?? '' }}" maxlength="2">
 							<span class="text-danger">{{ ($errors->has('lockout_time'))?$errors->first('lockout_time'):'' }}</span>
 						</div>
-					</div>
-					<div class="form-group" {!! (Auth::user()->user_id!=1)?'style="display:none;"':'' !!}>
-						<label for="perpage" class="col-md-4 control-label">Data Perpage</label>
+					</div> --}}
+					<div class="form-group" {!! (Auth::user()->id != 1)?'style="display:none;"':'' !!}>
+						<label for="perpage" class="col-md-4 control-label">Data Perhalaman</label>
 						<div class="col-md-8">
-							<input id="perpage" name="perpage" class="form-control" value="{{ $data->perpage ?? 0 }}" placeholder="Show data perpage">
+							<input id="perpage" name="perpage" class="form-control" value="{{ $data->perpage ?? 0 }}" placeholder="Tampilkan data perhalaman">
 						</div>
 					</div>
 					<div class="form-group">
-						<label for="enable" class="col-md-4 control-label">Enable</label>
+						<label for="enable" class="col-md-4 control-label">Aktifkan</label>
 						<div class="col-md-8">
 							<div class="checkbox">
 								<div class="col-xs-6 col-sm-3">
 									<label>
-										<input type="checkbox" name="enable_subscribe" {{ ($data->enable_subscribe==0)?'':'checked' }}> Subscribe
+										<input type="checkbox" name="enable_subscribe" {{ (!$data->enable_subscribe)?'':'checked' }}> Langganan
 									</label>
 								</div>
 								<div class="col-xs-6 col-sm-3">
 									<label>
-										<input type="checkbox" name="enable_comment" {{ ($data->enable_comment==0)?'':'checked' }}> Comment
+										<input type="checkbox" name="enable_comment" {{ (!$data->enable_comment)?'':'checked' }}> Komentar
 									</label>
 								</div>
 								<div class="col-xs-6 col-sm-3">
 									<label>
-										<input type="checkbox" name="enable_like" {{ ($data->enable_like==0)?'':'checked' }}> Like
+										<input type="checkbox" name="enable_like" {{ (!$data->enable_like)?'':'checked' }}> Sukai
 									</label>
 								</div>
 								<div class="col-xs-6 col-sm-3">
 									<label>
-										<input type="checkbox" name="enable_share" {{ ($data->enable_share==0)?'':'checked' }}> Share
+										<input type="checkbox" name="enable_share" {{ (!$data->enable_share)?'':'checked' }}> Bagikan
 									</label>
 								</div>
 							</div>
@@ -137,24 +137,24 @@
 						<label for="status" class="col-md-4 control-label">Status</label>
 						<div class="col-md-8">
 							<select id="status" name="status" class="form-control pwd-select">
-								<option value="1" {{ ($data->status==1)?'selected':'' }}>Active</option>
-								<option value="0" {{ ($data->status==0)?'selected':'' }}>Coming Soon</option>
-								<option value="2" {{ ($data->status==2)?'selected':'' }}>Maintenance</option>
+								<option value="1" {{ ($data->status == 1) ? 'selected' : '' }}>Active</option>
+								<option value="0" {{ ($data->status == 0) ? 'selected' : '' }}>Coming Soon</option>
+								<option value="2" {{ ($data->status == 2) ? 'selected' : '' }}>Maintenance</option>
 							</select>
 						</div>
 					</div>
-					<div class="form-group" {!! ($data->status==1)?'style="display:none;"':'' !!} id="d_active_at">
+					<div class="form-group" {!! ($data->status == 1) ? 'style="display:none;"' : '' !!} id="d_active_at">
 						<label for="active_at" class="col-md-4 control-label">Open at</label>
 						<div class="col-md-8">
-							<input type="text" class="form-control" id="i_active_at" name="active_at" value="{{ isset($data->id)?date("Y-m-d", strtotime($data->active_at)):'' }}" {!! ($data->status==1)?'readonly':'' !!}>
+							<input type="text" class="form-control" id="i_active_at" name="active_at" value="{{ isset($data->id)?date("Y-m-d", strtotime($data->active_at)) : '' }}" {!! ($data->status == 1) ? 'readonly' : '' !!}>
 						</div>
 					</div>
 				</div>
 				<div class="col-md-6">
-					<h4>Social Media <span class="btn btn-default btn-xs pull-right" id="btn-add-socmed"><i class="fa fa-plus"></i> Add</span></h4>
+					<h4>Media Sosial <span class="btn btn-default btn-xs pull-right" id="btn-add-socmed"><i class="fa fa-plus"></i> Tambah</span></h4>
 					<hr>
 					<div class="form-group">
-						<label for="label" class="col-md-4 control-label">Socmed</label>
+						<label for="label" class="col-md-4 control-label">Akun</label>
 						<div class="col-md-8">
 							@if (isset($socmed_data) && count($socmed_data)>0)
 								@foreach($socmed_data as $key => $val)
@@ -164,7 +164,7 @@
 								<div id="div-socmed-{{ $rand }}">
 									<div class="col-md-3 col-xs-6 no-padding">
 										<select name="socmed_id[]" class="form-control pwd-select">
-                      <option value="">--Choose--</option>
+                      <option value="">--Pilih--</option>
                       @if(isset($socmeds))
                         @foreach($socmeds as $socmed)
                           @php 
@@ -176,15 +176,15 @@
 										</select>
 									</div>
 									<div class="col-md-9 col-xs-6 no-padding">
-										@if ($key>0)
+										@if ($key > 0)
 											<div class="input-group">
-												<input type="text" class="form-control" name="socmed_uname[]" placeholder="Account Name" value="{{ $val->socmed_username }}">
+												<input type="text" class="form-control" name="socmed_uname[]" placeholder="Nama/ID akun" value="{{ $val->socmed_username }}">
 												<span class="input-group-btn">
 													<button type="button" class="btn" style="background:white;border:1px solid #ccc;" onclick="_remove('#div-socmed-{{ $rand }}')"><i class="fa fa-minus"></i></button
 												</span>
 											</div>
 										@else
-											<input type="text" class="form-control" name="socmed_uname[]" placeholder="Account Name" value="{{ $val->socmed_username }}">
+											<input type="text" class="form-control" name="socmed_uname[]" placeholder="Nama/ID akun" value="{{ $val->socmed_username }}">
 										@endif
 									</div>
 								</div>
@@ -192,7 +192,7 @@
 							@else
 								<div class="col-md-3 col-xs-6 no-padding">
 									<select name="socmed_id[]" class="form-control pwd-select">
-                    <option value="">--Choose--</option>
+                    <option value="">--Pilih--</option>
                     @if (isset($socmeds))
                       @foreach($socmeds as $socmed)
                         <option value="{{ $socmed->socmed_id }}">{{ $socmed->socmed_name }}</option>
@@ -201,44 +201,44 @@
 									</select>
 								</div>
 								<div class="col-md-9 col-xs-6 no-padding">
-									<input type="text" class="form-control" name="socmed_uname[]" placeholder="Account Name">
+									<input type="text" class="form-control" name="socmed_uname[]" placeholder="Nama/ID akun">
 								</div>
 							@endif
 							<div id="div-socmed"></div>
 						</div>
 					</div>
-					<h4>SEO Setting</h4>
+					<h4>Pengaturan SEO</h4>
 					<hr>
 					<div class="form-group">
-						<label for="keyword" class="col-md-4 control-label">Keywords</label>
+						<label for="keyword" class="col-md-4 control-label">Kata Kunci</label>
 						<div class="col-md-8">
-							<input type="text" id="keyword" class="form-control" name="keyword" value="{{ $data->keyword ?? '' }}" placeholder="Press enter to confirm">
+							<input type="text" id="keyword" class="form-control" name="keyword" value="{{ $data->keyword ?? '' }}" placeholder="Enter untuk konfirmasi">
 						</div>
 					</div>
 					<div class="form-group">
-						<label for="description" class="col-md-4 control-label">Description</label>
+						<label for="description" class="col-md-4 control-label">Deskripsi</label>
 						<div class="col-md-8">
-							<textarea name="description" class="form-control" rows="5" placeholder="Your Site Description">{{ $data->description ?? '' }}</textarea>
+							<textarea name="description" class="form-control" rows="5" placeholder="Your Site Deskripsi singkat mengenai situs">{{ $data->description ?? '' }}</textarea>
 						</div>
 					</div>
 					<div class="form-group">
 						<label for="phone" class="col-md-4 control-label">Google Analytics</label>
 						<div class="col-md-8">
-							<input type="text" class="form-control" name="ga" value="{{ $data->ga ?? '' }}" placeholder="Google Analytics Code">
+							<input type="text" class="form-control" name="google_analytics" value="{{ $data->google_analytics ?? '' }}" placeholder="Kode Lacak Google Analytics">
 						</div>
 					</div>
-					<h4>Location</h4>
+					<h4>Lokasi</h4>
 					<hr>
 					<div class="form-group">
-						<label for="address" class="col-md-4 control-label">Address</label>
+						<label for="address" class="col-md-4 control-label">Alamat</label>
 						<div class="col-md-8">
-							<textarea name="address" class="form-control" rows="5" placeholder="Complete Address">{{ $data->address ?? '' }}</textarea>
+							<textarea name="address" class="form-control" rows="5" placeholder="Alamat lengkap">{{ $data->address ?? '' }}</textarea>
 						</div>
 					</div>
 					<div class="form-group">
-						<label for="location" class="col-md-4 control-label">Coordinate</label>
+						<label for="location" class="col-md-4 control-label">Koordinat</label>
 						<div class="col-md-8">
-							<input type="text" class="form-control" name="location" value="{{ $data->location ?? '' }}" placeholder="Latitude, Longitude">
+							<input type="text" class="form-control" name="location" value="{{ $data->location ?? '' }}" placeholder="Lintang, Bujur">
 						</div>
 					</div>
 				</div>

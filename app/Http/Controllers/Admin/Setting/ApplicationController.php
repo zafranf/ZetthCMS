@@ -42,7 +42,7 @@ class ApplicationController extends AdminController
         $data = [
             'current_url' => $this->current_url,
             'page_title' => $this->page_title,
-            'page_subtitle' => 'Sunting Aplikasi',
+            'page_subtitle' => 'Aplikasi',
             'data' => Application::find(1),
             'breadcrumbs' => $this->breadcrumbs,
         ];
@@ -105,7 +105,7 @@ class ApplicationController extends AdminController
         /* validation */
         $this->validate($r, [
             'name' => 'required',
-            'logo' => 'dimensions:max_height=800,max_width=800|max:512',
+            'logo' => 'dimensions:max_height=500,max_width=500|max:512',
         ]);
 
         /* save data */
