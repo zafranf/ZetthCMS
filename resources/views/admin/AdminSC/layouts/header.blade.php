@@ -7,9 +7,10 @@
   <meta name="robots" content="noindex, nofollow">
   <meta name="csrf-token" content="{{ csrf_token() }}">
 
-  <link rel="icon" href="{{ _get_image('/images/' . $apps->logo) }}" type="image/x-icon"/>
-  <link rel="shortcut icon" type="image/x-icon" href="{{ _get_image('/images/' . $apps->logo) }}" />
   <title>{{ $page_title }} | {{ $apps->name }}</title>
+
+  <link rel="icon" type="image/x-icon" href="{{ _get_image('/images/' . $apps->logo) }}" />
+  <link rel="shortcut icon" type="image/x-icon" href="{{ _get_image('/images/' . $apps->logo) }}" />
 
   {{-- Fonts --}}
   <link href="https://fonts.googleapis.com/css?family=Lato:100,300,400" rel='stylesheet' type='text/css'>
@@ -19,6 +20,7 @@
   {!! _load_css('themes/admin/AdminSC/plugins/bootstrap/3.3.6/css/bootstrap.min.css') !!}
   {!! _load_css('themes/admin/AdminSC/css/app.css') !!}
   @yield('styles')
+
 </head>
 
 <body id="app-layout">

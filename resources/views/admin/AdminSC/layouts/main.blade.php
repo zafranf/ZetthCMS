@@ -46,7 +46,7 @@
       </div>
     </div>
 
-    {{ getBreadcrumb($breadcrumbs) }}
+    {{ generateBreadcrumb($breadcrumbs) }}
   </nav>
 
   <div class="page-header" id="page-header">

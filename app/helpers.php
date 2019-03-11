@@ -101,11 +101,12 @@ if (!function_exists('bool')) {
      */
     function bool($str = "")
     {
+        $true = ['true', 't', 'yes', 'y', '1', 'on'];
+
         if (is_string($str) || is_int($str)) {
             $str = strtolower(trim($str));
-            if ($str == 'true' || $str == 't' || $str == 'yes' || $str == 'y' || $str == '1' || $str == 'on') {
-                return true;
-            }
+
+            return in_array($str, $true);
         }
 
         return false;
@@ -194,7 +195,7 @@ if (!function_exists('_load_css')) {
         if (file_exists(public_path($file))) {
             $mtime = filemtime(public_path($file));
 
-            return '<link href="' . url($file) . '?' . $mtime . '" rel="stylesheet">';
+            return '<link href="' . url($file) . '?v=' . $mtime . '" rel="stylesheet">';
         }
 
         return null;
@@ -213,7 +214,7 @@ if (!function_exists('_load_js')) {
             $mtime = filemtime(public_path($file));
             $async = ($async) ? ' async' : '';
 
-            return '<script src="' . url($file) . '?' . $mtime . '"' . $async . '></script>';
+            return '<script src="' . url($file) . '?v=' . $mtime . '"' . $async . '></script>';
         }
 
         return null;
@@ -638,13 +639,13 @@ if (!function_exists('generateMenuArray')) {
     }
 }
 
-if (!function_exists('getBreadcrumb')) {
+if (!function_exists('generateBreadcrumb')) {
     /**
-     * [getBreadcrumb description]
+     * [generateBreadcrumb description]
      * @param  [type] $breadcrumb [description]
      * @return [type]             [description]
      */
-    function getBreadcrumb($breadcrumb)
+    function generateBreadcrumb($breadcrumb)
     {
         echo '<ol class="breadcrumb">';
         foreach ($breadcrumb as $bread) {
@@ -660,8 +661,25 @@ if (!function_exists('getBreadcrumb')) {
                 echo '</a></li>';
             }
         }
-        // echo '<span class="today pull-right">' . _generate_date(date("Y-m-d"), true) . '</span>';
+        echo '<span class="today pull-right">' . generateDate(date("Y-m-d")) . '</span>';
         echo '</ol>';
+    }
+}
+
+if (!function_exists('generateDate')) {
+    /**
+     * [generateDate description]
+     * @param  [type] $date [description]
+     * @param  [type] $lang [description]
+     * @return [type]             [description]
+     */
+    function generateDate($date, $lang = 'id')
+    {
+        $date = $date ?? date("Y-m-d");
+        $format = ($lang == 'id') ? '%A, %d %B %Y' : '%A, %B %d %Y';
+
+        \Carbon\Carbon::setLocale($lang);
+        return \Carbon\Carbon::parse($date)->formatLocalized($format);
     }
 }
 

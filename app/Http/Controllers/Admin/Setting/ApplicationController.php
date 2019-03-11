@@ -102,6 +102,7 @@ class ApplicationController extends AdminController
      */
     public function update(Request $r, Application $app)
     {
+        dd($r->input(), $r->file());
         /* validation */
         $this->validate($r, [
             'name' => 'required',
