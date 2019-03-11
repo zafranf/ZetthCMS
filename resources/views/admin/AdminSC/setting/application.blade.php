@@ -246,7 +246,7 @@
 			</div>
 			<div class="form-group">
 				<div class="col-md-offset-2 col-md-10">
-				  {{-- {{ _get_button_post() }} --}}
+				  {{ _get_button_post() }}
 				</div>
 			</div>
 		</form>

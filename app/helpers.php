@@ -61,6 +61,21 @@ if (!function_exists('_get_access_buttons')) {
     }
 }
 
+if (!function_exists('_get_button_post')) {
+    /**
+     * [_get_button_post description]
+     * @param  string $page [description]
+     * @return [type]       [description]
+     */
+    function _get_button_post($page = '')
+    {
+        echo '<div class="box-footer">';
+        echo '<button type="submit" class="btn btn-warning">Simpan</button>';
+        echo ' <a class="btn btn-default" href="' . url()->previous() . '">Batal</a>';
+        echo '</div>';
+    }
+}
+
 if (!function_exists('sequence')) {
     /**
      * Undocumented function
