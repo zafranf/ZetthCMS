@@ -33,6 +33,6 @@ class DashboardController extends AdminController
             'breadcrumbs' => $this->breadcrumbs,
         ];
 
-        return view('admin.dashboard', $data);
+        return view('admin.AdminSC.dashboard', $data);
     }
 }

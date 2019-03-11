@@ -1,7 +1,7 @@
 @php 
 $page_title = 'Masuk Aplikasi';
 @endphp
-@include('admin.layouts.header')
+@include('admin.AdminSC.layouts.header')
   <div class="container">
     <div class="row">
       <div class="col-md-6 col-md-offset-3">
@@ -72,4 +72,4 @@ $page_title = 'Masuk Aplikasi';
   <div class="copyright" style="padding-left: 10px;">
     Powered by <a href="https://porisweb.id" target="_blank">Poris Webdev</a>
   </div>
-@include('admin.layouts.footer')
+@include('admin.AdminSC.layouts.footer')

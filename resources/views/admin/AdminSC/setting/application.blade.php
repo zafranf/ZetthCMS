@@ -1,4 +1,4 @@
-@extends('admin.layouts.main')
+@extends('admin.AdminSC.layouts.main')
 
 @section('styles')
 {!! _load_css('themes/admin/AdminSC/plugins/jasny-bootstrap/3.1.3/css/jasny-bootstrap.min.css') !!}

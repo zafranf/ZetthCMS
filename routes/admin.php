@@ -2,11 +2,11 @@
 Route::get('/', function () {
     return redirect('/login');
 });
-Route::get('/login', 'Auth\LoginController@showLoginForm');
-Route::post('/login', 'Auth\LoginController@login');
-Route::post('/logout', 'Auth\LoginController@logout');
+Route::get('/login', 'Admin\Auth\LoginController@showLoginForm');
+Route::post('/login', 'Admin\Auth\LoginController@login');
+Route::post('/logout', 'Admin\Auth\LoginController@logout');
 if (env('APP_DEBUG')) {
-    Route::get('/logout', 'Auth\LoginController@logout');
+    Route::get('/logout', 'Admin\Auth\LoginController@logout');
 }
 
 Route::middleware('auth')->group(function () {

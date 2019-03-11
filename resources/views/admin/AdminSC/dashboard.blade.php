@@ -1,4 +1,4 @@
-@extends('admin.layouts.main')
+@extends('admin.AdminSC.layouts.main')
 
 @section('styles')
 {!! _load_css('themes/admin/AdminSC/plugins/bootstrap/daterangepicker/2.1.24/daterangepicker.css') !!}

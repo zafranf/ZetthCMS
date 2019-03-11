@@ -47,7 +47,7 @@ class ApplicationController extends AdminController
             'breadcrumbs' => $this->breadcrumbs,
         ];
 
-        return view('admin.setting.application', $data);
+        return view('admin.AdminSC.setting.application', $data);
     }
 
     /**

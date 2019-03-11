@@ -1,4 +1,4 @@
-@include('admin.layouts.header')
+@include('admin.AdminSC.layouts.header')
   <nav class="navbar navbar-default navbar-fixed-top">
     <div class="container-fluid">
       <div class="navbar-header">
@@ -116,4 +116,4 @@
   {!! _load_js('themes/admin/AdminSC/js/app.js') !!}
   @yield('scripts')
   <script>_tc();</script>
-@include('admin.layouts.footer')
+@include('admin.AdminSC.layouts.footer')
