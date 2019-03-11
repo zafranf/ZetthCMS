@@ -542,7 +542,7 @@ if (!function_exists('getMenu')) {
                 return $arr->role_id;
             });
 
-            \Cache::put($cacheRoleIdName, $roles_id, 10);
+            \Cache::put($cacheRoleIdName, $roles_id, 10 * 60);
         }
 
         $cacheMenuName = 'cacheMenu-menu-user' . $user->id;
@@ -562,7 +562,7 @@ if (!function_exists('getMenu')) {
                 }
             }
 
-            \Cache::put($cacheMenuName, $menus, 10);
+            \Cache::put($cacheMenuName, $menus, 10 * 60);
         }
 
         return $menus;
@@ -676,7 +676,7 @@ if (!function_exists('generateBreadcrumb')) {
                 echo '</a></li>';
             }
         }
-        echo '<span class="today pull-right">' . generateDate(date("Y-m-d")) . '</span>';
+        echo '<span class="today pull-right">' . generateDate() . '</span>';
         echo '</ol>';
     }
 }
@@ -688,13 +688,12 @@ if (!function_exists('generateDate')) {
      * @param  [type] $lang [description]
      * @return [type]             [description]
      */
-    function generateDate($date, $lang = 'id')
+    function generateDate($date = null, $lang = 'id')
     {
         $date = $date ?? date("Y-m-d");
-        $format = ($lang == 'id') ? '%A, %d %B %Y' : '%A, %B %d %Y';
+        $format = ($lang == 'id') ? 'dddd, Do MMMM YYYY' : 'dddd, MMMM Do YYYY';
 
-        \Carbon\Carbon::setLocale($lang);
-        return \Carbon\Carbon::parse($date)->formatLocalized($format);
+        return \Carbon\Carbon::parse($date)->locale($lang)->isoFormat($format);
     }
 }
 
