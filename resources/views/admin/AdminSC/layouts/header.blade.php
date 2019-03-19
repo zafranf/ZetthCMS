@@ -19,6 +19,7 @@
   {{-- Styles --}}
   {!! _load_css('themes/admin/AdminSC/plugins/bootstrap/3.3.6/css/bootstrap.min.css') !!}
   {!! _load_css('themes/admin/AdminSC/css/app.css') !!}
+  {!! _load_css('themes/admin/AdminSC/plugins/sweetalert2/css/sweetalert2.min.css') !!}
   @yield('styles')
 
 </head>

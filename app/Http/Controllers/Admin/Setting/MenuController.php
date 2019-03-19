@@ -16,8 +16,14 @@ class MenuController extends AdminController
      */
     public function __construct()
     {
-        $this->current_url = url('/setting/menus');
+        parent::__construct();
+        $this->current_url = url($this->adminPath . '/setting/application');
         $this->page_title = 'Pengaturan Menu';
+        $this->breadcrumbs[] = [
+            'page' => 'Pengaturan',
+            'icon' => '',
+            'url' => $this->current_url,
+        ];
     }
 
     /**
@@ -27,14 +33,22 @@ class MenuController extends AdminController
      */
     public function index(Request $r)
     {
+        $this->breadcrumbs[] = [
+            'page' => 'Menu',
+            'icon' => '',
+            'url' => '',
+        ];
+
         /* set variable for view */
         $data = [
             'current_url' => $this->current_url,
             'page_title' => $this->page_title,
             'page_subtitle' => 'Daftar Menu',
+            'menus' => Menu::all(),
+            'breadcrumbs' => $this->breadcrumbs,
         ];
 
-        return view('admin.setting.menu', $data);
+        return view('admin.AdminSC.setting.menu', $data);
     }
 
     /**

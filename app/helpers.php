@@ -49,13 +49,13 @@ if (!function_exists('_get_access_buttons')) {
             }
         } else {
             if ($user->can('read-' . $xname[0])) {
-                echo "actions += '&nbsp;<a href=\"' + url + '\" class=\"btn btn-outline-success btn-sm\" data-toggle=\"tooltip\" data-original-title=\"Detail\"><i class=\"fe fe-eye\"></i></a>';";
+                echo "actions += '&nbsp;<a href=\"' + url + '\" class=\"btn btn-default btn-sm\" data-toggle=\"tooltip\" data-original-title=\"Detail\"><i class=\"fa fa-eye\"></i></a>';";
             }
             if ($user->can('update-' . $xname[0])) {
-                echo "actions += '&nbsp;<a href=\"' + url + '/edit\" class=\"btn btn-outline-warning btn-sm\" data-toggle=\"tooltip\" data-original-title=\"Edit\"><i class=\"fe fe-edit\"></i></a>';";
+                echo "actions += '&nbsp;<a href=\"' + url + '/edit\" class=\"btn btn-default btn-sm\" data-toggle=\"tooltip\" data-original-title=\"Edit\"><i class=\"fa fa-edit\"></i></a>';";
             }
             if ($user->can('delete-' . $xname[0])) {
-                echo "actions += '&nbsp;<a href=\"#\" onclick=\"' + del + '\" class=\"btn btn-outline-danger btn-sm\" data-toggle=\"tooltip\" data-original-title=\"Hapus\"><i class=\"fe fe-trash-2\"></i></a>';";
+                echo "actions += '&nbsp;<a href=\"#\" onclick=\"' + del + '\" class=\"btn btn-default btn-sm\" data-toggle=\"tooltip\" data-original-title=\"Hapus\"><i class=\"fa fa-trash\"></i></a>';";
             }
         }
     }

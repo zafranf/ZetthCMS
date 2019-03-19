@@ -55,6 +55,20 @@ function _get_slug(txt) {
         .toLowerCase();
 }
 
+function _get_status_text(status = 0, par = []) {
+    /* check custom parameter */
+    if (par.length == 0) {
+        par = ['Nonaktif', 'Aktif'];
+    }
+
+    /* generate text */
+    if (status == 0) {
+        return '<span class="tag bg-danger text-center text-white">' + par[0] + '</span>';
+    } else {
+        return '<span class="tag bg-success text-cente text-white"">' + par[1] + '</span>';
+    }
+}
+
 function _delete(ID = 0, PAGE = '') {
     if (!CONNECT) {
         return false;
@@ -63,7 +77,7 @@ function _delete(ID = 0, PAGE = '') {
     var formDel = '<form id="form-delete" class="form-delete" action="' + SITE_URL + '/' + PAGE + '/' + ID + '" method="post">';
     formDel += '<input type="hidden" name="_method" value="DELETE">';
     formDel += '<input type="hidden" name="_token" value="' + TOKEN + '">';
-    formDel += '<label style="font-weight:normal;"><input type="checkbox" name="hard_delete"> Delete permanently</label>';
+    // formDel += '<label style="font-weight:normal;"><input type="checkbox" name="hard_delete"> Delete permanently</label>';
     formDel += '</form>';
 
     swal({

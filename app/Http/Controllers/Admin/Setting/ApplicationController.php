@@ -41,6 +41,7 @@ class ApplicationController extends AdminController
             'url' => '',
         ];
 
+        /* set variable for view */
         $data = [
             'current_url' => $this->current_url,
             'page_title' => $this->page_title,
