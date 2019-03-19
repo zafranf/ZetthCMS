@@ -170,11 +170,12 @@ if (!function_exists('_get_image')) {
      */
     function _get_image($image = "", $default = 'assets/images/no-image2.png')
     {
-        $img = public_path($image);
+        $img = storage_path('app/public/' . $image);
         if (file_exists($img) && !is_dir($img)) {
-            $img = url($image);
+            $mtime = filemtime($img);
+            $img = asset('/storage/' . $image) . '?v=' . $mtime;
         } else {
-            $img = url($default);
+            $img = asset('/storage/' . $default);
         }
 
         return $img;
@@ -701,10 +702,10 @@ if (!function_exists('urls')) {
     /**
      *
      */
-    function urls($url, $secure = false)
+    function urls($url, $parameters = [], $secure = false)
     {
         if (bool($secure) || env('FORCE_HTTPS', false)) {
-            return url_secure($url);
+            return secure_url($url);
         }
 
         return url($url);

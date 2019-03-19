@@ -4,6 +4,8 @@ namespace App\Http\Controllers\Admin\Setting;
 
 use App\Http\Controllers\Admin\AdminController;
 use App\Models\Application;
+use App\Models\Socmed;
+use App\Models\SocmedData;
 use Illuminate\Http\Request;
 
 class ApplicationController extends AdminController
@@ -43,9 +45,14 @@ class ApplicationController extends AdminController
             'current_url' => $this->current_url,
             'page_title' => $this->page_title,
             'page_subtitle' => 'Aplikasi',
-            'data' => Application::find(1),
+            // 'config' => Application::find(1),
             'breadcrumbs' => $this->breadcrumbs,
         ];
+
+        $data['socmeds'] = Socmed::where('status', 1)->get();
+        $data['socmed_data'] = SocmedData::where([
+            'type' => 'config',
+        ])->with('socmed')->get();
 
         return view('admin.AdminSC.setting.application', $data);
     }
@@ -97,38 +104,87 @@ class ApplicationController extends AdminController
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $r
-     * @param  \App\Models\Application  $app
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $r, Application $app)
+    public function update(Request $r, $id)
     {
-        dd($r->input(), $r->file());
+        // dd($r->input(), $r->file());
         /* validation */
         $this->validate($r, [
-            'name' => 'required',
+            'name' => 'required|max:50',
+            // 'description' => 'required',
+            // 'keyword' => 'required',
+            // 'email' => 'required|email',
+            'email' => 'email|nullable',
             'logo' => 'dimensions:max_height=500,max_width=500|max:512',
+            'icon' => 'dimensions:max_height=50,max_width=50|max:128',
+            'perpage' => 'integer|min:3',
         ]);
 
         /* save data */
-        $app->name = str_sanitize($r->input('name'));
-        $app->description = str_sanitize($r->input('description'));
+        $app = Application::find($id);
+        $app->name = $r->input('name');
+        $app->description = $r->input('description');
+        $app->keyword = $r->input('keyword');
+        $app->tagline = $r->input('tagline');
         $app->status = bool($r->input('status')) ? 1 : 0;
-        $app->save();
-
+        $app->active_at = $r->input('active_at');
+        $app->email = $r->input('email');
+        $app->address = $r->input('address');
+        $app->phone = $r->input('phone');
+        $app->coordinate = str_replace(" ", "", $r->input('coordinate'));
+        $app->perpage = $r->input('perpage');
+        $app->enable_subscribe = bool($r->enable_subscribe) ? 1 : 0;
+        $app->enable_like = bool($r->enable_like) ? 1 : 0;
+        $app->enable_share = bool($r->enable_share) ? 1 : 0;
+        $app->enable_comment = bool($r->enable_comment) ? 1 : 0;
+        $app->google_analytics = $r->input('google_analytics');
         /* upload logo */
         if ($r->hasFile('logo')) {
             $file = $r->file('logo');
             $par = [
                 'file' => $file,
-                'folder' => '/images/',
+                'folder' => '/assets/images/',
                 'name' => 'logo',
                 'type' => $file->getMimeType(),
                 'ext' => $file->getClientOriginalExtension(),
             ];
 
-            if ($this->uploadImage($par)) {
+            if ($this->uploadImage($par, true)) {
                 $app->logo = $par['name'] . '.' . $par['ext'];
-                $app->save();
+                // $app->save();
+            }
+        }
+        /* upload icon */
+        if ($r->hasFile('icon')) {
+            $file = $r->file('icon');
+            $par = [
+                'file' => $file,
+                'folder' => '/assets/images/',
+                'name' => 'icon',
+                'type' => $file->getMimeType(),
+                'ext' => $file->getClientOriginalExtension(),
+            ];
+
+            if ($this->uploadImage($par)) {
+                $app->icon = $par['name'] . '.' . $par['ext'];
+                // $app->save();
+            }
+        }
+        $app->save();
+
+        /* processing socmed */
+        $del = SocmedData::where([
+            'type' => 'config',
+        ])->forceDelete();
+        foreach ($r->input('socmed_id') as $key => $val) {
+            if ($r->input('socmed_id')[$key] != "" && $r->input('socmed_uname')[$key] != "") {
+                $socmed = new SocmedData;
+                $socmed->username = $r->input('socmed_uname')[$key];
+                $socmed->type = 'config';
+                $socmed->socmed_id = $r->input('socmed_id')[$key];
+                $socmed->save();
             }
         }
 

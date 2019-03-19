@@ -13,11 +13,13 @@ class CreateSocmedDatasTable extends Migration
      */
     public function up()
     {
-        Schema::create('socmed_datas', function (Blueprint $table) {
+        Schema::create('socmed_data', function (Blueprint $table) {
             $table->string('username');
             $table->enum('type', ['config', 'user'])->default('user');
             $table->integer('socmed_id')->unsigned();
             $table->integer('data_id')->unsigned()->nullable()->index();
+            $table->timestamps();
+            $table->softDeletes();
         });
     }
 
@@ -28,6 +30,6 @@ class CreateSocmedDatasTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('socmed_datas');
+        Schema::dropIfExists('socmed_data');
     }
 }
