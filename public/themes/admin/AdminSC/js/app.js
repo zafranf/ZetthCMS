@@ -25,7 +25,8 @@ $(document).ready(function() {
         }
     });
 
-    $('#app-navbar-collapse').find('.active').parent().parent().parent().addClass('active')
+    $('#app-navbar-collapse').find('.active').parent().parent().parent().addClass('active');
+    $('[data-toggle="tooltip"]').tooltip();
 });
 
 function _tc() {

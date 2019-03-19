@@ -284,7 +284,7 @@ class Controller extends BaseController
 
         /* folder check */
         $folders = explode('/', $par['folder']);
-        $fldr = public_path('');
+        $fldr = storage_path('app/public/');
         foreach ($folders as $folder) {
             if ($folder != '') {
                 $fldr .= '/' . $folder;
@@ -293,7 +293,8 @@ class Controller extends BaseController
                 }
             }
         }
-        $folder = public_path($par['folder']);
+        $folder = storage_path('app/public/' . $par['folder']);
+        // dd($folder);
 
         /* insert watermark */
         if (isset($par['watermark'])) {
@@ -320,8 +321,8 @@ class Controller extends BaseController
      */
     public function uploadImageOptimation($par)
     {
-        /* set 5 menit */
-        ini_set('max_execution_time', 300);
+        /* set 2 menit */
+        // ini_set('max_execution_time', 60 * 2);
 
         /* dimensi dan blur gambar, (w)idth, (h)eight, (b)lur */
         $imageconfig = array(
@@ -353,12 +354,12 @@ class Controller extends BaseController
         );
 
         /* siapkan image */
-        $file = public_path($par['folder'] . $par['name'] . "." . $par['ext']);
+        $file = storage_path('app/public/' . $par['folder'] . $par['name'] . "." . $par['ext']);
 
         /* optimasi gambar */
         foreach ($imageconfig as $suffix => $config) {
             /* folder check */
-            $nfolder = public_path($par['folder'] . $suffix);
+            $nfolder = storage_path('app/public/' . $par['folder'] . $suffix);
             if (!is_dir($nfolder)) {
                 mkdir($nfolder);
             }
@@ -404,7 +405,7 @@ class Controller extends BaseController
                 /* gabungkan semua gambar menjadi satu */
                 $compimage->insert($bgimage, 'center');
                 $compimage->insert($mainimage, 'center');
-                $compimage->save($save, 60);
+                $compimage->save($save, 70);
 
                 /* destroy */
                 $mainimage->destroy();
@@ -415,7 +416,7 @@ class Controller extends BaseController
             /* jika dimensinya sesuai, langsung pakai gambar utama */
             else {
                 /* clone gambar utama untuk dijadikan output */
-                $mainimage->save($save, 60);
+                $mainimage->save($save, 70);
                 $mainimage->destroy();
             }
         }

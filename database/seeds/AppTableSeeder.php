@@ -13,18 +13,18 @@ class AppTableSeeder extends Seeder
     {
         App\Models\Application::create([
             'name' => 'ZetthCMS Core',
-            'tagline' => '',
-            'logo' => '',
-            'icon' => '',
-            'description' => 'Core System ZetthCMS',
-            'keyword' => '',
+            // 'tagline' => '',
+            // 'logo' => '',
+            // 'icon' => '',
+            // 'description' => 'Core System ZetthCMS',
+            // 'keyword' => 'zetthcms, cms',
             'status' => 1,
             'active_at' => date("Y-m-d H:i:s"),
-            'email' => '',
-            'address' => '',
-            'phone' => '',
-            'google_analytic' => '',
-            'coordinate' => '',
+            // 'email' => '',
+            // 'address' => '',
+            // 'phone' => '',
+            // 'google_analytics' => '',
+            // 'coordinate' => '',
         ]);
     }
 }
