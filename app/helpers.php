@@ -530,38 +530,13 @@ if (!function_exists('rearrangeFiles')) {
 if (!function_exists('getMenu')) {
     function getMenu($group = 'admin')
     {
-        $menus = [];
-        $user = \Auth::user();
-
-        $cacheRoleIdName = 'cache-roleid-user' . $user->id;
-        $cacheRoleId = \Cache::get($cacheRoleIdName);
-        if ($cacheRoleId) {
-            $roles_id = $cacheRoleId;
-        } else {
-            $user = $user->load('role_ids');
-            $roles_id = $user->role_ids->map(function ($arr) {
-                return $arr->role_id;
-            });
-
-            \Cache::put($cacheRoleIdName, $roles_id, 10 * 60);
-        }
-
-        $cacheMenuName = 'cacheMenu-menu-user' . $user->id;
+        $cacheMenuName = 'cacheMenu-Group' . ucfirst($group);
         $cacheMenu = \Cache::get($cacheMenuName);
         if ($cacheMenu) {
             $menus = $cacheMenu;
         } else {
-            $roles = \App\Models\Role::with('menu.submenu')->whereIn('id', $roles_id)->get();
-
-            foreach ($roles as $role) {
-                if ($role->menu) {
-                    foreach ($role->menu as $menu) {
-                        if ($menu->group == $group) {
-                            $menus[] = $menu;
-                        }
-                    }
-                }
-            }
+            $groupmenu = \App\Models\MenuGroup::where('name', $group)->with('menu.submenu')->first();
+            $menus = $groupmenu->menu;
 
             \Cache::put($cacheMenuName, $menus, 10 * 60);
         }

@@ -11,17 +11,17 @@ class RoleMenuSeeder extends Seeder
      */
     public function run()
     {
-        $roles = \App\Models\Role::all();
-        foreach ($roles as $role) {
-            if ($role->id == 1) {
-                $menus = \App\Models\Menu::all();
-                foreach ($menus as $menu) {
-                    \App\Models\RoleMenu::create([
-                        'role_id' => $role->id,
-                        'menu_id' => $menu->id,
-                    ]);
-                }
-            }
-        }
+        /* $roles = \App\Models\Role::all();
+    foreach ($roles as $role) {
+    if ($role->id == 1) {
+    $menus = \App\Models\Menu::all();
+    foreach ($menus as $menu) {
+    \App\Models\RoleMenu::create([
+    'role_id' => $role->id,
+    'menu_id' => $menu->id,
+    ]);
+    }
+    }
+    } */
     }
 }
