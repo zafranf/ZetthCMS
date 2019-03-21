@@ -7,7 +7,7 @@
 
 @section('content')
     <div class="panel-body no-padding-right-left">
-        <table id="list" class="row-border hover">
+        <table id="table-data" class="row-border hover">
             <thead>
                 <tr>
                     <td width="25">No.</td>
@@ -33,7 +33,7 @@
 {!! _load_js('themes/admin/AdminSC/plugins/DataTables/1.10.12/js/jquery.dataTables.min.js') !!}
 <script>
   $(document).ready(function() {
-    var table = $('#list').DataTable({
+    var table = $('#table-data').DataTable({
       "processing": true,
       "serverSide": true,
       "ajax": SITE_URL + "{{ $adminPath }}/setting/menus/data",
@@ -44,8 +44,15 @@
           { "data": "status", "width": "50px" },
           { "width": "60px" },
       ],
-      "lengthMenu": [ [20, 50, 100, -1], [20, 50, 100, "All"] ],
+      "pageLength": 20,
+      "lengthMenu": [ [10, 20, 50, 100, -1], [10, 20, 50, 100, "All"] ],
       "columnDefs": [{
+        "targets": 3,
+        "data": 'status',
+        "render": function (data, type, row, meta) {
+          return _get_status_text(data);
+        }
+      }, {
         "targets": 4,
         "data": 'id',
         "render": function (data, type, row, meta) {
@@ -53,16 +60,12 @@
           var url = SITE_URL + "{{ $adminPath }}/setting/menus/" + data;
           var del = "_delete('" + url + "')";
           {!! _get_access_buttons() !!}
+          $('[data-toggle="tooltip"]').tooltip();
+
           return actions;
-        }
-      }, {
-        "targets": 3,
-        "data": 'status',
-        "render": function (data, type, row, meta) {
-          return _get_status_text(data);
         }
       }],
     });
   });
-  </script>
+</script>
 @endsection

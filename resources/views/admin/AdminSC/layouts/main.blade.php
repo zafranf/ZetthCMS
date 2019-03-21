@@ -73,7 +73,7 @@
         <div class="panel panel-default">
           <div class="panel-heading">
             {{ $page_subtitle}} 
-            {{-- {{ _get_button_add() }} --}}
+            {!! _get_access_buttons($current_url, 'add') !!}
           </div>
           
           @yield('content')
@@ -113,8 +113,8 @@
   </script>
   {!! _load_js('themes/admin/AdminSC/plugins/jquery/2.2.4/js/jquery.min.js') !!}
   {!! _load_js('themes/admin/AdminSC/plugins/bootstrap/3.3.6/js/bootstrap.min.js') !!}
-  {!! _load_js('themes/admin/AdminSC/js/app.js') !!}
   {!! _load_js('themes/admin/AdminSC/plugins/sweetalert2/js/sweetalert2.min.js') !!}
   @yield('scripts')
+  {!! _load_js('themes/admin/AdminSC/js/app.js') !!}
   <script>_tc();</script>
 @include('admin.AdminSC.layouts.footer')

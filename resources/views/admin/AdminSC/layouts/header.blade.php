@@ -10,7 +10,6 @@
   <title>{{ $page_title }} | {{ $apps->name }}</title>
 
   <link rel="icon" type="image/x-icon" href="{{ _get_image("assets/images/" . $apps->icon, "assets/images/logo.jpg") }}" />
-  <link rel="shortcut icon" type="image/x-icon" href="{{ _get_image("assets/images/" . $apps->icon, "assets/images/logo.jpg") }}" />
 
   {{-- Fonts --}}
   <link href="https://fonts.googleapis.com/css?family=Lato:100,300,400" rel='stylesheet' type='text/css'>
@@ -18,9 +17,9 @@
 
   {{-- Styles --}}
   {!! _load_css('themes/admin/AdminSC/plugins/bootstrap/3.3.6/css/bootstrap.min.css') !!}
-  {!! _load_css('themes/admin/AdminSC/css/app.css') !!}
   {!! _load_css('themes/admin/AdminSC/plugins/sweetalert2/css/sweetalert2.min.css') !!}
   @yield('styles')
+  {!! _load_css('themes/admin/AdminSC/css/app.css') !!}
 
 </head>
 
