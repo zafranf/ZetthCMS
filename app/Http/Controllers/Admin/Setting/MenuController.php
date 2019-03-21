@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin\Setting;
 
 use App\Http\Controllers\Admin\AdminController;
 use App\Models\Menu;
+use App\Models\MenuGroup;
 use Illuminate\Http\Request;
 
 class MenuController extends AdminController
@@ -206,7 +207,7 @@ class MenuController extends AdminController
     public function datatable(Request $r)
     {
         /* get data */
-        $data = Menu::select(sequence(), 'id', 'name', 'description', 'status')->get();
+        $data = MenuGroup::select(sequence(), 'id', 'name', 'description', 'status')->get();
 
         /* generate datatable */
         if ($r->ajax()) {
