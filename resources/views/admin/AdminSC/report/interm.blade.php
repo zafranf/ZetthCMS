@@ -38,7 +38,7 @@
                                 </td>
                             @endif
                             <td>
-                                {{ _get_button_access($interm->interm_id, Session::get('current_url')) }}
+                                {{ _get_button_access($interm->interm_id, $current_url) }}
                             </td>
                         </tr>
                     @endforeach

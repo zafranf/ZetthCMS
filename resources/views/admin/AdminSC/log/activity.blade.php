@@ -31,7 +31,7 @@
                             <td>{{ $activity->user->user_fullname or 'Visitor' }}</td>
                             <td>{{ $activity->created_at }}</td>
                             <td>
-                                {{ _get_button_access($activity->activity_id, Session::get('current_url')) }}
+                                {{ _get_button_access($activity->activity_id, $current_url) }}
                             </td>
                         </tr>
                     @endforeach

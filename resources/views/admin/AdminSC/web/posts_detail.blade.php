@@ -81,17 +81,17 @@
             <a class="pwd-share-button" onclick="_open_window('https://twitter.com/intent/tweet?text={{ $post->post_title.' '.$link }}')"><i class="fa fa-twitter"></i> Tweet</a>
             <a class="pwd-share-button" onclick="_open_window('https://plus.google.com/share?url={{ $link }}')"><i class="fa fa-google-plus"></i> Share</a>
             <a id="btn-short-url" class="pwd-share-button btn-short-url" data-toggle="modal" data-target="#pwd-modal"><i class="fa fa-link"></i> {{ $link }}</a>
-            <a id="btn-edit" class="pwd-share-button" href="{{ url(Session::get('current_url').'/'.$post->post_id.'/edit') }}"><i class="fa fa-edit"></i> Edit</a>
-            <a id="btn-delete" class="pwd-share-button" onclick="_delete('{{ $post->post_id }}', '{{ Session::get('current_url') }}');"><i class="fa fa-trash-o"></i> Delete</a>
-            <a id="btn-back" class="pwd-share-button" href="{{ url(Session::get('current_url')) }}"><i class="fa fa-caret-left"></i> Back</a> 
+            <a id="btn-edit" class="pwd-share-button" href="{{ url($current_url.'/'.$post->post_id.'/edit') }}"><i class="fa fa-edit"></i> Edit</a>
+            <a id="btn-delete" class="pwd-share-button" onclick="_delete('{{ $post->post_id }}', '{{ $current_url }}');"><i class="fa fa-trash-o"></i> Delete</a>
+            <a id="btn-back" class="pwd-share-button" href="{{ url($current_url) }}"><i class="fa fa-caret-left"></i> Back</a> 
         @else
             <a class="pwd-share-button" onclick="_open_window('https://www.facebook.com/sharer/sharer.php?u={{ $link }}&amp;src=sdkpreparse')"><i class="fa fa-facebook-square"></i></a>
             <a class="pwd-share-button" onclick="_open_window('https://twitter.com/intent/tweet?text={{ $post->post_title.' '.$link }}')"><i class="fa fa-twitter"></i></a>
             <a class="pwd-share-button" onclick="_open_window('https://plus.google.com/share?url={{ $link }}')"><i class="fa fa-google-plus"></i></a>
             <a id="btn-short-url" class="pwd-share-button btn-short-url" data-toggle="modal" data-target="#pwd-modal"><i class="fa fa-link"></i> <span class="hide">{{ $link }}</span></a>
-            <a id="btn-edit" class="pwd-share-button" href="{{ url(Session::get('current_url').'/'.$post->post_id.'/edit') }}"><i class="fa fa-edit"></i></a>
-            <a id="btn-delete" class="pwd-share-button" onclick="_delete('{{ $post->post_id }}', '{{ Session::get('current_url') }}');"><i class="fa fa-trash-o"></i></a>
-            <a id="btn-back" class="pwd-share-button" href="{{ url(Session::get('current_url')) }}"><i class="fa fa-caret-left"></i> Back</a> 
+            <a id="btn-edit" class="pwd-share-button" href="{{ url($current_url.'/'.$post->post_id.'/edit') }}"><i class="fa fa-edit"></i></a>
+            <a id="btn-delete" class="pwd-share-button" onclick="_delete('{{ $post->post_id }}', '{{ $current_url }}');"><i class="fa fa-trash-o"></i></a>
+            <a id="btn-back" class="pwd-share-button" href="{{ url($current_url) }}"><i class="fa fa-caret-left"></i> Back</a> 
         @endif
         <br>
         <br>

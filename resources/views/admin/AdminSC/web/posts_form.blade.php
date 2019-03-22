@@ -92,7 +92,7 @@ if (isset($post->post_id)){
 @section('content')
 <div class="panel-body no-padding-bottom">
 	<div class="row" style="margin-top:-15px;">
-		<form id="form-post" action="{{ url(Session::get('current_url')) }}{{ isset($post->post_id)?'/'.$post->post_id:'' }}" method="post" enctype="multipart/form-data">
+		<form id="form-post" action="{{ url($current_url) }}{{ isset($post->post_id)?'/'.$post->post_id:'' }}" method="post" enctype="multipart/form-data">
 			{{ isset($post->post_id)?method_field('PUT'):'' }}
 			{{ csrf_field() }}
 			<div class="col-sm-8 col-md-9 left-side no-padding">
@@ -210,7 +210,7 @@ if (isset($post->post_id)){
 					<br>
 					<div class="btn-group btn-group-justified" role="group">
 						<a onclick="$('#form-post').submit();" class="btn btn-warning"><i class="fa fa-edit"></i> SAVE</a>
-						<a href="{{ url(Session::get('current_url')) }}" class="btn btn-default"><i class="fa fa-times"></i> Cancel</a>
+						<a href="{{ url($current_url) }}" class="btn btn-default"><i class="fa fa-times"></i> Cancel</a>
 					</div>
 				</div>
 			</div>

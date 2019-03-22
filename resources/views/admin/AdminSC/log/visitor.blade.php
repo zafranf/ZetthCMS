@@ -33,7 +33,7 @@
                             {{-- <td>{{ Agent::browser($visitor->visitor_agent) }}</td>
                             <td>{{ $visitor->visitor_device }}</td>--}}
                             <td>
-                                {{ _get_button_access($visitor->visitor_id, Session::get('current_url')) }}
+                                {{ _get_button_access($visitor->visitor_id, $current_url) }}
                             </td>
                         </tr>
                     @endforeach

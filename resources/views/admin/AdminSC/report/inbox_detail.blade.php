@@ -33,9 +33,9 @@
         {{ $inbox->inbox_message }}
         <br>
         <br>
-        <!-- <a id="btn-delete" class="pwd-share-button" onclick="_delete('{{ $inbox->inbox_id }}', '{{ Session::get('current_url') }}');"><i class="fa fa-envelope"></i> Mark as Unread</a> --> 
-        <a id="btn-delete" class="pwd-share-button" onclick="_delete('{{ $inbox->inbox_id }}', '{{ Session::get('current_url') }}');"><i class="fa fa-trash-o"></i> Delete</a>
-        <a id="btn-back" class="pwd-share-button" href="{{ url(Session::get('current_url')) }}"><i class="fa fa-caret-left"></i> Back</a> 
+        <!-- <a id="btn-delete" class="pwd-share-button" onclick="_delete('{{ $inbox->inbox_id }}', '{{ $current_url }}');"><i class="fa fa-envelope"></i> Mark as Unread</a> --> 
+        <a id="btn-delete" class="pwd-share-button" onclick="_delete('{{ $inbox->inbox_id }}', '{{ $current_url }}');"><i class="fa fa-trash-o"></i> Delete</a>
+        <a id="btn-back" class="pwd-share-button" href="{{ url($current_url) }}"><i class="fa fa-caret-left"></i> Back</a> 
     </div>
 @endsection
 

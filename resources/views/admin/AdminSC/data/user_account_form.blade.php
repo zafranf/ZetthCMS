@@ -7,7 +7,7 @@
 
 @section('content')
     <div class="panel-body">
-        <form class="form-horizontal" action="{{ url(Session::get('current_url')) }}{{ isset($user->user_id)?'/'.$user->user_id:'' }}" method="post" enctype="multipart/form-data">
+        <form class="form-horizontal" action="{{ url($current_url) }}{{ isset($user->user_id)?'/'.$user->user_id:'' }}" method="post" enctype="multipart/form-data">
             {{ isset($user->user_id)?method_field('PUT'):'' }}
             {{ csrf_field() }}
             <div class="row">

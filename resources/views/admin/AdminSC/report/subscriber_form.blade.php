@@ -2,7 +2,7 @@
 
 @section('content')
     <div class="panel-body">
-        <form class="form-horizontal" action="{{ url(Session::get('current_url')) }}{{ isset($subscriber->subscriber_id)?'/'.$subscriber->subscriber_id:'' }}" method="post">
+        <form class="form-horizontal" action="{{ url($current_url) }}{{ isset($subscriber->subscriber_id)?'/'.$subscriber->subscriber_id:'' }}" method="post">
             {{ isset($subscriber->subscriber_id)?method_field('PUT'):'' }}
             {{ csrf_field() }}
             <div class="form-group">

@@ -36,7 +36,7 @@
                                 </td>
                             @endif
                             <td>
-                                {{ _get_button_access($subscriber->subscriber_id, Session::get('current_url')) }}
+                                {{ _get_button_access($subscriber->subscriber_id, $current_url) }}
                             </td>
                         </tr>
                     @endforeach

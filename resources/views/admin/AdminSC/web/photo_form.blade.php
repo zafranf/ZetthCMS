@@ -26,7 +26,7 @@
 
 @section('content')
     <div class="panel-body">
-        <form class="form-horizontal" action="{{ url(Session::get('current_url')) }}{{ isset($albums)?'/'.$albums->album_id:'' }}" method="post" enctype="multipart/form-data">
+        <form class="form-horizontal" action="{{ url($current_url) }}{{ isset($albums)?'/'.$albums->album_id:'' }}" method="post" enctype="multipart/form-data">
             {{ isset($albums)?method_field('PUT'):'' }}
             {{ csrf_field() }}
             <div class="form-group" style="margin-top:20px;">

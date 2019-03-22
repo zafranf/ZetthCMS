@@ -12,7 +12,7 @@
 
 @section('content')
 	<div class="panel-body">
-		<form class="form-horizontal" action="{{ url(Session::get('current_url')) }}{{ isset($banner->banner_id)?'/'.$banner->banner_id:'' }}" method="post" enctype="multipart/form-data">
+		<form class="form-horizontal" action="{{ url($current_url) }}{{ isset($banner->banner_id)?'/'.$banner->banner_id:'' }}" method="post" enctype="multipart/form-data">
 			{{ isset($banner->banner_id)?method_field('PUT'):'' }}
 			{{ csrf_field() }}
 			<div class="form-group">

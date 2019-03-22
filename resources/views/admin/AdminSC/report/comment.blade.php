@@ -48,8 +48,8 @@
                                 </td>
                             @endif
                             <td>
-                                <a href="{{ url(Session::get('current_url')."/create?cid=".$comment->comment_id."&pid=".$comment->post_id) }}" class="btn btn-default btn-xs" title="Reply"><i class="fa fa-reply"></i></a>
-                                {{ _get_button_access($comment->comment_id, Session::get('current_url')) }}
+                                <a href="{{ url($current_url."/create?cid=".$comment->comment_id."&pid=".$comment->post_id) }}" class="btn btn-default btn-xs" title="Reply"><i class="fa fa-reply"></i></a>
+                                {{ _get_button_access($comment->comment_id, $current_url) }}
                             </td>
                         </tr>
                     @endforeach

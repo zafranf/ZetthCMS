@@ -1,21 +1,5 @@
 @extends('admin.AdminSC.layouts.main')
 
-@section('styles')
-{!! _load_css('themes/admin/AdminSC/plugins/jasny-bootstrap/3.1.3/css/jasny-bootstrap.min.css') !!}
-{!! _load_css('themes/admin/AdminSC/plugins/bootstrap/tagsinput/0.8.0/css/bootstrap-tagsinput.css') !!}
-{!! _load_css('themes/admin/AdminSC/plugins/bootstrap/datetimepicker/4.17.37/css/bootstrap-datetimepicker.min.css') !!}
-{!! _load_css('themes/admin/AdminSC/plugins/select2/4.0.0/css/select2.min.css') !!}
-
-<style>
-	.group-socmed {
-    width:125px;
-    padding:3px 5px;
-    text-align:left;
-    font-size: 12px;
-	}
-</style>
-@endsection
-
 @section('content')
 	<div class="panel-body">
 		<form class="form-horizontal" action="{{ url($current_url) }}/{{ $apps->id ?? '' }}" method="post" enctype="multipart/form-data">
@@ -262,63 +246,79 @@
 	</div>
 @endsection
 
+@section('styles')
+	{!! _load_css('themes/admin/AdminSC/plugins/jasny-bootstrap/3.1.3/css/jasny-bootstrap.min.css') !!}
+	{!! _load_css('themes/admin/AdminSC/plugins/bootstrap/tagsinput/0.8.0/css/bootstrap-tagsinput.css') !!}
+	{!! _load_css('themes/admin/AdminSC/plugins/bootstrap/datetimepicker/4.17.37/css/bootstrap-datetimepicker.min.css') !!}
+	{!! _load_css('themes/admin/AdminSC/plugins/select2/4.0.0/css/select2.min.css') !!}
+
+	<style>
+		.group-socmed {
+			width:125px;
+			padding:3px 5px;
+			text-align:left;
+			font-size: 12px;
+		}
+	</style>
+@endsection
+
 @section('scripts')
-{!! _load_js('themes/admin/AdminSC/plugins/jasny-bootstrap/3.1.3/js/jasny-bootstrap.min.js') !!}
-{!! _load_js('themes/admin/AdminSC/plugins/bootstrap/tagsinput/0.8.0/js/bootstrap-tagsinput.js') !!}
-{!! _load_js('themes/admin/AdminSC/plugins/moment/2.13.0/js/moment.min.js') !!}
-{!! _load_js('themes/admin/AdminSC/plugins/bootstrap/datetimepicker/4.17.37/js/bootstrap-datetimepicker.min.js') !!}
-{!! _load_js('themes/admin/AdminSC/plugins/select2/4.0.0/js/select2.min.js') !!}
-<script>
-$(function(){
-	$('#i_active_at').datetimepicker({
-		format: 'YYYY-MM-DD'
-	});
-	$(".pwd-select").select2({
-		minimumResultsForSearch: Infinity
-	});
-});
-
-$(document).ready(function(){
-	$('#status').on("change", function(){
-		if ($('#status').val()!=1){
-			$('#d_active_at').show();
-			$('#i_active_at').attr('readonly', false);
-		}else{
-			$('#d_active_at').hide();
-			$('#i_active_at').attr('readonly', true);
-		}
-	});
-	$('#keyword').tagsinput({
-		tagClass: function(item){
-			return 'label label-warning'
-		}
-	});
-	$('#btn-add-socmed').on('click', function(){
-		socmed_no = (Math.random() * 1000000000).toFixed(0);
-		var html = '<div id="div-socmed-'+socmed_no+'"><div class="col-md-3 col-xs-6 no-padding">'+
-						'<select name="socmed_id[]" class="form-control pwd-select">'+
-              '<option value="">--Choose--</option>'+
-              @if (isset($socmeds))
-                @foreach($socmeds as $socmed)
-                  '<option value="{{ $socmed->id }}">{{ $socmed->name }}</option>'+
-                @endforeach
-              @endif
-						'</select>'+
-					'</div>'+
-					'<div class="col-md-9 col-xs-6 no-padding">'+
-						'<div class="input-group">'+
-							'<input type="text" class="form-control" name="socmed_uname[]" placeholder="Account Name">'+
-							'<span class="input-group-btn">'+
-								'<button type="button" class="btn" style="background:white;border:1px solid #ccc;" onclick="_remove(\'#div-socmed-'+socmed_no+'\')"><i class="fa fa-minus"></i></button'+
-							'</span>'+
-						'</div>'+
-					'</div></div>';
-
-		$('#div-socmed').append(html);
-		$(".pwd-select").select2({
-			minimumResultsForSearch: Infinity
+	{!! _load_js('themes/admin/AdminSC/plugins/jasny-bootstrap/3.1.3/js/jasny-bootstrap.min.js') !!}
+	{!! _load_js('themes/admin/AdminSC/plugins/bootstrap/tagsinput/0.8.0/js/bootstrap-tagsinput.js') !!}
+	{!! _load_js('themes/admin/AdminSC/plugins/moment/2.13.0/js/moment.min.js') !!}
+	{!! _load_js('themes/admin/AdminSC/plugins/bootstrap/datetimepicker/4.17.37/js/bootstrap-datetimepicker.min.js') !!}
+	{!! _load_js('themes/admin/AdminSC/plugins/select2/4.0.0/js/select2.min.js') !!}
+	<script>
+		$(function(){
+			$('#i_active_at').datetimepicker({
+				format: 'YYYY-MM-DD'
+			});
+			$(".pwd-select").select2({
+				minimumResultsForSearch: Infinity
+			});
 		});
-	});
-});
-</script>
+
+		$(document).ready(function(){
+			$('#status').on("change", function(){
+				if ($('#status').val()!=1){
+					$('#d_active_at').show();
+					$('#i_active_at').attr('readonly', false);
+				}else{
+					$('#d_active_at').hide();
+					$('#i_active_at').attr('readonly', true);
+				}
+			});
+			$('#keyword').tagsinput({
+				tagClass: function(item){
+					return 'label label-warning'
+				}
+			});
+			$('#btn-add-socmed').on('click', function(){
+				socmed_no = (Math.random() * 1000000000).toFixed(0);
+				var html = '<div id="div-socmed-'+socmed_no+'"><div class="col-md-3 col-xs-6 no-padding">'+
+								'<select name="socmed_id[]" class="form-control pwd-select">'+
+									'<option value="">--Choose--</option>'+
+									@if (isset($socmeds))
+										@foreach($socmeds as $socmed)
+											'<option value="{{ $socmed->id }}">{{ $socmed->name }}</option>'+
+										@endforeach
+									@endif
+								'</select>'+
+							'</div>'+
+							'<div class="col-md-9 col-xs-6 no-padding">'+
+								'<div class="input-group">'+
+									'<input type="text" class="form-control" name="socmed_uname[]" placeholder="Account Name">'+
+									'<span class="input-group-btn">'+
+										'<button type="button" class="btn" style="background:white;border:1px solid #ccc;" onclick="_remove(\'#div-socmed-'+socmed_no+'\')"><i class="fa fa-minus"></i></button'+
+									'</span>'+
+								'</div>'+
+							'</div></div>';
+
+				$('#div-socmed').append(html);
+				$(".pwd-select").select2({
+					minimumResultsForSearch: Infinity
+				});
+			});
+		});
+	</script>
 @endsection

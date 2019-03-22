@@ -11,7 +11,7 @@
 
 @section('content')
     <div class="panel-body">
-        <form class="form-horizontal" action="{{ url(Session::get('current_url')) }}{{ isset($comment->comment_id)?'/'.$comment->comment_id:'' }}" method="post">
+        <form class="form-horizontal" action="{{ url($current_url) }}{{ isset($comment->comment_id)?'/'.$comment->comment_id:'' }}" method="post">
             {{ isset($comment->comment_id)?method_field('PUT'):'' }}
             {{ csrf_field() }}
             @if (isset($comment->comment_id))

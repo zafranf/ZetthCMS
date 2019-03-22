@@ -19,8 +19,18 @@ class RoleController extends AdminController
      */
     public function __construct()
     {
-        $this->current_url = url('/setting/roles');
+        $this->current_url = url($this->adminPath . '/setting/roles');
         $this->page_title = 'Pengaturan Peran dan Akses';
+        $this->breadcrumbs[] = [
+            'page' => 'Pengaturan',
+            'icon' => '',
+            'url' => url($this->adminPath . '/setting/application'),
+        ];
+        $this->breadcrumbs[] = [
+            'page' => 'Peran dan Akses',
+            'icon' => '',
+            'url' => $this->current_url,
+        ];
     }
 
     /**
@@ -30,19 +40,21 @@ class RoleController extends AdminController
      */
     public function index(Request $r)
     {
+        $this->breadcrumbs[] = [
+            'page' => 'Daftar',
+            'icon' => '',
+            'url' => '',
+        ];
+
         /* set variable for view */
         $data = [
             'current_url' => $this->current_url,
             'page_title' => $this->page_title,
             'page_subtitle' => 'Daftar Peran',
+            'breadcrumbs' => $this->breadcrumbs,
         ];
 
-        /* generate datatable */
-        if ($r->ajax()) {
-            return $this->generateDataTable($r, $roles);
-        }
-
-        return view('admin.setting.role', $data);
+        return view('admin.AdminSC.setting.roles', $data);
     }
 
     /**
@@ -52,6 +64,12 @@ class RoleController extends AdminController
      */
     public function create()
     {
+        $this->breadcrumbs[] = [
+            'page' => 'Tambah',
+            'icon' => '',
+            'url' => '',
+        ];
+
         /* get data */
         $menus = Menu::where([
             'parent_id' => 0,
@@ -64,9 +82,10 @@ class RoleController extends AdminController
             'page_title' => $this->page_title,
             'page_subtitle' => 'Tambah Peran',
             'menus' => $menus,
+            'breadcrumbs' => $this->breadcrumbs,
         ];
 
-        return view('admin.setting.role_form', $data);
+        return view('admin.AdminSC.setting.roles_form', $data);
     }
 
     /**

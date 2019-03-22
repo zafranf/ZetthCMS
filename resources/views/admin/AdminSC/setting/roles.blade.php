@@ -1,4 +1,3 @@
-@php $no=1 @endphp
 @extends('admin.AdminSC.layouts.main')
 
 @section('content')
@@ -7,18 +6,14 @@
       <thead>
         <tr>
           <td width="25">No.</td>
-          <td>Menu</td>
-          <td>Deskripsi</td>
-          <td width="80">Status</td>
-          {{-- @if ($isDesktop)
-              <td>Menu Name</td>
-              <td>URL</td>
-              <td width="100">Target</td>
-              <td width="80">Status</td>
-          @else
-              <td width="200">Menu</td>
+          {{-- @if ($isDesktop) --}}
+            <td width="200">Nama Peran</td>
+            <td>Deskripsi</td>
+            <td width="80">Status</td>
+          {{-- @else 
+            <td>Group</td>
           @endif --}}
-          <td width="50">Aksi</td>
+          <td width="80">Akses</td>
         </tr>
       </thead>
     </table>
@@ -36,7 +31,7 @@
       var table = $('#table-data').DataTable({
         "processing": true,
         "serverSide": true,
-        "ajax": SITE_URL + "{{ $adminPath }}/setting/menus/data",
+        "ajax": SITE_URL + "{{ $adminPath }}/setting/roles/data",
         "columns": [
           { "data": "no", "width": "30px" },
           { "data": "name", "width": "200px" },
@@ -57,7 +52,7 @@
           "data": 'id',
           "render": function (data, type, row, meta) {
             var actions = '';
-            var url = SITE_URL + "{{ $adminPath }}/setting/menus/" + data;
+            var url = SITE_URL + "{{ $adminPath }}/setting/roles/" + data;
             var del = "_delete('" + url + "')";
             {!! _get_access_buttons() !!}
             $('[data-toggle="tooltip"]').tooltip();
