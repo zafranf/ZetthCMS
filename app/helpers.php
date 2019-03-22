@@ -71,7 +71,7 @@ if (!function_exists('_get_button_post')) {
     {
         echo '<div class="box-footer">';
         echo '<button type="submit" class="btn btn-warning">Simpan</button>';
-        echo ' <a class="btn btn-default" href="' . url()->previous() . '">Batal</a>';
+        echo ' <a class="btn btn-default" href="' . url($page) . '">Batal</a>';
         echo '</div>';
     }
 }

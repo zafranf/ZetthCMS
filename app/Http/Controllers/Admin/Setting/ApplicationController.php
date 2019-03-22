@@ -38,6 +38,11 @@ class ApplicationController extends AdminController
         $this->breadcrumbs[] = [
             'page' => 'Aplikasi',
             'icon' => '',
+            'url' => $this->current_url,
+        ];
+        $this->breadcrumbs[] = [
+            'page' => 'Sunting',
+            'icon' => '',
             'url' => '',
         ];
 

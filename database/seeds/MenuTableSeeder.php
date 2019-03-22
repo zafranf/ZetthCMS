@@ -55,8 +55,8 @@ class MenuTableSeeder extends Seeder
         /* menu menu */
         $setMenu = new Menu;
         $setMenu->name = 'Menu';
-        $setMenu->description = 'Menu pengaturan menu';
-        $setMenu->route_name = 'menus.index';
+        $setMenu->description = 'Menu pengaturan menu grup';
+        $setMenu->route_name = 'menu-groups.index';
         // $setMenu->icon = 'fa fa-menu';
         $setMenu->order = $setOrder++;
         $setMenu->status = 1;

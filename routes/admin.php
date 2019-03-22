@@ -12,6 +12,7 @@ if (env('APP_DEBUG')) {
 Route::middleware('auth')->group(function () {
     /* api datatable */
     Route::get('/setting/menus/data', 'Admin\Setting\MenuController@datatable')->name('menus.data');
+    Route::get('/setting/menu-groups/data', 'Admin\Setting\MenuGroupController@datatable')->name('menu-groups.data');
     Route::get('/setting/roles/data', 'Admin\Setting\RoleController@datatable')->name('roles.data');
     Route::get('/setting/users/data', 'Admin\Setting\UserController@datatable')->name('users.data');
     Route::get('/content/banners/data', 'Admin\Content\BannerController@datatable')->name('banners.data');
@@ -36,6 +37,7 @@ Route::middleware('auth')->group(function () {
             Route::resources([
                 '/application' => 'Admin\Setting\ApplicationController',
                 '/menus' => 'Admin\Setting\MenuController',
+                '/menu-groups' => 'Admin\Setting\MenuGroupController',
                 '/roles' => 'Admin\Setting\RoleController',
                 '/users' => 'Admin\Setting\UserController',
             ]);

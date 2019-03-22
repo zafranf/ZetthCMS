@@ -29,6 +29,12 @@ $(document).ready(function() {
     $('[data-toggle="tooltip"]').tooltip();
 });
 
+function _autofocus(el) {
+    var temp_value = el.value;
+    el.value = '';
+    el.value = temp_value;
+}
+
 function _tc() {
     setTimeout(function() {
         _tc();
@@ -69,24 +75,25 @@ function _get_status_text(status = 0, par = []) {
     }
 }
 
-function _delete(ID = 0, PAGE = '') {
+function _delete(URL = '') {
     if (!CONNECT) {
         return false;
     }
 
-    var formDel = '<form id="form-delete" class="form-delete" action="' + SITE_URL + '/' + PAGE + '/' + ID + '" method="post">';
+    var formDel = '<form id="form-delete" class="form-delete" action="' + URL + '" method="post">';
     formDel += '<input type="hidden" name="_method" value="DELETE">';
     formDel += '<input type="hidden" name="_token" value="' + TOKEN + '">';
     // formDel += '<label style="font-weight:normal;"><input type="checkbox" name="hard_delete"> Delete permanently</label>';
     formDel += '</form>';
 
     swal({
-        title: "Are you sure?",
+        title: "Hapus data?",
         html: formDel,
         type: "warning",
         showCancelButton: true,
+        cancelButtonText: 'Tidak',
         confirmButtonColor: '#d33',
-        confirmButtonText: "Yes, delete it!"
+        confirmButtonText: "Ya, hapus!"
     }).then(function(isConfirm) {
         if (isConfirm) {
             $('#form-delete').submit();
