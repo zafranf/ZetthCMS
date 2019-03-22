@@ -125,7 +125,6 @@ class MenuGroupController extends AdminController
      */
     public function edit(MenuGroup $menugroup)
     {
-        dd($menugroup);
         $this->breadcrumbs[] = [
             'page' => 'Edit',
             'icon' => '',
