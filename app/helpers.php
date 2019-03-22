@@ -558,14 +558,15 @@ if (!function_exists('generateMenu')) {
         echo '<ul class="nav navbar-nav">';
         foreach ($menus as $menu) {
             $active = (!empty($menu->route_name) && route($menu->route_name) == url()->current()) ? 'active' : '';
-            $href = !empty($menu->route_name) ? 'href="' . route($menu->route_name) . '"' : '';
+            $href = !empty($menu->route_name) ? 'href="' . route($menu->route_name) . '"' : null;
+            $href = $href ?? ($menu->url ? 'href="' . url($menu->url) . '"' : '');
             $sub = count($menu->submenu) ? ' dropdown' : '';
             $sublink = count($menu->submenu) ? ' dropdown-toggle' : '';
             $subtoggle = count($menu->submenu) ? ' data-toggle="dropdown" role="button"' : '';
             $icon = ($menu->icon != "") ? '<i class="' . $menu->icon . '"></i>' : '';
             $caret = (count($menu->submenu) > 0) ? '<span class="pull-right"><span class="caret"></span></span>' : '';
             echo '<li class="' . ($sub ?? '') . ' ' . $active . '">';
-            echo '<a ' . ($href ?? '') . ' class="' . ($sublink ?? '') . '"' . ($subtoggle ?? '') . '>' . $icon . ' ' . $menu->name . $caret . '</a>';
+            echo '<a ' . ($href ?? '') . ' class="' . ($sublink ?? '') . '"' . ($subtoggle ?? '') . ' target="' . $menu->target . '">' . $icon . ' ' . $menu->name . $caret . '</a>';
             if (count($menu->submenu) > 0) {
                 generateSubmenu($menu->submenu);
             }
@@ -587,7 +588,8 @@ if (!function_exists('generateSubmenu')) {
         echo '<ul class="dropdown-menu ' . $sublevel . '" role="menu">';
         foreach ($data as $submenu) {
             $active = (!empty($submenu->route_name) && route($submenu->route_name) == url()->current()) ? 'active' : '';
-            $href = !empty($submenu->route_name) ? 'href="' . route($submenu->route_name) . '"' : '';
+            $href = !empty($submenu->route_name) ? 'href="' . route($submenu->route_name) . '"' : null;
+            $href = $href ?? ($submenu->url ? 'href="' . url($submenu->url) . '"' : '');
             $dropdown = count($submenu->submenu) ? 'dropdown-submenu' : 'dropdown';
             $sublink = count($submenu->submenu) ? ' dropdown-toggle submenu' : '';
             $subtoggle = count($submenu->submenu) ? ' data-toggle="dropdown" role="button"' : '';
@@ -597,7 +599,7 @@ if (!function_exists('generateSubmenu')) {
             $caret = !isMobile() ? 'fa fa-caret-' . $direction : 'caret';
             $caret = (count($submenu->submenu) > 0) ? '<span ' . $caret_class . '><span class="' . $caret . '"></span></span>' : '';
             echo '<li class="' . $dropdown . '">';
-            echo '<a ' . ($href ?? '') . ' class="dropdown-item' . ($sublink ?? '') . ' ' . $active . '" ' . ($subtoggle ?? '') . '>' . $icon . ' ' . $submenu->name . $caret . '</a>';
+            echo '<a ' . ($href ?? '') . ' class="dropdown-item' . ($sublink ?? '') . ' ' . $active . '" ' . ($subtoggle ?? '') . ' target="' . $submenu->target . '">' . $icon . ' ' . $submenu->name . $caret . '</a>';
             if (count($submenu->submenu)) {
                 generateSubmenu($submenu->submenu, $level + 1);
             }

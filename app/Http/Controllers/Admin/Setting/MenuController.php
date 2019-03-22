@@ -139,16 +139,23 @@ class MenuController extends AdminController
      */
     public function edit(Menu $menu)
     {
+        $this->breadcrumbs[] = [
+            'page' => 'Tambah',
+            'icon' => '',
+            'url' => '',
+        ];
+
         /* set variable for view */
         $data = [
             'current_url' => $this->current_url,
             'page_title' => $this->page_title,
             'page_subtitle' => 'Edit Menu',
+            'breadcrumbs' => $this->breadcrumbs,
             'menus' => Menu::where('parent_id', 0)->with('allSubmenu')->orderBy('order')->get(),
             'data' => $menu,
         ];
 
-        return view('admin.setting.menu_form', $data);
+        return view('admin.AdminSC.setting.menu_form', $data);
     }
 
     /**
@@ -165,13 +172,20 @@ class MenuController extends AdminController
             'name' => 'required',
         ]);
 
+        /* get order number if null */
+        if (!$r->input('order')) {
+            $parent_id = $r->input('parent') ?? 0;
+            $parent = Menu::where('parent_id', (int) $parent_id)->orderBy('order', 'desc')->first();
+            $order = $parent->order + 1;
+        }
+
         /* save data */
         $menu->name = str_sanitize($r->input('name'));
         $menu->description = str_sanitize($r->input('description'));
-        // $menu->url = $r->input('url');
+        $menu->url = $r->input('url');
         $menu->route_name = str_sanitize($r->input('route_name'));
         $menu->target = str_sanitize($r->input('target'));
-        // $menu->order = (int) $r->input('order');
+        $menu->order = $r->input('order') ?? $order;
         $menu->icon = str_sanitize($r->input('icon'));
         $menu->status = bool($r->input('status')) ? 1 : 0;
         $menu->index = bool($r->input('index')) ? 1 : 0;

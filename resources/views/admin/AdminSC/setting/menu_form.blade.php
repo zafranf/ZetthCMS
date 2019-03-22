@@ -69,7 +69,10 @@
           <select class="form-control select2" name="parent" id="parent">
               <option value="0">--Pilih--</option>
               @foreach (generateMenuArray($menus) as $menu)
-                <option value="{{ $menu->id }}" {{ isset($data->id) && ($data->parent_id == $menu->id) ? 'selected' : '' }}>{!! $menu->name !!}</option>
+                @if (isset($data->id) && $data->id == $menu->id)
+                @else
+                  <option value="{{ $menu->id }}" {{ isset($data->id) && ($data->parent_id == $menu->id) ? 'selected' : '' }}>{!! $menu->name !!}</option>
+                @endif
               @endforeach
           </select>
         </div>
