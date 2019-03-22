@@ -120,7 +120,7 @@ class CategoryController extends AdminController
         $data = [
             'current_url' => $this->current_url,
             'page_title' => $this->page_title,
-            'page_subtitle' => 'Sunting Kategori',
+            'page_subtitle' => 'Edit Kategori',
             'categories' => $categories,
             'data' => $category,
         ];

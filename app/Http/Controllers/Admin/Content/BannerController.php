@@ -159,7 +159,7 @@ class BannerController extends AdminController
         $data = [
             'current_url' => $this->current_url,
             'page_title' => $this->page_title,
-            'page_subtitle' => 'Sunting Spanduk',
+            'page_subtitle' => 'Edit Spanduk',
             'banners' => $banners,
             'data' => $banner,
         ];

@@ -5,8 +5,8 @@ namespace App\Http\Controllers\Admin\Setting;
 use App\Http\Controllers\Admin\AdminController;
 use App\Models\Menu;
 use App\Models\Permission;
-use App\Models\PermissionRole;
 use App\Models\Role;
+use App\Models\RolePermission;
 use Illuminate\Http\Request;
 
 class RoleController extends AdminController
@@ -98,7 +98,7 @@ class RoleController extends AdminController
     {
         /* validation */
         $this->validate($r, [
-            'name' => 'required',
+            'name' => 'required|unique:roles',
         ]);
 
         /* save data */
@@ -111,12 +111,12 @@ class RoleController extends AdminController
         $role->save();
 
         /* set permissions */
-        $this->setPermissions($r, $role);
+        // $this->setPermissions($r, $role);
 
         /* log aktifitas */
         $this->activityLog('<b>' . \Auth::user()->fullname . '</b> menambahkan Peran "' . $role->display_name . '"');
 
-        return redirect('/setting/roles')->with('success', 'Peran berhasil ditambah!');
+        return redirect($this->current_url)->with('success', 'Peran berhasil ditambah!');
     }
 
     /**
@@ -138,6 +138,13 @@ class RoleController extends AdminController
      */
     public function edit(Role $role)
     {
+        dd($role);
+        $this->breadcrumbs[] = [
+            'page' => 'Edit',
+            'icon' => '',
+            'url' => '',
+        ];
+
         /* get data */
         $menus = Menu::where([
             'parent_id' => 0,
@@ -148,12 +155,13 @@ class RoleController extends AdminController
         $data = [
             'current_url' => $this->current_url,
             'page_title' => $this->page_title,
-            'page_subtitle' => 'Sunting Peran',
+            'page_subtitle' => 'Edit Peran',
+            'breadcrumbs' => $this->breadcrumbs,
             'data' => $role,
             'menus' => $menus,
         ];
 
-        return view('admin.setting.role_form', $data);
+        return view('admin.AdminSC.setting.roles_form', $data);
     }
 
     /**
@@ -167,7 +175,7 @@ class RoleController extends AdminController
     {
         /* validation */
         $this->validate($r, [
-            'name' => 'required',
+            'name' => 'required|unique:roles,name,' . $role->id . ',id',
         ]);
 
         /* save data */
@@ -179,12 +187,12 @@ class RoleController extends AdminController
         $role->save();
 
         /* set permissions */
-        $this->setPermissions($r, $role);
+        // $this->setPermissions($r, $role);
 
         /* log aktifitas */
         $this->activityLog('<b>' . \Auth::user()->fullname . '</b> memperbarui Peran "' . $role->name . '"');
 
-        return redirect('/setting/roles')->with('success', 'Peran berhasil disimpan!');
+        return redirect($this->current_url)->with('success', 'Peran berhasil disimpan!');
     }
 
     /**
@@ -210,7 +218,7 @@ class RoleController extends AdminController
     public function datatable(Request $r)
     {
         /* get data */
-        $data = Role::select(sequence(), 'id', 'display_name as name', 'description', 'status')->get();
+        $data = Role::select('id', 'display_name as name', 'description', 'status')->get();
 
         /* generate datatable */
         if ($r->ajax()) {
@@ -226,7 +234,7 @@ class RoleController extends AdminController
     public function setPermissions(Request $r, Role $role)
     {
         /* remove all permissions */
-        PermissionRole::where('role_id', $role->id)->delete();
+        RolePermission::where('role_id', $role->id)->delete();
 
         /* attach new permissions */
         $permissions = [];

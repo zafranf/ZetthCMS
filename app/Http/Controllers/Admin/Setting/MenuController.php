@@ -132,7 +132,7 @@ class MenuController extends AdminController
         $data = [
             'current_url' => $this->current_url,
             'page_title' => $this->page_title,
-            'page_subtitle' => 'Sunting Menu',
+            'page_subtitle' => 'Edit Menu',
             'menus' => Menu::where('parent_id', 0)->with('allSubmenu')->orderBy('order')->get(),
             'data' => $menu,
         ];

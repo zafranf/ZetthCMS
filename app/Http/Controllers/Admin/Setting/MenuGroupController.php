@@ -120,13 +120,14 @@ class MenuGroupController extends AdminController
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param  \App\Models\MenuGroup  $menugroup
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(MenuGroup $menugroup)
     {
+        dd($menugroup);
         $this->breadcrumbs[] = [
-            'page' => 'Sunting',
+            'page' => 'Edit',
             'icon' => '',
             'url' => '',
         ];
@@ -135,9 +136,9 @@ class MenuGroupController extends AdminController
         $data = [
             'current_url' => $this->current_url,
             'page_title' => $this->page_title,
-            'page_subtitle' => 'Sunting Grup Menu',
+            'page_subtitle' => 'Edit Grup Menu',
             'breadcrumbs' => $this->breadcrumbs,
-            'data' => MenuGroup::find($id),
+            'data' => $menugroup,
         ];
 
         return view('admin.AdminSC.setting.menu_group_form', $data);
@@ -147,10 +148,10 @@ class MenuGroupController extends AdminController
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $r
-     * @param  int $id
+     * @param  \App\Models\MenuGroup  $menugroup
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $r, $id)
+    public function update(Request $r, $menugroup)
     {
         /* validation */
         $this->validate($r, [
@@ -158,7 +159,7 @@ class MenuGroupController extends AdminController
         ]);
 
         /* save data */
-        $menugroup = MenuGroup::find($id);
+        // $menugroup = MenuGroup::find($id);
         $menugroup->name = str_sanitize($r->input('name'));
         $menugroup->description = str_sanitize($r->input('description'));
         $menugroup->status = bool($r->input('status')) ? 1 : 0;
@@ -176,14 +177,13 @@ class MenuGroupController extends AdminController
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int $id
+     * @param  \App\Models\MenuGroup  $menugroup
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Request $r, $id)
+    public function destroy(Request $r, $menugroup)
     {
-
         /* get data */
-        $menugroup = MenuGroup::find($id);
+        // $menugroup = MenuGroup::find($id);
 
         /* activity log */
         $this->activityLog('<b>' . \Auth::user()->fullname . '</b> menghapus Grup Menu "' . $menugroup->name . '"');

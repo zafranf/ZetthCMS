@@ -2,7 +2,7 @@
 
 @section('content')
 <div class="card-body">
-  <form action="{{ url('/setting/roles') }}{{ isset($data->id) ? '/' . $data->id : '' }}" method="post" enctype="multipart/form-data">
+  <form action="{{ url($current_url) }}{{ isset($data->id) ? '/' . $data->id : '' }}" method="post" enctype="multipart/form-data">
     @csrf
     @if (isset($data->id))
       {{ method_field('put') }}
@@ -63,7 +63,7 @@
                       <th width="100px">Indeks</th>
                       <th width="100px">Tambah</th>
                       <th width="100px">Detail</th>
-                      <th width="100px">Sunting</th>
+                      <th width="100px">Edit</th>
                       <th width="100px">Hapus</th>
                   </tr>
                 </thead>

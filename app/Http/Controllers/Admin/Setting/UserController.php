@@ -153,6 +153,7 @@ class UserController extends AdminController
      */
     public function edit(User $user)
     {
+        dd($user);
         /* where roles */
         if (\Auth::user()->hasRole('super')) {
             $whrRole = [
@@ -175,7 +176,7 @@ class UserController extends AdminController
         $data = [
             'current_url' => $this->current_url,
             'page_title' => $this->page_title,
-            'page_subtitle' => 'Sunting Pengguna',
+            'page_subtitle' => 'Edit Pengguna',
             'roles' => Role::where($whrRole)->get(),
             'data' => $user,
         ];
