@@ -150,7 +150,7 @@ class MenuGroupController extends AdminController
      * @param  \App\Models\MenuGroup  $menugroup
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $r, $menugroup)
+    public function update(Request $r, MenuGroup $menugroup)
     {
         /* validation */
         $this->validate($r, [
@@ -179,7 +179,7 @@ class MenuGroupController extends AdminController
      * @param  \App\Models\MenuGroup  $menugroup
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Request $r, $menugroup)
+    public function destroy(Request $r, MenuGroup $menugroup)
     {
         /* get data */
         // $menugroup = MenuGroup::find($id);
