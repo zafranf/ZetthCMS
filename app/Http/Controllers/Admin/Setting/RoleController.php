@@ -138,7 +138,6 @@ class RoleController extends AdminController
      */
     public function edit(Role $role)
     {
-        dd($role);
         $this->breadcrumbs[] = [
             'page' => 'Edit',
             'icon' => '',

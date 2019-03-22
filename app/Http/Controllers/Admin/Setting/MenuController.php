@@ -17,10 +17,15 @@ class MenuController extends AdminController
     public function __construct()
     {
         parent::__construct();
-        $this->current_url = url($this->adminPath . '/setting/application');
-        $this->page_title = 'Pengaturan Menu';
+        $this->current_url = url($this->adminPath . '/setting/menus');
+        $this->page_title = 'Pengaturan Grup Menu';
         $this->breadcrumbs[] = [
             'page' => 'Pengaturan',
+            'icon' => '',
+            'url' => url($this->adminPath . '/setting/application'),
+        ];
+        $this->breadcrumbs[] = [
+            'page' => 'Menu',
             'icon' => '',
             'url' => $this->current_url,
         ];
@@ -34,7 +39,7 @@ class MenuController extends AdminController
     public function index(Request $r)
     {
         $this->breadcrumbs[] = [
-            'page' => 'Menu',
+            'page' => 'Daftar',
             'icon' => '',
             'url' => '',
         ];
@@ -44,7 +49,6 @@ class MenuController extends AdminController
             'current_url' => $this->current_url,
             'page_title' => $this->page_title,
             'page_subtitle' => 'Daftar Menu',
-            'menus' => Menu::all(),
             'breadcrumbs' => $this->breadcrumbs,
         ];
 
@@ -58,15 +62,22 @@ class MenuController extends AdminController
      */
     public function create()
     {
+        $this->breadcrumbs[] = [
+            'page' => 'Tambah',
+            'icon' => '',
+            'url' => '',
+        ];
+
         /* set variable for view */
         $data = [
             'current_url' => $this->current_url,
             'page_title' => $this->page_title,
             'page_subtitle' => 'Tambah Menu',
+            'breadcrumbs' => $this->breadcrumbs,
             'menus' => Menu::where('parent_id', 0)->with('allSubmenu')->orderBy('order')->get(),
         ];
 
-        return view('admin.setting.menu_form', $data);
+        return view('admin.AdminSC.setting.menu_form', $data);
     }
 
     /**
@@ -86,7 +97,7 @@ class MenuController extends AdminController
         $menu = new Menu;
         $menu->name = str_sanitize($r->input('name'));
         $menu->description = str_sanitize($r->input('description'));
-        // $menu->url = $r->input('url');
+        $menu->url = $r->input('url');
         $menu->route_name = str_sanitize($r->input('route_name'));
         $menu->target = str_sanitize($r->input('target'));
         // $menu->order = (int) $r->input('order');
@@ -206,7 +217,7 @@ class MenuController extends AdminController
     public function datatable(Request $r)
     {
         /* get data */
-        $data = Menu::select(sequence(), 'id', 'name', 'description', 'status')->get();
+        $data = Menu::select('id', 'name', 'description', 'status')->get();
 
         /* generate datatable */
         if ($r->ajax()) {

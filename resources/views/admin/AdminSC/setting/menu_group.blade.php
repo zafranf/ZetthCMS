@@ -7,7 +7,7 @@
       <thead>
         <tr>
           <td width="25">No.</td>
-          <td>Menu</td>
+          <td>Grup</td>
           <td>Deskripsi</td>
           <td width="80">Status</td>
           {{-- @if ($isDesktop)

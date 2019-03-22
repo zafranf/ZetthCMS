@@ -6,7 +6,7 @@
       <div class="form-group">
         <label for="name" class="col-sm-2 control-label">Nama Grup Menu</label>
         <div class="col-sm-4">
-          <input type="text" class="form-control" id="name" name="name" value="{{ isset($data->id) ? $data->name : '' }}" autofocus onfocus="_autofocus(this)" maxlength="100" placeholder="Nama grup menu..">
+          <input type="text" class="form-control" id="name" name="name" value="{{ isset($data->id) ? $data->name : '' }}" autofocus onfocus="_onfocus(this)" maxlength="100" placeholder="Nama grup menu..">
         </div>
       </div>
       <div class="form-group">
@@ -19,7 +19,7 @@
         <div class="col-sm-offset-2 col-sm-4">
           <div class="checkbox">
             <label>
-              <input type="checkbox" name="status" {{ (isset($data->status) && $data->status == 0) ? '' : 'checked' }}> Active
+              <input type="checkbox" name="status" {{ (isset($data->status) && $data->status == 0) ? '' : 'checked' }}> Aktif
             </label>
           </div>
         </div>

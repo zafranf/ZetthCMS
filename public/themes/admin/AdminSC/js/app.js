@@ -29,7 +29,7 @@ $(document).ready(function() {
     $('[data-toggle="tooltip"]').tooltip();
 });
 
-function _autofocus(el) {
+function _onfocus(el) {
     var temp_value = el.value;
     el.value = '';
     el.value = temp_value;

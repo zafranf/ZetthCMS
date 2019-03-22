@@ -51,7 +51,6 @@ class ApplicationController extends AdminController
             'current_url' => $this->current_url,
             'page_title' => $this->page_title,
             'page_subtitle' => 'Aplikasi',
-            // 'config' => Application::find(1),
             'breadcrumbs' => $this->breadcrumbs,
         ];
 

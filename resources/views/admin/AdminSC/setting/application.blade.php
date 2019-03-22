@@ -3,8 +3,6 @@
 @section('content')
 	<div class="panel-body">
 		<form class="form-horizontal" action="{{ url($current_url) }}/{{ $apps->id ?? '' }}" method="post" enctype="multipart/form-data">
-			{{ isset($apps->id) ? method_field('PUT') : '' }}
-			{{ csrf_field() }}
 			<div class="row">
 				<div class="col-md-6">
 					<h4>Informasi Utama</h4>
@@ -57,7 +55,7 @@
 					<div class="form-group">
 						<label for="name" class="col-md-4 control-label">Nama Situs</label>
 						<div class="col-md-8">
-							<input type="text" class="form-control" name="name" value="{{ $apps->name ?? '' }}" placeholder="Nama situs" maxlength="50">
+							<input type="text" class="form-control" name="name" value="{{ $apps->name ?? '' }}" placeholder="Nama situs" maxlength="50" autofocus onfocus="_onfocus(this)">
 						</div>
 					</div>
 					<div class="form-group">
@@ -239,6 +237,8 @@
 			</div>
 			<div class="form-group">
 				<div class="col-md-offset-2 col-md-10">
+					{{ isset($apps->id) ? method_field('PUT') : '' }}
+					{{ csrf_field() }}
 				  {{ _get_button_post(url($adminPath . '/dashboard')) }}
 				</div>
 			</div>

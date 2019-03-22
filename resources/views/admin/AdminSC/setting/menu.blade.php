@@ -37,24 +37,36 @@
         "processing": true,
         "serverSide": true,
         "ajax": SITE_URL + "{{ $adminPath }}/setting/menus/data",
+        "pageLength": 20,
+        "lengthMenu": [
+          [10, 20, 50, 100, -1], 
+          [10, 20, 50, 100, "All"]
+        ],
         "columns": [
-          { "data": "no", "width": "30px" },
+          { "width": "30px" },
           { "data": "name", "width": "200px" },
           { "data": "description" },
           { "data": "status", "width": "50px" },
           { "width": "60px" },
         ],
-        "pageLength": 20,
-        "lengthMenu": [ [10, 20, 50, 100, -1], [10, 20, 50, 100, "All"] ],
         "columnDefs": [{
+          "targets": 0,
+          "data": null,
+          "sortable": false,
+          "render": function (data, type, row, meta) {
+            return meta.row + meta.settings._iDisplayStart + 1;
+          }
+        }, {
           "targets": 3,
           "data": 'status',
+          "sortable": false,
           "render": function (data, type, row, meta) {
             return _get_status_text(data);
           }
         }, {
           "targets": 4,
           "data": 'id',
+          "sortable": false,
           "render": function (data, type, row, meta) {
             var actions = '';
             var url = SITE_URL + "{{ $adminPath }}/setting/menus/" + data;
