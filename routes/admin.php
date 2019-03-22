@@ -51,12 +51,12 @@ Route::middleware('auth')->group(function () {
         Route::prefix('content')->group(function () {
             Route::resources([
                 '/banners' => 'Admin\Content\BannerController',
-                // '/pages' => 'Admin\Content\PageController',
-                // '/article/posts' => 'Admin\Content\Article\PostController',
-                // '/article/categories' => 'Admin\Content\Article\CategoryController',
-                // '/article/tags' => 'Admin\Content\Article\TagController',
-                // '/gallery/photos' => 'Admin\Content\Gallery\PhotoController',
-                // '/gallery/videos' => 'Admin\Content\Gallery\VideoController',
+                '/pages' => 'Admin\Content\PageController',
+                '/article/posts' => 'Admin\Content\Article\PostController',
+                '/article/categories' => 'Admin\Content\Article\CategoryController',
+                '/article/tags' => 'Admin\Content\Article\TagController',
+                '/gallery/photos' => 'Admin\Content\Gallery\PhotoController',
+                '/gallery/videos' => 'Admin\Content\Gallery\VideoController',
                 // '/products' => 'Admin\Content\Product\ProductController',
             ]);
             // Route::resource('/products/categories', 'Admin\Content\Product\CategoryController')->names('products.categories');
@@ -66,19 +66,19 @@ Route::middleware('auth')->group(function () {
         /* module report routes */
         Route::prefix('report')->group(function () {
             Route::resources([
-                // '/inbox' => 'Admin\Report\InboxController',
-                // '/comments' => 'Admin\Report\CommentController',
-                // '/incoming-terms' => 'Admin\Report\IntermController',
-                // '/subscribers' => 'Admin\Report\SubscriberController',
+                '/inbox' => 'Admin\Report\InboxController',
+                '/comments' => 'Admin\Report\CommentController',
+                '/incoming-terms' => 'Admin\Report\IntermController',
+                '/subscribers' => 'Admin\Report\SubscriberController',
             ]);
         });
 
         /* module log routes */
         Route::prefix('log')->group(function () {
             Route::resources([
-                // '/activities' => 'Admin\Log\ActivityController',
-                // '/errors' => 'Admin\Log\ErrorController',
-                // '/visitors' => 'Admin\Log\VisitorController',
+                '/activities' => 'Admin\Log\ActivityController',
+                '/errors' => 'Admin\Log\ErrorController',
+                '/visitors' => 'Admin\Log\VisitorController',
             ]);
         });
 
