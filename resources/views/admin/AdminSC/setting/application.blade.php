@@ -42,7 +42,7 @@
 									<a href="#" class="btn btn-default fileinput-exists" data-dismiss="fileinput">Hapus</a>
 								</div>
 							</div>
-							<small class="help-block">Maksimal ukuran dimensi logo adalah 500x500 piksel</small>
+							<small class="help-block">Maksimal ukuran dimensi logo adalah 512x512 piksel</small>
 						</div>
 					</div>
 					<div class="form-group">
@@ -62,7 +62,12 @@
 								</span>
 								<a href="#" class="input-group-addon btn fileinput-exists" data-dismiss="fileinput">Hapus</a>
 							</div>
-							<small class="help-block">Maksimal ukuran dimensi ikon adalah 50x50 piksel</small>
+							<small class="help-block">Maksimal ukuran dimensi ikon adalah 64x64 piksel</small>
+							<small class="help-block">
+								<label>
+									<input type="checkbox" name="use_logo"> Gunakan logo
+								</label>
+							</small>
 						</div>
 					</div>
 					<div class="form-group">
@@ -72,9 +77,9 @@
 						</div>
 					</div>
 					<div class="form-group">
-						<label for="slogan" class="col-md-4 control-label">Tagline</label>
+						<label for="slogan" class="col-md-4 control-label">Slogan</label>
 						<div class="col-md-8">
-							<input type="text" class="form-control" name="tagline" value="{{ $apps->tagline ?? '' }}" placeholder="Tagline situs">
+							<input type="text" class="form-control" name="tagline" value="{{ $apps->tagline ?? '' }}" placeholder="Slogan situs">
 						</div>
 					</div>
 					<div class="form-group">

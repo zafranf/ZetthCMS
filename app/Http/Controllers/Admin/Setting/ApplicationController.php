@@ -110,7 +110,6 @@ class ApplicationController extends AdminController
      */
     public function update(Request $r, $id)
     {
-        // dd($r->input(), $r->file());
         /* validation */
         $this->validate($r, [
             'name' => 'required|max:50',
@@ -118,8 +117,8 @@ class ApplicationController extends AdminController
             // 'keyword' => 'required',
             // 'email' => 'required|email',
             'email' => 'email|nullable',
-            'logo' => 'dimensions:max_height=500,max_width=500|max:512',
-            'icon' => 'dimensions:max_height=50,max_width=50|max:128',
+            'logo' => 'dimensions:max_height=512,max_width=512|max:512',
+            'icon' => 'dimensions:max_height=64,max_width=64|max:64',
             'perpage' => 'integer|min:3',
         ]);
 
@@ -141,6 +140,7 @@ class ApplicationController extends AdminController
         $app->enable_share = bool($r->enable_share) ? 1 : 0;
         $app->enable_comment = bool($r->enable_comment) ? 1 : 0;
         $app->google_analytics = $r->input('google_analytics');
+
         /* upload logo */
         if ($r->hasFile('logo')) {
             $file = $r->file('logo');
@@ -157,8 +157,13 @@ class ApplicationController extends AdminController
                 // $app->save();
             }
         }
+
         /* upload icon */
-        if ($r->hasFile('icon')) {
+        if ($r->input('use_logo')) {
+            if ($app->logo) {
+                $app->icon = $app->logo;
+            }
+        } else if ($r->hasFile('icon')) {
             $file = $r->file('icon');
             $par = [
                 'file' => $file,
@@ -173,6 +178,8 @@ class ApplicationController extends AdminController
                 // $app->save();
             }
         }
+
+        /* save config app */
         $app->save();
 
         /* processing socmed */
