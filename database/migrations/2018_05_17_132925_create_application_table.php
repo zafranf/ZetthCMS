@@ -15,6 +15,7 @@ class CreateApplicationTable extends Migration
     {
         Schema::create('applications', function (Blueprint $table) {
             $table->increments('id')->unsigned();
+            $table->string('domain');
             $table->string('name');
             $table->string('tagline')->nullable();
             $table->string('logo')->nullable();

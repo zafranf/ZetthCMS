@@ -12,6 +12,7 @@ class AppTableSeeder extends Seeder
     public function run()
     {
         App\Models\Application::create([
+            'domain' => env('APP_DOMAIN'),
             'name' => 'ZetthCMS Core',
             // 'tagline' => '',
             // 'logo' => '',

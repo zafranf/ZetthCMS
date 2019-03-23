@@ -40,6 +40,45 @@ return [
      */
 
     'debug' => env('APP_DEBUG', false),
+    'debug_blacklist' => [
+        '_ENV' => [
+            'APP_KEY',
+            'DB_HOST',
+            'DB_PORT',
+            'DB_DATABASE',
+            'DB_USERNAME',
+            'DB_PASSWORD',
+            'MEMCACHED_HOST',
+            'REDIS_HOST',
+            'REDIS_PORT',
+            'REDIS_PASSWORD',
+            'MAIL_HOST',
+            'MAIL_PORT',
+            'MAIL_USERNAME',
+            'MAIL_PASSWORD',
+        ],
+
+        '_SERVER' => [
+            'APP_KEY',
+            'DB_HOST',
+            'DB_PORT',
+            'DB_DATABASE',
+            'DB_USERNAME',
+            'DB_PASSWORD',
+            'MEMCACHED_HOST',
+            'REDIS_HOST',
+            'REDIS_PORT',
+            'REDIS_PASSWORD',
+            'MAIL_HOST',
+            'MAIL_PORT',
+            'MAIL_USERNAME',
+            'MAIL_PASSWORD',
+        ],
+
+        '_POST' => [
+            'password',
+        ],
+    ],
 
     /*
     |--------------------------------------------------------------------------
