@@ -12,6 +12,12 @@ class MenuTableSeeder extends Seeder
      */
     public function run()
     {
+        $this->admin();
+        $this->web();
+    }
+
+    public function admin()
+    {
         $mainOrder = 1;
         /* menu dashboard */
         $dash = new Menu;
@@ -445,5 +451,21 @@ class MenuTableSeeder extends Seeder
         $logError->update = 0;
         $logError->delete = 0;
         $logError->save();
+    }
+
+    public function web()
+    {
+        /* menu dashboard */
+        $dash = new Menu;
+        $dash->name = 'Beranda Website';
+        $dash->description = 'Halaman utama website';
+        $dash->route_name = 'home.index';
+        // $dash->icon = 'fa fa-dashboard';
+        $dash->target = '_self';
+        // $dash->order = $mainOrder++;
+        $dash->status = 1;
+        // $dash->index = 1;
+        $dash->group_id = 2;
+        $dash->save();
     }
 }

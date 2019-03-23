@@ -6,6 +6,6 @@ class TestController extends Controller
 {
     public function index()
     {
-        dd(getMenu());
+        dd(\App\Models\Role::with('menus')->get());
     }
 }

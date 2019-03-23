@@ -106,7 +106,7 @@
   <script>
     var SITE_URL = '{{ url('/') }}';
     var ADMIN_URL = '{{ url($adminPath) }}';
-    var CURRENT_URL = '{{ url('/') }}';
+    var CURRENT_URL = '{{ url($current_url) }}';
     var TOKEN = '{{ csrf_token() }}';
     var CONNECT = true;
     var IS_MOBILE = {{ $isMobile ? 'true' : 'false' }};
