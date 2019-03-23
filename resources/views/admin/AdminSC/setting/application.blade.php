@@ -55,25 +55,25 @@
 					<div class="form-group">
 						<label for="name" class="col-md-4 control-label">Nama Situs</label>
 						<div class="col-md-8">
-							<input type="text" class="form-control" name="name" value="{{ $apps->name ?? '' }}" placeholder="Nama situs" maxlength="50" autofocus onfocus="_onfocus(this)">
+							<input type="text" class="form-control" name="name" value="{{ $apps->name ?? '' }}" placeholder="Nama situs.." maxlength="50" autofocus onfocus="_onfocus(this)">
 						</div>
 					</div>
 					<div class="form-group">
 						<label for="slogan" class="col-md-4 control-label">Slogan</label>
 						<div class="col-md-8">
-							<input type="text" class="form-control" name="tagline" value="{{ $apps->tagline ?? '' }}" placeholder="Slogan situs">
+							<input type="text" class="form-control" name="tagline" value="{{ $apps->tagline ?? '' }}" placeholder="Slogan situs..">
 						</div>
 					</div>
 					<div class="form-group">
 						<label for="email" class="col-md-4 control-label">Surel</label>
 						<div class="col-md-8">
-							<input type="text" class="form-control" name="email" value="{{ $apps->email ?? '' }}" placeholder="surel@namasitus.com">
+							<input type="text" class="form-control" name="email" value="{{ $apps->email ?? '' }}" placeholder="Alamat surel..">
 						</div>
 					</div>
 					<div class="form-group">
 						<label for="phone" class="col-md-4 control-label">Telepon</label>
 						<div class="col-md-8">
-							<input type="text" class="form-control" name="phone" value="{{ $apps->phone ?? '' }}" placeholder="(123) 12345678">
+							<input type="text" class="form-control" name="phone" value="{{ $apps->phone ?? '' }}" placeholder="Nomor telepon..">
 						</div>
 					</div>
 					{{-- <div class="form-group" {!! (Auth::user()->id != 1)?'style="display:none;"':'' !!}>
@@ -93,7 +93,7 @@
 					<div class="form-group" {!! (Auth::user()->id != 1)?'style="display:none;"':'' !!}>
 						<label for="perpage" class="col-md-4 control-label">Data Perhalaman</label>
 						<div class="col-md-8">
-							<input id="perpage" name="perpage" class="form-control" value="{{ $apps->perpage ?? 0 }}" placeholder="Tampilkan data perhalaman">
+							<input id="perpage" name="perpage" class="form-control" value="{{ $apps->perpage ?? 0 }}" placeholder="Jumlah data perhalaman..">
 						</div>
 					</div>
 					<div class="form-group">
@@ -136,7 +136,7 @@
 					<div class="form-group" {!! ($apps->status == 1) ? 'style="display:none;"' : '' !!} id="d_active_at">
 						<label for="active_at" class="col-md-4 control-label">Dibuka pada</label>
 						<div class="col-md-8">
-							<input type="text" class="form-control" id="i_active_at" name="active_at" value="{{ isset($apps->id)?date("Y-m-d", strtotime($apps->active_at)) : '' }}" {!! ($apps->status == 1) ? 'readonly' : '' !!}>
+							<input type="text" class="form-control" id="i_active_at" name="active_at" value="{{ isset($apps->id) ? date("Y-m-d", strtotime($apps->active_at)) : '' }}" {!! ($apps->status == 1) ? 'readonly' : '' !!} placeholder="Dibuka pada..">
 						</div>
 					</div>
 				</div>
@@ -148,36 +148,36 @@
 						<div class="col-md-8">
 							@if (isset($socmed_data) && count($socmed_data) > 0)
 								@foreach ($socmed_data as $key => $val)
-								@php
-									$rand = rand(111111111, 999999999);
-								@endphp
-								<div id="div-socmed-{{ $rand }}">
-									<div class="col-md-3 col-xs-6 no-padding">
-										<select name="socmed_id[]" class="form-control pwd-select">
-                      <option value="">--Pilih--</option>
-                      @if (isset($socmeds))
-                        @foreach ($socmeds as $socmed)
-                          @php 
-                            $sl = ($socmed->id==$val->socmed->id) ? 'selected' : ''
-                          @endphp
-                          <option value="{{ $socmed->id }}" {{ $sl }}>{{ $socmed->name }}</option>
-                        @endforeach
+                  @php
+                    $rand = rand(111111111, 999999999);
+                  @endphp
+                  <div id="div-socmed-{{ $rand }}">
+                    <div class="col-md-3 col-xs-6 no-padding">
+                      <select name="socmed_id[]" class="form-control pwd-select">
+                        <option value="">--Pilih--</option>
+                        @if (isset($socmeds))
+                          @foreach ($socmeds as $socmed)
+                            @php 
+                              $sl = ($socmed->id==$val->socmed->id) ? 'selected' : ''
+                            @endphp
+                            <option value="{{ $socmed->id }}" {{ $sl }}>{{ $socmed->name }}</option>
+                          @endforeach
+                        @endif
+                      </select>
+                    </div>
+                    <div class="col-md-9 col-xs-6 no-padding">
+                      @if ($key > 0)
+                        <div class="input-group">
+                          <input type="text" class="form-control" name="socmed_uname[]" placeholder="Nama/ID akun.." value="{{ $val->username }}">
+                          <span class="input-group-btn">
+                            <button type="button" class="btn" style="background:white;border:1px solid #ccc;" onclick="_remove('#div-socmed-{{ $rand }}')"><i class="fa fa-minus"></i></button
+                          </span>
+                        </div>
+                      @else
+                        <input type="text" class="form-control" name="socmed_uname[]" placeholder="Nama/ID akun.." value="{{ $val->username }}">
                       @endif
-										</select>
-									</div>
-									<div class="col-md-9 col-xs-6 no-padding">
-										@if ($key > 0)
-											<div class="input-group">
-												<input type="text" class="form-control" name="socmed_uname[]" placeholder="Nama/ID akun" value="{{ $val->username }}">
-												<span class="input-group-btn">
-													<button type="button" class="btn" style="background:white;border:1px solid #ccc;" onclick="_remove('#div-socmed-{{ $rand }}')"><i class="fa fa-minus"></i></button
-												</span>
-											</div>
-										@else
-											<input type="text" class="form-control" name="socmed_uname[]" placeholder="Nama/ID akun" value="{{ $val->username }}">
-										@endif
-									</div>
-								</div>
+                    </div>
+                  </div>
 								@endforeach
 							@else
 								<div class="col-md-3 col-xs-6 no-padding">
@@ -191,7 +191,7 @@
 									</select>
 								</div>
 								<div class="col-md-9 col-xs-6 no-padding">
-									<input type="text" class="form-control" name="socmed_uname[]" placeholder="Nama/ID akun">
+									<input type="text" class="form-control" name="socmed_uname[]" placeholder="Nama/ID akun..">
 								</div>
 							@endif
 							<div id="div-socmed"></div>
@@ -202,19 +202,19 @@
 					<div class="form-group">
 						<label for="keyword" class="col-md-4 control-label">Kata Kunci</label>
 						<div class="col-md-8">
-							<input type="text" id="keyword" class="form-control" name="keyword" value="{{ $apps->keyword ?? '' }}" placeholder="Enter untuk konfirmasi">
+							<input type="text" id="keyword" class="form-control" name="keyword" value="{{ $apps->keyword ?? '' }}" placeholder="Tekan enter untuk konfirmasi..">
 						</div>
 					</div>
 					<div class="form-group">
 						<label for="description" class="col-md-4 control-label">Deskripsi</label>
 						<div class="col-md-8">
-							<textarea name="description" class="form-control" rows="5" placeholder="Deskripsi singkat mengenai situs">{{ $apps->description ?? '' }}</textarea>
+							<textarea name="description" class="form-control" rows="5" placeholder="Penjelasan singkat mengenai situs..">{{ $apps->description ?? '' }}</textarea>
 						</div>
 					</div>
 					<div class="form-group">
 						<label for="google_analytics" class="col-md-4 control-label">Google Analytics</label>
 						<div class="col-md-8">
-							<input type="text" class="form-control" name="google_analytics" value="{{ $apps->google_analytics ?? '' }}" placeholder="Kode Lacak Google Analytics">
+							<input type="text" class="form-control" name="google_analytics" value="{{ $apps->google_analytics ?? '' }}" placeholder="Kode lacak dari Google Analytics..">
 							<small class="help-block">Kode untuk analitik kunjungan website dari Google</small>
 						</div>
 					</div>
@@ -223,14 +223,14 @@
 					<div class="form-group">
 						<label for="address" class="col-md-4 control-label">Alamat</label>
 						<div class="col-md-8">
-							<textarea name="address" class="form-control" rows="5" placeholder="Alamat lengkap">{{ $apps->address ?? '' }}</textarea>
+							<textarea name="address" class="form-control" rows="5" placeholder="Alamat lengkap..">{{ $apps->address ?? '' }}</textarea>
 						</div>
 					</div>
 					<div class="form-group">
 						<label for="coordinate" class="col-md-4 control-label">Koordinat</label>
 						<div class="col-md-8">
-							<input type="text" class="form-control" name="coordinate" value="{{ $apps->coordinate ?? '' }}" placeholder="-6.229728, 106.6894312">
-							<small class="help-block">Garis lintang, garis bujur</small>
+							<input type="text" class="form-control" name="coordinate" value="{{ $apps->coordinate ?? '' }}" placeholder="Titik koordinat..">
+							<small class="help-block">Garis lintang, garis bujur. (cth: -6.229728, 106.6894312)</small>
 						</div>
 					</div>
 				</div>
@@ -307,7 +307,7 @@
 							'</div>'+
 							'<div class="col-md-9 col-xs-6 no-padding">'+
 								'<div class="input-group">'+
-									'<input type="text" class="form-control" name="socmed_uname[]" placeholder="Account Name">'+
+									'<input type="text" class="form-control" name="socmed_uname[]" placeholder="Nama/ID akun..">'+
 									'<span class="input-group-btn">'+
 										'<button type="button" class="btn" style="background:white;border:1px solid #ccc;" onclick="_remove(\'#div-socmed-'+socmed_no+'\')"><i class="fa fa-minus"></i></button'+
 									'</span>'+

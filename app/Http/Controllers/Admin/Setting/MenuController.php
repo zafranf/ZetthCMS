@@ -117,7 +117,7 @@ class MenuController extends AdminController
         /* clear cache */
         \Cache::flush();
 
-        return redirect($this->current_url)->with('success', 'Menu berhasil ditambah!');
+        return redirect($this->current_url)->with('success', 'Menu "' . $menu->name . '" berhasil ditambah!');
     }
 
     /**
@@ -203,7 +203,7 @@ class MenuController extends AdminController
         /* clear cache */
         \Cache::flush();
 
-        return redirect($this->current_url)->with('success', 'Menu berhasil disimpan!');
+        return redirect($this->current_url)->with('success', 'Menu "' . $menu->name . '" berhasil disimpan!');
     }
 
     /**
@@ -223,7 +223,7 @@ class MenuController extends AdminController
         /* clear cache */
         \Cache::flush();
 
-        return redirect($this->current_url)->with('success', 'Menu berhasil dihapus!');
+        return redirect($this->current_url)->with('success', 'Menu "' . $menu->name . '" berhasil dihapus!');
     }
 
     /**

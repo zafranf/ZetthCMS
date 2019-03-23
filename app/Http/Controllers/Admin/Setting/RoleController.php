@@ -114,9 +114,9 @@ class RoleController extends AdminController
         $this->setPermissions($r, $role);
 
         /* log aktifitas */
-        $this->activityLog('<b>' . \Auth::user()->fullname . '</b> menambahkan Peran "' . $role->display_name . '"');
+        $this->activityLog('<b>' . \Auth::user()->fullname . '</b> menambahkan Peran "' . $role->name . '"');
 
-        return redirect($this->current_url)->with('success', 'Peran berhasil ditambah!');
+        return redirect($this->current_url)->with('success', 'Peran "' . $role->name . '" berhasil ditambah!');
     }
 
     /**
@@ -191,7 +191,7 @@ class RoleController extends AdminController
         /* log aktifitas */
         $this->activityLog('<b>' . \Auth::user()->fullname . '</b> memperbarui Peran "' . $role->name . '"');
 
-        return redirect($this->current_url)->with('success', 'Peran berhasil disimpan!');
+        return redirect($this->current_url)->with('success', 'Peran "' . $role->name . '" berhasil disimpan!');
     }
 
     /**
@@ -208,7 +208,7 @@ class RoleController extends AdminController
         /* soft delete */
         $role->delete();
 
-        return redirect('/setting/roles')->with('success', 'Peran berhasil dihapus!');
+        return redirect($this->current_url)->with('success', 'Peran "' . $role->name . '" berhasil dihapus!');
     }
 
     /**
@@ -235,9 +235,14 @@ class RoleController extends AdminController
         /* remove all permissions */
         RolePermission::where('role_id', $role->id)->delete();
 
+        /* add menus access */
+        $accesses = $r->input('access');
+        if (in_array('menu-groups', array_keys($accesses))) {
+            $accesses['menus'] = $accesses['menu-groups'];
+        }
+
         /* attach new permissions */
         $permissions = [];
-        $accesses = $r->input('access');
         foreach ($accesses as $module => $access) {
             foreach ($access as $key => $val) {
                 // $role->attachPermission($key . '-' . $module);

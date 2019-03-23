@@ -67,11 +67,14 @@ if (!function_exists('_get_button_post')) {
      * @param  string $page [description]
      * @return [type]       [description]
      */
-    function _get_button_post($page = '')
+    function _get_button_post($page = '', $delete = false, $id = '')
     {
         echo '<div class="box-footer">';
         echo '<button type="submit" class="btn btn-warning">Simpan</button>';
-        echo ' <a class="btn btn-default" href="' . url($page) . '">Batal</a>';
+        echo ' &nbsp;<a class="btn btn-default" href="' . url($page) . '">Batal</a>';
+        if ($delete && $id != '') {
+            echo '<a class="btn btn-danger pull-right" onclick="_delete(\'' . url($page . '/' . $id) . '\')">Hapus</a>';
+        }
         echo '</div>';
     }
 }

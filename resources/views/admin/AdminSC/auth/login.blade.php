@@ -23,7 +23,7 @@ $page_title = 'Masuk Aplikasi';
               <div class="form-group{{ $errors->has('name') ? ' has-error' : '' }}">
                 <label class="col-md-4 control-label">Pengguna</label>
                 <div class="col-md-6">
-                  <input type="name" class="form-control" name="name" value="{{ old('name') }}" placeholder="Nama atau email" autofocus>
+                  <input type="name" class="form-control" name="name" value="{{ old('name') }}" placeholder="Nama atau surel.." autofocus>
                   @if ($errors->has('name'))
                     <span class="help-block">
                       <strong>{{ $errors->first('name') }}</strong>
@@ -35,7 +35,7 @@ $page_title = 'Masuk Aplikasi';
               <div class="form-group{{ $errors->has('password') ? ' has-error' : '' }}">
                 <label class="col-md-4 control-label">Sandi</label>
                 <div class="col-md-6">
-                  <input type="password" class="form-control" name="password" placeholder="Kata sandi">
+                  <input type="password" class="form-control" name="password" placeholder="Kata sandi..">
                   @if ($errors->has('password'))
                     <span class="help-block">
                       <strong>{{ $errors->first('password') }}</strong>
@@ -57,9 +57,9 @@ $page_title = 'Masuk Aplikasi';
               <div class="form-group">
                 <div class="col-md-7 col-md-offset-4">
                   <button type="submit" class="btn btn-default">
-                    <i class="fa fa-btn fa-sign-in"></i>Login
+                    <i class="fa fa-btn fa-sign-in"></i> Masuk
                   </button>
-                  <a class="btn btn-link" href="{{ url($adminPath . '/password/reset') }}">Forgot Your Password?</a>
+                  <a class="btn btn-link" href="{{ url($adminPath . '/password/reset') }}">Lupa sandi?</a>
                 </div>
               </div>
             </form>

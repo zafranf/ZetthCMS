@@ -103,7 +103,7 @@ class MenuGroupController extends AdminController
         /* activity log */
         $this->activityLog('<b>' . \Auth::user()->fullname . '</b> menambahkan Grup Menu "' . $menu->name . '"');
 
-        return redirect($this->current_url)->with('success', 'Grup Menu berhasil ditambah!');
+        return redirect($this->current_url)->with('success', 'Grup Menu "' . $menugroup->name . '" berhasil ditambah!');
     }
 
     /**
@@ -170,7 +170,7 @@ class MenuGroupController extends AdminController
         /* clear cache */
         \Cache::forget('cacheMenu-Group' . ucfirst($menugroup->name));
 
-        return redirect($this->current_url)->with('success', 'Grup Menu berhasil disimpan!');
+        return redirect($this->current_url)->with('success', 'Grup Menu "' . $menugroup->name . '" berhasil disimpan!');
     }
 
     /**
@@ -181,19 +181,16 @@ class MenuGroupController extends AdminController
      */
     public function destroy(Request $r, MenuGroup $menugroup)
     {
-        /* get data */
-        // $menugroup = MenuGroup::find($id);
-
         /* activity log */
         $this->activityLog('<b>' . \Auth::user()->fullname . '</b> menghapus Grup Menu "' . $menugroup->name . '"');
 
-        /* delete data */
+        /* soft delete */
         $menugroup->delete();
 
         /* clear cache */
         \Cache::forget('cacheMenu-Group' . ucfirst($menugroup->name));
 
-        return redirect($this->current_url)->with('success', 'Grup Menu berhasil dihapus!');
+        return redirect($this->current_url)->with('success', 'Grup Menu "' . $menugroup->name . '" berhasil dihapus!');
     }
 
     /**

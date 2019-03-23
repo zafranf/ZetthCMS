@@ -62,7 +62,7 @@ class LaratrustSeeder extends Seeder
                 'fullname' => ucwords(str_replace('_', ' ', $key_fullname)),
                 'email' => $key . '@mail.co',
                 'password' => bcrypt('123123'),
-                'language' => 'id',
+                // 'language' => 'id',
                 'status' => 1,
             ]);
 
@@ -80,7 +80,7 @@ class LaratrustSeeder extends Seeder
                         'fullname' => ucwords(str_replace('_', ' ', $key)),
                         'email' => $key . '@mail.co',
                         'password' => bcrypt('123123'),
-                        'language' => 'id',
+                        // 'language' => 'id',
                         'status' => 1,
                     ]);
                     $permissions = [];

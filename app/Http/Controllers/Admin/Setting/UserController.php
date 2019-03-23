@@ -4,6 +4,8 @@ namespace App\Http\Controllers\Admin\Setting;
 
 use App\Http\Controllers\Admin\AdminController;
 use App\Models\Role;
+use App\Models\Socmed;
+use App\Models\SocmedData;
 use App\Models\User;
 use Illuminate\Http\Request;
 
@@ -18,8 +20,13 @@ class UserController extends AdminController
     public function __construct()
     {
         parent::__construct();
-        $this->current_url = url('/data/users');
+        $this->current_url = url($this->adminPath . '/setting/users');
         $this->page_title = 'Pengaturan Pengguna';
+        $this->breadcrumbs[] = [
+            'page' => 'Pengaturan',
+            'icon' => '',
+            'url' => url($this->adminPath . '/setting/application'),
+        ];
         $this->breadcrumbs[] = [
             'page' => 'Pengguna',
             'icon' => '',
@@ -34,14 +41,21 @@ class UserController extends AdminController
      */
     public function index(Request $r)
     {
+        $this->breadcrumbs[] = [
+            'page' => 'Daftar',
+            'icon' => '',
+            'url' => '',
+        ];
+
         /* set variable for view */
         $data = [
             'current_url' => $this->current_url,
             'page_title' => $this->page_title,
             'page_subtitle' => 'Daftar Pengguna',
+            'breadcrumbs' => $this->breadcrumbs,
         ];
 
-        return view('admin.setting.user', $data);
+        return view('admin.AdminSC.setting.users', $data);
     }
 
     /**
@@ -51,6 +65,12 @@ class UserController extends AdminController
      */
     public function create()
     {
+        $this->breadcrumbs[] = [
+            'page' => 'Tambah',
+            'icon' => '',
+            'url' => '',
+        ];
+
         /* where roles */
         if (\Auth::user()->hasRole('super')) {
             $whrRole = [
@@ -74,10 +94,17 @@ class UserController extends AdminController
             'current_url' => $this->current_url,
             'page_title' => $this->page_title,
             'page_subtitle' => 'Tambah Pengguna',
+            'breadcrumbs' => $this->breadcrumbs,
             'roles' => Role::where($whrRole)->get(),
         ];
 
-        return view('admin.setting.user_form', $data);
+        /* socmed */
+        $data['socmeds'] = Socmed::where('status', 1)->get();
+        /* $data['socmed_data'] = SocmedData::where([
+        'type' => 'user',
+        ])->with('socmed')->get(); */
+
+        return view('admin.AdminSC.setting.users_form', $data);
     }
 
     /**
@@ -93,8 +120,8 @@ class UserController extends AdminController
             'name' => 'required|alpha_num|min:3|max:30|unique:users',
             'fullname' => 'required|min:1|max:100',
             'email' => 'required|email',
-            'image' => 'mimes:jpg,jpeg,png,svg|max:200|dimensions:max_width=500,max_height=500',
-            'password' => 'required',
+            'image' => 'mimes:jpg,jpeg,png,svg|max:512|dimensions:max_width=512,max_height=512',
+            'password' => 'required|min:6',
             'password_confirmation' => 'same:password',
         ]);
 
@@ -104,16 +131,16 @@ class UserController extends AdminController
         $user->fullname = str_sanitize($r->input('fullname'));
         $user->email = str_sanitize($r->input('email'));
         $user->password = bcrypt($r->input('password'));
-        $user->language = str_sanitize($r->input('language'));
+        $user->biography = str_sanitize($r->input('biography'));
+        $user->is_admin = bool($r->input('is_admin')) ? 1 : 0;
         $user->status = bool($r->input('status')) ? 1 : 0;
-        $user->save();
 
         /* upload image */
         if ($r->hasFile('image')) {
             $file = $r->file('image');
             $par = [
                 'file' => $file,
-                'folder' => '/images/user/',
+                'folder' => '/assets/images/users/',
                 'name' => str_slug($user->name),
                 'type' => $file->getMimeType(),
                 'ext' => $file->getClientOriginalExtension(),
@@ -121,17 +148,23 @@ class UserController extends AdminController
 
             if ($this->uploadImage($par)) {
                 $user->image = $par['name'] . '.' . $par['ext'];
-                $user->save();
+                // $user->save();
             }
         }
+
+        /* save user */
+        $user->save();
 
         /* attach role */
         $this->assignRole($user, $r->input('role'));
 
+        /* save socmed */
+        $this->saveSocmed($user, $r);
+
         /* log aktifitas */
         $this->activityLog('<b>' . \Auth::user()->fullname . '</b> menambahkan Pengguna "' . $user->name . '"');
 
-        return redirect($this->current_url)->with('success', 'Pengguna berhasil ditambah!');
+        return redirect($this->current_url)->with('success', 'Pengguna "' . $user->name . '" berhasil ditambah!');
     }
 
     /**
@@ -153,7 +186,12 @@ class UserController extends AdminController
      */
     public function edit(User $user)
     {
-        dd($user);
+        $this->breadcrumbs[] = [
+            'page' => 'Edit',
+            'icon' => '',
+            'url' => '',
+        ];
+
         /* where roles */
         if (\Auth::user()->hasRole('super')) {
             $whrRole = [
@@ -177,11 +215,19 @@ class UserController extends AdminController
             'current_url' => $this->current_url,
             'page_title' => $this->page_title,
             'page_subtitle' => 'Edit Pengguna',
+            'breadcrumbs' => $this->breadcrumbs,
             'roles' => Role::where($whrRole)->get(),
             'data' => $user,
         ];
 
-        return view('admin.setting.user_form', $data);
+        /* socmed */
+        $data['socmeds'] = Socmed::where('status', 1)->get();
+        $data['socmed_data'] = SocmedData::where([
+            'type' => 'user',
+            'data_id' => $user->id,
+        ])->with('socmed')->get();
+
+        return view('admin.AdminSC.setting.users_form', $data);
     }
 
     /**
@@ -198,13 +244,13 @@ class UserController extends AdminController
             'name' => 'required|alpha_num|min:3|max:30|unique:users,name,' . $user->id . ',id',
             'fullname' => 'required|min:1|max:100',
             'email' => 'required|email',
-            'image' => 'mimes:jpg,jpeg,png,svg|max:200|dimensions:max_width=500,max_height=500',
+            'image' => 'mimes:jpg,jpeg,png,svg|max:512|dimensions:max_width=512,max_height=512',
         ]);
 
         /* validasi password jika ada */
         if ($r->input('password') !== null || $r->input('password_confirmation') !== null) {
             $this->validate($r, [
-                'password' => 'required',
+                'password' => 'required|min:6',
                 'password_confirmation' => 'same:password',
             ]);
         }
@@ -214,16 +260,16 @@ class UserController extends AdminController
         $user->fullname = str_sanitize($r->input('fullname'));
         $user->email = str_sanitize($r->input('email'));
         $user->password = bcrypt($r->input('password'));
-        $user->language = str_sanitize($r->input('language'));
+        $user->biography = str_sanitize($r->input('biography'));
+        $user->is_admin = bool($r->input('is_admin')) ? 1 : 0;
         $user->status = bool($r->input('status')) ? 1 : 0;
-        $user->save();
 
         /* upload image */
         if ($r->hasFile('image')) {
             $file = $r->file('image');
             $par = [
                 'file' => $file,
-                'folder' => '/images/user/',
+                'folder' => '/assets/images/users/',
                 'name' => str_slug($r->input('name')),
                 'type' => $file->getMimeType(),
                 'ext' => $file->getClientOriginalExtension(),
@@ -231,17 +277,23 @@ class UserController extends AdminController
 
             if ($this->uploadImage($par)) {
                 $user->image = $par['name'] . '.' . $par['ext'];
-                $user->save();
+                // $user->save();
             }
         }
+
+        /* save user */
+        $user->save();
 
         /* attach role */
         $this->assignRole($user, $r->input('role'));
 
+        /* save socmed */
+        $this->saveSocmed($user, $r);
+
         /* log aktifitas */
         $this->activityLog('<b>' . \Auth::user()->fullname . '</b> memperbarui Pengguna "' . $user->name . '"');
 
-        return redirect($this->current_url)->with('success', 'Pengguna berhasil disimpan!');
+        return redirect($this->current_url)->with('success', 'Pengguna "' . $user->name . '" berhasil disimpan!');
     }
 
     /**
@@ -258,7 +310,7 @@ class UserController extends AdminController
         /* soft delete */
         $user->delete();
 
-        return redirect($this->current_url)->with('success', 'Pengguna berhasil dihapus!');
+        return redirect($this->current_url)->with('success', 'Pengguna "' . $user->name . '" berhasil dihapus!');
     }
 
     /**
@@ -267,7 +319,7 @@ class UserController extends AdminController
     public function datatable(Request $r)
     {
         /* get data */
-        $data = User::select(sequence(), 'id', 'name', 'fullname', 'status')->get();
+        $data = User::select('id', 'name', 'fullname', 'image', 'email', 'status')->get();
 
         /* generate datatable */
         if ($r->ajax()) {
@@ -289,5 +341,27 @@ class UserController extends AdminController
 
         /* tambah role baru */
         $user->attachRole($newRole);
+    }
+
+    /**
+     * Save user's social media
+     */
+    public function saveSocmed($user, Request $r)
+    {
+        /* processing socmed */
+        $del = SocmedData::where([
+            'type' => 'user',
+            'data_id' => $user->id,
+        ])->forceDelete();
+        foreach ($r->input('socmed_id') as $key => $val) {
+            if ($r->input('socmed_id')[$key] != "" && $r->input('socmed_uname')[$key] != "") {
+                $socmed = new SocmedData;
+                $socmed->username = $r->input('socmed_uname')[$key];
+                $socmed->type = 'user';
+                $socmed->socmed_id = $r->input('socmed_id')[$key];
+                $socmed->data_id = $user->id;
+                $socmed->save();
+            }
+        }
     }
 }
