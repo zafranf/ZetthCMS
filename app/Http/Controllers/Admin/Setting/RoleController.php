@@ -111,7 +111,7 @@ class RoleController extends AdminController
         $role->save();
 
         /* set permissions */
-        // $this->setPermissions($r, $role);
+        $this->setPermissions($r, $role);
 
         /* log aktifitas */
         $this->activityLog('<b>' . \Auth::user()->fullname . '</b> menambahkan Peran "' . $role->display_name . '"');
@@ -186,7 +186,7 @@ class RoleController extends AdminController
         $role->save();
 
         /* set permissions */
-        // $this->setPermissions($r, $role);
+        $this->setPermissions($r, $role);
 
         /* log aktifitas */
         $this->activityLog('<b>' . \Auth::user()->fullname . '</b> memperbarui Peran "' . $role->name . '"');

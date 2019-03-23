@@ -15,18 +15,18 @@
           <textarea id="description" name="description" class="form-control" placeholder="Penjelasan singkat menu.." rows="4">{{ isset($data->id) ? $data->description : '' }}</textarea>
         </div>
       </div>
-      {{-- <div class="form-group">
+      <div class="form-group">
         <label for="url" class="col-sm-2 control-label">URL</label>
         <div class="col-sm-4">
           <select id="url" name="url" class="form-control select2">
-            <option value="#">[None]</option>
-            <option value="/">Home</option>
-            <option value="articles">Articles</option>
-            <option value="pages">Pages</option>
-            <option value="albums">Albums</option>
-            <option value="videos">Videos</option>
-            <option value="external" {{ (isset($data->id) && $data->url_ext ) ?'selected' : '' }}>External Link</option>
-            @php $type = ''; @endphp
+            <option value="#">[Tidak ada]</option>
+            <option value="external" {{ (isset($data->id) && $data->url_ext ) ? 'selected' : '' }}>[Tautan Luar]</option>
+            <option value="/">Beranda</option>
+            <option value="/articles">Artikel</option>
+            <option value="/pages">Halaman</option>
+            <option value="/albums">Album Foto</option>
+            <option value="/videos">Video</option>
+            {{-- @php $type = ''; @endphp
             @foreach($post_opt as $n => $post)
               @if ($type!=$post->post_type)
                 {!! ($n>0) ? '</optgroup>' : '' !!}
@@ -43,22 +43,22 @@
                 <option value="{{ 'blog/'.$post->post_slug }}" {{ $post->post_slug=="# " ?'disabled' : '' }}  {{ (isset($data->id) && 'blog/'.$post->post_slug==$data->url) ? 'selected' : '' }}>{{ $post->post_title }}</option>
               @endif
               @php $type = $post->post_type; @endphp
-            @endforeach
+            @endforeach --}}
           </select>
-          <input type="text" class="form-control" id="url_ext" name="url_ext" value="{{ isset($data->id) ? (($data->url=="#") ? '' : $data->url) : '' }}" placeholder="http://example.com" {!! (isset($data->id) && ($data->url_ext) ) ?'style="margin-top:5px;"':'style="margin-top:5px;display:none;" disabled' !!}>
+          <input type="text" class="form-control" id="url_external" name="url_external" value="{{ isset($data->id) ? (($data->url=="#") ? '' : $data->url) : '' }}" placeholder="http://example.com" {!! (isset($data->id) && ($data->url_external) ) ? 'style="margin-top:5px;"' : 'style="margin-top:5px;display:none;" disabled' !!}>
         </div>
-      </div> --}}
-      <div class="form-group">
+      </div>
+      {{-- <div class="form-group">
         <label for="url" class="col-sm-2 control-label">URL</label>
         <div class="col-sm-4">
           <input type="text" class="form-control" id="url" name="url" placeholder="Alamat URL.." value="{{ isset($data->id) ? $data->url : '' }}">
         </div>
-      </div>
+      </div> --}}
       <div class="form-group">
         <label for="target" class="col-sm-2 control-label">Target</label>
         <div class="col-sm-4">
           <select class="form-control custom-select2" name="target" id="target">
-            <option value="_self" {{ isset($data->id) && ($data->target == "_self") ? 'selected' : '' }}>Tab Sendiri</option>
+            <option value="_self" {{ isset($data->id) && ($data->target == "_self") ? 'selected' : '' }}>Tab Aktif</option>
             <option value="_blank" {{ isset($data->id) && ($data->target == "_blank") ? 'selected' : '' }}>Tab Baru</option>
           </select>
         </div>
@@ -67,7 +67,7 @@
         <label for="parent" class="col-sm-2 control-label">Cabang</label>
         <div class="col-sm-4">
           <select class="form-control select2" name="parent" id="parent">
-              <option value="0">--Pilih--</option>
+              <option value="0">[Tidak ada]</option>
               @foreach (generateMenuArray($menus) as $menu)
                 @if (isset($data->id) && $data->id == $menu->id)
                 @else
@@ -111,14 +111,14 @@
       });
     });
 
-    /* $(document).ready(function(){
+    $(document).ready(function(){
       $('.select2').on('change',function(){
         if ($('#url').val()=="external"){
-          $('#url_ext').attr("disabled", false).show();
+          $('#url_external').attr("disabled", false).show();
         } else {
-          $('#url_ext').attr("disabled", true).hide();
+          $('#url_external').attr("disabled", true).hide();
         }
       });
-    }); */
+    });
   </script>
 @endsection

@@ -18,7 +18,7 @@ class MenuController extends AdminController
     {
         parent::__construct();
         $this->current_url = url($this->adminPath . '/setting/menus');
-        $this->page_title = 'Pengaturan Grup Menu';
+        $this->page_title = 'Pengaturan Menu';
         $this->breadcrumbs[] = [
             'page' => 'Pengaturan',
             'icon' => '',
@@ -27,7 +27,7 @@ class MenuController extends AdminController
         $this->breadcrumbs[] = [
             'page' => 'Menu',
             'icon' => '',
-            'url' => $this->current_url,
+            'url' => url($this->adminPath . '/setting/menu-groups'),
         ];
     }
 
@@ -182,7 +182,8 @@ class MenuController extends AdminController
         /* save data */
         $menu->name = str_sanitize($r->input('name'));
         $menu->description = str_sanitize($r->input('description'));
-        $menu->url = $r->input('url');
+        $menu->url = str_sanitize($r->input('url'));
+        $menu->url_external = str_sanitize($r->input('url_external'));
         $menu->route_name = str_sanitize($r->input('route_name'));
         $menu->target = str_sanitize($r->input('target'));
         $menu->order = $r->input('order') ?? $order;
