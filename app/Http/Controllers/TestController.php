@@ -6,6 +6,6 @@ class TestController extends Controller
 {
     public function index()
     {
-        dd(\App\Models\Role::with('menus')->get());
+        dd(urls('asdasda', true, ['test']));
     }
 }

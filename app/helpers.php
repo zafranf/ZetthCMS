@@ -33,6 +33,8 @@ if (!function_exists('_get_access_buttons')) {
      */
     function _get_access_buttons($url = '', $btn = '')
     {
+        $add = isDesktop() ? 'TAMBAH' : '';
+
         /* ambil user login */
         $user = \Auth::user();
         if (!$user) {
@@ -45,7 +47,7 @@ if (!function_exists('_get_access_buttons')) {
 
         if ($btn == 'add') {
             if ($user->can('create-' . $xname[0])) {
-                echo '<a href="' . url($url . '/create') . '" class="btn btn-default pull-right" data-toggle="tooltip" data-original-title="Tambah Data"><i class="fa fa-plus"></i></a>';
+                echo '<a href="' . url($url . '/create') . '" class="btn btn-default pull-right" data-toggle="tooltip" data-original-title="Tambah Data"><i class="fa fa-plus"></i> ' . $add . '</a>';
             }
         } else {
             if ($user->can('read-' . $xname[0])) {
@@ -121,7 +123,7 @@ if (!function_exists('bool')) {
     {
         $true = ['true', 't', 'yes', 'y', '1', 'on'];
 
-        if (is_string($str) || is_int($str)) {
+        if (is_string($str) || is_int($str) || is_bool($str)) {
             $str = strtolower(trim($str));
 
             return in_array($str, $true);
@@ -680,10 +682,25 @@ if (!function_exists('generateDate')) {
 
 if (!function_exists('urls')) {
     /**
-     *
+     * URL secure
      */
-    function urls($url, $parameters = [], $secure = false)
+    function urls()
     {
+        $url = null;
+        $secure = false;
+        $parameters = [];
+
+        $args = func_get_args();
+        foreach ($args as $arg) {
+            if (is_string($arg)) {
+                $url = $arg;
+            } else if (is_bool($arg)) {
+                $secure = $arg;
+            } else if (is_array($arg)) {
+                $parameters = $arg;
+            }
+        }
+
         if (bool($secure) || env('FORCE_HTTPS', false)) {
             return secure_url($url);
         }
@@ -695,23 +712,20 @@ if (!function_exists('urls')) {
 if (!function_exists('isMobile')) {
     function isMobile()
     {
-        $agent = new \Jenssegers\Agent\Agent();
-        return $agent->isMobile();
+        return (new \Jenssegers\Agent\Agent())->isMobile();
     }
 }
 
 if (!function_exists('isTablet')) {
     function isTablet()
     {
-        $agent = new \Jenssegers\Agent\Agent();
-        return $agent->isTablet();
+        return (new \Jenssegers\Agent\Agent())->isTablet();
     }
 }
 
 if (!function_exists('isDesktop')) {
     function isDesktop()
     {
-        $agent = new \Jenssegers\Agent\Agent();
-        return $agent->isDesktop();
+        return (new \Jenssegers\Agent\Agent())->isDesktop();
     }
 }
