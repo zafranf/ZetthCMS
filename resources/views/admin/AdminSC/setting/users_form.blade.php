@@ -28,7 +28,7 @@
 					<div class="form-group">
 						<label for="password_confirmation" class="col-md-4 control-label">Ulangi Sandi</label>
 						<div class="col-md-8">
-							<input type="password" class="form-control" id="password_confirmation" name="password_confirmation"  placeholder="Ulangi kata sandi..">
+							<input type="password" class="form-control" id="password_confirmation" name="password_confirmation"  placeholder="Konfirmasi kata sandi..">
 						</div>
 					</div>
 					<div class="form-group">
