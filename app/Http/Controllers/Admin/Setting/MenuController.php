@@ -95,13 +95,13 @@ class MenuController extends AdminController
 
         /* save data */
         $menu = new Menu;
-        $menu->name = str_sanitize($r->input('name'));
-        $menu->description = str_sanitize($r->input('description'));
+        $menu->name = $r->input('name');
+        $menu->description = $r->input('description');
         $menu->url = $r->input('url');
-        $menu->route_name = str_sanitize($r->input('route_name'));
-        $menu->target = str_sanitize($r->input('target'));
+        $menu->route_name = $r->input('route_name');
+        $menu->target = $r->input('target');
         // $menu->order = (int) $r->input('order');
-        $menu->icon = str_sanitize($r->input('icon'));
+        $menu->icon = $r->input('icon');
         $menu->status = bool($r->input('status')) ? 1 : 0;
         $menu->index = bool($r->input('index')) ? 1 : 0;
         $menu->create = bool($r->input('create')) ? 1 : 0;
@@ -180,14 +180,14 @@ class MenuController extends AdminController
         }
 
         /* save data */
-        $menu->name = str_sanitize($r->input('name'));
-        $menu->description = str_sanitize($r->input('description'));
-        $menu->url = str_sanitize($r->input('url'));
-        $menu->url_external = str_sanitize($r->input('url_external'));
-        $menu->route_name = str_sanitize($r->input('route_name'));
-        $menu->target = str_sanitize($r->input('target'));
+        $menu->name = $r->input('name');
+        $menu->description = $r->input('description');
+        $menu->url = $r->input('url');
+        $menu->url_external = $r->input('url_external');
+        $menu->route_name = $r->input('route_name');
+        $menu->target = $r->input('target');
         $menu->order = $r->input('order') ?? $order;
-        $menu->icon = str_sanitize($r->input('icon'));
+        $menu->icon = $r->input('icon');
         $menu->status = bool($r->input('status')) ? 1 : 0;
         $menu->index = bool($r->input('index')) ? 1 : 0;
         $menu->create = bool($r->input('create')) ? 1 : 0;

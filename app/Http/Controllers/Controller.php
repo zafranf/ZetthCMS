@@ -439,4 +439,20 @@ class Controller extends BaseController
 
         return \Datatables::collection($collection)->addColumn('action', 'test')->make();
     }
+
+    /**
+     * Undocumented function
+     *
+     * @param Role $role
+     * @return void
+     */
+    public function roleMenus(\App\Models\Role $role)
+    {
+        $menus = collect([]);
+        foreach ($role->menu_groups as $group) {
+            $menus = $menus->merge($group->menu);
+        }
+
+        return $menus;
+    }
 }

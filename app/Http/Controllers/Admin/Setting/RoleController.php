@@ -100,11 +100,11 @@ class RoleController extends AdminController
         ]);
 
         /* save data */
-        $name = str_sanitize($r->input('name'));
+        $name = $r->input('name');
         $role = new Role;
         $role->name = str_slug($name);
         $role->display_name = $name;
-        $role->description = str_sanitize($r->input('description'));
+        $role->description = $r->input('description');
         $role->status = bool($r->input('status')) ? 1 : 0;
         $role->save();
 
@@ -147,6 +147,7 @@ class RoleController extends AdminController
 
         /* get data menugroups */
         $menugroups = MenuGroup::where('status', 1)->get();
+        $role = $role->load('menu_groups');
 
         /* set variable for view */
         $data = [
@@ -155,8 +156,8 @@ class RoleController extends AdminController
             'page_title' => $this->page_title,
             'page_subtitle' => 'Edit Peran',
             'menugroups' => $menugroups,
-            'menus' => $role->menus,
-            'data' => $role->load('menu_groups'),
+            'menus' => $this->roleMenus($role),
+            'data' => $role,
         ];
 
         return view('admin.AdminSC.setting.roles_form', $data);
@@ -177,10 +178,10 @@ class RoleController extends AdminController
         ]);
 
         /* save data */
-        $name = str_sanitize($r->input('name'));
+        $name = $r->input('name');
         $role->name = str_slug($name);
         $role->display_name = $name;
-        $role->description = str_sanitize($r->input('description'));
+        $role->description = $r->input('description');
         $role->status = bool($r->input('status')) ? 1 : 0;
         $role->save();
 

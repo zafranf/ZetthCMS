@@ -94,11 +94,11 @@ class MenuGroupController extends AdminController
         ]);
 
         /* save data */
-        $name = str_sanitize($r->input('name'));
+        $name = $r->input('name');
         $menugroup = new MenuGroup;
         $menugroup->name = str_slug($name);
         $menugroup->display_name = $name;
-        $menugroup->description = str_sanitize($r->input('description'));
+        $menugroup->description = $r->input('description');
         $menugroup->status = bool($r->input('status')) ? 1 : 0;
         $menugroup->save();
 
@@ -161,10 +161,10 @@ class MenuGroupController extends AdminController
 
         /* save data */
         // $menugroup = MenuGroup::find($id);
-        $name = str_sanitize($r->input('name'));
+        $name = $r->input('name');
         $menugroup->name = str_slug($name);
         $menugroup->display_name = $name;
-        $menugroup->description = str_sanitize($r->input('description'));
+        $menugroup->description = $r->input('description');
         $menugroup->status = bool($r->input('status')) ? 1 : 0;
         $menugroup->save();
 

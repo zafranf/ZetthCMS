@@ -11,30 +11,23 @@ class Role extends LaratrustRole
 
     public function menu_groups()
     {
-        return $this->belongsToMany('App\Models\MenuGroup', 'role_menu', 'role_id', 'menu_group_id');
+        return $this->belongsToMany('App\Models\MenuGroup', 'role_menu', 'role_id', 'menu_group_id')->with('menu.submenu');
     }
 
     /* public function getMenusAttribute($value)
-    {
-    $menugroups = $this->menu_groups;
+{
+// dd($this->menugroups);
+// $menugroups = $this->menu_groups()->with('menu.submenu')->get();
+$menus = collect([]);
+foreach ($this->menugroups as $group) {
+$menus = $menus->merge($group->menu);
+}
 
-    // There two calls return collections
-    // as defined in relations.
-    $competitionsHome = $this->competitionsHome;
-    $competitionsGuest = $this->competitionsGuest;
+return $menus;
+}
 
-    // Merge collections and return single collection.
-    return $competitionsHome->merge($competitionsGuest);
-    } */
-
-    public function getMenusAttribute($value)
-    {
-        $menugroups = $this->menu_groups()->with('menu.submenu')->get();
-        $menus = collect([]);
-        foreach ($menugroups as $group) {
-            $menus = $menus->merge($group->menu);
-        }
-
-        return $menus;
-    }
+public function getMenuGroupsAttribute($value)
+{
+return $this->menu_groups()->with('menu.submenu')->get();
+} */
 }

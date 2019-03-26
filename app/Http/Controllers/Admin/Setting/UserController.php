@@ -127,11 +127,11 @@ class UserController extends AdminController
 
         /* save data */
         $user = new User;
-        $user->name = str_sanitize($r->input('name'));
-        $user->fullname = str_sanitize($r->input('fullname'));
-        $user->email = str_sanitize($r->input('email'));
+        $user->name = $r->input('name');
+        $user->fullname = $r->input('fullname');
+        $user->email = $r->input('email');
         $user->password = bcrypt($r->input('password'));
-        $user->biography = str_sanitize($r->input('biography'));
+        $user->biography = $r->input('biography');
         $user->is_admin = bool($r->input('is_admin')) ? 1 : 0;
         $user->status = bool($r->input('status')) ? 1 : 0;
 
@@ -256,11 +256,11 @@ class UserController extends AdminController
         }
 
         /* save data */
-        $user->name = str_sanitize($r->input('name'));
-        $user->fullname = str_sanitize($r->input('fullname'));
-        $user->email = str_sanitize($r->input('email'));
+        $user->name = $r->input('name');
+        $user->fullname = $r->input('fullname');
+        $user->email = $r->input('email');
         $user->password = bcrypt($r->input('password'));
-        $user->biography = str_sanitize($r->input('biography'));
+        $user->biography = $r->input('biography');
         $user->is_admin = bool($r->input('is_admin')) ? 1 : 0;
         $user->status = bool($r->input('status')) ? 1 : 0;
 
