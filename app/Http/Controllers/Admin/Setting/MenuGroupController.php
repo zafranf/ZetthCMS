@@ -48,9 +48,9 @@ class MenuGroupController extends AdminController
         /* set variable for view */
         $data = [
             'current_url' => $this->current_url,
+            'breadcrumbs' => $this->breadcrumbs,
             'page_title' => $this->page_title,
             'page_subtitle' => 'Daftar Grup Menu',
-            'breadcrumbs' => $this->breadcrumbs,
         ];
 
         return view('admin.AdminSC.setting.menu_group', $data);
@@ -72,9 +72,9 @@ class MenuGroupController extends AdminController
         /* set variable for view */
         $data = [
             'current_url' => $this->current_url,
+            'breadcrumbs' => $this->breadcrumbs,
             'page_title' => $this->page_title,
             'page_subtitle' => 'Tambah Grup Menu',
-            'breadcrumbs' => $this->breadcrumbs,
         ];
 
         return view('admin.AdminSC.setting.menu_group_form', $data);
@@ -90,20 +90,22 @@ class MenuGroupController extends AdminController
     {
         /* validation */
         $this->validate($r, [
-            'name' => 'required',
+            'name' => 'required|unique:menu_groups',
         ]);
 
         /* save data */
-        $menu = new MenuGroup;
-        $menu->name = str_sanitize($r->input('name'));
-        $menu->description = str_sanitize($r->input('description'));
-        $menu->status = bool($r->input('status')) ? 1 : 0;
-        $menu->save();
+        $name = str_sanitize($r->input('name'));
+        $menugroup = new MenuGroup;
+        $menugroup->name = str_slug($name);
+        $menugroup->display_name = $name;
+        $menugroup->description = str_sanitize($r->input('description'));
+        $menugroup->status = bool($r->input('status')) ? 1 : 0;
+        $menugroup->save();
 
         /* activity log */
-        $this->activityLog('<b>' . \Auth::user()->fullname . '</b> menambahkan Grup Menu "' . $menu->name . '"');
+        $this->activityLog('<b>' . \Auth::user()->fullname . '</b> menambahkan Grup Menu "' . $menugroup->name . '"');
 
-        return redirect($this->current_url)->with('success', 'Grup Menu "' . $menugroup->name . '" berhasil ditambah!');
+        return redirect($this->current_url)->with('success', 'Grup Menu "' . $menugroup->display_name . '" berhasil ditambah!');
     }
 
     /**
@@ -134,9 +136,9 @@ class MenuGroupController extends AdminController
         /* set variable for view */
         $data = [
             'current_url' => $this->current_url,
+            'breadcrumbs' => $this->breadcrumbs,
             'page_title' => $this->page_title,
             'page_subtitle' => 'Edit Grup Menu',
-            'breadcrumbs' => $this->breadcrumbs,
             'data' => $menugroup,
         ];
 
@@ -154,12 +156,14 @@ class MenuGroupController extends AdminController
     {
         /* validation */
         $this->validate($r, [
-            'name' => 'required',
+            'name' => 'required|unique:menu_groups,name,' . $menugroup->id . ',id',
         ]);
 
         /* save data */
         // $menugroup = MenuGroup::find($id);
-        $menugroup->name = str_sanitize($r->input('name'));
+        $name = str_sanitize($r->input('name'));
+        $menugroup->name = str_slug($name);
+        $menugroup->display_name = $name;
         $menugroup->description = str_sanitize($r->input('description'));
         $menugroup->status = bool($r->input('status')) ? 1 : 0;
         $menugroup->save();
@@ -170,7 +174,7 @@ class MenuGroupController extends AdminController
         /* clear cache */
         \Cache::forget('cacheMenu-Group' . ucfirst($menugroup->name));
 
-        return redirect($this->current_url)->with('success', 'Grup Menu "' . $menugroup->name . '" berhasil disimpan!');
+        return redirect($this->current_url)->with('success', 'Grup Menu "' . $menugroup->display_name . '" berhasil disimpan!');
     }
 
     /**
@@ -190,7 +194,7 @@ class MenuGroupController extends AdminController
         /* clear cache */
         \Cache::forget('cacheMenu-Group' . ucfirst($menugroup->name));
 
-        return redirect($this->current_url)->with('success', 'Grup Menu "' . $menugroup->name . '" berhasil dihapus!');
+        return redirect($this->current_url)->with('success', 'Grup Menu "' . $menugroup->display_name . '" berhasil dihapus!');
     }
 
     /**
@@ -199,7 +203,7 @@ class MenuGroupController extends AdminController
     public function datatable(Request $r)
     {
         /* get data */
-        $data = MenuGroup::select('id', 'name', 'description', 'status')->get();
+        $data = MenuGroup::select('id', 'display_name as name', 'description', 'status')->get();
 
         /* generate datatable */
         if ($r->ajax()) {

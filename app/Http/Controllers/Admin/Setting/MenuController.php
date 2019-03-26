@@ -47,9 +47,9 @@ class MenuController extends AdminController
         /* set variable for view */
         $data = [
             'current_url' => $this->current_url,
+            'breadcrumbs' => $this->breadcrumbs,
             'page_title' => $this->page_title,
             'page_subtitle' => 'Daftar Menu',
-            'breadcrumbs' => $this->breadcrumbs,
         ];
 
         return view('admin.AdminSC.setting.menu', $data);
@@ -71,9 +71,9 @@ class MenuController extends AdminController
         /* set variable for view */
         $data = [
             'current_url' => $this->current_url,
+            'breadcrumbs' => $this->breadcrumbs,
             'page_title' => $this->page_title,
             'page_subtitle' => 'Tambah Menu',
-            'breadcrumbs' => $this->breadcrumbs,
             'menus' => Menu::where('parent_id', 0)->with('allSubmenu')->orderBy('order')->get(),
         ];
 
@@ -148,9 +148,9 @@ class MenuController extends AdminController
         /* set variable for view */
         $data = [
             'current_url' => $this->current_url,
+            'breadcrumbs' => $this->breadcrumbs,
             'page_title' => $this->page_title,
             'page_subtitle' => 'Edit Menu',
-            'breadcrumbs' => $this->breadcrumbs,
             'menus' => Menu::where('parent_id', 0)->with('allSubmenu')->orderBy('order')->get(),
             'data' => $menu,
         ];

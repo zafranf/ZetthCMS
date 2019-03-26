@@ -3,9 +3,10 @@
 namespace App\Http\Controllers\Admin\Setting;
 
 use App\Http\Controllers\Admin\AdminController;
-use App\Models\Menu;
+use App\Models\MenuGroup;
 use App\Models\Permission;
 use App\Models\Role;
+use App\Models\RoleMenu;
 use App\Models\RolePermission;
 use Illuminate\Http\Request;
 
@@ -49,9 +50,9 @@ class RoleController extends AdminController
         /* set variable for view */
         $data = [
             'current_url' => $this->current_url,
+            'breadcrumbs' => $this->breadcrumbs,
             'page_title' => $this->page_title,
             'page_subtitle' => 'Daftar Peran',
-            'breadcrumbs' => $this->breadcrumbs,
         ];
 
         return view('admin.AdminSC.setting.roles', $data);
@@ -70,19 +71,16 @@ class RoleController extends AdminController
             'url' => '',
         ];
 
-        /* get data */
-        $menus = Menu::where([
-            'parent_id' => 0,
-            'status' => 1,
-        ])->with('submenu')->orderBy('order')->get();
+        /* get data menugroups */
+        $menugroups = MenuGroup::where('status', 1)->get();
 
         /* set variable for view */
         $data = [
             'current_url' => $this->current_url,
+            'breadcrumbs' => $this->breadcrumbs,
             'page_title' => $this->page_title,
             'page_subtitle' => 'Tambah Peran',
-            'menus' => $menus,
-            'breadcrumbs' => $this->breadcrumbs,
+            'menugroups' => $menugroups,
         ];
 
         return view('admin.AdminSC.setting.roles_form', $data);
@@ -111,12 +109,15 @@ class RoleController extends AdminController
         $role->save();
 
         /* set permissions */
-        $this->setPermissions($r, $role);
+        // $this->setPermissions($r, $role);
+
+        /* save menu group */
+        $this->saveMenuGroup($r, $role);
 
         /* log aktifitas */
         $this->activityLog('<b>' . \Auth::user()->fullname . '</b> menambahkan Peran "' . $role->name . '"');
 
-        return redirect($this->current_url)->with('success', 'Peran "' . $role->name . '" berhasil ditambah!');
+        return redirect($this->current_url . '/' . $role->id . '/edit')->with('success', 'Peran "' . $role->display_name . '" berhasil ditambah, segera atur akses menu!');
     }
 
     /**
@@ -144,20 +145,18 @@ class RoleController extends AdminController
             'url' => '',
         ];
 
-        /* get data */
-        $menus = Menu::where([
-            'parent_id' => 0,
-            'status' => 1,
-        ])->with('submenu')->orderBy('order')->get();
+        /* get data menugroups */
+        $menugroups = MenuGroup::where('status', 1)->get();
 
         /* set variable for view */
         $data = [
             'current_url' => $this->current_url,
+            'breadcrumbs' => $this->breadcrumbs,
             'page_title' => $this->page_title,
             'page_subtitle' => 'Edit Peran',
-            'breadcrumbs' => $this->breadcrumbs,
-            'data' => $role,
-            'menus' => $menus,
+            'menugroups' => $menugroups,
+            'menus' => $role->menus,
+            'data' => $role->load('menu_groups'),
         ];
 
         return view('admin.AdminSC.setting.roles_form', $data);
@@ -186,12 +185,20 @@ class RoleController extends AdminController
         $role->save();
 
         /* set permissions */
-        $this->setPermissions($r, $role);
+        if (bool($r->input('is_access'))) {
+            $this->setPermissions($r, $role);
+        } else {
+            /* remove all permissions */
+            RolePermission::where('role_id', $role->id)->delete();
+        }
+
+        /* save menu group */
+        $this->saveMenuGroup($r, $role);
 
         /* log aktifitas */
         $this->activityLog('<b>' . \Auth::user()->fullname . '</b> memperbarui Peran "' . $role->name . '"');
 
-        return redirect($this->current_url)->with('success', 'Peran "' . $role->name . '" berhasil disimpan!');
+        return redirect($this->current_url . '/' . $role->id . '/edit')->with('success', 'Peran "' . $role->display_name . '" berhasil disimpan, segera atur akses menu!');
     }
 
     /**
@@ -208,7 +215,7 @@ class RoleController extends AdminController
         /* soft delete */
         $role->delete();
 
-        return redirect($this->current_url)->with('success', 'Peran "' . $role->name . '" berhasil dihapus!');
+        return redirect($this->current_url)->with('success', 'Peran "' . $role->display_name . '" berhasil dihapus!');
     }
 
     /**
@@ -256,5 +263,18 @@ class RoleController extends AdminController
 
         // Attach all permissions to the role
         $role->permissions()->sync($permissions);
+    }
+
+    public function saveMenuGroup(Request $r, Role $role)
+    {
+        /* remove all menu group id */
+        RoleMenu::where('role_id', $role->id)->delete();
+
+        foreach ($r->input('menugroups') as $group) {
+            $rolemenu = new RoleMenu;
+            $rolemenu->role_id = $role->id;
+            $rolemenu->menu_group_id = $group;
+            $rolemenu->save();
+        }
     }
 }

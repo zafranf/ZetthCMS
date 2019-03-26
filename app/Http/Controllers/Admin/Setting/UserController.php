@@ -50,9 +50,9 @@ class UserController extends AdminController
         /* set variable for view */
         $data = [
             'current_url' => $this->current_url,
+            'breadcrumbs' => $this->breadcrumbs,
             'page_title' => $this->page_title,
             'page_subtitle' => 'Daftar Pengguna',
-            'breadcrumbs' => $this->breadcrumbs,
         ];
 
         return view('admin.AdminSC.setting.users', $data);
@@ -92,9 +92,9 @@ class UserController extends AdminController
         /* set variable for view */
         $data = [
             'current_url' => $this->current_url,
+            'breadcrumbs' => $this->breadcrumbs,
             'page_title' => $this->page_title,
             'page_subtitle' => 'Tambah Pengguna',
-            'breadcrumbs' => $this->breadcrumbs,
             'roles' => Role::where($whrRole)->get(),
         ];
 
@@ -213,9 +213,9 @@ class UserController extends AdminController
         /* set variable for view */
         $data = [
             'current_url' => $this->current_url,
+            'breadcrumbs' => $this->breadcrumbs,
             'page_title' => $this->page_title,
             'page_subtitle' => 'Edit Pengguna',
-            'breadcrumbs' => $this->breadcrumbs,
             'roles' => Role::where($whrRole)->get(),
             'data' => $user,
         ];

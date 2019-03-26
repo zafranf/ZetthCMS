@@ -1,7 +1,15 @@
+@php
+  $dataMenuGroup = [];
+  if (isset($data)) {
+    $dataMenuGroup = $data->menu_groups->map(function ($arr) { 
+      return $arr->id; 
+    })->toArray();
+  }
+@endphp
 @extends('admin.AdminSC.layouts.main')
 
 @section('content')
-  <form class="form-horizontal" action="{{ url($current_url) }}{{ isset($data) ? '/'.$data->id : '' }}" method="post">
+  <form class="form-horizontal" action="{{ url($current_url) }}{{ isset($data) ? '/' . $data->id : '' }}" method="post">
     <div class="panel-body">
       <div class="form-group">
         <label for="name" class="col-sm-2 control-label">Nama Peran</label>
@@ -16,10 +24,20 @@
         </div>
       </div>
       <div class="form-group">
+        <label for="menugroups" class="col-sm-2 control-label">Grup Menu</label>
+        <div class="col-sm-4">
+          <select id="menugroups" name="menugroups[]" class="form-control select2" multiple>
+            @foreach ($menugroups as $group)
+              <option value="{{ $group->id }}" {{ in_array($group->id, $dataMenuGroup) ? 'selected' : '' }}>{{ $group->display_name }}</option>
+            @endforeach
+          </select>
+        </div>
+      </div>
+      <div class="form-group">
         <div class="col-sm-offset-2 col-sm-4">
           <div class="checkbox">
             <label>
-              <input type="checkbox" name="status" {{ (isset($data) && $data->status==0) ? '' : 'checked' }}> Active
+              <input type="checkbox" name="status" {{ (isset($data) && $data->status == 0) ? '' : 'checked' }}> Aktif
             </label>
           </div>
         </div>
@@ -37,9 +55,10 @@
     </div>
 
     @if (isset($data))
-      <div class="panel panel-default">
+      <div id="access-panel" class="panel panel-default">
         <div class="panel-heading">
           Akses
+          <input type="checkbox" name="is_access" class="hide" checked>
         </div>
         <div class="panel-body no-padding">
           <table class="table table-bordered table-hover" id="access-list" width="100%">
@@ -101,6 +120,7 @@
 @endsection
 
 @section('styles')
+  {!! _load_css('themes/admin/AdminSC/plugins/select2/4.0.0/css/select2.min.css') !!}
   <style>
     #access-list {
       margin: 0;
@@ -139,4 +159,63 @@
       left: -8px;
     } */
   </style>
+@endsection
+
+@section('scripts')
+  {!! _load_js('themes/admin/AdminSC/plugins/select2/4.0.0/js/select2.min.js') !!}
+  <script>
+    var menugroup = {{ isset($data) ? '['. implode(",", $dataMenuGroup) .']' : '[]' }}  
+    $('document').ready(function() {
+      $('.select2').select2({
+        placeholder: '--Pilih--'
+      });
+
+      $('#menugroups').on('change', function() {
+        togglePanel($(this).val());
+      });
+    });
+
+    function togglePanel(val) {
+      let hide = true;
+      let cMenugroup = menugroup.length;
+      let cVal = val ? val.length : 0;
+      console.log('menugroup', menugroup)
+      console.log('val', val)
+      console.log('length menugroup', cMenugroup)
+      console.log('length val', cVal)
+      if (cVal == cMenugroup) {
+        hide = checkToggle(val, menugroup);
+      }
+
+      if (hide) {
+        $('#access-panel').hide();
+        $('input[name=is_access]').prop('checked', false)
+      } else {
+        $('#access-panel').show();
+        $('input[name=is_access]').prop('checked', true)
+      }
+    }
+
+    function checkToggle(arr1, arr2) {
+      let toggle = false;
+      let t = 0;
+      let f = 0;
+      $.each(arr1, function (k, v) {
+        let idx = arr2.indexOf(parseInt(v));
+        if (idx >= 0) {
+          t += 1
+        } else {
+          f += 1
+        }
+        console.log('indexof v=' + parseInt(v) + ' k=' + k, arr2.indexOf(parseInt(v)));
+        console.log('t='+ t +' f='+ f)
+      });
+
+      if (f > 0) {
+        return true;
+      }
+
+      return false;
+    }
+  </script>
 @endsection

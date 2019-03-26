@@ -49,9 +49,9 @@ class ApplicationController extends AdminController
         /* set variable for view */
         $data = [
             'current_url' => $this->current_url,
+            'breadcrumbs' => $this->breadcrumbs,
             'page_title' => $this->page_title,
             'page_subtitle' => 'Aplikasi',
-            'breadcrumbs' => $this->breadcrumbs,
         ];
 
         $data['socmeds'] = Socmed::where('status', 1)->get();

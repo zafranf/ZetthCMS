@@ -126,7 +126,7 @@
 					<div class="form-group">
 						<label for="status" class="col-md-4 control-label">Status</label>
 						<div class="col-md-8">
-							<select id="status" name="status" class="form-control pwd-select">
+							<select id="status" name="status" class="form-control custom-select2">
 								<option value="1" {{ ($apps->status == 1) ? 'selected' : '' }}>Aktif</option>
 								<option value="0" {{ ($apps->status == 0) ? 'selected' : '' }}>Segera Hadir</option>
 								<option value="2" {{ ($apps->status == 2) ? 'selected' : '' }}>Perbaikan</option>
@@ -136,7 +136,7 @@
 					<div class="form-group" {!! ($apps->status == 1) ? 'style="display:none;"' : '' !!} id="d_active_at">
 						<label for="active_at" class="col-md-4 control-label">Dibuka pada</label>
 						<div class="col-md-8">
-							<input type="text" class="form-control" id="i_active_at" name="active_at" value="{{ isset($apps->id) ? date("Y-m-d", strtotime($apps->active_at)) : '' }}" {!! ($apps->status == 1) ? 'readonly' : '' !!} placeholder="Dibuka pada..">
+							<input type="text" class="form-control" id="i_active_at" name="active_at" value="{{ isset($apps) ? date("Y-m-d", strtotime($apps->active_at)) : '' }}" {!! ($apps->status == 1) ? 'readonly' : '' !!} placeholder="Dibuka pada..">
 						</div>
 					</div>
 				</div>
@@ -148,46 +148,46 @@
 						<div class="col-md-8">
 							@if (isset($socmed_data) && count($socmed_data) > 0)
 								@foreach ($socmed_data as $key => $val)
-                  @php
-                    $rand = rand(111111111, 999999999);
-                  @endphp
-                  <div id="div-socmed-{{ $rand }}">
-                    <div class="col-md-3 col-xs-6 no-padding">
-                      <select name="socmed_id[]" class="form-control pwd-select">
-                        <option value="">--Pilih--</option>
-                        @if (isset($socmeds))
-                          @foreach ($socmeds as $socmed)
-                            @php 
-                              $sl = ($socmed->id==$val->socmed->id) ? 'selected' : ''
-                            @endphp
-                            <option value="{{ $socmed->id }}" {{ $sl }}>{{ $socmed->name }}</option>
-                          @endforeach
-                        @endif
-                      </select>
-                    </div>
-                    <div class="col-md-9 col-xs-6 no-padding">
-                      @if ($key > 0)
-                        <div class="input-group">
-                          <input type="text" class="form-control" name="socmed_uname[]" placeholder="Nama/ID akun.." value="{{ $val->username }}">
-                          <span class="input-group-btn">
-                            <button type="button" class="btn" style="background:white;border:1px solid #ccc;" onclick="_remove('#div-socmed-{{ $rand }}')"><i class="fa fa-minus"></i></button
-                          </span>
-                        </div>
-                      @else
-                        <input type="text" class="form-control" name="socmed_uname[]" placeholder="Nama/ID akun.." value="{{ $val->username }}">
-                      @endif
-                    </div>
-                  </div>
+									@php
+										$rand = rand(111111111, 999999999);
+									@endphp
+									<div id="div-socmed-{{ $rand }}">
+										<div class="col-md-3 col-xs-6 no-padding">
+										<select name="socmed_id[]" class="form-control custom-select2">
+											<option value="">--Pilih--</option>
+											@if (isset($socmeds))
+                        @foreach ($socmeds as $socmed)
+                          @php 
+                            $sl = ($socmed->id==$val->socmed->id) ? 'selected' : ''
+                          @endphp
+                          <option value="{{ $socmed->id }}" {{ $sl }}>{{ $socmed->name }}</option>
+                        @endforeach
+											@endif
+										</select>
+										</div>
+										<div class="col-md-9 col-xs-6 no-padding">
+										@if ($key > 0)
+											<div class="input-group">
+											<input type="text" class="form-control" name="socmed_uname[]" placeholder="Nama/ID akun.." value="{{ $val->username }}">
+											<span class="input-group-btn">
+												<button type="button" class="btn" style="background:white;border:1px solid #ccc;" onclick="_remove('#div-socmed-{{ $rand }}')"><i class="fa fa-minus"></i></button
+											</span>
+											</div>
+										@else
+											<input type="text" class="form-control" name="socmed_uname[]" placeholder="Nama/ID akun.." value="{{ $val->username }}">
+										@endif
+										</div>
+									</div>
 								@endforeach
 							@else
 								<div class="col-md-3 col-xs-6 no-padding">
-									<select name="socmed_id[]" class="form-control pwd-select">
-                    <option value="">--Pilih--</option>
-                    @if (isset($socmeds))
+									<select name="socmed_id[]" class="form-control custom-select2">
+										<option value="">--Pilih--</option>
+										@if (isset($socmeds))
                       @foreach ($socmeds as $socmed)
                         <option value="{{ $socmed->id }}">{{ $socmed->name }}</option>
                       @endforeach
-                    @endif
+										@endif
 									</select>
 								</div>
 								<div class="col-md-9 col-xs-6 no-padding">
@@ -237,7 +237,7 @@
 			</div>
 			<div class="form-group">
 				<div class="col-md-offset-2 col-md-10">
-					{{ isset($apps->id) ? method_field('PUT') : '' }}
+					{{ isset($apps) ? method_field('PUT') : '' }}
 					{{ csrf_field() }}
 				  {{ _get_button_post(url($adminPath . '/dashboard')) }}
 				</div>
@@ -273,7 +273,7 @@
 			$('#i_active_at').datetimepicker({
 				format: 'YYYY-MM-DD'
 			});
-			$(".pwd-select").select2({
+			$(".custom-select2").select2({
 				minimumResultsForSearch: Infinity
 			});
 		});
@@ -296,7 +296,7 @@
 			$('#btn-add-socmed').on('click', function(){
 				socmed_no = (Math.random() * 1000000000).toFixed(0);
 				var html = '<div id="div-socmed-'+socmed_no+'"><div class="col-md-3 col-xs-6 no-padding">'+
-								'<select name="socmed_id[]" class="form-control pwd-select">'+
+								'<select name="socmed_id[]" class="form-control custom-select2">'+
 									'<option value="">--Choose--</option>'+
 									@if (isset($socmeds))
 										@foreach($socmeds as $socmed)
@@ -315,7 +315,7 @@
 							'</div></div>';
 
 				$('#div-socmed').append(html);
-				$(".pwd-select").select2({
+				$(".custom-select2").select2({
 					minimumResultsForSearch: Infinity
 				});
 			});

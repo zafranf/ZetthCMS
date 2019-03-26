@@ -151,6 +151,7 @@
           $('#url_external').attr("disabled", true).hide();
         }
       });
+      
       $('#is_crud').on('click', function() {
         let checked = $('#is_crud').prop('checked');
         if (checked) {

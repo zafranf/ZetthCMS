@@ -16,6 +16,7 @@ class CreateMenuGroupsTable extends Migration
         Schema::create('menu_groups', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name');
+            $table->string('display_name');
             $table->string('description');
             $table->boolean('status')->comment('0=inactive, 1=active')->unsigned();
             $table->timestamps();
