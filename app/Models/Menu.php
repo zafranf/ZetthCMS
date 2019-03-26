@@ -18,4 +18,9 @@ class Menu extends Model
     {
         return $this->hasMany('App\Models\Menu', 'parent_id', 'id')->orderBy('order')->with('allSubmenu');
     }
+
+    public function group()
+    {
+        return $this->belongsTo('App\Models\MenuGroup');
+    }
 }

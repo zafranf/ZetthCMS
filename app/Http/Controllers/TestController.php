@@ -6,6 +6,6 @@ class TestController extends Controller
 {
     public function index()
     {
-        dd(urls('asdasda', true, ['test']));
+        dd(\App\Models\Menu::with('group')->orderBy('id', 'desc')->first());
     }
 }

@@ -47,7 +47,7 @@ if (!function_exists('_get_access_buttons')) {
 
         if ($btn == 'add') {
             if ($user->can('create-' . $xname[0])) {
-                echo '<a href="' . url($url . '/create') . '" class="btn btn-default pull-right" data-toggle="tooltip" data-original-title="Tambah Data"><i class="fa fa-plus"></i> ' . $add . '</a>';
+                echo '<a href="' . url($url . '/create') . '" class="btn btn-default pull-right" data-toggle="tooltip" data-original-title="Tambah Data"><i class="fa fa-plus"></i>&nbsp;' . $add . '</a>';
             }
         } else {
             if ($user->can('read-' . $xname[0])) {

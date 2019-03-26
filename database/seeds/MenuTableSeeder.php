@@ -464,7 +464,8 @@ class MenuTableSeeder extends Seeder
         $dash->target = '_self';
         // $dash->order = $mainOrder++;
         $dash->status = 1;
-        // $dash->index = 1;
+        $dash->is_crud = 0;
+        $dash->index = 1;
         $dash->group_id = 2;
         $dash->save();
     }

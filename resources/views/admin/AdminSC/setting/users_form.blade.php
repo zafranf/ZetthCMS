@@ -78,7 +78,7 @@
 						<div class="col-md-offset-4 col-md-8">
 							<div class="checkbox">
 								<label>
-									<input type="checkbox" name="status" {{ (isset($data) && $data->status == 0 ) ?'':'checked' }}> Aktif
+									<input type="checkbox" name="status" {{ (isset($data) && $data->status == 0 ) ?'' : 'checked' }}> Aktif
 								</label>
 							</div>
 						</div>

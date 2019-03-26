@@ -26,6 +26,7 @@ class CreateMenuTable extends Migration
             $table->boolean('status')->comment('0=inactive, 1=active')->unsigned();
             $table->integer('group_id')->unsigned()->default(1);
             $table->integer('parent_id')->unsigned()->default(0);
+            $table->boolean('is_crud')->unsigned()->default(1);
             $table->boolean('index')->unsigned()->default(0);
             $table->boolean('create')->unsigned()->default(0);
             $table->boolean('read')->unsigned()->default(0);
