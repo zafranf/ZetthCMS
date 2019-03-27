@@ -116,21 +116,32 @@ class ApplicationController extends AdminController
     {
         /* validation */
         $this->validate($r, [
+            'logo' => 'mimes:jpg,jpeg,png,svg|max:384|dimensions:max_width=512,max_height=512',
+            'icon' => 'mimes:jpg,jpeg,png,svg,ico|max:96|dimensions:max_width=128,max_height=128',
             'name' => 'required|max:50',
-            // 'description' => 'required',
-            // 'keyword' => 'required',
-            // 'email' => 'required|email',
-            'email' => 'email|nullable',
-            'logo' => 'dimensions:max_height=512,max_width=512|max:512',
-            'icon' => 'dimensions:max_height=64,max_width=64|max:64',
-            'perpage' => 'integer|min:3',
+            'tagline' => 'nullable|max:100',
+            'email' => 'nullable|max:100|email',
+            'phone' => 'nullable|max:16|integer',
+            'perpage' => 'required|integer|min:3|max:100',
+
+            /* socmed */
+            'socmed_uname.*' => 'max:50',
+
+            /* seo */
+            'keywords' => 'nullable|max:50',
+            'description' => 'nullable|max:150',
+            'google_analytics' => 'nullable|20',
+
+            /* location */
+            'address' => 'nullable|max:280',
+            'coordinate' => 'nullable|max:30',
         ]);
 
         /* save data */
         $app = Application::find($id);
         $app->name = $r->input('name');
         $app->description = $r->input('description');
-        $app->keyword = $r->input('keyword');
+        $app->keywords = $r->input('keywords');
         $app->tagline = $r->input('tagline');
         $app->status = bool($r->input('status')) ? 1 : 0;
         $app->active_at = $r->input('active_at');

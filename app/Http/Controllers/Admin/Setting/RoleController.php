@@ -42,7 +42,7 @@ class RoleController extends AdminController
     public function index(Request $r)
     {
         $this->breadcrumbs[] = [
-            'page' => 'Daftar',
+            'page' => 'Tabel',
             'icon' => '',
             'url' => '',
         ];
@@ -52,7 +52,7 @@ class RoleController extends AdminController
             'current_url' => $this->current_url,
             'breadcrumbs' => $this->breadcrumbs,
             'page_title' => $this->page_title,
-            'page_subtitle' => 'Daftar Peran',
+            'page_subtitle' => 'Tabel Peran',
         ];
 
         return view('admin.AdminSC.setting.roles', $data);
@@ -224,8 +224,26 @@ class RoleController extends AdminController
      */
     public function datatable(Request $r)
     {
+        /* where roles */
+        if (\Auth::user()->hasRole('super')) {
+            $whrRole = [
+                // ['status', 1],
+            ];
+        } else if (\Auth::user()->hasRole('admin')) {
+            $whrRole = [
+                // ['status', 1],
+                ['id', '!=', 1],
+            ];
+        } else {
+            $whrRole = [
+                // ['status', 1],
+                ['id', '!=', 1],
+                ['id', '!=', 2],
+            ];
+        }
+
         /* get data */
-        $data = Role::select('id', 'display_name as name', 'description', 'status')->get();
+        $data = Role::select('id', 'display_name as name', 'description', 'status')->where($whrRole)->get();
 
         /* generate datatable */
         if ($r->ajax()) {

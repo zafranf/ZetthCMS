@@ -39,7 +39,7 @@ class MenuController extends AdminController
     public function index(Request $r)
     {
         $this->breadcrumbs[] = [
-            'page' => 'Daftar',
+            'page' => 'Tabel',
             'icon' => '',
             'url' => '',
         ];
@@ -49,7 +49,7 @@ class MenuController extends AdminController
             'current_url' => $this->current_url,
             'breadcrumbs' => $this->breadcrumbs,
             'page_title' => $this->page_title,
-            'page_subtitle' => 'Daftar Menu',
+            'page_subtitle' => 'Tabel Menu',
         ];
 
         return view('admin.AdminSC.setting.menu', $data);

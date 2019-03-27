@@ -1,8 +1,8 @@
 <?php
 
-use Illuminate\Support\Facades\Schema;
-use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
 
 class CreatePostsTable extends Migration
 {
@@ -27,11 +27,12 @@ class CreatePostsTable extends Migration
             $table->integer('visited')->unsigned()->default(0);
             $table->integer('shared')->unsigned()->default(0);
             $table->integer('liked')->unsigned()->default(0);
-            $table->dateTime('time');
+            $table->timestamp('published_at')->nullable();
             $table->string('short_url')->nullable();
             $table->boolean('status')->comment('0=pending, 1=active, 2=draft')->unsigned();
             $table->integer('created_by')->unsigned()->index();
             $table->integer('updated_by')->unsigned()->nullable();
+            $table->integer('deleted_by')->unsigned()->nullable();
             $table->timestamps();
             $table->softDeletes();
         });

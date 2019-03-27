@@ -24,17 +24,18 @@ class AccessMiddleware
 
     public function checkAccess()
     {
-        /* ambil user login */
+        /* get user login */
         $user = \Auth::user();
         if (!$user) {
             throw new \Exception('There are no user in current session');
         }
 
-        /* ambil route name */
+        /* get route name */
         $name = \Route::current()->getName();
-
-        $access = null;
         $xname = explode('.', $name);
+
+        /* check access */
+        $access = null;
         if (count($xname) > 1) {
             if ($xname[1] == "index") {
                 $access = 'index';
@@ -50,7 +51,7 @@ class AccessMiddleware
                 throw new Exception('Undefined access');
             }
         }
-        
+
         return $user->can($access . '-' . $xname[0]);
     }
 

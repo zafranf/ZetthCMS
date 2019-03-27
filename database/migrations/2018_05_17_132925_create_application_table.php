@@ -21,7 +21,7 @@ class CreateApplicationTable extends Migration
             $table->string('logo')->nullable();
             $table->string('icon')->nullable();
             $table->string('description')->nullable();
-            $table->string('keyword')->nullable();
+            $table->string('keywords')->nullable();
             $table->integer('template_id')->unsigned()->nullable();
             $table->string('timezone')->default('Asia/Jakarta');
             $table->boolean('status')->comment('0=coming soon, 1=active, 2=maintenance')->unsigned();
