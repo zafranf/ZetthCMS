@@ -61,58 +61,68 @@
           <input type="checkbox" name="is_access" class="hide" checked>
         </div>
         <div class="panel-body no-padding">
-          <table class="table table-bordered table-hover" id="access-list" width="100%">
-            <thead>
-              <tr>
-                <th>Menu</th>
-                <th width="100px">Indeks</th>
-                <th width="100px">Tambah</th>
-                <th width="100px">Detail</th>
-                <th width="100px">Edit</th>
-                <th width="100px">Hapus</th>
-              </tr>
-            </thead>
-            <tbody>
-              @foreach (generateMenuArray($menus) as $menu)
-                @php
-                  $routename = explode('.', $menu->route_name);
-                @endphp
+          @if (count($menus) > 0)
+            <table class="table table-bordered table-hover" id="access-list" width="100%">
+              <thead>
                 <tr>
-                  <td>{!! $menu->name !!}</td>
-                  <td>
-                    <label class="custom-control custom-checkbox">
-                      <input type="checkbox" class="custom-control-input" name="access[{{ $routename[0] }}][index]" {{ !$menu->index ? 'disabled' : '' }} {{ isset($data) && $data->hasPermission('index-' . $routename[0]) ? 'checked' : '' }}>
-                      <span class="custom-control-label"></span>
-                    </label>
-                  </td>
-                  <td>
-                    <label class="custom-control custom-checkbox">
-                      <input type="checkbox" class="custom-control-input" name="access[{{ $routename[0] }}][create]" {{ !$menu->create ? 'disabled' : '' }} {{ isset($data) && $data->hasPermission('create-' . $routename[0]) ? 'checked' : '' }}>
-                      <span class="custom-control-label"></span>
-                    </label>
-                  </td>
-                  <td>
-                    <label class="custom-control custom-checkbox">
-                      <input type="checkbox" class="custom-control-input" name="access[{{ $routename[0] }}][read]" {{ !$menu->read ? 'disabled' : '' }} {{ isset($data) && $data->hasPermission('read-' . $routename[0]) ? 'checked' : '' }}>
-                      <span class="custom-control-label"></span>
-                    </label>
-                  </td>
-                  <td>
-                    <label class="custom-control custom-checkbox">
-                      <input type="checkbox" class="custom-control-input" name="access[{{ $routename[0] }}][update]" {{ !$menu->update ? 'disabled' : '' }} {{ isset($data) && $data->hasPermission('update-' . $routename[0]) ? 'checked' : '' }}>
-                      <span class="custom-control-label"></span>
-                    </label>
-                  </td>
-                  <td>
-                    <label class="custom-control custom-checkbox">
-                      <input type="checkbox" class="custom-control-input" name="access[{{ $routename[0] }}][delete]" {{ !$menu->delete ? 'disabled' : '' }} {{ isset($data) && $data->hasPermission('delete-' . $routename[0]) ? 'checked' : '' }}>
-                      <span class="custom-control-label"></span>
-                    </label>
-                  </td>
+                  <th>Menu</th>
+                  <th width="100px">Indeks</th>
+                  <th width="100px">Tambah</th>
+                  <th width="100px">Detail</th>
+                  <th width="100px">Edit</th>
+                  <th width="100px">Hapus</th>
                 </tr>
-              @endforeach
-            </tbody>
-          </table>
+              </thead>
+              <tbody>
+                @foreach (generateMenuArray($menus) as $menu)
+                  @php
+                    $routename = explode('.', $menu->route_name);
+                  @endphp
+                  <tr>
+                    <td>{!! $menu->name !!}</td>
+                    <td>
+                      <label class="custom-control custom-checkbox">
+                        <input type="checkbox" class="custom-control-input" name="access[{{ $routename[0] }}][index]" {{ !$menu->index ? 'disabled' : '' }} {{ isset($data) && $data->hasPermission('index-' . $routename[0]) ? 'checked' : '' }}>
+                        <span class="custom-control-label"></span>
+                      </label>
+                    </td>
+                    <td>
+                      <label class="custom-control custom-checkbox">
+                        <input type="checkbox" class="custom-control-input" name="access[{{ $routename[0] }}][create]" {{ !$menu->create ? 'disabled' : '' }} {{ isset($data) && $data->hasPermission('create-' . $routename[0]) ? 'checked' : '' }}>
+                        <span class="custom-control-label"></span>
+                      </label>
+                    </td>
+                    <td>
+                      <label class="custom-control custom-checkbox">
+                        <input type="checkbox" class="custom-control-input" name="access[{{ $routename[0] }}][read]" {{ !$menu->read ? 'disabled' : '' }} {{ isset($data) && $data->hasPermission('read-' . $routename[0]) ? 'checked' : '' }}>
+                        <span class="custom-control-label"></span>
+                      </label>
+                    </td>
+                    <td>
+                      <label class="custom-control custom-checkbox">
+                        <input type="checkbox" class="custom-control-input" name="access[{{ $routename[0] }}][update]" {{ !$menu->update ? 'disabled' : '' }} {{ isset($data) && $data->hasPermission('update-' . $routename[0]) ? 'checked' : '' }}>
+                        <span class="custom-control-label"></span>
+                      </label>
+                    </td>
+                    <td>
+                      <label class="custom-control custom-checkbox">
+                        <input type="checkbox" class="custom-control-input" name="access[{{ $routename[0] }}][delete]" {{ !$menu->delete ? 'disabled' : '' }} {{ isset($data) && $data->hasPermission('delete-' . $routename[0]) ? 'checked' : '' }}>
+                        <span class="custom-control-label"></span>
+                      </label>
+                    </td>
+                  </tr>
+                @endforeach
+              </tbody>
+            </table>
+          @else
+            <table class="table table-bordered table-hover" id="access-list" width="100%">
+              <tr>
+                <td>
+                  <span style="color:grey">Belum ada menu yang terdaftar..</span>
+                </td>
+              </tr>
+            </table>
+          @endif
         </div>
       </div>
     @endif
