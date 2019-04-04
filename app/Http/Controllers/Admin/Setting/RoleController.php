@@ -289,7 +289,8 @@ class RoleController extends AdminController
         /* remove all menu group id */
         RoleMenu::where('role_id', $role->id)->delete();
 
-        foreach ($r->input('menugroups') as $group) {
+        $menugroups = $r->input('menugroups') ?? [];
+        foreach ($menugroups as $group) {
             $rolemenu = new RoleMenu;
             $rolemenu->role_id = $role->id;
             $rolemenu->menu_group_id = $group;

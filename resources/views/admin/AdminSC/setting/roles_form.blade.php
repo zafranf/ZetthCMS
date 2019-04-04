@@ -14,7 +14,7 @@
       <div class="form-group">
         <label for="name" class="col-sm-2 control-label">Nama Peran</label>
         <div class="col-sm-4">
-          <input type="text" class="form-control" id="name" name="name" value="{{ isset($data) ? $data->display_name : '' }}" autofocus onfocus="_onfocus(this)" maxlength="50" placeholder="Nama peran..">
+          <input type="text" class="form-control autofocus" id="name" name="name" value="{{ isset($data) ? $data->display_name : '' }}" maxlength="50" placeholder="Nama peran..">
         </div>
       </div>
       <div class="form-group">

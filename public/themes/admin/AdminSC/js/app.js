@@ -37,7 +37,7 @@ function _onfocus() {
         /* this focus on last character if input isn't empty. https://stackoverflow.com/a/53196878/6885956 */
         tmp = el.val();
         el.focus().val("").blur().focus().val(tmp);
-    }, 200);
+    }, 100);
 }
 
 function _tc() {

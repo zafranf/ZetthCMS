@@ -17,7 +17,7 @@ class CreateMenuGroupsTable extends Migration
             $table->increments('id');
             $table->string('name');
             $table->string('display_name');
-            $table->string('description');
+            $table->string('description')->nullable();
             $table->boolean('status')->comment('0=inactive, 1=active')->unsigned();
             $table->timestamps();
             $table->softDeletes();

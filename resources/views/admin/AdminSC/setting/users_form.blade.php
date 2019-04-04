@@ -10,7 +10,7 @@
 					<div class="form-group">
 						<label for="name" class="col-md-4 control-label">Nama Akses</label>
 						<div class="col-md-8">
-							<input type="text" class="form-control" id="name" name="name" value="{{ isset($data) ? $data->name : '' }}" autofocus onfocus="_onfocus(this)" maxlength="30" placeholder="Nama akses.." {{ isset($data) ? 'readonly' : '' }}>
+							<input type="text" class="form-control autofocus" id="name" name="name" value="{{ isset($data) ? $data->name : '' }}" maxlength="30" placeholder="Nama akses.." {{ isset($data) ? 'readonly' : '' }}>
 						</div>
 					</div>
 					<div class="form-group">

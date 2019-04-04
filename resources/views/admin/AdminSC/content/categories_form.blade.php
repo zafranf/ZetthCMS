@@ -12,7 +12,7 @@
             <div class="form-group">
                 <label for="category_name" class="col-sm-2 control-label">Category Name</label>
                 <div class="col-sm-4">
-                    <input type="text" class="form-control" name="category_name" value="{{ isset($category->term_id)?$category->term_name:'' }}" autofocus onfocus="this.value = this.value;" maxlength="30" placeholder="Category Name">
+                    <input type="text" class="form-control autofocus" name="category_name" value="{{ isset($category->term_id)?$category->term_name:'' }}" maxlength="30" placeholder="Category Name">
                 </div>
             </div>
             <div class="form-group">

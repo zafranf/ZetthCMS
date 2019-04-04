@@ -8,7 +8,7 @@
             <div class="form-group">
                 <label for="tag_name" class="col-sm-2 control-label">Tag Name</label>
                 <div class="col-sm-4">
-                    <input type="text" class="form-control" name="tag_name" value="{{ isset($tag->term_id)?$tag->term_name:'' }}" autofocus onfocus="this.value = this.value;" placeholder="Tag Name">
+                    <input type="text" class="form-control autofocus" name="tag_name" value="{{ isset($tag->term_id)?$tag->term_name:'' }}" placeholder="Tag Name">
                 </div>
             </div>
             <div class="form-group">

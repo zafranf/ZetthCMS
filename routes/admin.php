@@ -15,19 +15,19 @@ Route::middleware('auth')->group(function () {
     Route::get('/setting/menu-groups/data', 'Admin\Setting\MenuGroupController@datatable')->name('menu-groups.data');
     Route::get('/setting/roles/data', 'Admin\Setting\RoleController@datatable')->name('roles.data');
     Route::get('/setting/users/data', 'Admin\Setting\UserController@datatable')->name('users.data');
-    Route::get('/content/banners/data', 'Admin\Content\BannerController@datatable')->name('banners.data');
     Route::get('/content/pages/data', 'Admin\Content\PageController@datatable')->name('pages.data');
-    Route::get('/content/article/categories/data', 'Admin\Content\Article\CategoryController@datatable')->name('categories.data');
-    Route::get('/content/article/tags/data', 'Admin\Content\Article\TagController@datatable')->name('tags.data');
-    Route::get('/report/subscribers/data', 'Admin\Report\SubscriberController@datatable')->name('subscribers.data');
+    Route::get('/content/articles/categories/data', 'Admin\Content\Article\CategoryController@datatable')->name('categories.data');
+    Route::get('/content/articles/tags/data', 'Admin\Content\Article\TagController@datatable')->name('tags.data');
+    // Route::get('/content/banners/data', 'Admin\Content\BannerController@datatable')->name('banners.data');
+    // Route::get('/report/subscribers/data', 'Admin\Report\SubscriberController@datatable')->name('subscribers.data');
 
     /* sort menu */
-    Route::get('/setting/menus/sort', 'Admin\Setting\MenuController@sort')->name('menus.sort');
-    Route::put('/setting/menus/sort', 'Admin\Setting\MenuController@sortSave')->name('menus.sortSave');
+    // Route::get('/setting/menus/sort', 'Admin\Setting\MenuController@sort')->name('menus.sort');
+    // Route::put('/setting/menus/sort', 'Admin\Setting\MenuController@sortSave')->name('menus.sortSave');
 
     /* sort banner */
-    Route::get('/content/banners/sort', 'Admin\Content\BannerController@sort')->name('banners.sort')->name('banners.sort');
-    Route::put('/content/banners/sort', 'Admin\Content\BannerController@sortSave')->name('banners.sortSave');
+    /* Route::get('/content/banners/sort', 'Admin\Content\BannerController@sort')->name('banners.sort')->name('banners.sort');
+    Route::put('/content/banners/sort', 'Admin\Content\BannerController@sortSave')->name('banners.sortSave'); */
 
     Route::middleware('access')->group(function () {
         /* dashboard */
@@ -51,13 +51,13 @@ Route::middleware('auth')->group(function () {
         /* module content routes */
         Route::prefix('content')->group(function () {
             Route::resources([
-                '/banners' => 'Admin\Content\BannerController',
                 '/pages' => 'Admin\Content\PageController',
-                '/article/posts' => 'Admin\Content\Article\PostController',
-                '/article/categories' => 'Admin\Content\Article\CategoryController',
-                '/article/tags' => 'Admin\Content\Article\TagController',
-                '/gallery/photos' => 'Admin\Content\Gallery\PhotoController',
-                '/gallery/videos' => 'Admin\Content\Gallery\VideoController',
+                '/articles/posts' => 'Admin\Content\Article\PostController',
+                '/articles/categories' => 'Admin\Content\Article\CategoryController',
+                '/articles/tags' => 'Admin\Content\Article\TagController',
+                // '/banners' => 'Admin\Content\BannerController',
+                // '/gallery/photos' => 'Admin\Content\Gallery\PhotoController',
+                // '/gallery/videos' => 'Admin\Content\Gallery\VideoController',
                 // '/products' => 'Admin\Content\Product\ProductController',
             ]);
             // Route::resource('/products/categories', 'Admin\Content\Product\CategoryController')->names('products.categories');
@@ -67,19 +67,19 @@ Route::middleware('auth')->group(function () {
         /* module report routes */
         Route::prefix('report')->group(function () {
             Route::resources([
-                '/inbox' => 'Admin\Report\InboxController',
-                '/comments' => 'Admin\Report\CommentController',
-                '/incoming-terms' => 'Admin\Report\IntermController',
-                '/subscribers' => 'Admin\Report\SubscriberController',
+                // '/inbox' => 'Admin\Report\InboxController',
+                // '/comments' => 'Admin\Report\CommentController',
+                // '/incoming-terms' => 'Admin\Report\IntermController',
+                // '/subscribers' => 'Admin\Report\SubscriberController',
             ]);
         });
 
         /* module log routes */
         Route::prefix('log')->group(function () {
             Route::resources([
-                '/activities' => 'Admin\Log\ActivityController',
-                '/errors' => 'Admin\Log\ErrorController',
-                '/visitors' => 'Admin\Log\VisitorController',
+                // '/activities' => 'Admin\Log\ActivityController',
+                // '/errors' => 'Admin\Log\ErrorController',
+                // '/visitors' => 'Admin\Log\VisitorController',
             ]);
         });
 

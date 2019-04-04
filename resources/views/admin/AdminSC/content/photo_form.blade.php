@@ -32,7 +32,7 @@
             <div class="form-group" style="margin-top:20px;">
                 <label for="photo_title" class="col-sm-2 control-label">Album Name</label>
                 <div class="col-sm-4">
-                    <input type="text" class="form-control" id="album_name" name="album_name" value="{{ isset($albums->album_id)?$albums->album_name:'' }}" autofocus onfocus="this.value = this.value;" maxlength="100" placeholder="Album Name">
+                    <input type="text" class="form-control autofocus" id="album_name" name="album_name" value="{{ isset($albums->album_id)?$albums->album_name:'' }}" maxlength="100" placeholder="Album Name">
                 </div>
             </div>
             <div class="form-group">

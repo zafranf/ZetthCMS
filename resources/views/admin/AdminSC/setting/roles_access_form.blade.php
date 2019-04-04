@@ -6,7 +6,7 @@
       <div class="form-group">
         <label for="name" class="col-sm-2 control-label">Group Name</label>
         <div class="col-sm-4">
-          <input type="text" class="form-control" id="name" name="name" value="{{ isset($group) ? $group->name : '' }}" autofocus onfocus="_onfocus(this)" maxlength="50" placeholder="Group Name">
+          <input type="text" class="form-control autofocus" id="name" name="name" value="{{ isset($group) ? $group->name : '' }}" maxlength="50" placeholder="Group Name">
         </div>
       </div>
       <div class="form-group">

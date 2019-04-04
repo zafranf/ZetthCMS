@@ -6,7 +6,7 @@
       <div class="form-group">
         <label for="name" class="col-sm-2 control-label">Nama Menu</label>
         <div class="col-sm-4">
-          <input type="text" class="form-control" id="name" name="name" value="{{ isset($data) ? $data->name : '' }}" autofocus onfocus="_onfocus(this)" maxlength="100" placeholder="Nama menu..">
+          <input type="text" class="form-control autofocus" id="name" name="name" value="{{ isset($data) ? $data->name : '' }}" maxlength="100" placeholder="Nama menu..">
         </div>
       </div>
       <div class="form-group">
@@ -20,12 +20,12 @@
         <div class="col-sm-4">
           <select id="url" name="url" class="form-control select2">
             <option value="#">[Tidak ada]</option>
-            <option value="external" {{ (isset($data) && $data->url_ext ) ? 'selected' : '' }}>[Tautan Luar]</option>
-            <option value="/">Beranda</option>
-            <option value="/articles">Artikel</option>
-            <option value="/pages">Halaman</option>
-            <option value="/albums">Album Foto</option>
-            <option value="/videos">Video</option>
+            <option value="external" {{ (isset($data) && ($data->url_external) ) ? 'selected' : '' }}>[Tautan Luar]</option>
+            <option value="/" {{ (isset($data) && $data->url == "/" ) ? 'selected' : '' }}>Beranda</option>
+            <option value="/pages" {{ (isset($data) && $data->url == "/pages" ) ? 'selected' : '' }}>Halaman</option>
+            <option value="/articles" {{ (isset($data) && $data->url == "/articles" ) ? 'selected' : '' }}>Artikel</option>
+            {{-- <option value="/albums">Album Foto</option>
+            <option value="/videos">Video</option> --}}
             {{-- @php $type = ''; @endphp
             @foreach($post_opt as $n => $post)
               @if ($type!=$post->post_type)
@@ -120,6 +120,7 @@
       </div>
       <div class="form-group">
         <div class="col-sm-offset-2 col-sm-4">
+          <input type="hidden" name="group" value="{{ _get('group') }}">
           {{ isset($data) ? method_field('PUT') : '' }}
           {{ csrf_field() }}
           {{ _get_button_post($current_url, true, $data->id ?? '') }}

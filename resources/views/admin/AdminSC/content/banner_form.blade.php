@@ -35,7 +35,7 @@
 			<div class="form-group">
 				<label for="banner_title" class="col-sm-2 control-label">Title</label>
 				<div class="col-sm-4">
-					<input type="text" class="form-control" id="banner_title" name="banner_title" value="{{ isset($banner->banner_id)?$banner->banner_title:'' }}" autofocus onfocus="this.value = this.value;" maxlength="100" placeholder="Title">
+					<input type="text" class="form-control autofocus" id="banner_title" name="banner_title" value="{{ isset($banner->banner_id)?$banner->banner_title:'' }}" maxlength="100" placeholder="Title">
 				</div>
 			</div>
 			<div class="form-group">

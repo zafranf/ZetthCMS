@@ -6,7 +6,7 @@
 			<div class="form-group">
 				<label for="title" class="col-sm-2 control-label">Judul</label>
 				<div class="col-sm-10">
-					<input type="text" class="form-control" id="title" name="title" value="{{ isset($data) ? $data->title : '' }}" {!! isset($data) ? '' : 'autofocus onfocus="_onfocus(this);"' !!} maxlength="100" placeholder="Judul halaman..">
+					<input type="text" class="form-control {!! isset($data) ? '' : 'autofocus' !!}" id="title" name="title" value="{{ isset($data) ? $data->title : '' }}" maxlength="100" placeholder="Judul halaman..">
 				</div>
 			</div>
 			<div class="form-group">

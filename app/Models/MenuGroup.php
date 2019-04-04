@@ -19,6 +19,8 @@ class MenuGroup extends Model
 
     public function allMenu()
     {
-        return $this->hasMany('App\Models\Menu');
+        return $this->hasMany('App\Models\Menu', 'group_id')->where([
+            'parent_id' => 0,
+        ]);
     }
 }

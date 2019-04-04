@@ -29,6 +29,10 @@ class MenuController extends AdminController
             'icon' => '',
             'url' => url($this->adminPath . '/setting/menu-groups'),
         ];
+
+        if (!request()->input('group')) {
+            return redirect($this->adminPath . '/setting/menu-groups')->send();
+        }
     }
 
     /**
@@ -91,6 +95,8 @@ class MenuController extends AdminController
         /* validation */
         $this->validate($r, [
             'name' => 'required',
+            'description' => 'required',
+            'group' => 'required|exists:menu_groups,id',
         ]);
 
         /* save data */
@@ -98,6 +104,11 @@ class MenuController extends AdminController
         $menu->name = $r->input('name');
         $menu->description = $r->input('description');
         $menu->url = $r->input('url');
+        $menu->url_external = 0;
+        if ($r->input('url') == 'external') {
+            $menu->url = $r->input('url_external');
+            $menu->url_external = 1;
+        }
         $menu->route_name = $r->input('route_name');
         $menu->target = $r->input('target');
         // $menu->order = (int) $r->input('order');
@@ -109,15 +120,16 @@ class MenuController extends AdminController
         $menu->update = bool($r->input('update')) ? 1 : 0;
         $menu->delete = bool($r->input('delete')) ? 1 : 0;
         $menu->parent_id = (int) $r->input('parent');
+        $menu->group_id = (int) $r->input('group');
         $menu->save();
 
         /* log aktifitas */
         $this->activityLog('<b>' . \Auth::user()->fullname . '</b> menambahkan Menu "' . $menu->name . '"');
 
         /* clear cache */
-        \Cache::flush();
+        // \Cache::flush();
 
-        return redirect($this->current_url)->with('success', 'Menu "' . $menu->name . '" berhasil ditambah!');
+        return redirect($this->adminPath . '/setting/menu-groups/' . $menu->group_id . '/edit')->with('success', 'Menu "' . $menu->name . '" berhasil ditambah!');
     }
 
     /**
@@ -170,6 +182,8 @@ class MenuController extends AdminController
         /* validation */
         $this->validate($r, [
             'name' => 'required',
+            'description' => 'required',
+            'group' => 'required|exists:menu_groups,id',
         ]);
 
         /* get order number if null */
@@ -183,7 +197,11 @@ class MenuController extends AdminController
         $menu->name = $r->input('name');
         $menu->description = $r->input('description');
         $menu->url = $r->input('url');
-        $menu->url_external = $r->input('url_external');
+        $menu->url_external = 0;
+        if ($r->input('url') == 'external') {
+            $menu->url = $r->input('url_external');
+            $menu->url_external = 1;
+        }
         $menu->route_name = $r->input('route_name');
         $menu->target = $r->input('target');
         $menu->order = $r->input('order') ?? $order;
@@ -195,15 +213,16 @@ class MenuController extends AdminController
         $menu->update = bool($r->input('update')) ? 1 : 0;
         $menu->delete = bool($r->input('delete')) ? 1 : 0;
         $menu->parent_id = (int) $r->input('parent');
+        $menu->group_id = (int) $r->input('group');
         $menu->save();
 
         /* log aktifitas */
         $this->activityLog('<b>' . \Auth::user()->fullname . '</b> memperbarui Menu "' . $menu->name . '"');
 
         /* clear cache */
-        \Cache::flush();
+        // \Cache::flush();
 
-        return redirect($this->current_url)->with('success', 'Menu "' . $menu->name . '" berhasil disimpan!');
+        return redirect($this->adminPath . '/setting/menu-groups/' . $menu->group_id . '/edit')->with('success', 'Menu "' . $menu->name . '" berhasil disimpan!');
     }
 
     /**
@@ -214,6 +233,11 @@ class MenuController extends AdminController
      */
     public function destroy(Request $r, Menu $menu)
     {
+        /* validation */
+        $this->validate($r, [
+            'group' => 'required|exists:menu_groups,id',
+        ]);
+
         /* log aktifitas */
         $this->activityLog('<b>' . \Auth::user()->fullname . '</b> menghapus Menu "' . $menu->name . '"');
 
@@ -221,9 +245,9 @@ class MenuController extends AdminController
         $menu->delete();
 
         /* clear cache */
-        \Cache::flush();
+        // \Cache::flush();
 
-        return redirect($this->current_url)->with('success', 'Menu "' . $menu->name . '" berhasil dihapus!');
+        return redirect($this->adminPath . '/setting/menu-groups/' . $menu->group_id . '/edit')->with('success', 'Menu "' . $menu->name . '" berhasil dihapus!');
     }
 
     /**

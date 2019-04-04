@@ -105,7 +105,7 @@ class MenuGroupController extends AdminController
         /* activity log */
         $this->activityLog('<b>' . \Auth::user()->fullname . '</b> menambahkan Grup Menu "' . $menugroup->name . '"');
 
-        return redirect($this->current_url)->with('success', 'Grup Menu "' . $menugroup->display_name . '" berhasil ditambah!');
+        return redirect($this->current_url . '/' . $menugroup->id . '/edit')->with('success', 'Peran "' . $menugroup->display_name . '" berhasil ditambah, segera atur daftar menu!');
     }
 
     /**
@@ -139,7 +139,7 @@ class MenuGroupController extends AdminController
             'breadcrumbs' => $this->breadcrumbs,
             'page_title' => $this->page_title,
             'page_subtitle' => 'Edit Grup Menu',
-            'data' => $menugroup,
+            'data' => $menugroup->load('allMenu.submenu'),
         ];
 
         return view('admin.AdminSC.setting.menu_group_form', $data);
@@ -168,13 +168,16 @@ class MenuGroupController extends AdminController
         $menugroup->status = bool($r->input('status')) ? 1 : 0;
         $menugroup->save();
 
+        /* save position */
+        $save = $this->sortMenu($r);
+
         /* activity log */
         $this->activityLog('<b>' . \Auth::user()->fullname . '</b> memperbarui Grup Menu "' . $menugroup->name . '"');
 
         /* clear cache */
         \Cache::forget('cacheMenu-Group' . ucfirst($menugroup->name));
 
-        return redirect($this->current_url)->with('success', 'Grup Menu "' . $menugroup->display_name . '" berhasil disimpan!');
+        return redirect($this->current_url . '/' . $menugroup->id . '/edit')->with('success', 'Peran "' . $menugroup->display_name . '" berhasil disimpan, segera atur daftar menu!');
     }
 
     /**
@@ -211,5 +214,28 @@ class MenuGroupController extends AdminController
         }
 
         abort(403);
+    }
+
+    /* save menu position */
+    public function sortMenu(Request $r, $data = [], $parent = 0)
+    {
+        /* mapping values */
+        $updates = [];
+        $sorts = empty($data) ? json_decode($r->input('sort'))[0] : $data;
+        foreach ($sorts as $order => $sort) {
+            $updates[] = Menu::where('id', $sort->id)->update([
+                'order' => ($order + 1),
+                'parent_id' => $parent,
+            ]);
+            if (count($sort->children) > 0) {
+                foreach ($sort->children as $child) {
+                    if (!empty($child)) {
+                        $updates = array_merge($updates, $this->sortMenu($r, $child, $sort->id));
+                    }
+                }
+            }
+        }
+
+        return $updates;
     }
 }

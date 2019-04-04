@@ -96,7 +96,7 @@ if (isset($post->post_id)){
 			{{ isset($post->post_id)?method_field('PUT'):'' }}
 			{{ csrf_field() }}
 			<div class="col-sm-8 col-md-9 left-side no-padding">
-				<input type="text" id="post_title" class="form-control no-border-top-right no-border-left no-radius input-lg" name="post_title" {{ isset($post->post_id)?'':'autofocus onfocus="this.value=this.value"' }} placeholder="Title" maxlength="100" value="{{ isset($post->post_id)?$post->post_title:'' }}">
+				<input type="text" id="post_title" class="form-control {{ isset($post->post_id) ? '' : 'autofocus' }} no-border-top-right no-border-left no-radius input-lg" name="post_title" placeholder="Title" maxlength="100" value="{{ isset($post->post_id)?$post->post_title:'' }}">
 				<div class="input-group">
 					<span class="input-group-addon no-border-top-right no-border-left no-radius input-sm" id="post_url_span">{{ url('/post/') }}/</span>
 					<input type="text" id="post_url" class="form-control no-border-top-right no-radius input-sm" name="post_url" placeholder="URL (double click to edit)" readonly value="{{ isset($post->post_id)?$post->post_slug:'' }}">
