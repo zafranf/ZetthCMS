@@ -33,11 +33,10 @@ $(document).ready(function() {
 
 function _onfocus() {
     let el = $('.autofocus');
-    setTimeout(function() {
-        /* this focus on last character if input isn't empty. https://stackoverflow.com/a/53196878/6885956 */
-        tmp = el.val();
-        el.focus().val("").blur().focus().val(tmp);
-    }, 100);
+    tmp = el.val();
+    el.val("").val(tmp).blur().focus();
+
+    /* this focus on last character if input isn't empty. https://stackoverflow.com/a/53196878/6885956 */
 }
 
 function _tc() {

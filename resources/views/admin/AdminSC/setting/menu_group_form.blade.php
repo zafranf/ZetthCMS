@@ -1,9 +1,13 @@
 @php
 function sortMenu($data, $level = 0, $adminPath = '') {
   echo ($level == 0) ? '<ol class="default vertical">' : '<ol>';
+  echo ($level == 0) ? '<small style="font-weight:300;color:grey">Geser untuk atur posisi</small>' : '';
   echo count($data) == 0 ? '<span style="color:grey">Belum ada menu yang terdaftar..</span>' : '';
   foreach ($data as $menu) {
-    echo '<li data-id="' . $menu->id . '" data-name="' . $menu->name . '"><span class="fe ' . $menu->icon . '"></span> ' . $menu->name .'<a href="#" onclick="_delete(\'' . $adminPath . '/setting/menus/'.$menu->id. '\')" class="btn btn-default btn-xs pull-right" data-toggle="tooltip" data-original-title="Hapus"><i class="fa fa-trash"></i></a>&nbsp;<a href="'.url($adminPath.'/setting/menus/'.$menu->id.'/edit?group='.$menu->group_id).'" class="btn btn-default btn-xs pull-right" data-toggle="tooltip" data-original-title="Edit"><i class="fa fa-edit"></i></a>';
+    echo '<li data-id="' . $menu->id . '" data-name="' . $menu->name . '">';
+    echo '<span class="' . $menu->icon . '"></span> ' . $menu->name;
+    echo '<a href="#" onclick="_delete(\'' . $adminPath . '/setting/menus/'.$menu->id. '\')" class="btn btn-default btn-xs pull-right" data-toggle="tooltip" data-original-title="Hapus"><i class="fa fa-trash"></i></a>';
+    echo '<a href="' . url($adminPath . '/setting/menus/' . $menu->id . '/edit?group=' . $menu->group_id) . '" class="btn btn-default btn-xs pull-right" data-toggle="tooltip" data-original-title="Edit"><i class="fa fa-edit"></i></a>';
     if (count($menu->submenu) > 0) {
       sortMenu($menu->submenu, $level + 1, $adminPath);
     }
@@ -21,6 +25,8 @@ function sortMenu($data, $level = 0, $adminPath = '') {
     <form class="form-horizontal" action="{{ url($current_url) }}{{ isset($data) ? '/' . $data->id : '' }}" method="post" enctype="multipart/form-data">
       <div class="row">
         <div class="col-md-6">
+            <h4>Info Utama</h4>
+            <hr>
           <div class="form-group">
             <label for="name" class="col-sm-4 control-label">Nama Grup Menu</label>
             <div class="col-sm-8">
@@ -47,9 +53,7 @@ function sortMenu($data, $level = 0, $adminPath = '') {
           @if (isset($data))
             <h4>Daftar Menu <a href="{{ url($adminPath.'/setting/menus/create?group='.$data->id) }}" class="btn btn-default btn-xs pull-right" data-toggle="tooltip" data-original-title="Tambah"><i class="fa fa-plus"></i></a></h4>
             <hr>
-            {{-- @if (count($data->allMenu) > 0)  --}}
-              {!! sortMenu($data->allMenu, 0, $adminPath) !!}
-            {{-- @endif --}}
+            {!! sortMenu($data->allMenu, 0, $adminPath) !!}
           @endif
         </div>
       </div>
@@ -78,21 +82,23 @@ function sortMenu($data, $level = 0, $adminPath = '') {
       margin: 5px;
       padding: 5px;
       border: 1px solid #cccccc;
-      color: #0088cc;
-      background: #eeeeee;
+      color: coral;
+      /* background: #eeeeee; */
     }
     ol.vertical li {
       display: block;
       margin: 5px;
       padding: 5px;
       border: 1px solid #cccccc;
-      color: #0088cc;
-      background: #eeeeee; }
+      color: coral;
+      /* background: #eeeeee;  */
+    }
     ol.vertical li.placeholder {
       position: relative;
       margin: 0;
       padding: 0;
-      border: none; }
+      border: none; 
+    }
     ol.vertical li.placeholder:before {
         position: absolute;
         content: "";
@@ -103,13 +109,15 @@ function sortMenu($data, $level = 0, $adminPath = '') {
         top: -4px;
         border: 5px solid transparent;
         border-left-color: red;
-        border-right: none; }
+        border-right: none; 
+      }
     ol.default li {
       cursor: move; 
     }
     ol li.highlight {
       background: #333333;
-      color: #999999; }
+      color: #999999; 
+    }
   </style>
 @endsection
 
