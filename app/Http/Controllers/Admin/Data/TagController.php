@@ -17,8 +17,13 @@ class TagController extends AdminController
     public function __construct()
     {
         parent::__construct();
-        $this->current_url = url('/content/tags');
+        $this->current_url = url($this->adminPath . '/data/tags');
         $this->page_title = 'Pengaturan Label';
+        $this->breadcrumbs[] = [
+            'page' => 'Data',
+            'icon' => '',
+            'url' => url($this->adminPath . '/data/users'),
+        ];
         $this->breadcrumbs[] = [
             'page' => 'Label',
             'icon' => '',
@@ -33,14 +38,21 @@ class TagController extends AdminController
      */
     public function index()
     {
+        $this->breadcrumbs[] = [
+            'page' => 'Tabel',
+            'icon' => '',
+            'url' => '',
+        ];
+
         /* set variable for view */
         $data = [
             'current_url' => $this->current_url,
+            'breadcrumbs' => $this->breadcrumbs,
             'page_title' => $this->page_title,
-            'page_subtitle' => 'Daftar Label',
+            'page_subtitle' => 'Tabel Label',
         ];
 
-        return view('admin.content.tag', $data);
+        return view('admin.AdminSC.data.tags', $data);
     }
 
     /**
@@ -50,14 +62,22 @@ class TagController extends AdminController
      */
     public function create()
     {
+        $this->breadcrumbs[] = [
+            'page' => 'Tambah',
+            'icon' => '',
+            'url' => '',
+        ];
+
         /* set variable for view */
         $data = [
             'current_url' => $this->current_url,
+            'breadcrumbs' => $this->breadcrumbs,
             'page_title' => $this->page_title,
             'page_subtitle' => 'Tambah Label',
+            // 'tags' => Term::where('type', 'tag')->where('parent_id', 0)->with('allSubtag')->orderBy('name')->get(),
         ];
 
-        return view('admin.content.tag_form', $data);
+        return view('admin.AdminSC.data.tags_form', $data);
     }
 
     /**
@@ -76,8 +96,8 @@ class TagController extends AdminController
         /* save data */
         $name = str_sanitize($r->input('name'));
         $tag = new Term;
-        $tag->name = $name;
-        $tag->slug = str_slug($name);
+        $tag->name = str_slug($name);
+        $tag->display_name = $name;
         $tag->description = str_sanitize($r->input('description'));
         $tag->type = 'tag';
         $tag->parent_id = (int) $r->input('parent');
@@ -85,9 +105,9 @@ class TagController extends AdminController
         $tag->save();
 
         /* log aktifitas */
-        $this->activityLog('<b>' . \Auth::user()->fullname . '</b> menambahkan Label "' . $tag->name . '"');
+        $this->activityLog('<b>' . \Auth::user()->fullname . '</b> menambahkan Label "' . $tag->display_name . '"');
 
-        return redirect($this->current_url)->with('success', 'Label berhasil ditambah!');
+        return redirect($this->current_url)->with('success', 'Label ' . $tag->display_name . ' berhasil ditambah!');
     }
 
     /**
@@ -109,15 +129,23 @@ class TagController extends AdminController
      */
     public function edit(Term $tag)
     {
+        $this->breadcrumbs[] = [
+            'page' => 'Edit',
+            'icon' => '',
+            'url' => '',
+        ];
+
         /* set variable for view */
         $data = [
             'current_url' => $this->current_url,
+            'breadcrumbs' => $this->breadcrumbs,
             'page_title' => $this->page_title,
             'page_subtitle' => 'Edit Label',
+            // 'tags' => Term::where('type', 'tag')->where('parent_id', 0)->with('allSubtag')->orderBy('name')->get(),
             'data' => $tag,
         ];
 
-        return view('admin.content.tag_form', $data);
+        return view('admin.AdminSC.data.tags_form', $data);
     }
 
     /**
@@ -136,8 +164,8 @@ class TagController extends AdminController
 
         /* save data */
         $name = str_sanitize($r->input('name'));
-        $tag->name = $name;
-        $tag->slug = str_slug($name);
+        $tag->name = str_slug($name);
+        $tag->display_name = $name;
         $tag->description = str_sanitize($r->input('description'));
         $tag->type = 'tag';
         $tag->parent_id = (int) $r->input('parent');
@@ -145,9 +173,9 @@ class TagController extends AdminController
         $tag->save();
 
         /* log aktifitas */
-        $this->activityLog('<b>' . \Auth::user()->fullname . '</b> memperbarui Label "' . $tag->name . '"');
+        $this->activityLog('<b>' . \Auth::user()->fullname . '</b> memperbarui Label "' . $tag->display_name . '"');
 
-        return redirect($this->current_url)->with('success', 'Label berhasil disimpan!');
+        return redirect($this->current_url)->with('success', 'Label ' . $tag->display_name . ' berhasil disimpan!');
     }
 
     /**
@@ -159,12 +187,12 @@ class TagController extends AdminController
     public function destroy(Term $tag)
     {
         /* log aktifitas */
-        $this->activityLog('<b>' . \Auth::user()->fullname . '</b> menghapus Label "' . $tag->name . '"');
+        $this->activityLog('<b>' . \Auth::user()->fullname . '</b> menghapus Label "' . $tag->display_name . '"');
 
         /* soft delete */
         $tag->delete();
 
-        return redirect($this->current_url)->with('success', 'Label berhasil dihapus!');
+        return redirect($this->current_url)->with('success', 'Label ' . $tag->display_name . ' berhasil dihapus!');
     }
 
     /**
@@ -173,7 +201,7 @@ class TagController extends AdminController
     public function datatable(Request $r)
     {
         /* get data */
-        $data = Term::select(sequence(), 'id', 'name', 'description', 'status')->where('type', 'tag')->get();
+        $data = Term::select('id', 'display_name as name', 'description', 'status')->where('type', 'tag')->get();
 
         /* generate datatable */
         if ($r->ajax()) {

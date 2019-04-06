@@ -7,7 +7,7 @@
         <tr>
           <td width="25">No.</td>
           {{-- @if ($isDesktop) --}}
-            <td width="250">Kategori</td>
+            <td width="250">Label</td>
             <td>Deskripsi</td>
             {{-- <td width="200">Parent</td> --}}
             <td width="80">Status</td>
@@ -34,7 +34,7 @@
       var table = $('#table-data').DataTable({
         "processing": true,
         "serverSide": true,
-        "ajax": SITE_URL + "{{ $adminPath }}/data/categories/data",
+        "ajax": SITE_URL + "{{ $adminPath }}/data/tags/data",
         "pageLength": 20,
         "lengthMenu": [
           [10, 20, 50, 100, -1], 
@@ -67,7 +67,7 @@
           "sortable": false,
           "render": function (data, type, row, meta) {
             var actions = '';
-            var url = SITE_URL + "{{ $adminPath }}/data/categories/" + data;
+            var url = SITE_URL + "{{ $adminPath }}/data/tags/" + data;
             var del = "_delete('" + url + "')";
             {!! _get_access_buttons() !!}
             $('[data-toggle="tooltip"]').tooltip();
