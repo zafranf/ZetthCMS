@@ -74,7 +74,7 @@
                 </tr>
               </thead>
               <tbody>
-                @foreach (generateMenuArray($menus) as $menu)
+                @foreach (generateArrayLevel($menus) as $menu)
                   @php
                     $routename = explode('.', $menu->route_name);
                   @endphp

@@ -22,7 +22,7 @@ class PageController extends AdminController
         $this->breadcrumbs[] = [
             'page' => 'Konten',
             'icon' => '',
-            'url' => url($this->adminPath . '/content/banners'),
+            'url' => url($this->adminPath . '/content/pages'),
         ];
         $this->breadcrumbs[] = [
             'page' => 'Halaman',

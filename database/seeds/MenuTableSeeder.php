@@ -90,21 +90,64 @@ class MenuTableSeeder extends Seeder
         $setRole->delete = 1;
         $setRole->save();
 
+        $dataOrder = 1;
+        /* menu pengaturan (grup) */
+        $data = new Menu;
+        $data->name = 'Data';
+        $data->description = 'Grup menu data';
+        // $data->icon = 'fa fa-cog';
+        $data->order = $mainOrder++;
+        $data->status = 1;
+        $data->index = 1;
+        $data->save();
+
         /* menu pengguna */
-        $setUser = new Menu;
-        $setUser->name = 'Pengguna';
-        $setUser->description = 'Menu pengaturan pengguna';
-        $setUser->route_name = 'users.index';
-        // $setUser->icon = 'fa fa-user';
-        $setUser->order = $setOrder++;
-        $setUser->status = 1;
-        $setUser->parent_id = $set->id;
-        $setUser->index = 1;
-        $setUser->create = 1;
-        $setUser->read = 1;
-        $setUser->update = 1;
-        $setUser->delete = 1;
-        $setUser->save();
+        $dataUser = new Menu;
+        $dataUser->name = 'Pengguna';
+        $dataUser->description = 'Menu pengaturan pengguna';
+        $dataUser->route_name = 'users.index';
+        // $dataUser->icon = 'fa fa-user';
+        $dataUser->order = $dataOrder++;
+        $dataUser->status = 1;
+        $dataUser->parent_id = $data->id;
+        $dataUser->index = 1;
+        $dataUser->create = 1;
+        $dataUser->read = 1;
+        $dataUser->update = 1;
+        $dataUser->delete = 1;
+        $dataUser->save();
+
+        /* menu kategori */
+        $dataCat = new Menu;
+        $dataCat->name = 'Kategori';
+        $dataCat->description = 'Menu pengaturan kategori';
+        $dataCat->route_name = 'categories.index';
+        // $dataCat->icon = 'pg-unordered_list';
+        $dataCat->order = $dataOrder++;
+        $dataCat->status = 1;
+        $dataCat->parent_id = $data->id;
+        $dataCat->index = 1;
+        $dataCat->create = 1;
+        $dataCat->read = 0;
+        $dataCat->update = 1;
+        $dataCat->delete = 1;
+        $dataCat->save();
+
+        /* menu label */
+        $dataTag = new Menu;
+        $dataTag->name = 'Label';
+        $dataTag->description = 'Menu pengaturan label';
+        $dataTag->route_name = 'tags.index';
+        // $dataTag->icon = 'fa fa-list';
+        $dataTag->order = $dataOrder++;
+        $dataTag->status = 1;
+        $dataTag->parent_id = $data->id;
+        $dataTag->index = 1;
+        $dataTag->create = 1;
+        $dataTag->read = 0;
+        $dataTag->update = 1;
+        $dataTag->delete = 1;
+        $dataTag->save();
 
         $contentOrder = 1;
         /* menu konten (grup) */
@@ -135,7 +178,7 @@ class MenuTableSeeder extends Seeder
 
         $postOrder = 1;
         /* menu artikel (grup) */
-        $post = new Menu;
+        /* $post = new Menu;
         $post->name = 'Artikel';
         $post->description = 'Menu pengaturan artikel';
         // $post->route_name = 'posts.index';
@@ -148,55 +191,23 @@ class MenuTableSeeder extends Seeder
         // $post->read = 1;
         // $post->update = 1;
         // $post->delete = 1;
-        $post->save();
+        $post->save(); */
 
-        /* menu semua artikel */
-        $postAll = new Menu;
-        $postAll->name = 'Semua Artikel';
-        $postAll->description = 'Menu pengaturan semua artikel';
-        $postAll->route_name = 'posts.index';
-        // $postAll->icon = 'fa fa-newspaper-o';
-        $postAll->order = $postOrder++;
-        $postAll->status = 1;
-        $postAll->parent_id = $post->id;
-        $postAll->index = 1;
-        $postAll->create = 1;
-        $postAll->read = 1;
-        $postAll->update = 1;
-        $postAll->delete = 1;
-        $postAll->save();
-
-        /* menu kategori */
-        $postCat = new Menu;
-        $postCat->name = 'Kategori';
-        $postCat->description = 'Menu pengaturan kategori';
-        $postCat->route_name = 'categories.index';
-        // $postCat->icon = 'pg-unordered_list';
-        $postCat->order = $postOrder++;
-        $postCat->status = 1;
-        $postCat->parent_id = $post->id;
-        $postCat->index = 1;
-        $postCat->create = 1;
-        $postCat->read = 0;
-        $postCat->update = 1;
-        $postCat->delete = 1;
-        $postCat->save();
-
-        /* menu label */
-        $postTag = new Menu;
-        $postTag->name = 'Label';
-        $postTag->description = 'Menu pengaturan label';
-        $postTag->route_name = 'tags.index';
-        // $postTag->icon = 'fa fa-list';
-        $postTag->order = $postOrder++;
-        $postTag->status = 1;
-        $postTag->parent_id = $post->id;
-        $postTag->index = 1;
-        $postTag->create = 1;
-        $postTag->read = 0;
-        $postTag->update = 1;
-        $postTag->delete = 1;
-        $postTag->save();
+        /* menu artikel */
+        $contentPost = new Menu;
+        $contentPost->name = 'Artikel';
+        $contentPost->description = 'Menu pengaturan artikel';
+        $contentPost->route_name = 'posts.index';
+        // $contentPost->icon = 'fa fa-newspaper-o';
+        $contentPost->order = $contentOrder++;
+        $contentPost->status = 1;
+        $contentPost->parent_id = $content->id;
+        $contentPost->index = 1;
+        $contentPost->create = 1;
+        $contentPost->read = 1;
+        $contentPost->update = 1;
+        $contentPost->delete = 1;
+        $contentPost->save();
 
         /* menu spanduk */
         /* $contentBanner = new Menu;

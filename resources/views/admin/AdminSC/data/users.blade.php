@@ -7,10 +7,10 @@
 				<tr>
 					<td width="25">No.</td>
 					{{-- @if ($isDesktop) --}}
-						<td width="100">Foto</td>
+						{{-- <td width="100">Foto</td> --}}
 						<td width="200">Nama Akses</td>
 						<td>Nama Lengkap</td>
-						<td width="200">Surel</td>
+						{{-- <td width="200">Surel</td> --}}
 						<td width="80">Status</td>
 					{{-- @else
 						<td width="100%">User</td>
@@ -33,7 +33,7 @@
       var table = $('#table-data').DataTable({
         "processing": true,
         "serverSide": true,
-        "ajax": SITE_URL + "{{ $adminPath }}/setting/users/data",
+        "ajax": SITE_URL + "{{ $adminPath }}/data/users/data",
         "pageLength": 20,
         "lengthMenu": [
           [10, 20, 50, 100, -1], 
@@ -41,10 +41,10 @@
         ],
         "columns": [
           { "width": "30px" },
-          { "data": "image", "width": "80px" },
-          { "data": "name", "width": "120px" },
+          // { "data": "image", "width": "80px" },
+          { "data": "name", "width": "200px" },
           { "data": "fullname" },
-          { "data": "email", "width": "200px" },
+          // { "data": "email", "width": "200px" },
           { "data": "status", "width": "50px" },
           { "width": "100px" },
         ],
@@ -55,27 +55,27 @@
           "render": function (data, type, row, meta) {
             return meta.row + meta.settings._iDisplayStart + 1;
           }
-        }, {
+        }, /* {
           "targets": 1,
           "data": 'image',
           "sortable": false,
           "render": function (data, type, row, meta) {
             return '<img src="' + data + '" width="80">';
           }
-        }, {
-          "targets": 5,
+        }, */ {
+          "targets": 3,
           "data": 'status',
           "sortable": false,
           "render": function (data, type, row, meta) {
             return _get_status_text(data);
           }
         }, {
-          "targets": 6,
+          "targets": 4,
           "data": 'id',
           "sortable": false,
           "render": function (data, type, row, meta) {
             var actions = '';
-            var url = SITE_URL + "{{ $adminPath }}/setting/users/" + data;
+            var url = SITE_URL + "{{ $adminPath }}/data/users/" + data;
             var del = "_delete('" + url + "')";
             {!! _get_access_buttons() !!}
             $('[data-toggle="tooltip"]').tooltip();

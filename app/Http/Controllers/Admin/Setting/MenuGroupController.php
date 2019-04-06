@@ -103,7 +103,7 @@ class MenuGroupController extends AdminController
         $menugroup->save();
 
         /* activity log */
-        $this->activityLog('<b>' . \Auth::user()->fullname . '</b> menambahkan Grup Menu "' . $menugroup->name . '"');
+        $this->activityLog('<b>' . \Auth::user()->fullname . '</b> menambahkan Grup Menu "' . $menugroup->display_name . '"');
 
         return redirect($this->current_url . '/' . $menugroup->id . '/edit')->with('success', 'Peran "' . $menugroup->display_name . '" berhasil ditambah, segera atur daftar menu!');
     }
@@ -172,7 +172,7 @@ class MenuGroupController extends AdminController
         $save = $this->sortMenu($r);
 
         /* activity log */
-        $this->activityLog('<b>' . \Auth::user()->fullname . '</b> memperbarui Grup Menu "' . $menugroup->name . '"');
+        $this->activityLog('<b>' . \Auth::user()->fullname . '</b> memperbarui Grup Menu "' . $menugroup->display_name . '"');
 
         /* clear cache */
         \Cache::forget('cacheMenu-Group' . ucfirst($menugroup->name));
@@ -189,7 +189,7 @@ class MenuGroupController extends AdminController
     public function destroy(Request $r, MenuGroup $menugroup)
     {
         /* activity log */
-        $this->activityLog('<b>' . \Auth::user()->fullname . '</b> menghapus Grup Menu "' . $menugroup->name . '"');
+        $this->activityLog('<b>' . \Auth::user()->fullname . '</b> menghapus Grup Menu "' . $menugroup->display_name . '"');
 
         /* soft delete */
         $menugroup->delete();

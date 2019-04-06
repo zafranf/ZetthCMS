@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Admin\Content\Article;
+namespace App\Http\Controllers\Admin\Data;
 
 use App\Http\Controllers\Admin\AdminController;
 use App\Models\Term;
@@ -17,8 +17,13 @@ class CategoryController extends AdminController
     public function __construct()
     {
         parent::__construct();
-        $this->current_url = url('/content/categories');
+        $this->current_url = url($this->adminPath . '/data/categories');
         $this->page_title = 'Pengaturan Kategori';
+        $this->breadcrumbs[] = [
+            'page' => 'Data',
+            'icon' => '',
+            'url' => url($this->adminPath . '/data/users'),
+        ];
         $this->breadcrumbs[] = [
             'page' => 'Kategori',
             'icon' => '',
@@ -33,14 +38,21 @@ class CategoryController extends AdminController
      */
     public function index()
     {
+        $this->breadcrumbs[] = [
+            'page' => 'Tabel',
+            'icon' => '',
+            'url' => '',
+        ];
+
         /* set variable for view */
         $data = [
             'current_url' => $this->current_url,
+            'breadcrumbs' => $this->breadcrumbs,
             'page_title' => $this->page_title,
-            'page_subtitle' => 'Daftar Kategori',
+            'page_subtitle' => 'Tabel Kategori',
         ];
 
-        return view('admin.content.category', $data);
+        return view('admin.AdminSC.data.categories', $data);
     }
 
     /**
@@ -50,18 +62,22 @@ class CategoryController extends AdminController
      */
     public function create()
     {
-        /* get data */
-        $categories = Term::where('type', 'category')->orderBy('name')->get();
+        $this->breadcrumbs[] = [
+            'page' => 'Tambah',
+            'icon' => '',
+            'url' => '',
+        ];
 
         /* set variable for view */
         $data = [
             'current_url' => $this->current_url,
+            'breadcrumbs' => $this->breadcrumbs,
             'page_title' => $this->page_title,
             'page_subtitle' => 'Tambah Kategori',
-            'categories' => $categories,
+            'categories' => Term::where('type', 'category')->where('parent_id', 0)->with('allSubcategory')->orderBy('name')->get(),
         ];
 
-        return view('admin.content.category_form', $data);
+        return view('admin.AdminSC.data.categories_form', $data);
     }
 
     /**
@@ -80,8 +96,8 @@ class CategoryController extends AdminController
         /* save data */
         $name = str_sanitize($r->input('name'));
         $category = new Term;
-        $category->name = $name;
-        $category->slug = str_slug($name);
+        $category->name = str_slug($name);
+        $category->display_name = $name;
         $category->description = str_sanitize($r->input('description'));
         $category->type = 'category';
         $category->parent_id = (int) $r->input('parent');
@@ -89,9 +105,9 @@ class CategoryController extends AdminController
         $category->save();
 
         /* log aktifitas */
-        $this->activityLog('<b>' . \Auth::user()->fullname . '</b> menambahkan Kategori "' . $category->name . '"');
+        $this->activityLog('<b>' . \Auth::user()->fullname . '</b> menambahkan Kategori "' . $category->display_name . '"');
 
-        return redirect($this->current_url)->with('success', 'Kategori berhasil ditambah!');
+        return redirect($this->current_url)->with('success', 'Kategori ' . $category->display_name . ' berhasil ditambah!');
     }
 
     /**
@@ -113,19 +129,23 @@ class CategoryController extends AdminController
      */
     public function edit(Term $category)
     {
-        /* get data */
-        $categories = Term::where('type', 'category')->orderBy('name')->get();
+        $this->breadcrumbs[] = [
+            'page' => 'Edit',
+            'icon' => '',
+            'url' => '',
+        ];
 
         /* set variable for view */
         $data = [
             'current_url' => $this->current_url,
+            'breadcrumbs' => $this->breadcrumbs,
             'page_title' => $this->page_title,
             'page_subtitle' => 'Edit Kategori',
-            'categories' => $categories,
+            'categories' => Term::where('type', 'category')->where('parent_id', 0)->with('allSubcategory')->orderBy('name')->get(),
             'data' => $category,
         ];
 
-        return view('admin.content.category_form', $data);
+        return view('admin.AdminSC.data.categories_form', $data);
     }
 
     /**
@@ -144,8 +164,8 @@ class CategoryController extends AdminController
 
         /* save data */
         $name = str_sanitize($r->input('name'));
-        $category->name = $name;
-        $category->slug = str_slug($name);
+        $category->name = str_slug($name);
+        $category->display_name = $name;
         $category->description = str_sanitize($r->input('description'));
         $category->type = 'category';
         $category->parent_id = (int) $r->input('parent');
@@ -153,9 +173,9 @@ class CategoryController extends AdminController
         $category->save();
 
         /* log aktifitas */
-        $this->activityLog('<b>' . \Auth::user()->fullname . '</b> memperbarui Kategori "' . $category->name . '"');
+        $this->activityLog('<b>' . \Auth::user()->fullname . '</b> memperbarui Kategori "' . $category->display_name . '"');
 
-        return redirect($this->current_url)->with('success', 'Kategori berhasil disimpan!');
+        return redirect($this->current_url)->with('success', 'Kategori ' . $category->display_name . ' berhasil disimpan!');
     }
 
     /**
@@ -167,12 +187,12 @@ class CategoryController extends AdminController
     public function destroy(Term $category)
     {
         /* log aktifitas */
-        $this->activityLog('<b>' . \Auth::user()->fullname . '</b> menghapus Kategori "' . $category->name . '"');
+        $this->activityLog('<b>' . \Auth::user()->fullname . '</b> menghapus Kategori "' . $category->display_name . '"');
 
         /* soft delete */
         $category->delete();
 
-        return redirect($this->current_url)->with('success', 'Kategori berhasil dihapus!');
+        return redirect($this->current_url)->with('success', 'Kategori ' . $category->display_name . ' berhasil dihapus!');
     }
 
     /**
@@ -181,7 +201,7 @@ class CategoryController extends AdminController
     public function datatable(Request $r)
     {
         /* get data */
-        $data = Term::select(sequence(), 'id', 'name', 'description', 'status')->where('type', 'category')->get();
+        $data = Term::select('id', 'display_name as name', 'description', 'status')->where('type', 'category')->get();
 
         /* generate datatable */
         if ($r->ajax()) {

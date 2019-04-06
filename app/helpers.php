@@ -614,13 +614,13 @@ if (!function_exists('generateSubmenu')) {
     }
 }
 
-if (!function_exists('generateMenuArray')) {
+if (!function_exists('generateArrayLevel')) {
     /**
      * Generate Top Menu Array
      *
      * @return void
      */
-    function generateMenuArray($data, $separator = '-', $level = 0)
+    function generateArrayLevel($data, $sub = 'submenu', $separator = '-', $level = 0)
     {
         $array = [];
         $sep = $separator ? str_pad("", $level, $separator) : '';
@@ -628,8 +628,8 @@ if (!function_exists('generateMenuArray')) {
         foreach ($data as $menu) {
             $menu->name = ($sep ? '<span class="text-muted" style="padding-left: ' . $pad . 'px">' . $sep . '</span> ' : '') . $menu->name;
             $array[] = $menu;
-            if (count($menu->submenu) > 0) {
-                $array = array_merge($array, generateMenuArray($menu->submenu, $separator, $level + 1));
+            if (count($menu->{$sub}) > 0) {
+                $array = array_merge($array, generateArrayLevel($menu->{$sub}, $sub, $separator, $level + 1));
             }
         }
 

@@ -24,7 +24,7 @@
         <div class="col-sm-10">
           <select class="form-control" name="parent" id="parent">
               <option value="0">--Pilih--</option>
-              @foreach (generateMenuArray($categories) as $category)
+              @foreach (generateArrayLevel($categories) as $category)
                 <option value="{{ $category->id }}" {{ isset($data->id) && ($data->parent_id == $category->id) ? 'selected' : '' }}>{!! $category->name !!}</option>
               @endforeach
           </select>

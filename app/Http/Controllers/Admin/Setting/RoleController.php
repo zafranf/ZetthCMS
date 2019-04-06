@@ -211,7 +211,7 @@ class RoleController extends AdminController
     public function destroy(Role $role)
     {
         /* log aktifitas */
-        $this->activityLog('<b>' . \Auth::user()->fullname . '</b> menghapus Peran "' . $role->name . '"');
+        $this->activityLog('<b>' . \Auth::user()->fullname . '</b> menghapus Peran "' . $role->display_name . '"');
 
         /* soft delete */
         $role->delete();

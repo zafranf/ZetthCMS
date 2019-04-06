@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Admin\Setting;
+namespace App\Http\Controllers\Admin\Data;
 
 use App\Http\Controllers\Admin\AdminController;
 use App\Models\Role;
@@ -20,12 +20,12 @@ class UserController extends AdminController
     public function __construct()
     {
         parent::__construct();
-        $this->current_url = url($this->adminPath . '/setting/users');
+        $this->current_url = url($this->adminPath . '/data/users');
         $this->page_title = 'Pengaturan Pengguna';
         $this->breadcrumbs[] = [
-            'page' => 'Pengaturan',
+            'page' => 'Data',
             'icon' => '',
-            'url' => url($this->adminPath . '/setting/application'),
+            'url' => url($this->adminPath . '/data/users'),
         ];
         $this->breadcrumbs[] = [
             'page' => 'Pengguna',
@@ -55,7 +55,7 @@ class UserController extends AdminController
             'page_subtitle' => 'Tabel Pengguna',
         ];
 
-        return view('admin.AdminSC.setting.users', $data);
+        return view('admin.AdminSC.data.users', $data);
     }
 
     /**
@@ -104,7 +104,7 @@ class UserController extends AdminController
         'type' => 'user',
         ])->with('socmed')->get(); */
 
-        return view('admin.AdminSC.setting.users_form', $data);
+        return view('admin.AdminSC.data.users_form', $data);
     }
 
     /**
@@ -227,7 +227,7 @@ class UserController extends AdminController
             'data_id' => $user->id,
         ])->with('socmed')->get();
 
-        return view('admin.AdminSC.setting.users_form', $data);
+        return view('admin.AdminSC.data.users_form', $data);
     }
 
     /**
@@ -319,7 +319,7 @@ class UserController extends AdminController
     public function datatable(Request $r)
     {
         /* get data */
-        $data = User::select('id', 'name', 'fullname', 'image', 'email', 'status')->get();
+        $data = User::select('id', 'name', 'fullname', /* 'image', 'email', */'status')->get();
 
         /* generate datatable */
         if ($r->ajax()) {

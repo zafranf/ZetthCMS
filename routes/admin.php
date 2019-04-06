@@ -14,10 +14,10 @@ Route::middleware('auth')->group(function () {
     Route::get('/setting/menus/data', 'Admin\Setting\MenuController@datatable')->name('menus.data');
     Route::get('/setting/menu-groups/data', 'Admin\Setting\MenuGroupController@datatable')->name('menu-groups.data');
     Route::get('/setting/roles/data', 'Admin\Setting\RoleController@datatable')->name('roles.data');
-    Route::get('/setting/users/data', 'Admin\Setting\UserController@datatable')->name('users.data');
+    Route::get('/data/users/data', 'Admin\Data\UserController@datatable')->name('users.data');
+    Route::get('/data/categories/data', 'Admin\Data\CategoryController@datatable')->name('categories.data');
+    Route::get('/data/tags/data', 'Admin\Data\TagController@datatable')->name('tags.data');
     Route::get('/content/pages/data', 'Admin\Content\PageController@datatable')->name('pages.data');
-    Route::get('/content/articles/categories/data', 'Admin\Content\Article\CategoryController@datatable')->name('categories.data');
-    Route::get('/content/articles/tags/data', 'Admin\Content\Article\TagController@datatable')->name('tags.data');
     // Route::get('/content/banners/data', 'Admin\Content\BannerController@datatable')->name('banners.data');
     // Route::get('/report/subscribers/data', 'Admin\Report\SubscriberController@datatable')->name('subscribers.data');
 
@@ -40,7 +40,6 @@ Route::middleware('auth')->group(function () {
                 '/menus' => 'Admin\Setting\MenuController',
                 '/menu-groups' => 'Admin\Setting\MenuGroupController',
                 '/roles' => 'Admin\Setting\RoleController',
-                '/users' => 'Admin\Setting\UserController',
             ], [
                 'parameters' => [
                     'menu-groups' => 'menugroup',
@@ -48,13 +47,20 @@ Route::middleware('auth')->group(function () {
             ]);
         });
 
+        /* module data routes */
+        Route::prefix('data')->group(function () {
+            Route::resources([
+                '/users' => 'Admin\Data\UserController',
+                '/categories' => 'Admin\Data\CategoryController',
+                '/tags' => 'Admin\Data\TagController',
+            ]);
+        });
+
         /* module content routes */
         Route::prefix('content')->group(function () {
             Route::resources([
                 '/pages' => 'Admin\Content\PageController',
-                '/articles/posts' => 'Admin\Content\Article\PostController',
-                '/articles/categories' => 'Admin\Content\Article\CategoryController',
-                '/articles/tags' => 'Admin\Content\Article\TagController',
+                '/posts' => 'Admin\Content\PostController',
                 // '/banners' => 'Admin\Content\BannerController',
                 // '/gallery/photos' => 'Admin\Content\Gallery\PhotoController',
                 // '/gallery/videos' => 'Admin\Content\Gallery\VideoController',

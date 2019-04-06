@@ -1,8 +1,8 @@
 <?php
 
-use Illuminate\Support\Facades\Schema;
-use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
 
 class CreateTermsTable extends Migration
 {
@@ -16,7 +16,7 @@ class CreateTermsTable extends Migration
         Schema::create('terms', function (Blueprint $table) {
             $table->increments('id')->unsigned();
             $table->string('name');
-            $table->string('slug')->index();
+            $table->string('display_name');
             $table->string('description')->nullable();
             $table->enum('type', ['tag', 'category'])->default('category');
             $table->integer('parent_id')->unsigned()->default(0);
