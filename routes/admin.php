@@ -18,6 +18,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/data/categories/data', 'Admin\Data\CategoryController@datatable')->name('categories.data');
     Route::get('/data/tags/data', 'Admin\Data\TagController@datatable')->name('tags.data');
     Route::get('/content/pages/data', 'Admin\Content\PageController@datatable')->name('pages.data');
+    Route::get('/content/posts/data', 'Admin\Content\PostController@datatable')->name('posts.data');
     // Route::get('/content/banners/data', 'Admin\Content\BannerController@datatable')->name('banners.data');
     // Route::get('/report/subscribers/data', 'Admin\Report\SubscriberController@datatable')->name('subscribers.data');
 

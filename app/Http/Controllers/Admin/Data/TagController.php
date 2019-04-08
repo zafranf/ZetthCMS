@@ -100,7 +100,6 @@ class TagController extends AdminController
         $tag->display_name = $name;
         $tag->description = str_sanitize($r->input('description'));
         $tag->type = 'tag';
-        $tag->parent_id = (int) $r->input('parent');
         $tag->status = bool($r->input('status')) ? 1 : 0;
         $tag->save();
 
@@ -168,7 +167,6 @@ class TagController extends AdminController
         $tag->display_name = $name;
         $tag->description = str_sanitize($r->input('description'));
         $tag->type = 'tag';
-        $tag->parent_id = (int) $r->input('parent');
         $tag->status = bool($r->input('status')) ? 1 : 0;
         $tag->save();
 

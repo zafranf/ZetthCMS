@@ -71,8 +71,8 @@ class PageController extends AdminController
         /* set variable for view */
         $data = [
             'current_url' => $this->current_url,
-            'page_title' => $this->page_title,
             'breadcrumbs' => $this->breadcrumbs,
+            'page_title' => $this->page_title,
             'page_subtitle' => 'Tambah Halaman',
         ];
 
@@ -138,8 +138,8 @@ class PageController extends AdminController
         /* set variable for view */
         $data = [
             'current_url' => $this->current_url,
-            'page_title' => $this->page_title,
             'breadcrumbs' => $this->breadcrumbs,
+            'page_title' => $this->page_title,
             'page_subtitle' => 'Edit Halaman',
             'data' => $page,
         ];
@@ -201,7 +201,7 @@ class PageController extends AdminController
     public function datatable(Request $r)
     {
         /* get data */
-        $data = Post::select('id', 'title', 'slug', 'status')->where('type', 'page')->get();
+        $data = Post::select('id', 'title', /* 'slug', */'status')->where('type', 'page')->get();
 
         /* generate datatable */
         if ($r->ajax()) {
