@@ -4,6 +4,8 @@ namespace App\Http\Controllers\Admin\Content;
 
 use App\Http\Controllers\Admin\AdminController;
 use App\Models\Post;
+use App\Models\PostTerm;
+use App\Models\Term;
 use Illuminate\Http\Request;
 
 class PostController extends AdminController
@@ -68,7 +70,7 @@ class PostController extends AdminController
             'url' => '',
         ];
 
-        $categories = \App\Models\Term::where('type', 'category')->
+        $categories = Term::where('type', 'category')->
             where('status', 1)->
             orderBy('name', 'asc')->
             get();
@@ -190,7 +192,6 @@ class PostController extends AdminController
 
         $categories = Term::where('term_type', 'category')->
             where('term_status', 1)->
-            where('app_id', $this->app_id)->
             orderBy('term_name', 'asc')->
             get();
 
@@ -300,28 +301,26 @@ class PostController extends AdminController
     public function process_categories($categories, $descriptions, $parents, $pid)
     {
         foreach ($categories as $k => $category) {
-            $chkCategory = Term::where('term_name', $category)->
-                where('term_type', 'category')->
-                where('app_id', $this->app_id)->
+            $chkCategory = Term::where('display_name', $category)->
+                where('type', 'category')->
                 first();
 
             if (!$chkCategory) {
                 $term = new Term;
-                $term->term_name = $category;
-                $term->term_slug = str_slug($category);
-                $term->term_description = $descriptions[$k];
-                $term->term_parent = $parents[$k];
-                $term->term_type = 'category';
-                $term->term_status = 1;
-                $term->app_id = $this->app_id;
+                $term->name = $category;
+                $term->slug = str_slug($category);
+                $term->description = $descriptions[$k];
+                $term->parent = $parents[$k];
+                $term->type = 'category';
+                $term->status = 1;
                 $term->save();
 
-                $cid = $term->term_id;
+                $cid = $term->id;
             } else {
-                $cid = $chkCategory->term_id;
+                $cid = $chkCategory->id;
             }
 
-            //process relations
+            /* process relations */
             $this->process_postrels($pid, $cid);
         }
     }
@@ -329,26 +328,24 @@ class PostController extends AdminController
     public function process_tags($tags, $pid)
     {
         foreach ($tags as $tag) {
-            $chkTag = Term::where('term_name', $tag)->
-                where('term_type', 'tag')->
-                where('app_id', $this->app_id)->
+            $chkTag = Term::where('display_name', $tag)->
+                where('type', 'tag')->
                 first();
 
             if (!$chkTag) {
                 $term = new Term;
-                $term->term_name = strtolower($tag);
-                $term->term_slug = str_slug($tag);
-                $term->term_type = 'tag';
-                $term->term_status = 1;
-                $term->app_id = $this->app_id;
+                $term->name = strtolower($tag);
+                $term->slug = str_slug($tag);
+                $term->type = 'tag';
+                $term->status = 1;
                 $term->save();
 
-                $tid = $term->term_id;
+                $tid = $term->id;
             } else {
-                $tid = $chkTag->term_id;
+                $tid = $chkTag->id;
             }
 
-            //process relations
+            /* process relations */
             $this->process_postrels($pid, $tid);
         }
     }
@@ -359,17 +356,6 @@ class PostController extends AdminController
         $postrel->post_id = $pid;
         $postrel->term_id = $tid;
         $postrel->save();
-    }
-
-    public function process_url($slug, $uniq)
-    {
-        $s = new ShortUrl;
-        $s->url_code = $uniq;
-        $s->url_original = "http://" . Session::get('app')->app_domain . "/post/" . $slug;
-        $s->url_digit = strlen($uniq);
-        $s->url_status = 1;
-        $s->app_id = $this->app_id;
-        $s->save();
     }
 
 }

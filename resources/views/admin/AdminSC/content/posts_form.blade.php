@@ -41,8 +41,8 @@ if (isset($post) ) {
 						</div>
 						<div class="pwd-upload-exists thumbnail"></div>
 						<div>
-							<a href="{{ url('/themes/admin/AdminSC/plugins/filemanager/dialog.php?type=1&field_id=cover&lang=id&relative_url=1&fldr=/') }}" class="btn btn-default pwd-upload-new" id="btn-upload" type="button">Select</a>
-							<a href="{{ url('/themes/admin/AdminSC/plugins/filemanager/dialog.php?type=1&field_id=cover&lang=id&relative_url=1&fldr=/') }}" class="btn btn-default pwd-upload-exists" id="btn-upload" type="button">Change</a>
+							<a href="{{ url('/themes/admin/AdminSC/plugins/filemanager/dialog.php?type=1&field_id=cover&lang=id&fldr=/') }}" class="btn btn-default pwd-upload-new" id="btn-upload" type="button">Select</a>
+							<a href="{{ url('/themes/admin/AdminSC/plugins/filemanager/dialog.php?type=1&field_id=cover&lang=id&fldr=/') }}" class="btn btn-default pwd-upload-exists" id="btn-upload" type="button">Change</a>
 							<a id="btn-remove" class="btn btn-default pwd-upload-exists" type="button">Remove</a>
 							<input name="cover" id="cover" type="hidden">
 							@if(isset($post->cover))
@@ -53,7 +53,7 @@ if (isset($post) ) {
 						</div>
 					</div>
 				</div>
-				<div class="form-group">
+				{{-- <div class="form-group">
 					<label for="featured_image">Featured Image</label>
 					<a id="btn-add-featured-image" class="btn btn-default btn-xs pull-right" title="Add a Featured Image"><i class="fa fa-plus"></i></a>
 					<div class="row">
@@ -62,14 +62,14 @@ if (isset($post) ) {
 								@foreach ($post->images as $key => $image)
 									<div class="input-group" id="box-featured-image{{ $key+1 }}">
 									  	<input type="text" class="form-control featured_images" name="featured_image[]" id="featured_image{{ $key+1 }}" readonly value="{{ $image->image_file }}">
-									  	<a href="/assets/plugins/filemanager/dialog.php?type=1&field_id=featured_image{{ $key+1 }}&lang=id&relative_url=1&fldr=/" class="input-group-addon" id="btn-add-featured-image{{ $key+1 }}" style="display:none;"><i class="fa fa-search"></i></a>
+									  	<a href="/assets/plugins/filemanager/dialog.php?type=1&field_id=featured_image{{ $key+1 }}&lang=id&fldr=/" class="input-group-addon" id="btn-add-featured-image{{ $key+1 }}" style="display:none;"><i class="fa fa-search"></i></a>
 										<a class="input-group-addon" onclick="_remove_featured({{ $key+1 }})" style="cursor:pointer;"><i class="fa fa-times"></i></a>
 									</div>
 								@endforeach
 							@endif
 						</div>
 					</div>
-				</div>
+				</div> --}}
 				<div class="form-group">
 					<label for="category">Category*</label>
 					<a id="btn-add-category" class="btn btn-default btn-xs pull-right" data-toggle="modal" data-target="#pwd-modal" title="Add a New Category"><i class="fa fa-plus"></i></a>
@@ -244,15 +244,15 @@ if (isset($post) ) {
     function responsive_filemanager_callback(field_id){
       var url = $('#'+field_id).val().replace(SITE_URL, "");
       var img = '<img src="'+url+'">';
-      if (field_id.indexOf("featured")<0) {
+      if (field_id.indexOf("featured") < 0) {
         $('.pwd-upload-new').hide();
         $('.pwd-upload-exists').show();
         $('.pwd-upload-exists.thumbnail').html(img);
         $('#cover_remove').attr("checked", false);
       } else {
-        url = url.replace('/assets/images/upload/', "");;
-        $('#'+field_id).val(url);
+        url = url.replace('/storage/assets/images/upload/', "");
       }
+      $('#'+field_id).val(url);
     }
 
     $(document).ready(function(){
