@@ -15,6 +15,12 @@
           <textarea id="description" name="description" class="form-control" placeholder="Penjelasan singkat menu.." rows="4">{{ isset($data) ? $data->description : '' }}</textarea>
         </div>
       </div>
+      <div class="form-group {{ Auth::user()->hasRole('super') ? '' : 'hide' }}">
+        <label for="route_name" class="col-sm-2 control-label">Route</label>
+        <div class="col-sm-4">
+          <input type="text" class="form-control" id="route_name" name="route_name" value="{{ isset($data) ? $data->route_name : '' }}" maxlength="100" placeholder="Route name..">
+        </div>
+      </div>
       <div class="form-group">
         <label for="url" class="col-sm-2 control-label">URL</label>
         <div class="col-sm-4">
@@ -91,21 +97,33 @@
         <label for="status" class="col-sm-2 control-label">Akses</label>
         <div class="col-sm-4">
           <div class="checkbox">
-            <label>
-              <input type="checkbox" name="index" {{ (isset($data) && $data->index == 0) ? '' : 'checked' }}> Indeks
-            </label>
-            <label>
-              <input type="checkbox" name="create" {{ isset($data) && $data->create ? 'checked' : '' }}> Tambah
-            </label>
-            <label>
-              <input type="checkbox" name="read" {{ isset($data) && $data->read ? 'checked' : '' }}> Detail
-            </label>
-            <label>
-              <input type="checkbox" name="update" {{ isset($data) && $data->update ? 'checked' : '' }}> Edit
-            </label>
-            <label>
-              <input type="checkbox" name="delete" {{ isset($data) && $data->delete ? 'checked' : '' }}> Hapus
-            </label>
+            <div class="row">
+              <div class="col-sm-2">
+                <label>
+                  <input type="checkbox" name="index" {{ (isset($data) && $data->index == 0) ? '' : 'checked' }}> Tabel
+                </label>
+              </div>
+              <div class="col-sm-2">
+                <label>
+                  <input type="checkbox" name="create" {{ isset($data) && $data->create ? 'checked' : '' }}> Tambah
+                </label>
+              </div>
+              <div class="col-sm-2">
+                <label>
+                  <input type="checkbox" name="read" {{ isset($data) && $data->read ? 'checked' : '' }}> Detail
+                </label>
+              </div>
+              <div class="col-sm-2">
+                <label>
+                  <input type="checkbox" name="update" {{ isset($data) && $data->update ? 'checked' : '' }}> Edit
+                </label>
+              </div>
+              <div class="col-sm-2">
+                <label>
+                  <input type="checkbox" name="delete" {{ isset($data) && $data->delete ? 'checked' : '' }}> Hapus
+                </label>
+              </div>
+            </div>
           </div>
         </div>
       </div>

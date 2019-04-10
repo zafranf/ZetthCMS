@@ -11,7 +11,23 @@ class Role extends LaratrustRole
 
     public function menu_groups()
     {
-        return $this->belongsToMany('App\Models\MenuGroup', 'role_menu', 'role_id', 'menu_group_id')->with('menu.submenu');
+        return $this->belongsToMany('App\Models\MenuGroup', 'role_menu', 'role_id', 'menu_group_id')->with('menu.submenu', 'menu.group');
+    }
+
+    /**
+     * Undocumented function
+     *
+     * @param Role $role
+     * @return void
+     */
+    public function roleMenus(\App\Models\Role $role)
+    {
+        $menus = collect([]);
+        foreach ($role->menu_groups as $group) {
+            $menus = $menus->merge($group->menu);
+        }
+
+        return $menus;
     }
 
     /* public function getMenusAttribute($value)

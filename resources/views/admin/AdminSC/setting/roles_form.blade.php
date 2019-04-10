@@ -66,7 +66,7 @@
               <thead>
                 <tr>
                   <th>Menu</th>
-                  <th width="100px">Indeks</th>
+                  <th width="100px">Tabel</th>
                   <th width="100px">Tambah</th>
                   <th width="100px">Detail</th>
                   <th width="100px">Edit</th>
@@ -74,12 +74,23 @@
                 </tr>
               </thead>
               <tbody>
+                @php
+                  $group = '';
+                @endphp
                 @foreach (generateArrayLevel($menus) as $menu)
                   @php
                     $routename = explode('.', $menu->route_name);
                   @endphp
+                  @if ($group != $menu->group->name)
+                      <tr>
+                        <td colspan="6" style="font-size:15px;"><b>{{ $menu->group->display_name }}</b></td>
+                      </tr>
+                      @php
+                       $group = $menu->group->name;  
+                      @endphp
+                  @endif
                   <tr>
-                    <td>{!! $menu->name !!}</td>
+                    <td style="padding-left:20px;">{!! $menu->name !!}</td>
                     <td>
                       <label class="custom-control custom-checkbox">
                         <input type="checkbox" class="custom-control-input" name="access[{{ $routename[0] }}][index]" {{ !$menu->index ? 'disabled' : '' }} {{ isset($data) && $data->hasPermission('index-' . $routename[0]) ? 'checked' : '' }}>

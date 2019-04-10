@@ -624,7 +624,7 @@ if (!function_exists('generateArrayLevel')) {
     {
         $array = [];
         $sep = $separator ? str_pad("", $level, $separator) : '';
-        $pad = $level * 10;
+        $pad = $level * 20;
         foreach ($data as $menu) {
             $menu->name = ($sep ? '<span class="text-muted" style="padding-left: ' . $pad . 'px">' . $sep . '</span> ' : '') . $menu->name;
             $array[] = $menu;

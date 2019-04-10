@@ -156,7 +156,7 @@ class RoleController extends AdminController
             'page_title' => $this->page_title,
             'page_subtitle' => 'Edit Peran',
             'menugroups' => $menugroups,
-            'menus' => $this->roleMenus($role),
+            'menus' => (new Role)->roleMenus($role),
             'data' => $role,
         ];
 
