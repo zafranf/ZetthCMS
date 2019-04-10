@@ -16,11 +16,11 @@
           </div>
         </div>
         <div class="form-group">
-          <label for="parent" class="col-sm-2 control-label">Cabang</label>
+          <label for="parent" class="col-sm-2 control-label">Induk</label>
           <div class="col-sm-4">
             <select name="parent" class="form-control custom-select2">
-              <option value="">--Pilih--</option>
-              @foreach (generateArrayLevel($categories, 'allSubcategory') as $category)
+              <option value="">[Tidak Ada]</option>
+              @foreach (generateArrayLevel($categories, 'allSubcategory', '&dash;') as $category)
                 @if (isset($data) && $data->id == $category->id)
                 @else
                   <option value="{{ $category->id }}" {{ isset($data) && ($data->parent_id == $category->id) ? 'selected' : '' }}>{!! $category->name !!}</option>

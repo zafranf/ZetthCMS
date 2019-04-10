@@ -173,14 +173,14 @@ if (!function_exists('_get_image')) {
      * @param  string $image [description]
      * @return [type]        [description]
      */
-    function _get_image($image = "", $default = 'assets/images/no-image2.png')
+    function _get_image($image = "", $default = '/assets/images/default.jpg')
     {
         $img = storage_path('app/public/' . $image);
         if (file_exists($img) && !is_dir($img)) {
             $mtime = filemtime($img);
-            $img = asset('/storage/' . $image) . '?v=' . $mtime;
+            $img = url('/storage/' . $image) . '?v=' . $mtime;
         } else {
-            $img = asset('/storage/' . $default);
+            $img = url($default);
         }
 
         return $img;
@@ -623,7 +623,7 @@ if (!function_exists('generateArrayLevel')) {
     function generateArrayLevel($data, $sub = 'submenu', $separator = '-', $level = 0)
     {
         $array = [];
-        $sep = $separator ? str_pad("", $level, $separator) : '';
+        $sep = $separator ? str_repeat($separator, $level) : '';
         $pad = $level * 20;
         foreach ($data as $menu) {
             $menu->name = ($sep ? '<span class="text-muted" style="padding-left: ' . $pad . 'px">' . $sep . '</span> ' : '') . $menu->name;

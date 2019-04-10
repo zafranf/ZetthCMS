@@ -283,27 +283,25 @@ class Controller extends BaseController
         $img = \Image::make($par['file']);
 
         /* folder check */
+        $folder = storage_path('app/public/');
         $folders = explode('/', $par['folder']);
-        $fldr = storage_path('app/public/');
-        foreach ($folders as $folder) {
-            if ($folder != '') {
-                $fldr .= '/' . $folder;
-                if (!is_dir($fldr)) {
-                    mkdir($fldr);
-                }
+        foreach ($folders as $foldr) {
+            $folder .= '/' . $foldr;
+            if (!is_dir($folder)) {
+                mkdir($folder);
             }
         }
-        $folder = storage_path('app/public/' . $par['folder']);
+        // $folder = storage_path('app/public/' . $par['folder']);
         // dd($folder);
 
         /* insert watermark */
-        if (isset($par['watermark'])) {
-            $wmImg = \Image::make($par['watermark']);
-            $img->insert($wmImg, 'center');
-        }
+        /* if (isset($par['watermark'])) {
+        $wmImg = \Image::make($par['watermark']);
+        $img->insert($wmImg, 'center');
+        } */
 
         /* save original */
-        $img->save($folder . $par['name'] . '.' . $par['ext']);
+        $img->save($folder . '/' . $par['name'] . '.' . $par['ext']);
 
         /* image optimation */
         if ($optimation) {

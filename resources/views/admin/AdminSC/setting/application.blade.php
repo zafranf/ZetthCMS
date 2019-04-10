@@ -12,7 +12,7 @@
 						<div class="col-md-8">
 							<div class="fileinput fileinput-new" data-provides="fileinput">
 								<div class="fileinput-new thumbnail">
-									<img src="{{ _get_image("assets/images/" . $apps->logo, "assets/images/logo.jpg") }}">
+									<img src="{{ _get_image("/assets/images/" . $apps->logo, "/assets/images/logo.jpg") }}">
 								</div>
 								<div class="fileinput-preview fileinput-exists thumbnail"></div>
 								<div>
@@ -32,10 +32,11 @@
 						<div class="col-md-8">
 							<div class="fileinput fileinput-new input-group" data-provides="fileinput">
 								<div class="form-control" data-trigger="fileinput">
-									<i class="fa fa-image fileinput-exists"></i>
-									<span class="fileinput-filename">
-										<img style="width:20px;margin-top:-5px;margin-right:2px;" src="{{ _get_image("assets/images/" . $apps->icon, "assets/images/logo.jpg") }}">
-									</span>
+                  <div class="fileinput-new thumbnail" style="width:20px;padding:0;margin-bottom:8px;position:absolute;left:5px;">
+                    <img src="{{ _get_image("/assets/images/" . $apps->logo, "/assets/images/logo.jpg") }}" width="20">
+                  </div>
+                  <div class="fileinput-preview fileinput-exists thumbnail" style="width:20px;padding:0;margin-bottom:8px;position:absolute;left:5px;"></div>
+									<span class="fileinput-filename" style="margin-bottom:5px;position:relative;left:20px;"></span>
 								</div>
 								<span class="input-group-addon btn btn-file">
 									<span class="fileinput-new">Pilih</span>
@@ -269,7 +270,7 @@
 	{!! _load_js('themes/admin/AdminSC/plugins/bootstrap/datetimepicker/4.17.37/js/bootstrap-datetimepicker.min.js') !!}
 	{!! _load_js('themes/admin/AdminSC/plugins/select2/4.0.0/js/select2.min.js') !!}
 	<script>
-		$(function(){
+		$(function() {
 			$('#active-at').datetimepicker({
 				format: 'YYYY-MM-DD'
       });
@@ -279,7 +280,7 @@
 			});
 		});
 
-		$(document).ready(function(){
+		$(document).ready(function() {
 			$('#status').on("change", function(){
 				if ($('#status').val()!=1){
 					$('#d-active-at').show();

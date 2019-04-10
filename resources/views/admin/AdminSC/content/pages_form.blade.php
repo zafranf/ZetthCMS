@@ -71,6 +71,7 @@
         relative_urls: false,
         selector: '#content',
         skin: 'custom',
+        language: 'id',
         height: 300,
         plugins: [
           "advlist autolink link image lists charmap print preview hr anchor pagebreak",
@@ -85,6 +86,7 @@
         external_filemanager_path:"{{ asset('themes/admin/AdminSC/plugins/filemanager/') }}/",
         filemanager_title:"Filemanager",
         filemanager_folder: '/',
+        filemanager_language: 'id',
         external_plugins: { "filemanager" : "{{ asset('themes/admin/AdminSC/plugins/filemanager/plugin.min.js') }}" }
       });
     });

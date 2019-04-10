@@ -15,7 +15,7 @@ $page_title = 'Masuk Aplikasi';
               }
             @endphp
             <center>
-              <img src="{{ _get_image("assets/images/".$apps->logo, '/assets/images/logo.jpg') }}" alt="{{ $apps->name }} Logo" style="margin-bottom: 20px; width: {{ $w }}px;">
+              <img src="{{ _get_image("/assets/images/" . $apps->logo) }}" alt="{{ $apps->name }} Logo" style="margin-bottom: 20px; width: {{ $w }}px;">
             </center>
             <form class="form-horizontal" role="form" method="POST" action="{{ url($adminPath . '/login') }}">
               {!! csrf_field() !!}

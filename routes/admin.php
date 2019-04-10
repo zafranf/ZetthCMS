@@ -22,6 +22,9 @@ Route::middleware('auth')->group(function () {
     // Route::get('/content/banners/data', 'Admin\Content\BannerController@datatable')->name('banners.data');
     // Route::get('/report/subscribers/data', 'Admin\Report\SubscriberController@datatable')->name('subscribers.data');
 
+    /* api ajax */
+    Route::get('/ajax/data/{term}', 'Admin\AjaxController@term')->name('ajax.term');
+
     /* sort menu */
     // Route::get('/setting/menus/sort', 'Admin\Setting\MenuController@sort')->name('menus.sort');
     // Route::put('/setting/menus/sort', 'Admin\Setting\MenuController@sortSave')->name('menus.sortSave');

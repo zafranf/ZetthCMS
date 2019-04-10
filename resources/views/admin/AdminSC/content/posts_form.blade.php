@@ -5,13 +5,13 @@ $parents_ = [];
 $tags_ = [];
 if (isset($post) ) {
 	foreach($post->terms as $k => $term) {
-		if ($term->term_type=="category"){
-			$categories_[] = $term->term_name;
-			$descriptions_[] = $term->term_description;
-			$parents_[] = $term->term_parent;
+		if ($term->type == "category"){
+			$categories_[] = $term->name;
+			$descriptions_[] = $term->description;
+			$parents_[] = $term->parent;
 		}
-		if ($term->term_type=="tag")
-			$tags_[] = $term->term_name;
+		if ($term->type=="tag")
+			$tags_[] = $term->name;
 	}
 }
 ?>
@@ -27,7 +27,7 @@ if (isset($post) ) {
 				<input type="text" id="title" class="form-control {{ isset($post)   ? '' :   'autofocus' }} no-border-top-right no-border-left no-radius input-lg" name="title" placeholder="Title" maxlength="100" value="{{ isset($post) ? $post->title : '' }}">
 				<div class="input-group">
 					<span class="input-group-addon no-border-top-right no-border-left no-radius input-sm" id="url_span">{{ url('/post/') }}/</span>
-					<input type="text" id="url" class="form-control no-border-top-right no-radius input-sm" name="url" placeholder="URL (double click to edit)" readonly value="{{ isset($post) ? $post->slug : '' }}">
+					<input type="text" id="slug" class="form-control no-border-top-right no-radius input-sm" name="slug" placeholder="URL (double click to edit)" readonly value="{{ isset($post) ? $post->slug : '' }}">
 				</div>
 				<textarea id="excerpt" name="excerpt" class="form-control no-border-top-right no-border-left no-radius input-xlarge" placeholder="Add an excerpt?" rows="3">{{ isset($post) ? $post->excerpt : '' }}</textarea>
 				<textarea id="content" name="content" class="form-control no-border-top-right no-border-bottom no-radius input-xlarge" placeholder="Type your content here...">{{ isset($post) ? $post->content : '' }}</textarea>
@@ -41,8 +41,8 @@ if (isset($post) ) {
 						</div>
 						<div class="pwd-upload-exists thumbnail"></div>
 						<div>
-							<a href="{{ url('assets/plugins/filemanager/dialog.php?type=1&field_id=cover&relative_url=1&fldr=').Session::get('template') }}/" class="btn btn-default pwd-upload-new" id="btn-upload" type="button">Select</a>
-							<a href="{{ url('assets/plugins/filemanager/dialog.php?type=1&field_id=cover&relative_url=1&fldr=').Session::get('template') }}/" class="btn btn-default pwd-upload-exists" id="btn-upload" type="button">Change</a>
+							<a href="{{ url('/themes/admin/AdminSC/plugins/filemanager/dialog.php?type=1&field_id=cover&lang=id&relative_url=1&fldr=/') }}" class="btn btn-default pwd-upload-new" id="btn-upload" type="button">Select</a>
+							<a href="{{ url('/themes/admin/AdminSC/plugins/filemanager/dialog.php?type=1&field_id=cover&lang=id&relative_url=1&fldr=/') }}" class="btn btn-default pwd-upload-exists" id="btn-upload" type="button">Change</a>
 							<a id="btn-remove" class="btn btn-default pwd-upload-exists" type="button">Remove</a>
 							<input name="cover" id="cover" type="hidden">
 							@if(isset($post->cover))
@@ -62,7 +62,7 @@ if (isset($post) ) {
 								@foreach ($post->images as $key => $image)
 									<div class="input-group" id="box-featured-image{{ $key+1 }}">
 									  	<input type="text" class="form-control featured_images" name="featured_image[]" id="featured_image{{ $key+1 }}" readonly value="{{ $image->image_file }}">
-									  	<a href="/assets/plugins/filemanager/dialog.php?type=1&field_id=featured_image{{ $key+1 }}&relative_url=1&fldr={{ Session::get('template') }}/" class="input-group-addon" id="btn-add-featured-image{{ $key+1 }}" style="display:none;"><i class="fa fa-search"></i></a>
+									  	<a href="/assets/plugins/filemanager/dialog.php?type=1&field_id=featured_image{{ $key+1 }}&lang=id&relative_url=1&fldr=/" class="input-group-addon" id="btn-add-featured-image{{ $key+1 }}" style="display:none;"><i class="fa fa-search"></i></a>
 										<a class="input-group-addon" onclick="_remove_featured({{ $key+1 }})" style="cursor:pointer;"><i class="fa fa-times"></i></a>
 									</div>
 								@endforeach
@@ -75,7 +75,7 @@ if (isset($post) ) {
 					<a id="btn-add-category" class="btn btn-default btn-xs pull-right" data-toggle="modal" data-target="#pwd-modal" title="Add a New Category"><i class="fa fa-plus"></i></a>
 					<ul id="category-list">
 						@if (isset($post) ) 
-							@foreach ($categories_   as $key => $value)
+							@foreach ($categories_ as $key => $value)
 								<li style="width:98%;">
 								{{ $value }}
 								<span class="pull-right"><i class="fa fa-minus-square-o" style="cursor:pointer;" onclick="_remove_category(this)" title="Remove {{ $value }}"></i></span>
@@ -151,7 +151,7 @@ if (isset($post) ) {
   {{-- {!! _load_css('themes/admin/AdminSC/plugins/jasny-bootstrap/3.1.3/css/jasny-bootstrap.min.css') !!} --}}
 	{!! _load_css('themes/admin/AdminSC/plugins/bootstrap/tagsinput/0.8.0/css/bootstrap-tagsinput.css') !!}
 	{!! _load_css('themes/admin/AdminSC/plugins/bootstrap/datetimepicker/4.17.37/css/bootstrap-datetimepicker.min.css') !!}
-  {!! _load_css('themes/admin/AdminSC/plugins/fancybox/2.1.5/css/jquery-fancybox.css') !!}
+  {!! _load_css('themes/admin/AdminSC/plugins/fancybox/2.1.5/css/jquery.fancybox.css') !!}
   <style>
     #mceu_15 {
       position: absolute;
@@ -240,6 +240,7 @@ if (isset($post) ) {
       });
       _resize_tinymce();
     });
+
     function responsive_filemanager_callback(field_id){
       var url = $('#'+field_id).val().replace(SITE_URL, "");
       var img = '<img src="'+url+'">';
@@ -253,20 +254,23 @@ if (isset($post) ) {
         $('#'+field_id).val(url);
       }
     }
+
     $(document).ready(function(){
       var wFB = window.innerWidth - 30;
       var hFB = window.innerHeight - 60;
       var fImage = <?php echo isset($post) ? count($post->images):1 ?>;
+      
       $('input').on('keypress', function(e){
         key = e.keyCode;
         if (key==13) {
           e.preventDefault();
         }
       });
+
       $('#btn-upload').fancybox({
         type      : 'iframe',
         autoScale : false,
-        autoSize : false,
+        autoSize : true,
         beforeLoad : function() {
           this.width  = wFB;
           this.height = hFB;
@@ -286,6 +290,7 @@ if (isset($post) ) {
         /*codesample_dialog_height: 300,*/
         height: (lsH-190),
         skin: 'custom',
+        language: 'id',
         plugins: [
           "advlist autolink link image lists charmap print preview hr anchor pagebreak",
           "searchreplace wordcount visualblocks visualchars insertdatetime media nonbreaking",
@@ -296,10 +301,11 @@ if (isset($post) ) {
         image_advtab: true,
         image_caption: true,
         menubar: false,
-        external_filemanager_path:"{{ asset('themes/admin/AdminSC/plugins/filemanager/') }}/",
+        external_filemanager_path:"{{ asset('/themes/admin/AdminSC/plugins/filemanager/') }}/",
         filemanager_title:"Filemanager",
         filemanager_folder: '/',
-        external_plugins: { "filemanager" : "{{ asset('themes/admin/AdminSC/plugins/filemanager/plugin.min.js') }}" }
+        filemanager_language: 'id',
+        external_plugins: { "filemanager" : "{{ asset('/themes/admin/AdminSC/plugins/filemanager/plugin.min.js') }}" }
       });
       $('#btn-add-featured-image').on('click', function(){
         if ($('.featured_images').length>=5) {
@@ -309,7 +315,7 @@ if (isset($post) ) {
         
         var html = '<div class="input-group" id="box-featured-image'+fImage+'">'+
                   '<input type="text" class="form-control featured_images" name="featured_image[]" id="featured_image'+fImage+'" readonly>'+
-                  '<a href="/assets/plugins/filemanager/dialog.php?type=1&field_id=featured_image'+fImage+'&relative_url=1&fldr={{ Session::get('template') }}/" class="input-group-addon" id="btn-add-featured-image'+fImage+'" style="display:none;"><i class="fa fa-search"></i></a>'+
+                  '<a href="/themes/admin/AdminSC/plugins/filemanager/dialog.php?type=1&field_id=featured_image'+fImage+'&lang=id&relative_url=1&fldr=/" class="input-group-addon" id="btn-add-featured-image'+fImage+'" style="display:none;"><i class="fa fa-search"></i></a>'+
                 '<a class="input-group-addon" onclick="_remove_featured('+fImage+')" style="cursor:pointer;"><i class="fa fa-times"></i></a>'+
               '</div>';
         $('#featured-images').append(html);
@@ -321,6 +327,8 @@ if (isset($post) ) {
           beforeLoad : function() {
             this.width  = wFB;
             this.height = hFB;
+            console.log('aaaa', this.width)
+            console.log('aaaa', wFB)
           },
           afterClose : function(){
             fimg = fImage-1;
@@ -333,18 +341,9 @@ if (isset($post) ) {
         $('#btn-add-featured-image'+fImage).click();
         fImage++;
       });
-      $('#btn-add-category').on('click', function(){
-        @if (isset($categories) && ($categories)>0)
-          @php(
-            $par = [
-              'id'        => 'term_id',
-              'parent'    => 'term_parent',
-              'name'      => 'term_name',
-              'print'     => 'term_tree',
-              'sl'        => isset($category->term_id)?$category->term_parent:0
-            ]
-          )
-          var categories = "{{ _build_tree($categories, $par) }}";
+      $('#btn-add-category').on('click', function() {
+        @if (isset($categories) && count($categories) > 0)
+          // var categories = {!! json_encode(generateArrayLevel($categories, 'allSubcategory', '&dash;')) !!};
         @else
           var categories = "";
         @endif
@@ -367,7 +366,6 @@ if (isset($post) ) {
             parent: $('#category_parent').val()
           };
           _insert_new_category(par);
-
         });
         $('input').on('keypress', function(e){
           key = e.keyCode;
@@ -377,22 +375,22 @@ if (isset($post) ) {
         });
       });
       var title = $('#title');
-      var slug = $('#url');
-      @if (!isset($post) ) 
+      var slug = $('#slug');
+      @if (!isset($post)) 
         $('#title').on('keyup blur', function(){
           ttl_val = title.val();
-          if (ttl_val==""){
+          if (ttl_val=="") {
             slug.val('');
-          }else{
+          } else {
             url = _get_slug(ttl_val);
             slug.val(url);
           }
         });
-        $('#url').on('dblclick', function(){
+        $('#slug').on('dblclick', function(){
           slug.focus();
           slug.attr("readonly", false);
         });
-        $('#url').on('blur', function(){
+        $('#slug').on('blur', function(){
           ro = slug.attr('readonly');
           if (!ro){
             sl_val = slug.val();
@@ -420,7 +418,7 @@ if (isset($post) ) {
         datumTokenizer: Bloodhound.tokenizers.obj.whitespace('name'),
         queryTokenizer: Bloodhound.tokenizers.whitespace,
         prefetch: {
-          url: '{{ url('ajax/data/categories') }}',
+          url: '{{ url($adminPath . '/ajax/data/categories') }}',
           cache: false,
           filter: function(list) {
             return $.map(list, function(category) {
@@ -432,8 +430,7 @@ if (isset($post) ) {
       categories.initialize();
       $('#category').typeahead({
           minLength: 1
-        },
-        {
+        }, {
         name: 'categories',
         displayKey: 'name',
         valueKey: 'name',
@@ -452,14 +449,13 @@ if (isset($post) ) {
           selected.push(val.name);
         }
         $('#category').typeahead('val', '');
-
       });
       /*tagsinput*/
       var tags = new Bloodhound({
         datumTokenizer: Bloodhound.tokenizers.obj.whitespace('name'),
         queryTokenizer: Bloodhound.tokenizers.whitespace,
         prefetch: {
-          url: '{{ url('ajax/data/tags') }}',
+          url: '{{ url($adminPath . '/ajax/data/tags') }}',
           cache: false,
           filter: function(list) {
           return $.map(list, function(tag) {

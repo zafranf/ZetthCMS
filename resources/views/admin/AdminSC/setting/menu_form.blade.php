@@ -61,20 +61,20 @@
         </div>
       </div> --}}
       <div class="form-group">
-        <label for="target" class="col-sm-2 control-label">Target</label>
+        <label for="target" class="col-sm-2 control-label">Jendela Tujuan</label>
         <div class="col-sm-4">
           <select class="form-control custom-select2" name="target" id="target">
-            <option value="_self" {{ isset($data) && ($data->target == "_self") ? 'selected' : '' }}>Tab Aktif</option>
-            <option value="_blank" {{ isset($data) && ($data->target == "_blank") ? 'selected' : '' }}>Tab Baru</option>
+            <option value="_self" {{ isset($data) && ($data->target == "_self") ? 'selected' : '' }}>Jendela Aktif</option>
+            <option value="_blank" {{ isset($data) && ($data->target == "_blank") ? 'selected' : '' }}>Jendela Baru</option>
           </select>
         </div>
       </div>
       <div class="form-group">
-        <label for="parent" class="col-sm-2 control-label">Cabang</label>
+        <label for="parent" class="col-sm-2 control-label">Induk</label>
         <div class="col-sm-4">
           <select class="form-control select2" name="parent" id="parent">
               <option value="0">[Tidak ada]</option>
-              @foreach (generateArrayLevel($menus) as $menu)
+              @foreach (generateArrayLevel($menus, 'submenu', '&dash;') as $menu)
                 @if (isset($data) && $data->id == $menu->id)
                 @else
                   <option value="{{ $menu->id }}" {{ isset($data) && ($data->parent_id == $menu->id) ? 'selected' : '' }}>{!! $menu->name !!}</option>
