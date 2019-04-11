@@ -113,12 +113,12 @@
 								</div>
 								<div class="col-xs-6 col-sm-3">
 									<label>
-										<input type="checkbox" id="enable-like" name="enable_like" {{ (!$apps->enable_like) ? '' : 'checked' }}> Sukai
+										<input type="checkbox" id="enable-like" name="enable_like" {{ (!$apps->enable_like) ? '' : 'checked' }}> Suka
 									</label>
 								</div>
 								<div class="col-xs-6 col-sm-3">
 									<label>
-										<input type="checkbox" id="enable-share" name="enable_share" {{ (!$apps->enable_share) ? '' : 'checked' }}> Bagikan
+										<input type="checkbox" id="enable-share" name="enable_share" {{ (!$apps->enable_share) ? '' : 'checked' }}> Sebar
 									</label>
 								</div>
 							</div>

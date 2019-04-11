@@ -85,7 +85,7 @@
   @yield('content2')
 
   <div id="pwd-modal" class="modal" role="dialog">
-    <div class="modal-dialog {{ !$isDesktop?'modal-sm':'' }}">
+    <div class="modal-dialog {{ !$isDesktop ? 'modal-sm' : '' }}">
       <div class="modal-content">
         <div class="modal-header">
           <button type="button" class="close" data-dismiss="modal">&times;</button>

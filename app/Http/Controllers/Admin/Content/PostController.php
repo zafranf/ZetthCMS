@@ -70,10 +70,10 @@ class PostController extends AdminController
             'url' => '',
         ];
 
-        $categories = Term::where('type', 'category')->
-            where('status', 1)->
-            orderBy('name', 'asc')->
-            get();
+        $categories = Term::where('type', 'category')
+            ->where('status', 1)
+            ->orderBy('name', 'asc')
+            ->get();
 
         /* set variable for view */
         $data = [
@@ -101,7 +101,7 @@ class PostController extends AdminController
             'slug' => 'unique:posts,slug,NULL,created_at,type,article',
             'content' => 'required',
             'categories' => 'required',
-            // 'tags' => 'required',
+            'tags' => 'required',
         ]);
 
         /* set variables */
@@ -150,6 +150,12 @@ class PostController extends AdminController
         return redirect($this->current_url)->with('success', 'Artikel "' . $post->title . '" berhasil ditambah!');
     }
 
+    /**
+     * Display the specified resource.
+     *
+     * @param  \App\Models\Post  $post
+     * @return \Illuminate\Http\Response
+     */
     public function show($id)
     {
         /* initial config */
@@ -173,33 +179,36 @@ class PostController extends AdminController
         return view('admin.web.posts_detail', $data);
     }
 
-    public function edit($id)
+    /**
+     * Show the form for editing the specified resource.
+     *
+     * @param  \App\Models\Post  $post
+     * @return \Illuminate\Http\Response
+     */
+    public function edit(Post $post)
     {
-        /* initial config */
-        $this->_init_config();
-
-        $this->init['title_box'] = 'Edit post';
-        $this->init['breadcrumb'][] = [
+        $this->breadcrumbs[] = [
             'page' => 'Edit',
+            'icon' => '',
             'url' => '',
         ];
-        $this->_init_session($this->init);
 
-        $post = Post::where('post_id', $id)->with('terms')->first();
-        if (!$post) {
-            abort(404);
-        }
+        $categories = Term::where('type', 'category')
+            ->where('status', 1)
+            ->orderBy('name', 'asc')
+            ->get();
 
-        $categories = Term::where('term_type', 'category')->
-            where('term_status', 1)->
-            orderBy('term_name', 'asc')->
-            get();
+        /* set variable for view */
+        $data = [
+            'current_url' => $this->current_url,
+            'page_title' => $this->page_title,
+            'breadcrumbs' => $this->breadcrumbs,
+            'page_subtitle' => 'Edit Artikel',
+            'categories' => $categories,
+            'data' => $post->load('terms'),
+        ];
 
-        $data = [];
-        $data['post'] = $post;
-        $data['categories'] = $categories;
-
-        return view('admin.web.posts_form', $data);
+        return view('admin.AdminSC.content.posts_form', $data);
     }
 
     public function update(Request $r, $id)
@@ -301,14 +310,14 @@ class PostController extends AdminController
     public function process_categories($categories, $descriptions, $parents, $pid)
     {
         foreach ($categories as $k => $category) {
-            $chkCategory = Term::where('display_name', $category)->
-                where('type', 'category')->
-                first();
+            $chkCategory = Term::where('name', str_slug($category))
+                ->where('type', 'category')
+                ->first();
 
             if (!$chkCategory) {
                 $term = new Term;
-                $term->name = $category;
-                $term->slug = str_slug($category);
+                $term->name = str_slug($category);
+                $term->display_name = $category;
                 $term->description = $descriptions[$k];
                 $term->parent = $parents[$k];
                 $term->type = 'category';
@@ -328,14 +337,14 @@ class PostController extends AdminController
     public function process_tags($tags, $pid)
     {
         foreach ($tags as $tag) {
-            $chkTag = Term::where('display_name', $tag)->
+            $chkTag = Term::where('name', str_slug($tag))->
                 where('type', 'tag')->
                 first();
 
             if (!$chkTag) {
                 $term = new Term;
-                $term->name = strtolower($tag);
-                $term->slug = str_slug($tag);
+                $term->name = str_slug($tag);
+                $term->display_name = strtolower($tag);
                 $term->type = 'tag';
                 $term->status = 1;
                 $term->save();

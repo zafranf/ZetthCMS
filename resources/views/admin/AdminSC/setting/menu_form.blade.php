@@ -74,7 +74,7 @@
         <div class="col-sm-4">
           <select class="form-control select2" name="parent" id="parent">
               <option value="0">[Tidak ada]</option>
-              @foreach (generateArrayLevel($menus, 'submenu', '&dash;') as $menu)
+              @foreach (generateArrayLevel($menus) as $menu)
                 @if (isset($data) && $data->id == $menu->id)
                 @else
                   <option value="{{ $menu->id }}" {{ isset($data) && ($data->parent_id == $menu->id) ? 'selected' : '' }}>{!! $menu->name !!}</option>

@@ -113,7 +113,7 @@ class PageController extends AdminController
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Term  $tag
+     * @param  \App\Models\Post  $page
      * @return \Illuminate\Http\Response
      */
     public function show($id)
@@ -124,7 +124,7 @@ class PageController extends AdminController
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Post  $tag
+     * @param  \App\Models\Post  $page
      * @return \Illuminate\Http\Response
      */
     public function edit(Post $page)

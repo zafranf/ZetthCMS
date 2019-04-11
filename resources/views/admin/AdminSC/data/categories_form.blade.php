@@ -20,7 +20,7 @@
           <div class="col-sm-4">
             <select name="parent" class="form-control custom-select2">
               <option value="">[Tidak Ada]</option>
-              @foreach (generateArrayLevel($categories, 'allSubcategory', '&dash;') as $category)
+              @foreach (generateArrayLevel($categories, 'allSubcategory') as $category)
                 @if (isset($data) && $data->id == $category->id)
                 @else
                   <option value="{{ $category->id }}" {{ isset($data) && ($data->parent_id == $category->id) ? 'selected' : '' }}>{!! $category->name !!}</option>

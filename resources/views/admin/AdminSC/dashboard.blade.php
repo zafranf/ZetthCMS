@@ -208,7 +208,7 @@
       mn = start.format('MM')-1;
       dt = start.format('DD');
       @if ($isDesktop)
-      var range = start.format('MMMM DD, YYYY') + ' - ' + end.format('MMMM DD, YYYY');
+        var range = start.format('MMMM DD, YYYY') + ' - ' + end.format('MMMM DD, YYYY');
       @else
       var range = label;
       @endif

@@ -9,17 +9,13 @@ $page_title = 'Masuk Aplikasi';
           <!-- <div class="panel-heading">Login Form</div> -->
           <div class="panel-body">
             @php
-              $w = 250;
-              if ($isMobile) {
-                $w = 150;
-              }
+              $w = $isMobile ? 150 : 250;
             @endphp
             <center>
               <img src="{{ _get_image("/assets/images/" . $apps->logo) }}" alt="{{ $apps->name }} Logo" style="margin-bottom: 20px; width: {{ $w }}px;">
             </center>
             <form class="form-horizontal" role="form" method="POST" action="{{ url($adminPath . '/login') }}">
-              {!! csrf_field() !!}
-
+              
               <div class="form-group{{ $errors->has('name') ? ' has-error' : '' }}">
                 <label class="col-md-4 control-label">Pengguna</label>
                 <div class="col-md-6">
@@ -60,6 +56,7 @@ $page_title = 'Masuk Aplikasi';
                     <i class="fa fa-btn fa-sign-in"></i> Masuk
                   </button>
                   <a class="btn btn-link" href="{{ url($adminPath . '/password/reset') }}">Lupa sandi?</a>
+                  {!! csrf_field() !!}
                 </div>
               </div>
             </form>

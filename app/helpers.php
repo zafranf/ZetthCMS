@@ -533,11 +533,11 @@ if (!function_exists('rearrangeFiles')) {
 }
 
 if (!function_exists('getMenu')) {
-    function getMenu($group = 'admin')
+    function getMenu($group = 'admin', $cache = false)
     {
         $cacheMenuName = 'cacheMenu-Group' . ucfirst($group);
         $cacheMenu = \Cache::get($cacheMenuName);
-        if ($cacheMenu) {
+        if ($cacheMenu && $cache) {
             $menus = $cacheMenu;
         } else {
             $groupmenu = \App\Models\MenuGroup::where('name', $group)->with('menu.submenu')->first();
@@ -616,11 +616,11 @@ if (!function_exists('generateSubmenu')) {
 
 if (!function_exists('generateArrayLevel')) {
     /**
-     * Generate Top Menu Array
+     * Generate Array To List Level
      *
      * @return void
      */
-    function generateArrayLevel($data, $sub = 'submenu', $separator = '-', $level = 0)
+    function generateArrayLevel($data, $sub = 'submenu', $separator = '&dash;', $level = 0)
     {
         $array = [];
         $sep = $separator ? str_repeat($separator, $level) : '';
@@ -677,35 +677,6 @@ if (!function_exists('generateDate')) {
         $format = ($lang == 'id') ? 'dddd, Do MMMM YYYY' : 'dddd, MMMM Do YYYY';
 
         return \Carbon\Carbon::parse($date)->locale($lang)->isoFormat($format);
-    }
-}
-
-if (!function_exists('urls')) {
-    /**
-     * URL secure
-     */
-    function urls()
-    {
-        $url = null;
-        $secure = false;
-        $parameters = [];
-
-        $args = func_get_args();
-        foreach ($args as $arg) {
-            if (is_string($arg)) {
-                $url = $arg;
-            } else if (is_bool($arg)) {
-                $secure = $arg;
-            } else if (is_array($arg)) {
-                $parameters = $arg;
-            }
-        }
-
-        if (bool($secure) || env('FORCE_HTTPS', false)) {
-            return secure_url($url);
-        }
-
-        return url($url);
     }
 }
 
