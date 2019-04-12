@@ -8,7 +8,10 @@
 					<h4>Informasi Utama</h4>
 					<hr>
 					<div class="form-group">
-						<label for="name" class="col-md-4 control-label">Logo</label>
+						<label for="name" class="col-md-4 control-label">
+              Logo
+              <small class="help-block">Maksimal dimensi logo adalah 512x512 piksel dengan ukuran maksimal 384 KB</small>
+            </label>
 						<div class="col-md-8">
 							<div class="fileinput fileinput-new" data-provides="fileinput">
 								<div class="fileinput-new thumbnail">
@@ -21,19 +24,28 @@
 										<span class="fileinput-exists">Ganti</span>
 										<input type="file" id="logo" name="logo" accept="image/*">
 									</span>
-									<a href="#" class="btn btn-default fileinput-exists" data-dismiss="fileinput">Hapus</a>
+									<a href="#" class="btn btn-default fileinput-exists" data-dismiss="fileinput">Batal</a>
+                  @if (isset($apps->logo))
+                    <small class="help-inline">
+                      <label class="pull-right">
+                        <input type="checkbox" name="logo_remove" id="logo_remove"> Hapus
+                      </label>
+                    </small>
+                  @endif
 								</div>
 							</div>
-							<small class="help-block">Maksimal dimensi logo adalah 512x512 piksel dengan ukuran maksimal 384 KB</small>
 						</div>
 					</div>
 					<div class="form-group">
-						<label for="name" class="col-md-4 control-label">Ikon</i></label>
+						<label for="name" class="col-md-4 control-label">
+              Ikon
+							<small class="help-block">Maksimal dimensi ikon adalah 128x128 piksel dengan ukuran maksimal 96 KB</small>
+            </label>
 						<div class="col-md-8">
 							<div class="fileinput fileinput-new input-group" data-provides="fileinput">
 								<div class="form-control" data-trigger="fileinput">
                   <div class="fileinput-new thumbnail" style="width:20px;padding:0;margin-bottom:8px;position:absolute;left:5px;">
-                    <img src="{{ _get_image("/assets/images/" . $apps->logo, "/assets/images/logo.jpg") }}" width="20">
+                    <img src="{{ _get_image("/assets/images/" . $apps->icon, "/assets/images/logo.jpg") }}" width="20">
                   </div>
                   <div class="fileinput-preview fileinput-exists thumbnail" style="width:20px;padding:0;margin-bottom:8px;position:absolute;left:5px;"></div>
 									<span class="fileinput-filename" style="margin-bottom:5px;position:relative;left:20px;"></span>
@@ -43,13 +55,17 @@
 									<span class="fileinput-exists">Ganti</span>
                   <input type="file" id="icon" name="icon" accept="image/*">
 								</span>
-								<a href="#" class="input-group-addon btn fileinput-exists" data-dismiss="fileinput">Hapus</a>
+								<a href="#" class="input-group-addon btn fileinput-exists" data-dismiss="fileinput">Batal</a>
 							</div>
-							<small class="help-block">Maksimal dimensi ikon adalah 128x128 piksel dengan ukuran maksimal 96 KB</small>
 							<small class="help-block">
 								<label>
-									<input type="checkbox" name="use_logo"> Gunakan logo
+									<input type="checkbox" name="use_logo" id="use_logo"> Gunakan logo
 								</label>
+                @if (isset($apps->icon))
+                  <label class="pull-right">
+                    <input type="checkbox" name="icon_remove" id="icon_remove"> Hapus
+                  </label>
+                @endif
 							</small>
 						</div>
 					</div>
@@ -213,10 +229,12 @@
 						</div>
 					</div>
 					<div class="form-group">
-						<label for="google_analytics" class="col-md-4 control-label">Google Analytics</label>
+						<label for="google_analytics" class="col-md-4 control-label">
+              Google Analytics
+							<small class="help-block">Kode untuk analitik website dari Google</small>
+            </label>
 						<div class="col-md-8">
 							<input type="text" class="form-control" id="google-analytics" name="google_analytics" value="{{ $apps->google_analytics ?? '' }}" placeholder="Kode lacak dari Google Analytics.." maxlength="20">
-							<small class="help-block">Kode untuk analitik website dari Google</small>
 						</div>
 					</div>
 					<h4>Lokasi</h4>
@@ -228,10 +246,12 @@
 						</div>
 					</div>
 					<div class="form-group">
-						<label for="coordinate" class="col-md-4 control-label">Koordinat</label>
+						<label for="coordinate" class="col-md-4 control-label">
+              Koordinat
+              <small class="help-block">Garis lintang dan garis bujur.<br>(contoh: -6.229728, 106.6894312)</small>
+            </label>
 						<div class="col-md-8">
 							<input type="text" class="form-control" id="coordinate" name="coordinate" value="{{ $apps->coordinate ?? '' }}" placeholder="Titik koordinat.." maxlength="30">
-							<small class="help-block">Garis lintang dan garis bujur. (cth: -6.229728, 106.6894312)</small>
 						</div>
 					</div>
 				</div>

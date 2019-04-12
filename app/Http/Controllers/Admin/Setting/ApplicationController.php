@@ -157,7 +157,9 @@ class ApplicationController extends AdminController
         $app->google_analytics = $r->input('google_analytics');
 
         /* upload logo */
-        if ($r->hasFile('logo')) {
+        if ($r->input('logo_remove')) {
+            $app->logo = '';
+        } else if ($r->hasFile('logo')) {
             $file = $r->file('logo');
             $par = [
                 'file' => $file,
@@ -169,28 +171,30 @@ class ApplicationController extends AdminController
 
             if ($this->uploadImage($par, true)) {
                 $app->logo = $par['name'] . '.' . $par['ext'];
-                // $app->save();
             }
         }
 
         /* upload icon */
-        if ($r->input('use_logo')) {
-            if ($app->logo) {
-                $app->icon = $app->logo;
-            }
-        } else if ($r->hasFile('icon')) {
-            $file = $r->file('icon');
-            $par = [
-                'file' => $file,
-                'folder' => '/assets/images/',
-                'name' => 'icon',
-                'type' => $file->getMimeType(),
-                'ext' => $file->getClientOriginalExtension(),
-            ];
+        if ($r->input('icon_remove')) {
+            $app->icon = '';
+        } else {
+            if ($r->input('use_logo')) {
+                if ($app->logo) {
+                    $app->icon = $app->logo;
+                }
+            } else if ($r->hasFile('icon')) {
+                $file = $r->file('icon');
+                $par = [
+                    'file' => $file,
+                    'folder' => '/assets/images/',
+                    'name' => 'icon',
+                    'type' => $file->getMimeType(),
+                    'ext' => $file->getClientOriginalExtension(),
+                ];
 
-            if ($this->uploadImage($par)) {
-                $app->icon = $par['name'] . '.' . $par['ext'];
-                // $app->save();
+                if ($this->uploadImage($par)) {
+                    $app->icon = $par['name'] . '.' . $par['ext'];
+                }
             }
         }
 

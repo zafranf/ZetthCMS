@@ -71,8 +71,10 @@ class PostController extends AdminController
         ];
 
         $categories = Term::where('type', 'category')
+            ->where('parent_id', 0)
             ->where('status', 1)
             ->orderBy('name', 'asc')
+            ->with('subcategory')
             ->get();
 
         /* set variable for view */
@@ -111,10 +113,9 @@ class PostController extends AdminController
         $descriptions = $r->input('descriptions');
         $parents = $r->input('parents');
         $tags = explode(",", $r->input('tags'));
-        $url = url('/');
-        $digit = 3;
-        $uniq = str_random($digit);
-        $cover = str_replace($url, "", $r->input('cover'));
+        // $digit = 3;
+        // $uniq = str_random($digit);
+        $cover = str_replace(url('/'), '', $r->input('cover'));
         $date = ($r->input('date') == '') ? date("Y-m-d") : $r->input('date');
         $time = ($r->input('time') == '') ? date("H:i") : $r->input('time');
 
@@ -156,27 +157,8 @@ class PostController extends AdminController
      * @param  \App\Models\Post  $post
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Post $post)
     {
-        /* initial config */
-        $this->_init_config();
-
-        $this->init['title_box'] = 'Show post';
-        $this->init['breadcrumb'][] = [
-            'page' => 'Show',
-            'url' => '',
-        ];
-        $this->_init_session($this->init);
-
-        $post = Post::where('post_id', $id)->with('terms')->first();
-        if (!$post) {
-            abort(404);
-        }
-
-        $data = [];
-        $data['post'] = $post;
-
-        return view('admin.web.posts_detail', $data);
     }
 
     /**
@@ -194,8 +176,10 @@ class PostController extends AdminController
         ];
 
         $categories = Term::where('type', 'category')
+            ->where('parent_id', 0)
             ->where('status', 1)
             ->orderBy('name', 'asc')
+            ->with('subcategory')
             ->get();
 
         /* set variable for view */
@@ -211,88 +195,93 @@ class PostController extends AdminController
         return view('admin.AdminSC.content.posts_form', $data);
     }
 
-    public function update(Request $r, $id)
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $r
+     * @param  \App\Models\Post  $post
+     * @return \Illuminate\Http\Response
+     */
+    public function update(Request $r, Post $post)
     {
-        /* initial config */
-        $this->_init_config();
-
-        //validation
+        /* validation */
         $this->validate($r, [
-            'post_title' => 'required|max:100|unique:posts,post_title,' . $id . ',post_id,post_type,article,app_id,' . $this->app_id,
-            'post_slug' => 'required|max:100|unique:posts,post_slug,' . $id . ',post_id,post_type,article,app_id,' . $this->app_id,
-            'post_content' => 'required',
-            'post_categories' => 'required',
-            'post_tags' => 'required',
+            'title' => 'required|max:100|unique:posts,title,' . $post->id . ',id,type,article',
+            // 'slug' => 'unique:posts,slug,' . $post->id . ',id,type,article',
+            'content' => 'required',
+            'categories' => 'required',
+            'tags' => 'required',
         ]);
 
-        //defining variables
-        $cover = '';
-        $title = $r->post_title;
-        $slug = str_slug($r->post_slug);
-        $categories = $r->post_categories;
-        $descriptions = $r->post_descriptions;
-        $parents = $r->post_parents;
-        $tags = explode(",", $r->post_tags);
-        $url = Session::get('app')->app_domain;
-        $cover = str_replace(url('/'), "", $r->post_cover);
-        $date = ("" == $r->post_date) ? date("Y-m-d") : $r->post_date;
-        $time = ("" == $r->post_time) ? date("H:i") : $r->post_time;
+        /* set variables */
+        $title = $r->input('title');
+        // $slug = str_slug($r->input('slug'));
+        $categories = $r->input('categories');
+        $descriptions = $r->input('descriptions');
+        $parents = $r->input('parents');
+        $tags = explode(",", $r->input('tags'));
+        // $digit = 3;
+        // $uniq = str_random($digit);
+        $cover = str_replace(url('/'), '', $r->input('cover'));
+        $date = ($r->input('date') == '') ? date("Y-m-d") : $r->input('date');
+        $time = ($r->input('time') == '') ? date("H:i") : $r->input('time');
 
-        //processing post
-        $post = Post::find($id);
-        $post->post_title = $title;
-        // $post->post_slug    = $slug;
-        $post->post_content = $r->post_content;
-        $post->post_excerpt = $r->post_excerpt;
-        if ($cover != '') {
-            $post->post_cover = $cover;
+        /* save data */
+        $post->title = $title;
+        // $post->slug = $slug;
+        $post->content = $r->input('content');
+        $post->excerpt = $r->input('excerpt');
+        $post->type = 'article';
+        $post->cover = $cover;
+        if ($r->input('cover_remove')) {
+            $post->cover = '';
         }
-        if (isset($r->post_cover_remove)) {
-            $post->post_cover = '';
-        }
-        $post->post_status = $r->post_status;
-        $post->post_share = ($r->post_share) ? 1 : 0;
-        $post->post_like = ($r->post_like) ? 1 : 0;
-        $post->post_comment = ($r->post_comment) ? 1 : 0;
+        $post->status = $r->input('status');
+        $post->share = ($r->input('share')) ? 1 : 0;
+        $post->like = ($r->input('like')) ? 1 : 0;
+        $post->comment = ($r->input('comment')) ? 1 : 0;
         $post->published_at = $date . ' ' . $time;
+        // $post->short_url = $uniq;
         $post->updated_by = \Auth::user()->id;
         $post->save();
 
-        //delete post relation
-        PostTerm::where('post_id', $id)->delete();
+        /* delete post relation */
+        PostTerm::where('post_id', $post->id)->delete();
 
-        //processing categories
-        $this->process_categories($categories, $descriptions, $parents, $id);
+        /* processing categories */
+        $this->process_categories($categories, $descriptions, $parents, $post->id);
 
-        //processing tags
-        $this->process_tags($tags, $id);
+        /* processing tags */
+        $this->process_tags($tags, $post->id);
 
-        /* clear cache */
-        // Cache::flush();
+        /* log aktifitas */
+        $this->activityLog('<b>' . \Auth::user()->fullname . '</b> memperbarui Artikel "' . $post->title . '"');
 
-        return redirect($this->current_url)->with('success', 'Post has been updated!');
-    }
-
-    public function destroy($id, Request $r)
-    {
-        /* initial config */
-        $this->_init_config();
-
-        if ($r->hard_delete) {
-            Post::find($id)->forceDelete();
-            PostTerm::where('post_id', $id)->delete();
-        } else {
-            Post::find($id)->delete();
-        }
-
-        /* clear cache */
-        Cache::flush();
-
-        return redirect(Session::get('current_url'))->with('success', 'Post has been deleted!');
+        return redirect($this->current_url)->with('success', 'Artikel "' . $post->title . '" berhasil disimpan!');
     }
 
     /**
-     * Generate DataTables
+     * Remove the specified resource from storage.
+     *
+     * @param  \App\Models\Post  $post
+     * @return \Illuminate\Http\Response
+     */
+    public function destroy(Post $post)
+    {
+        /* log aktifitas */
+        $this->activityLog('<b>' . \Auth::user()->fullname . '</b> menghapus Artikel "' . $post->title . '"');
+
+        /* soft delete */
+        $post->delete();
+
+        return redirect($this->current_url)->with('success', 'Artikel "' . $post->title . '" berhasil dihapus!');
+    }
+
+    /**
+     * Undocumented function
+     *
+     * @param Request $r
+     * @return void
      */
     public function datatable(Request $r)
     {
@@ -307,6 +296,15 @@ class PostController extends AdminController
         abort(403);
     }
 
+    /**
+     * Undocumented function
+     *
+     * @param [type] $categories
+     * @param [type] $descriptions
+     * @param [type] $parents
+     * @param [type] $pid
+     * @return void
+     */
     public function process_categories($categories, $descriptions, $parents, $pid)
     {
         foreach ($categories as $k => $category) {
@@ -319,7 +317,7 @@ class PostController extends AdminController
                 $term->name = str_slug($category);
                 $term->display_name = $category;
                 $term->description = $descriptions[$k];
-                $term->parent = $parents[$k];
+                $term->parent_id = $parents[$k] ?? 0;
                 $term->type = 'category';
                 $term->status = 1;
                 $term->save();
@@ -334,6 +332,13 @@ class PostController extends AdminController
         }
     }
 
+    /**
+     * Undocumented function
+     *
+     * @param [type] $tags
+     * @param [type] $pid
+     * @return void
+     */
     public function process_tags($tags, $pid)
     {
         foreach ($tags as $tag) {
@@ -359,6 +364,13 @@ class PostController extends AdminController
         }
     }
 
+    /**
+     * Undocumented function
+     *
+     * @param [type] $pid
+     * @param [type] $tid
+     * @return void
+     */
     public function process_postrels($pid, $tid)
     {
         $postrel = new PostTerm;

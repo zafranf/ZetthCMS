@@ -22,7 +22,8 @@
         {{ generateMenu() }}
         {{-- Right Side Of Navbar --}}
         <ul class="nav navbar-nav navbar-right">
-          <li><a href="{{ url('admin/help') }}" title="Help"><i class="fa fa-question-circle-o"></i></a></li>
+          <li><a href="{{ url('/') }}" data-toggle="tooltip" data-original-title="Kunjungi website" target="_blank"><i class="fa fa-globe"></i></a></li>
+          {{-- <li><a href="{{ url('admin/help') }}" title="Help"><i class="fa fa-question-circle-o"></i></a></li> --}}
           {{-- <li><a href="#" title="Notifications"><i class="fa fa-bell-o"></i></a></li> --}}
           {{-- Authentication Links --}}
           @if (Auth::guest())

@@ -19,7 +19,7 @@
           <label for="parent" class="col-sm-2 control-label">Induk</label>
           <div class="col-sm-4">
             <select name="parent" class="form-control custom-select2">
-              <option value="">[Tidak Ada]</option>
+              <option value="">[Tidak ada]</option>
               @foreach (generateArrayLevel($categories, 'allSubcategory') as $category)
                 @if (isset($data) && $data->id == $category->id)
                 @else

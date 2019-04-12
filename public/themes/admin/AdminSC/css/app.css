@@ -591,6 +591,13 @@ label[for=publish] {
     border-radius:6px 0 6px 6px;
 } */
 
+.help-inline {
+    display: inline;
+    margin-top: 5px;
+    margin-bottom: 10px;
+    color: #737373;
+}
+
 @media (max-width: 767px) {
     .breadcrumb,
     .sub-menu li {

@@ -254,7 +254,10 @@ class BannerController extends AdminController
     }
 
     /**
-     * Generate DataTables
+     * Undocumented function
+     *
+     * @param Request $r
+     * @return void
      */
     public function datatable(Request $r)
     {
@@ -270,7 +273,10 @@ class BannerController extends AdminController
     }
 
     /**
-     * Banner Sort Form
+     * Undocumented function
+     *
+     * @param Request $r
+     * @return void
      */
     public function sort(Request $r)
     {
@@ -288,7 +294,13 @@ class BannerController extends AdminController
         return view('admin.content.banner_sort', $data);
     }
 
-    /* Save Sorted Spanduk */
+    /**
+     * Undocumented function
+     *
+     * @param Request $r
+     * @param array $data
+     * @return void
+     */
     public function sortSave(Request $r, $data = [])
     {
         /* validation */
@@ -302,7 +314,13 @@ class BannerController extends AdminController
         return redirect($this->current_url)->with('success', 'Spanduk berhasil diurutkan!');
     }
 
-    /* Do Save Spanduk */
+    /**
+     * Undocumented function
+     *
+     * @param Request $r
+     * @param array $data
+     * @return void
+     */
     public function sortQuery(Request $r, $data = [])
     {
         /* mapping values */

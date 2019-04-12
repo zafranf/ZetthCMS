@@ -1,4 +1,4 @@
-<?php
+@php
 $categories_ = [];
 $descriptions_ = [];
 $parents_ = [];
@@ -14,137 +14,145 @@ if (isset($data) ) {
 			$tags_[] = $term->name;
 	}
 }
-?>
+
+$urlFilemanager = url('/themes/admin/AdminSC/plugins/filemanager/dialog.php?type=1&field_id=cover&lang=id&fldr=/');
+@endphp
 @extends('admin.AdminSC.layouts.main')
 
 @section('content')
-<div class="panel-body no-padding-bottom">
-	<div class="row" style="margin-top:-15px;">
-		<form id="form-post" action="{{ url($current_url) }}{{ isset($data) ? '/' . $data->id : '' }}" method="post" enctype="multipart/form-data">
-			<div class="col-sm-8 col-md-9 left-side no-padding">
-				<input type="text" id="title" class="form-control {{ isset($data)   ? '' :   'autofocus' }} no-border-top-right no-border-left no-radius input-lg" name="title" placeholder="Judul.." maxlength="100" value="{{ isset($data) ? $data->title : '' }}">
-				<div class="input-group">
-					<span class="input-group-addon no-border-top-right no-border-left no-radius input-sm" id="url_span">{{ url('/post/') }}/</span>
-					<input type="text" id="slug" class="form-control no-border-top-right no-radius input-sm" name="slug" placeholder="Tautan.. (klik 2x untuk edit)" readonly value="{{ isset($data) ? $data->slug : '' }}">
-				</div>
-				<textarea id="excerpt" name="excerpt" class="form-control no-border-top-right no-border-left no-radius input-xlarge" placeholder="Kutipan.." rows="3">{{ isset($data) ? $data->excerpt : '' }}</textarea>
-				<textarea id="content" name="content" class="form-control no-border-top-right no-border-bottom no-radius input-xlarge" placeholder="Ketikkan tulisan anda di sini...">{{ isset($data) ? $data->content : '' }}</textarea>
-			</div>
-			<div class="col-sm-4 col-md-3 right-side">
-				<div class="form-group" style="padding-top:10px;">
-					<label for="cover">Sampul</label><br>
-					<div class="pwd-upload">
-						<div class="pwd-upload-new thumbnail">
-							<img src="{!! _get_image(isset($data) ? $data->cover : '') !!}">
-						</div>
-						<div class="pwd-upload-exists thumbnail"></div>
-						<div>
-							<a href="{{ url('/themes/admin/AdminSC/plugins/filemanager/dialog.php?type=1&field_id=cover&lang=id&fldr=/') }}" class="btn btn-default pwd-upload-new" id="btn-upload" type="button">Pilih</a>
-							<a href="{{ url('/themes/admin/AdminSC/plugins/filemanager/dialog.php?type=1&field_id=cover&lang=id&fldr=/') }}" class="btn btn-default pwd-upload-exists" id="btn-upload" type="button">Ganti</a>
-							<a id="btn-remove" class="btn btn-default pwd-upload-exists" type="button">Hapus</a>
-							<input name="cover" id="cover" type="hidden">
-							@if (isset($data->cover))
-								<label class="pull-right">
-									<input type="checkbox" name="cover_remove" id="cover_remove"> Tanpa Sampul
-								</label>
-							@endif
-						</div>
-					</div>
-				</div>
-				{{-- <div class="form-group">
-					<label for="featured_image">Featured Image</label>
-					<a id="btn-add-featured-image" class="btn btn-default btn-xs pull-right" title="Add a Featured Image"><i class="fa fa-plus"></i></a>
-					<div class="row">
-						<div class="col-md-12" id="featured-images">
-							@if (isset($data) ) 
-								@foreach ($data->images as $key => $image)
-									<div class="input-group" id="box-featured-image{{ $key+1 }}">
-									  	<input type="text" class="form-control featured_images" name="featured_image[]" id="featured_image{{ $key+1 }}" readonly value="{{ $image->image_file }}">
-									  	<a href="/assets/plugins/filemanager/dialog.php?type=1&field_id=featured_image{{ $key+1 }}&lang=id&fldr=/" class="input-group-addon" id="btn-add-featured-image{{ $key+1 }}" style="display:none;"><i class="fa fa-search"></i></a>
-										<a class="input-group-addon" onclick="_remove_featured({{ $key+1 }})" style="cursor:pointer;"><i class="fa fa-times"></i></a>
-									</div>
-								@endforeach
-							@endif
-						</div>
-					</div>
-				</div> --}}
-				<div class="form-group">
-					<label for="category">Kategori*</label>
-					<a id="btn-add-category" class="btn btn-default btn-xs pull-right" data-toggle="modal" data-target="#pwd-modal" title="Add a New Category"><i class="fa fa-plus"></i></a>
-					<ul id="category-list">
-						@if (isset($data)) 
-							@foreach ($categories_ as $key => $value)
-								<li style="width:98%;">
-								{{ $value }}
-								<span class="pull-right"><i class="fa fa-minus-square-o" style="cursor:pointer;" onclick="_remove_category(this)" title="Remove {{ $value }}"></i></span>
-								<input type="hidden" name="categories[]" value="{{ $value }}">
-								<input type="hidden" name="descriptions[]" value="{{ $descriptions_[$key] }}">
-								<input type="hidden" name="parents[]" value="{{ $parents_[$key] }}">
-								</li>
-							@endforeach
-						@endif
-					</ul>
-					<input type="text" class="form-control" id="category" name="category" placeholder="Pasang kategori..">
-				</div>
-				<div class="form-group">
-					<label for="tags">Label*</label>
-					<div class="col-sm-12 no-padding">
-						<input type="text" class="form-control" id="tags" name="tags" placeholder="Berikan label.." value="{{ isset($data) ? implode(",", $tags_) : '' }}">
-					</div>
-				</div>
-				<div class="form-group">
-					<label for="visitor">Pengunjung</label><br>
-					<div class="col-sm-4 col-xs-4 no-padding">
-						<label>
-						  <input name="comment" type="checkbox" {{ (isset($data) && ($data->comment)) ? 'checked' : ($apps->enable_comment) ? 'checked' : '' }}> Komentar
-						</label>
-					</div>
-					<div class="col-sm-4 col-xs-4 no-padding">
-						<label>
-						  <input name="like" type="checkbox" {{ (isset($data) && ($data->like)) ? 'checked' : ($apps->enable_like) ? 'checked' : '' }}> Suka
-						</label>
-					</div>
-					<div class="col-sm-4 col-xs-4 no-padding">
-						<label>
-						  <input name="share" type="checkbox" {{ (isset($data) && ($data->share)) ? 'checked' : ($apps->enable_share) ? 'checked' : '' }}> Sebar
-						</label>
-					</div>
-				</div>
-				<div class="form-group">
-					<label for="publish">Terbitkan</label><br>
-					<div class="col-sm-6 col-xs-6 no-padding">
-						<label>
-						  <input name="status" type="radio" value="1" {{ (isset($data) && (!$data->status)) ? '' : 'checked' }}> Ya
-						</label>
-					</div>
-					<div class="col-sm-6 col-xs-6 no-padding">
-						<label>
-						  <input name="status" type="radio" value="0" {{ (isset($data) && (!$data->status)) ? 'checked' : '' }}> Tidak
-						</label>
-					</div>
-				</div>
-				<div class="form-group">
-					<label for="time">Waktu</label><br>
-					<div class="col-sm-6 col-xs-6 no-padding">
-						<input type="text" class="form-control" id="date" name="date" value="{{ isset($data) ? date("Y-m-d", strtotime($data->published_at)):date("Y-m-d") }}" placeholder="{{ isset($data) ? date("Y-m-d", strtotime($data->published_at)):date("Y-m-d") }}">
-					</div>
-					<div class="col-sm-6 col-xs-6 no-padding">
-						<input type="text" class="form-control" id="time" name="time" value="{{ isset($data) ? date("H:i", strtotime($data->published_at)) : date("H:i") }}" placeholder="{{ isset($data) ? date("H:i", strtotime($data->published_at)) : date("H:i") }}">
-					</div>
-				</div>
-				<div class="form-group btn-post">
-					<br><br>
-					<div class="btn-group btn-group-justified" role="group">
-						<a onclick="$('#form-post').submit();" class="btn btn-warning"><i class="fa fa-edit"></i> Simpan</a>
-						<a href="{{ url($current_url) }}" class="btn btn-default"><i class="fa fa-times"></i> Batal</a>
-					</div>
-				</div>
-			</div>
-			{{ isset($data) ? method_field('PUT') : '' }}
-			{{ csrf_field() }}
-		</form>
-	</div>
-</div>
+  <div class="panel-body no-padding-bottom">
+    <div class="row" style="margin-top:-15px;">
+      <form id="form-post" action="{{ url($current_url) }}{{ isset($data) ? '/' . $data->id : '' }}" method="post" enctype="multipart/form-data">
+        <div class="col-sm-8 col-md-9 left-side no-padding">
+          <input type="text" id="title" class="form-control {{ isset($data)   ? '' :   'autofocus' }} no-border-top-right no-border-left no-radius input-lg" name="title" placeholder="Judul.." maxlength="100" value="{{ isset($data) ? $data->title : '' }}">
+          <div class="input-group">
+            <span class="input-group-addon no-border-top-right no-border-left no-radius input-sm" id="url_span">{{ url('/post/') }}/</span>
+            <input type="text" id="slug" class="form-control no-border-top-right no-radius input-sm" name="slug" placeholder="Tautan.. (klik 2x untuk edit)" readonly value="{{ isset($data) ? $data->slug : '' }}">
+          </div>
+          <textarea id="excerpt" name="excerpt" class="form-control no-border-top-right no-border-left no-radius input-xlarge" placeholder="Kutipan.." rows="3">{{ isset($data) ? $data->excerpt : '' }}</textarea>
+          <textarea id="content" name="content" class="form-control no-border-top-right no-border-bottom no-radius input-xlarge" placeholder="Ketikkan tulisan anda di sini...">{{ isset($data) ? $data->content : '' }}</textarea>
+        </div>
+        <div class="col-sm-4 col-md-3 right-side">
+          <div class="form-group" style="padding-top:10px;">
+            <label for="cover">Sampul</label><br>
+            <div class="pwd-upload">
+              <div class="pwd-upload-new thumbnail">
+                <img src="{!! _get_image(isset($data) ? $data->cover : '') !!}">
+              </div>
+              <div class="pwd-upload-exists thumbnail"></div>
+              <div>
+                <span class="btn btn-default">
+                  <a href="{{ $urlFilemanager }}" type="button" class="pwd-upload-new" id="btn-upload">Pilih</a>
+                  <a href="{{ $urlFilemanager }}" type="button" class="pwd-upload-exists" id="btn-upload">Ganti</a>
+                </span>
+                <span class="btn btn-default" style="display:none;">
+                  <a type="button" class="pwd-upload-exists" id="btn-remove">Batal</a>
+                </span>
+                <input name="cover" id="cover" type="hidden" accept="image/*">
+                @if (isset($data->cover))
+                  <small class="help-inline">
+                    <label class="pull-right">
+                      <input type="checkbox" name="cover_remove" id="cover_remove"> Hapus
+                    </label>
+                  </small>
+                @endif
+              </div>
+            </div>
+          </div>
+          {{-- <div class="form-group">
+            <label for="featured_image">Featured Image</label>
+            <a id="btn-add-featured-image" class="btn btn-default btn-xs pull-right" title="Add a Featured Image"><i class="fa fa-plus"></i></a>
+            <div class="row">
+              <div class="col-md-12" id="featured-images">
+                @if (isset($data) ) 
+                  @foreach ($data->images as $key => $image)
+                    <div class="input-group" id="box-featured-image{{ $key+1 }}">
+                        <input type="text" class="form-control featured_images" name="featured_image[]" id="featured_image{{ $key+1 }}" readonly value="{{ $image->image_file }}">
+                        <a href="/assets/plugins/filemanager/dialog.php?type=1&field_id=featured_image{{ $key+1 }}&lang=id&fldr=/" class="input-group-addon" id="btn-add-featured-image{{ $key+1 }}" style="display:none;"><i class="fa fa-search"></i></a>
+                      <a class="input-group-addon" onclick="_remove_featured({{ $key+1 }})" style="cursor:pointer;"><i class="fa fa-times"></i></a>
+                    </div>
+                  @endforeach
+                @endif
+              </div>
+            </div>
+          </div> --}}
+          <div class="form-group">
+            <label for="category">Kategori*</label>
+            <a id="btn-add-category" class="btn btn-default btn-xs pull-right" data-toggle="modal" data-target="#pwd-modal" title="Add a New Category"><i class="fa fa-plus"></i></a>
+            <ul id="category-list">
+              @if (isset($data)) 
+                @foreach ($categories_ as $key => $value)
+                  <li style="width:98%;">
+                  {{ $value }}
+                  <span class="pull-right"><i class="fa fa-minus-square-o" style="cursor:pointer;" onclick="_remove_category(this)" title="Remove {{ $value }}"></i></span>
+                  <input type="hidden" name="categories[]" value="{{ $value }}">
+                  <input type="hidden" name="descriptions[]" value="{{ $descriptions_[$key] }}">
+                  <input type="hidden" name="parents[]" value="{{ $parents_[$key] }}">
+                  </li>
+                @endforeach
+              @endif
+            </ul>
+            <input type="text" class="form-control" id="category" name="category" placeholder="Cantumkan kategori..">
+          </div>
+          <div class="form-group">
+            <label for="tags">Label*</label>
+            <div class="col-sm-12 no-padding">
+              <input type="text" class="form-control" id="tags" name="tags" placeholder="Berikan label.." value="{{ isset($data) ? implode(",", $tags_) : '' }}">
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="visitor">Pengunjung</label><br>
+            <div class="col-sm-4 col-xs-4 no-padding">
+              <label>
+                <input name="comment" type="checkbox" {{ (isset($data) && ($data->comment)) ? 'checked' : ($apps->enable_comment) ? 'checked' : '' }}> Komentar
+              </label>
+            </div>
+            <div class="col-sm-4 col-xs-4 no-padding">
+              <label>
+                <input name="like" type="checkbox" {{ (isset($data) && ($data->like)) ? 'checked' : ($apps->enable_like) ? 'checked' : '' }}> Suka
+              </label>
+            </div>
+            <div class="col-sm-4 col-xs-4 no-padding">
+              <label>
+                <input name="share" type="checkbox" {{ (isset($data) && ($data->share)) ? 'checked' : ($apps->enable_share) ? 'checked' : '' }}> Sebar
+              </label>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="publish">Terbitkan</label><br>
+            <div class="col-sm-6 col-xs-6 no-padding">
+              <label>
+                <input name="status" type="radio" value="1" {{ (isset($data) && (!$data->status)) ? '' : 'checked' }}> Ya
+              </label>
+            </div>
+            <div class="col-sm-6 col-xs-6 no-padding">
+              <label>
+                <input name="status" type="radio" value="0" {{ (isset($data) && (!$data->status)) ? 'checked' : '' }}> Tidak
+              </label>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="time">Waktu</label><br>
+            <div class="col-sm-6 col-xs-6 no-padding">
+              <input type="text" class="form-control" id="date" name="date" value="{{ isset($data) ? date("Y-m-d", strtotime($data->published_at)):date("Y-m-d") }}" placeholder="{{ isset($data) ? date("Y-m-d", strtotime($data->published_at)):date("Y-m-d") }}">
+            </div>
+            <div class="col-sm-6 col-xs-6 no-padding">
+              <input type="text" class="form-control" id="time" name="time" value="{{ isset($data) ? date("H:i", strtotime($data->published_at)) : date("H:i") }}" placeholder="{{ isset($data) ? date("H:i", strtotime($data->published_at)) : date("H:i") }}">
+            </div>
+          </div>
+          <div class="form-group btn-post">
+            <br><br>
+            <div class="btn-group btn-group-justified" role="group">
+              <a onclick="$('#form-post').submit();" class="btn btn-warning"><i class="fa fa-edit"></i> Simpan</a>
+              <a href="{{ url($current_url) }}" class="btn btn-default"><i class="fa fa-times"></i> Batal</a>
+            </div>
+          </div>
+        </div>
+        {{ isset($data) ? method_field('PUT') : '' }}
+        {{ csrf_field() }}
+      </form>
+    </div>
+  </div>
 @endsection
 
 @section('styles')
@@ -152,6 +160,7 @@ if (isset($data) ) {
 	{!! _load_css('themes/admin/AdminSC/plugins/bootstrap/tagsinput/0.8.0/css/bootstrap-tagsinput.css') !!}
 	{!! _load_css('themes/admin/AdminSC/plugins/bootstrap/datetimepicker/4.17.37/css/bootstrap-datetimepicker.min.css') !!}
   {!! _load_css('themes/admin/AdminSC/plugins/fancybox/2.1.5/css/jquery.fancybox.css') !!}
+	{!! _load_css('themes/admin/AdminSC/plugins/select2/4.0.0/css/select2.min.css') !!}
   <style>
     #mceu_15 {
       position: absolute;
@@ -204,6 +213,13 @@ if (isset($data) ) {
       border-right: 1px solid #ccc;
       min-height: 640px;
     }
+    
+    .pwd-upload a {
+      text-decoration: none;
+    }
+    .pwd-upload .thumbnail {
+      margin-bottom: 5px;
+    }
     .pwd-upload-exists {
       display: none;
     }
@@ -216,20 +232,23 @@ if (isset($data) ) {
         border-bottom: 1px solid #ccc!important;
       }
     }
+    .select2-container {
+      width: 100%!important;
+    }
   </style>
 @endsection
 
 @section('scripts')
-  {!! _load_js('themes/admin/AdminSC/plugins/jasny-bootstrap/3.1.3/js/jasny-bootstrap.min.js') !!}
+  {{-- {!! _load_js('themes/admin/AdminSC/plugins/jasny-bootstrap/3.1.3/js/jasny-bootstrap.min.js') !!} --}}
   {!! _load_js('themes/admin/AdminSC/plugins/bootstrap/tagsinput/0.8.0/js/bootstrap-tagsinput.js') !!}
   {!! _load_js('themes/admin/AdminSC/plugins/moment/2.13.0/js/moment.min.js') !!}
   {!! _load_js('themes/admin/AdminSC/plugins/bootstrap/datetimepicker/4.17.37/js/bootstrap-datetimepicker.min.js') !!}
   {!! _load_js('themes/admin/AdminSC/plugins/fancybox/2.1.5/js/jquery.fancybox.js') !!}
   {!! _load_js('themes/admin/AdminSC/plugins/typeahead/0.11.1/js/typeahead.bundle.min.js') !!}
   {!! _load_js('themes/admin/AdminSC/plugins/tinymce/4.3.2/tinymce.min.js') !!}
-
+	{!! _load_js('themes/admin/AdminSC/plugins/select2/4.0.0/js/select2.min.js') !!}
   <script>
-    var selected = ['<?php echo isset($data) ? implode("','",$categories_ ) :'' ?>'];
+    var selected = ['{!! isset($data) ? implode("','", $categories_ ) : '' !!}'];
     var lsH,tmH = 0;
     $(function () {
       $('#date').datetimepicker({
@@ -248,11 +267,12 @@ if (isset($data) ) {
         $('.pwd-upload-new').hide();
         $('.pwd-upload-exists').show();
         $('.pwd-upload-exists.thumbnail').html(img);
+        $('#btn-remove').parent().show();
         $('#cover_remove').attr("checked", false);
-      } else {
+      }/*  else {
         url = url.replace('/storage/assets/images/upload/', "");
-      }
-      $('#'+field_id).val(url);
+      } */
+      $('#'+field_id).val(url.replace('/storage', ''));
     }
 
     $(document).ready(function(){
@@ -283,6 +303,7 @@ if (isset($data) ) {
         $('#cover').val('');
         $('.pwd-upload-new').show();
         $('.pwd-upload-exists').hide();
+        $('#btn-remove').parent().hide();
       });
       tinymce.init({
         relative_urls: false,
@@ -345,13 +366,15 @@ if (isset($data) ) {
 
       $('#btn-add-category').on('click', function() {
         var categories = "";
-        /* @if (isset($categories) && count($categories) > 0)
-          var categories = {!! json_encode(generateArrayLevel($categories, 'allSubcategory')) !!};
-        @endif */
+        @if (isset($categories) && count($categories) > 0)
+          @foreach (generateArrayLevel($categories, 'subcategory') as $category)
+            categories += '<option value="{{ $category->id }}" {{ isset($data) && ($data->parent_id == $category->id) ? 'selected' : '' }}>{!! $category->name !!}</option>';
+          @endforeach
+        @endif
         var inp = '<form class="form-horizontal" role="form">';
-          inp+= '<div class="form-group"><label class="control-label col-sm-4" for="category_name">Kategori</label><div class="col-sm-6"><input type="text" class="form-control" id="category_name" placeholder="Kategori.." maxlength="30"></div></div>';
+          inp+= '<div class="form-group"><label class="control-label col-sm-4" for="category_name">Kategori</label><div class="col-sm-6"><input type="text" class="form-control" id="category_name" placeholder="Nama kategori.." maxlength="30"></div></div>';
           inp+= '<div class="form-group"><label class="control-label col-sm-4" for="category_desc">Deskripsi</label><div class="col-sm-6"><textarea id="category_desc" name="category_desc" class="form-control" placeholder="Penjelasan singkat kategori.."></textarea></div></div>';
-          inp+= '<div class="form-group"><label class="control-label col-sm-4" for="category_parent">Induk</label><div class="col-sm-6"><select id="category_parent" name="category_parent" class="form-control"><option value="">[Pilih]</option>'+categories+'</select></div></div>';
+          inp+= '<div class="form-group"><label class="control-label col-sm-4" for="category_parent">Induk</label><div class="col-sm-6"><select id="category_parent" name="category_parent" class="form-control custom-select2"><option value="">[Tidak ada]</option>'+categories+'</select></div></div>';
           inp+= '</form>';
         var btn = '<button type="button" class="btn btn-default" data-dismiss="modal" id="btn-modal-cancel">Batal</button> <button type="button" class="btn btn-warning" data-dismiss="modal" id="btn-modal-add">Tambah</button>';
 
@@ -377,6 +400,10 @@ if (isset($data) ) {
           if (key==13) {
             e.preventDefault();
           }
+        });
+
+        $(".custom-select2").select2({
+          minimumResultsForSearch: Infinity
         });
       });
 
