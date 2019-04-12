@@ -598,6 +598,16 @@ label[for=publish] {
     color: #737373;
 }
 
+.help-inline-table {
+    display: inline-table;
+    /* margin-top: 5px; */
+    margin-bottom: 10px;
+    color: #737373;
+    position: relative;
+    top: 7px;
+    float: right;
+}
+
 @media (max-width: 767px) {
     .breadcrumb,
     .sub-menu li {

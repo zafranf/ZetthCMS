@@ -1,21 +1,21 @@
 @php
-$categories_ = [];
-$descriptions_ = [];
-$parents_ = [];
-$tags_ = [];
-if (isset($data) ) {
-	foreach($data->terms as $k => $term) {
-		if ($term->type == "category"){
-			$categories_[] = $term->name;
-			$descriptions_[] = $term->description;
-			$parents_[] = $term->parent;
-		}
-		if ($term->type=="tag")
-			$tags_[] = $term->name;
-	}
-}
+  $categories_ = [];
+  $descriptions_ = [];
+  $parents_ = [];
+  $tags_ = [];
+  if (isset($data) ) {
+    foreach($data->terms as $k => $term) {
+      if ($term->type == "category"){
+        $categories_[] = $term->name;
+        $descriptions_[] = $term->description;
+        $parents_[] = $term->parent;
+      }
+      if ($term->type=="tag")
+        $tags_[] = $term->name;
+    }
+  }
 
-$urlFilemanager = url('/themes/admin/AdminSC/plugins/filemanager/dialog.php?type=1&field_id=cover&lang=id&fldr=/');
+  $urlFilemanager = url('/themes/admin/AdminSC/plugins/filemanager/dialog.php?type=1&field_id=cover&lang=id&fldr=/');
 @endphp
 @extends('admin.AdminSC.layouts.main')
 
@@ -50,7 +50,7 @@ $urlFilemanager = url('/themes/admin/AdminSC/plugins/filemanager/dialog.php?type
                 </span>
                 <input name="cover" id="cover" type="hidden" accept="image/*">
                 @if (isset($data->cover))
-                  <small class="help-inline">
+                  <small class="help-inline-table">
                     <label class="pull-right">
                       <input type="checkbox" name="cover_remove" id="cover_remove"> Hapus
                     </label>
@@ -82,17 +82,17 @@ $urlFilemanager = url('/themes/admin/AdminSC/plugins/filemanager/dialog.php?type
             <ul id="category-list">
               @if (isset($data)) 
                 @foreach ($categories_ as $key => $value)
-                  <li style="width:98%;">
-                  {{ $value }}
-                  <span class="pull-right"><i class="fa fa-minus-square-o" style="cursor:pointer;" onclick="_remove_category(this)" title="Remove {{ $value }}"></i></span>
-                  <input type="hidden" name="categories[]" value="{{ $value }}">
-                  <input type="hidden" name="descriptions[]" value="{{ $descriptions_[$key] }}">
-                  <input type="hidden" name="parents[]" value="{{ $parents_[$key] }}">
+                  <li>
+                    {{ $value }}
+                    <span class="pull-right"><i class="fa fa-minus-square-o" style="cursor:pointer;" onclick="_remove_category(this)" title="Remove {{ $value }}"></i></span>
+                    <input type="hidden" name="categories[]" value="{{ $value }}">
+                    <input type="hidden" name="descriptions[]" value="{{ $descriptions_[$key] }}">
+                    <input type="hidden" name="parents[]" value="{{ $parents_[$key] }}">
                   </li>
                 @endforeach
               @endif
             </ul>
-            <input type="text" class="form-control" id="category" name="category" placeholder="Cantumkan kategori..">
+            <input type="text" class="form-control" id="category" name="category" placeholder="Set kategori..">
           </div>
           <div class="form-group">
             <label for="tags">Label*</label>
@@ -234,6 +234,55 @@ $urlFilemanager = url('/themes/admin/AdminSC/plugins/filemanager/dialog.php?type
     }
     .select2-container {
       width: 100%!important;
+    }
+
+    #category-list {
+      padding-left: 0;
+      margin-bottom: 5px;
+    }
+    #category-list li {
+
+      display: block;
+      margin: 5px 0;
+      padding: 5px;
+      border: 1px solid #ccc;
+      color: coral;
+      border-radius: 4px;
+    }
+    #category-list li:hover {
+      background: #f9f9f9
+    }
+
+    .bootstrap-tagsinput {
+      border: 0;
+      box-shadow: none;
+      padding: 0;
+    }
+
+    .bootstrap-tagsinput .tag {
+      /* display: block; */
+      margin: 5px 0;
+      padding: 5px;
+      border: 1px solid #ccc;
+      color: coral;
+      border-radius: 4px;
+      line-height: 35px;
+    }
+
+    .bootstrap-tagsinput .twitter-typeahead {
+      display: block;
+      margin: 5px 0;
+      margin-top: 3px;
+      padding: 5px;
+      border: 1px solid #ccc;
+      color: coral;
+      border-radius: 4px;
+    }
+    
+    .bootstrap-tagsinput .tag [data-role="remove"]:after {
+      font-family: 'FontAwesome'; 
+      content: "\f147";
+      padding: 0;
     }
   </style>
 @endsection
@@ -507,7 +556,7 @@ $urlFilemanager = url('/themes/admin/AdminSC/plugins/filemanager/dialog.php?type
       
       $('#tags').tagsinput({
         tagClass: function(item){
-          return 'label label-warning'
+          // return 'label label-warning'
         },
         typeaheadjs: {
           name: 'tags',
@@ -540,7 +589,7 @@ $urlFilemanager = url('/themes/admin/AdminSC/plugins/filemanager/dialog.php?type
     });
 
     function _insert_new_category(par) {
-      var cat = '<li style="width:98%;">'+par.name+'<span class="pull-right"><i class="fa fa-minus-square-o" style="cursor:pointer;" onclick="_remove_category(this)" title="Remove '+par.name+'"></i></span>'
+      var cat = '<li>'+par.name+'<span class="pull-right"><i class="fa fa-minus-square-o" style="cursor:pointer;" onclick="_remove_category(this)" title="Remove '+par.name+'"></i></span>'
           +'<input type="hidden" name="categories[]" value="'+par.name+'">'
           +'<input type="hidden" name="descriptions[]" value="'+par.desc+'">'
           +'<input type="hidden" name="parents[]" value="'+par.parent+'">'

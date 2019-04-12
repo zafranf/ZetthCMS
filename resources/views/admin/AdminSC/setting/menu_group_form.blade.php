@@ -97,18 +97,18 @@
       display: block;
       /* margin: 5px; */
       /* padding: 5px; */
-      /* border: 1px solid #cccccc; */
+      /* border: 1px solid #ccc; */
       color: coral;
-      /* background: #eeeeee; */
+      /* background: #eee; */
     }
     ol.vertical li span {
       display: block;
       margin: 5px;
       margin-left: 0;
       padding: 5px;
-      border: 1px solid #cccccc;
+      border: 1px solid #ccc;
       color: coral;
-      /* background: #eeeeee;  */
+      /* background: #eee;  */
     }
     ol.vertical li.placeholder {
       position: relative;

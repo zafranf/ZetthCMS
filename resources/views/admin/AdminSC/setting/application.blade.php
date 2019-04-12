@@ -26,7 +26,7 @@
 									</span>
 									<a href="#" class="btn btn-default fileinput-exists" data-dismiss="fileinput">Batal</a>
                   @if (isset($apps->logo))
-                    <small class="help-inline">
+                    <small class="help-inline-table">
                       <label class="pull-right">
                         <input type="checkbox" name="logo_remove" id="logo_remove"> Hapus
                       </label>
