@@ -17,7 +17,7 @@ function sortMenu($data, $level = 0) {
 
 {{-- @section('menu-sort')
   @if (\Auth::user()->can('update-menus'))
-    <a href="{{ url('/setting/menus/sort') }}" class="btn btn-info" data-toggle="tooltip" data-original-title="Urutkan"><i class="fa fa-sort"></i></a>
+    <a href="{{ url('/setting/menus/sort') }}" class="btn btn-info" data-toggle="tooltip" title="Urutkan"><i class="fa fa-sort"></i></a>
   @endif
 @endsection --}}
 

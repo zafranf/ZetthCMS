@@ -6,8 +6,8 @@ function sortMenu($data, $level = 0, $adminPath = '') {
   foreach ($data as $menu) {
     echo '<li data-id="' . $menu->id . '" data-name="' . $menu->name . '">';
     echo '<span class="' . $menu->icon . '"></span> ' . $menu->name;
-    echo '<a href="#" onclick="_delete(\'' . $adminPath . '/setting/menus/'.$menu->id. '\')" class="btn btn-default btn-xs pull-right" data-toggle="tooltip" data-original-title="Hapus"><i class="fa fa-trash"></i></a>';
-    echo '<a href="' . url($adminPath . '/setting/menus/' . $menu->id . '/edit?group=' . $menu->group_id) . '" class="btn btn-default btn-xs pull-right" data-toggle="tooltip" data-original-title="Edit"><i class="fa fa-edit"></i></a>';
+    echo '<a href="#" onclick="_delete(\'' . $adminPath . '/setting/menus/'.$menu->id. '\')" class="btn btn-default btn-xs pull-right" data-toggle="tooltip" title="Hapus"><i class="fa fa-trash"></i></a>';
+    echo '<a href="' . url($adminPath . '/setting/menus/' . $menu->id . '/edit?group=' . $menu->group_id) . '" class="btn btn-default btn-xs pull-right" data-toggle="tooltip" title="Edit"><i class="fa fa-edit"></i></a>';
     if (count($menu->submenu) > 0) {
       sortMenu($menu->submenu, $level + 1, $adminPath);
     }
@@ -51,7 +51,7 @@ function sortMenu($data, $level = 0, $adminPath = '') {
         </div>
         <div class="col-md-6">
           @if (isset($data))
-            <h4>Daftar Menu <a href="{{ url($adminPath.'/setting/menus/create?group='.$data->id) }}" class="btn btn-default btn-xs pull-right" data-toggle="tooltip" data-original-title="Tambah"><i class="fa fa-plus"></i></a></h4>
+            <h4>Daftar Menu <a href="{{ url($adminPath.'/setting/menus/create?group='.$data->id) }}" class="btn btn-default btn-xs pull-right" data-toggle="tooltip" title="Tambah"><i class="fa fa-plus"></i></a></h4>
             <hr>
             {!! sortMenu($data->allMenu, 0, $adminPath) !!}
           @endif
