@@ -20,8 +20,9 @@ class RoleController extends AdminController
      */
     public function __construct()
     {
+        parent::__construct();
         $this->current_url = url($this->adminPath . '/setting/roles');
-        $this->page_title = 'Pengaturan Peran dan Akses';
+        $this->page_title = 'Kelola Peran dan Akses';
         $this->breadcrumbs[] = [
             'page' => 'Pengaturan',
             'icon' => '',
@@ -42,7 +43,7 @@ class RoleController extends AdminController
     public function index(Request $r)
     {
         $this->breadcrumbs[] = [
-            'page' => 'Tabel',
+            'page' => 'Daftar',
             'icon' => '',
             'url' => '',
         ];
@@ -52,7 +53,7 @@ class RoleController extends AdminController
             'current_url' => $this->current_url,
             'breadcrumbs' => $this->breadcrumbs,
             'page_title' => $this->page_title,
-            'page_subtitle' => 'Tabel Peran',
+            'page_subtitle' => 'Daftar Peran',
         ];
 
         return view('admin.AdminSC.setting.roles', $data);

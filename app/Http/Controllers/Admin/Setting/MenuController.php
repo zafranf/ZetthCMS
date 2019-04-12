@@ -18,7 +18,7 @@ class MenuController extends AdminController
     {
         parent::__construct();
         $this->current_url = url($this->adminPath . '/setting/menus');
-        $this->page_title = 'Pengaturan Menu';
+        $this->page_title = 'Kelola Menu';
         $this->breadcrumbs[] = [
             'page' => 'Pengaturan',
             'icon' => '',
@@ -43,7 +43,7 @@ class MenuController extends AdminController
     public function index(Request $r)
     {
         $this->breadcrumbs[] = [
-            'page' => 'Tabel',
+            'page' => 'Daftar',
             'icon' => '',
             'url' => '',
         ];
@@ -53,7 +53,7 @@ class MenuController extends AdminController
             'current_url' => $this->current_url,
             'breadcrumbs' => $this->breadcrumbs,
             'page_title' => $this->page_title,
-            'page_subtitle' => 'Tabel Menu',
+            'page_subtitle' => 'Daftar Menu',
         ];
 
         return view('admin.AdminSC.setting.menu', $data);

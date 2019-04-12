@@ -18,7 +18,7 @@ class TagController extends AdminController
     {
         parent::__construct();
         $this->current_url = url($this->adminPath . '/data/tags');
-        $this->page_title = 'Pengaturan Label';
+        $this->page_title = 'Kelola Label';
         $this->breadcrumbs[] = [
             'page' => 'Data',
             'icon' => '',
@@ -39,7 +39,7 @@ class TagController extends AdminController
     public function index()
     {
         $this->breadcrumbs[] = [
-            'page' => 'Tabel',
+            'page' => 'Daftar',
             'icon' => '',
             'url' => '',
         ];
@@ -49,7 +49,7 @@ class TagController extends AdminController
             'current_url' => $this->current_url,
             'breadcrumbs' => $this->breadcrumbs,
             'page_title' => $this->page_title,
-            'page_subtitle' => 'Tabel Label',
+            'page_subtitle' => 'Daftar Label',
         ];
 
         return view('admin.AdminSC.data.tags', $data);

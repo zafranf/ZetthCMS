@@ -20,7 +20,7 @@ class PostController extends AdminController
     {
         parent::__construct();
         $this->current_url = url($this->adminPath . '/content/posts');
-        $this->page_title = 'Pengaturan Artikel';
+        $this->page_title = 'Kelola Artikel';
         $this->breadcrumbs[] = [
             'page' => 'Konten',
             'icon' => '',
@@ -41,7 +41,7 @@ class PostController extends AdminController
     public function index()
     {
         $this->breadcrumbs[] = [
-            'page' => 'Tabel',
+            'page' => 'Daftar',
             'icon' => '',
             'url' => '',
         ];
@@ -51,7 +51,7 @@ class PostController extends AdminController
             'current_url' => $this->current_url,
             'breadcrumbs' => $this->breadcrumbs,
             'page_title' => $this->page_title,
-            'page_subtitle' => 'Tabel Artikel',
+            'page_subtitle' => 'Daftar Artikel',
         ];
 
         return view('admin.AdminSC.content.posts', $data);

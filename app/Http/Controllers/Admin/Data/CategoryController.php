@@ -18,7 +18,7 @@ class CategoryController extends AdminController
     {
         parent::__construct();
         $this->current_url = url($this->adminPath . '/data/categories');
-        $this->page_title = 'Pengaturan Kategori';
+        $this->page_title = 'Kelola Kategori';
         $this->breadcrumbs[] = [
             'page' => 'Data',
             'icon' => '',
@@ -39,7 +39,7 @@ class CategoryController extends AdminController
     public function index()
     {
         $this->breadcrumbs[] = [
-            'page' => 'Tabel',
+            'page' => 'Daftar',
             'icon' => '',
             'url' => '',
         ];
@@ -49,7 +49,7 @@ class CategoryController extends AdminController
             'current_url' => $this->current_url,
             'breadcrumbs' => $this->breadcrumbs,
             'page_title' => $this->page_title,
-            'page_subtitle' => 'Tabel Kategori',
+            'page_subtitle' => 'Daftar Kategori',
         ];
 
         return view('admin.AdminSC.data.categories', $data);

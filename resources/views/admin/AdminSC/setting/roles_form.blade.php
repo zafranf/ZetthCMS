@@ -66,7 +66,7 @@
               <thead>
                 <tr>
                   <th>Menu</th>
-                  <th width="100px">Tabel</th>
+                  <th width="100px">Daftar</th>
                   <th width="100px">Tambah</th>
                   <th width="100px">Detail</th>
                   <th width="100px">Edit</th>

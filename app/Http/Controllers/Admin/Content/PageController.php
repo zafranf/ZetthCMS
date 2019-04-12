@@ -18,7 +18,7 @@ class PageController extends AdminController
     {
         parent::__construct();
         $this->current_url = url($this->adminPath . '/content/pages');
-        $this->page_title = 'Pengaturan Halaman';
+        $this->page_title = 'Kelola Halaman';
         $this->breadcrumbs[] = [
             'page' => 'Konten',
             'icon' => '',
@@ -39,7 +39,7 @@ class PageController extends AdminController
     public function index()
     {
         $this->breadcrumbs[] = [
-            'page' => 'Tabel',
+            'page' => 'Daftar',
             'icon' => '',
             'url' => '',
         ];
@@ -49,7 +49,7 @@ class PageController extends AdminController
             'current_url' => $this->current_url,
             'breadcrumbs' => $this->breadcrumbs,
             'page_title' => $this->page_title,
-            'page_subtitle' => 'Tabel Halaman',
+            'page_subtitle' => 'Daftar Halaman',
         ];
 
         return view('admin.AdminSC.content.pages', $data);

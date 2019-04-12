@@ -20,7 +20,7 @@ class ApplicationController extends AdminController
     {
         parent::__construct();
         $this->current_url = url($this->adminPath . '/setting/application');
-        $this->page_title = 'Pengaturan Aplikasi';
+        $this->page_title = 'Kelola Aplikasi';
         $this->breadcrumbs[] = [
             'page' => 'Pengaturan',
             'icon' => '',

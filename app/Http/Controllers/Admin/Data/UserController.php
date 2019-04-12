@@ -21,7 +21,7 @@ class UserController extends AdminController
     {
         parent::__construct();
         $this->current_url = url($this->adminPath . '/data/users');
-        $this->page_title = 'Pengaturan Pengguna';
+        $this->page_title = 'Kelola Pengguna';
         $this->breadcrumbs[] = [
             'page' => 'Data',
             'icon' => '',
@@ -42,7 +42,7 @@ class UserController extends AdminController
     public function index(Request $r)
     {
         $this->breadcrumbs[] = [
-            'page' => 'Tabel',
+            'page' => 'Daftar',
             'icon' => '',
             'url' => '',
         ];
@@ -52,7 +52,7 @@ class UserController extends AdminController
             'current_url' => $this->current_url,
             'breadcrumbs' => $this->breadcrumbs,
             'page_title' => $this->page_title,
-            'page_subtitle' => 'Tabel Pengguna',
+            'page_subtitle' => 'Daftar Pengguna',
         ];
 
         return view('admin.AdminSC.data.users', $data);

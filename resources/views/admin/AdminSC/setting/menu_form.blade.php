@@ -100,7 +100,7 @@
             <div class="row">
               <div class="col-sm-2">
                 <label>
-                  <input type="checkbox" name="index" {{ (isset($data) && $data->index == 0) ? '' : 'checked' }}> Tabel
+                  <input type="checkbox" name="index" {{ (isset($data) && $data->index == 0) ? '' : 'checked' }}> Daftar
                 </label>
               </div>
               <div class="col-sm-2">

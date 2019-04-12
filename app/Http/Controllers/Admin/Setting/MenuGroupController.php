@@ -19,7 +19,7 @@ class MenuGroupController extends AdminController
     {
         parent::__construct();
         $this->current_url = url($this->adminPath . '/setting/menu-groups');
-        $this->page_title = 'Pengaturan Grup Menu';
+        $this->page_title = 'Kelola Grup Menu';
         $this->breadcrumbs[] = [
             'page' => 'Pengaturan',
             'icon' => '',
@@ -40,7 +40,7 @@ class MenuGroupController extends AdminController
     public function index(Request $r)
     {
         $this->breadcrumbs[] = [
-            'page' => 'Tabel',
+            'page' => 'Daftar',
             'icon' => '',
             'url' => '',
         ];
@@ -50,7 +50,7 @@ class MenuGroupController extends AdminController
             'current_url' => $this->current_url,
             'breadcrumbs' => $this->breadcrumbs,
             'page_title' => $this->page_title,
-            'page_subtitle' => 'Tabel Grup Menu',
+            'page_subtitle' => 'Daftar Grup Menu',
         ];
 
         return view('admin.AdminSC.setting.menu_group', $data);
