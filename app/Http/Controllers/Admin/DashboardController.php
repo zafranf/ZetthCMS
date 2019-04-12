@@ -16,7 +16,12 @@ class DashboardController extends AdminController
     {
         parent::__construct();
         $this->current_url = url('/setting/roles');
-        $this->page_title = 'Beranda';
+        $this->page_title = 'Dasbor';
+        $this->breadcrumbs[] = [
+            'page' => 'Dasbor',
+            'icon' => '',
+            'url' => '',
+        ];
     }
 
     /**

@@ -21,7 +21,7 @@ class MenuTableSeeder extends Seeder
         $mainOrder = 1;
         /* menu dashboard */
         $dash = new Menu;
-        $dash->name = 'Beranda';
+        $dash->name = 'Dasbor';
         $dash->description = 'Halaman utama aplikasi';
         $dash->route_name = 'dashboard.index';
         // $dash->icon = 'fa fa-dashboard';
