@@ -242,7 +242,7 @@
     }
     #category-list li {
 
-      display: block;
+      display: inline-block;
       margin: 5px 0;
       padding: 5px;
       border: 1px solid #ccc;
@@ -251,6 +251,11 @@
     }
     #category-list li:hover {
       background: #f9f9f9
+    }
+    #category-list li span {
+      margin-left: 8px;
+      position: relative;
+      top: 1px;
     }
 
     .bootstrap-tagsinput {
@@ -283,6 +288,8 @@
       font-family: 'FontAwesome'; 
       content: "\f147";
       padding: 0;
+      position: relative;
+      top: 1px;
     }
   </style>
 @endsection
