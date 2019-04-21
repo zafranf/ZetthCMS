@@ -35,18 +35,18 @@
         <div class="col-sm-4 col-md-3 right-side">
           <div class="form-group" style="padding-top:10px;">
             <label for="cover">Sampul</label><br>
-            <div class="pwd-upload">
-              <div class="pwd-upload-new thumbnail">
+            <div class="zetth-upload">
+              <div class="zetth-upload-new thumbnail">
                 <img src="{!! _get_image(isset($data) ? $data->cover : '') !!}">
               </div>
-              <div class="pwd-upload-exists thumbnail"></div>
+              <div class="zetth-upload-exists thumbnail"></div>
               <div>
                 <span class="btn btn-default">
-                  <a href="{{ $urlFilemanager }}" type="button" class="pwd-upload-new" id="btn-upload">Pilih</a>
-                  <a href="{{ $urlFilemanager }}" type="button" class="pwd-upload-exists" id="btn-upload">Ganti</a>
+                  <a href="{{ $urlFilemanager }}" type="button" class="zetth-upload-new" id="btn-upload">Pilih</a>
+                  <a href="{{ $urlFilemanager }}" type="button" class="zetth-upload-exists" id="btn-upload">Ganti</a>
                 </span>
                 <span class="btn btn-default" style="display:none;">
-                  <a type="button" class="pwd-upload-exists" id="btn-remove">Batal</a>
+                  <a type="button" class="zetth-upload-exists" id="btn-remove">Batal</a>
                 </span>
                 <input name="cover" id="cover" type="hidden" accept="image/*">
                 @if (isset($data->cover))
@@ -78,7 +78,7 @@
           </div> --}}
           <div class="form-group">
             <label for="category">Kategori*</label>
-            <a id="btn-add-category" class="btn btn-default btn-xs pull-right" data-toggle="modal" data-target="#pwd-modal" title="Add a New Category"><i class="fa fa-plus"></i></a>
+            <a id="btn-add-category" class="btn btn-default btn-xs pull-right" data-toggle="modal" data-target="#zetth-modal" title="Add a New Category"><i class="fa fa-plus"></i></a>
             <ul id="category-list">
               @if (isset($data)) 
                 @foreach ($categories_ as $key => $value)
@@ -214,13 +214,13 @@
       min-height: 640px;
     }
     
-    .pwd-upload a {
+    .zetth-upload a {
       text-decoration: none;
     }
-    .pwd-upload .thumbnail {
+    .zetth-upload .thumbnail {
       margin-bottom: 5px;
     }
-    .pwd-upload-exists {
+    .zetth-upload-exists {
       display: none;
     }
     @media (max-width: 767px) {
@@ -320,9 +320,9 @@
       var url = $('#'+field_id).val().replace(SITE_URL, "");
       var img = '<img src="'+url+'">';
       if (field_id.indexOf("featured") < 0) {
-        $('.pwd-upload-new').hide();
-        $('.pwd-upload-exists').show();
-        $('.pwd-upload-exists.thumbnail').html(img);
+        $('.zetth-upload-new').hide();
+        $('.zetth-upload-exists').show();
+        $('.zetth-upload-exists.thumbnail').html(img);
         $('#btn-remove').parent().show();
         $('#cover_remove').attr("checked", false);
       }/*  else {
@@ -357,8 +357,8 @@
       });
       $('#btn-remove').on('click', function(){
         $('#cover').val('');
-        $('.pwd-upload-new').show();
-        $('.pwd-upload-exists').hide();
+        $('.zetth-upload-new').show();
+        $('.zetth-upload-exists').hide();
         $('#btn-remove').parent().hide();
       });
       tinymce.init({
@@ -438,7 +438,7 @@
         $('.modal-body').html(inp);
         $('.modal-footer').html(btn);
 
-        $('#pwd-modal').on('shown.bs.modal', function () {
+        $('#zetth-modal').on('shown.bs.modal', function () {
           $('#category_name').select();
         });
 

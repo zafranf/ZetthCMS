@@ -1,60 +1,89 @@
-@php($no=1)
-@extends('admin.layout')
-
-@section('styles')
-{!! _load_sweetalert('css') !!}
-{!! _load_datatables('css') !!}
-@endsection
+@extends('admin.AdminSC.layouts.main')
 
 @section('content')
-    <div class="panel-body no-padding-right-left">
-        <table id="table-data" class="row-border hover">
-            <thead>
-                <tr>
-                    <td width="25">No.</td>
-                    @if ($isDesktop)
-                        <td width="200">Name</td>
-                        <td width="200">Email</td>
-                        <td>Message</td>
-                        <td width="80">Status</td>
-                    @else
-                        <td width="300">Message</td>
-                    @endif
-                    <td width="50">Action</td>
-                </tr>
-            </thead>
-            <tbody>
-                @if (count($inboxes)>0)
-                    @foreach($inboxes as $inbox)
-                        @php(
-                            $sts = ['Unread', 'Read']
-                        )
-                        <tr{!! ($inbox->inbox_read)?'':' style="font-weight:400"' !!}>
-                            <td align="center">{{ $no++ }}</td>
-                            @if ($isDesktop)
-                                <td>{{ $inbox->inbox_name }}</td>
-                                <td>{{ $inbox->inbox_email }}</td>
-                                <td>{{ str_limit($inbox->inbox_message, 60) }}</td>
-                                <td>{{ _get_status_text($inbox->inbox_read, $sts) }}</td>
-                            @else
-                                <td>
-                                    {{ $inbox->inbox_name }}: <br>
-                                    <small>{{ str_limit($inbox->inbox_message, 50) }}<br>
-                                    {{ _get_status_text($inbox->inbox_read, $sts) }}</small>
-                                </td>
-                            @endif
-                            <td>
-                                {{ _get_button_access($inbox->inbox_id, $current_url) }}
-                            </td>
-                        </tr>
-                    @endforeach
-                @endif
-            </tbody>
-        </table>
-    </div>
+	<div class="panel-body no-padding-right-left">
+		<table id="table-data" class="row-border hover">
+			<thead>
+				<tr>
+					<td width="25">No.</td>
+					{{-- @if ($isDesktop) --}}
+						{{-- <td width="100">Foto</td> --}}
+						<td width="200">Nama</td>
+						<td>Pesan</td>
+						{{-- <td width="200">Surel</td> --}}
+						<td width="80">Status</td>
+					{{-- @else
+						<td width="100%">User</td>
+					@endif --}}
+					<td width="50">Akses</td>
+				</tr>
+			</thead>
+		</table>
+	</div>
+@endsection
+
+@section('styles')
+  {!! _load_css('themes/admin/AdminSC/plugins/DataTables/1.10.12/css/jquery.dataTables.min.css') !!}
 @endsection
 
 @section('scripts')
-{!! _load_sweetalert('js') !!}
-{!! _load_datatables('js') !!}
+  {!! _load_js('themes/admin/AdminSC/plugins/DataTables/1.10.12/js/jquery.dataTables.min.js') !!}
+  <script>
+    $(document).ready(function() {
+      var table = $('#table-data').DataTable({
+        "processing": true,
+        "serverSide": true,
+        "ajax": SITE_URL + "{{ $adminPath }}/report/inbox/data",
+        "pageLength": 20,
+        "lengthMenu": [
+          [10, 20, 50, 100, -1], 
+          [10, 20, 50, 100, "All"]
+        ],
+        "columns": [
+          { "width": "30px" },
+          // { "data": "image", "width": "80px" },
+          { "data": "name", "width": "200px" },
+          { "data": "message" },
+          // { "data": "email", "width": "200px" },
+          { "data": "status", "width": "50px" },
+          { "width": "100px" },
+        ],
+        "columnDefs": [{
+          "targets": 0,
+          "data": null,
+          "sortable": false,
+          "render": function (data, type, row, meta) {
+            return meta.row + meta.settings._iDisplayStart + 1;
+          }
+        }, /* {
+          "targets": 1,
+          "data": 'image',
+          "sortable": false,
+          "render": function (data, type, row, meta) {
+            return '<img src="' + data + '" width="80">';
+          }
+        }, */ {
+          "targets": 3,
+          "data": 'status',
+          "sortable": false,
+          "render": function (data, type, row, meta) {
+            return _get_status_text(data);
+          }
+        }, {
+          "targets": 4,
+          "data": 'id',
+          "sortable": false,
+          "render": function (data, type, row, meta) {
+            var actions = '';
+            var url = SITE_URL + "{{ $adminPath }}/report/inbox/" + data;
+            var del = "_delete('" + url + "')";
+            {!! _get_access_buttons() !!}
+            $('[data-toggle="tooltip"]').tooltip();
+
+            return actions;
+          }
+        }],
+      });
+    });
+  </script>
 @endsection

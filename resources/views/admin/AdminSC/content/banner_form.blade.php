@@ -4,7 +4,7 @@
 {!! _load_select2('css') !!}
 {!! _load_fancybox('css') !!}
 <style media="screen">
-	.pwd-upload-exists {
+	.zetth-upload-exists {
 		display: none;
 	}
 </style>
@@ -18,15 +18,15 @@
 			<div class="form-group">
 				<label for="banner_image" class="col-sm-2 control-label">Banner Image <abbr data-toggle="tooltip" data-placement="top" title="Size 1600x600"><i class="fa fa-question-circle"></i></abbr></label>
 				<div class="col-sm-4">
-					<div class="pwd-upload">
-						<div class="pwd-upload-new thumbnail">
+					<div class="zetth-upload">
+						<div class="zetth-upload-new thumbnail">
 							<img src="{!! _get_image_temp(isset($banner->banner_id)?$banner->banner_image:'', [560]) !!}">
 						</div>
-						<div class="pwd-upload-exists thumbnail"></div>
+						<div class="zetth-upload-exists thumbnail"></div>
 						<div>
-							<a href="{{ url('assets/plugins/filemanager/dialog.php?type=1&field_id=banner_image&relative_url=1&fldr=').Session::get('template') }}/" class="btn btn-default pwd-upload-new" id="btn-upload" type="button">Select</a>
-							<a href="{{ url('assets/plugins/filemanager/dialog.php?type=1&field_id=banner_image&relative_url=1&fldr=').Session::get('template') }}/" class="btn btn-default pwd-upload-exists" id="btn-upload" type="button">Change</a>
-							<a id="btn-remove" class="btn btn-default pwd-upload-exists" type="button">Remove</a>
+							<a href="{{ url('assets/plugins/filemanager/dialog.php?type=1&field_id=banner_image&relative_url=1&fldr=').Session::get('template') }}/" class="btn btn-default zetth-upload-new" id="btn-upload" type="button">Select</a>
+							<a href="{{ url('assets/plugins/filemanager/dialog.php?type=1&field_id=banner_image&relative_url=1&fldr=').Session::get('template') }}/" class="btn btn-default zetth-upload-exists" id="btn-upload" type="button">Change</a>
+							<a id="btn-remove" class="btn btn-default zetth-upload-exists" type="button">Remove</a>
 							<input name="banner_image" id="banner_image" type="hidden">
 						</div>
 					</div>
@@ -76,7 +76,7 @@
 			<div class="form-group">
 				<label for="banner_target" class="col-sm-2 control-label">Target</label>
 				<div class="col-sm-4">
-					<select name="banner_target" class="form-control pwd-select">
+					<select name="banner_target" class="form-control zetth-select">
 					@foreach(_option_target() as $key => $value)
 						<option {{ (isset($banner->banner_id) && $value==$banner->banner_target)?'selected':'' }} value="{{ $key }}">{{ $value }}</option>
 					@endforeach
@@ -113,7 +113,7 @@ $(function(){
 	$(".select2").select2({
 		placeholder: "[None]"
 	});
-	$(".pwd-select").select2({
+	$(".zetth-select").select2({
 		minimumResultsForSearch: Infinity
 	});
 });
@@ -121,9 +121,9 @@ $(function(){
 function responsive_filemanager_callback(field_id){
 	var url = $('#'+field_id).val().replace(SITE_URL, "");
 	var img = '<img src="'+url+'">';
-	$('.pwd-upload-new').hide();
-	$('.pwd-upload-exists').show();
-	$('.pwd-upload-exists.thumbnail').html(img);
+	$('.zetth-upload-new').hide();
+	$('.zetth-upload-exists').show();
+	$('.zetth-upload-exists.thumbnail').html(img);
 	$('#banner_image_remove').attr("checked", false);
 }
 
@@ -153,8 +153,8 @@ $(document).ready(function(){
 	});
 	$('#btn-remove').on('click', function(){
 		$('#post_cover').val('');
-		$('.pwd-upload-new').show();
-		$('.pwd-upload-exists').hide();
+		$('.zetth-upload-new').show();
+		$('.zetth-upload-exists').hide();
 	});
 });
 </script>

@@ -77,7 +77,7 @@
                                 @endphp
                                 <div id="div-socmed-{{ $rand }}">
                                     <div class="col-md-3 no-padding">
-                                        <select name="socmed_id[]" class="form-control pwd-select">
+                                        <select name="socmed_id[]" class="form-control zetth-select">
                                             <option value="">--Choose--</option>
                                             @foreach($socmeds as $socmed)
                                                 @php
@@ -103,7 +103,7 @@
                                 @endforeach
                             @else
                                 <div class="col-md-3 no-padding">
-                                    <select name="socmed_id[]" class="form-control pwd-select">
+                                    <select name="socmed_id[]" class="form-control zetth-select">
                                         <option value="">--Choose--</option>
                                         @foreach($socmeds as $socmed)
                                             <option value="{{ $socmed->socmed_id }}">{{ $socmed->socmed_name }}</option>
@@ -135,7 +135,7 @@
 {!! _load_select2('js') !!}
 <script>
 $(function(){
-    $(".pwd-select").select2({
+    $(".zetth-select").select2({
         minimumResultsForSearch: Infinity
     });
 });
@@ -144,7 +144,7 @@ $(document).ready(function(){
     $('#btn-add-socmed').on('click', function(){
         socmed_no = (Math.random() * 1000000000).toFixed(0);
         var html = '<div id="div-socmed-'+socmed_no+'"><div class="col-md-3 no-padding">'+
-                        '<select name="socmed_id[]" class="form-control pwd-select">'+
+                        '<select name="socmed_id[]" class="form-control zetth-select">'+
                             '<option value="">--Choose--</option>'+
                             @foreach($socmeds as $socmed)
                                 '<option value="{{ $socmed->socmed_id }}">{{ $socmed->socmed_name }}</option>'+
@@ -161,7 +161,7 @@ $(document).ready(function(){
                     '</div></div>';
 
         $('#div-socmed').append(html);
-        $(".pwd-select").select2({
+        $(".zetth-select").select2({
             minimumResultsForSearch: Infinity
         });
     });

@@ -4,7 +4,7 @@
 @section('styles')
 {!! _load_sweetalert('css') !!}
 <style>
-    .pwd-share-button {
+    .zetth-share-button {
         position: relative;
         height: 18px;
         margin-top: -2px;
@@ -18,7 +18,7 @@
         font-size: 12px;
         line-height: 1.2;
     }
-    .pwd-share-button:hover, .pwd-share-button:active, .pwd-share-button:focus {
+    .zetth-share-button:hover, .zetth-share-button:active, .zetth-share-button:focus {
         text-decoration: none;
     }
 </style>
@@ -34,11 +34,11 @@
         {!! nl2br(e($comment->comment_text)) !!}
         <br>
         <br>
-        <a id="btn-reply" class="pwd-share-button"  href="{{ url($current_url."/approve/".$comment->comment_id) }}"><i class="fa fa-check"></i> Approve</a>
-        <a id="btn-reply" class="pwd-share-button"  href="{{ url($current_url."/create?cid=".$comment->comment_id."&pid=".$comment->post_id) }}"><i class="fa fa-reply"></i> Reply</a>
-        <a id="btn-edit" class="pwd-share-button" href="{{ url($current_url.'/'.$comment->comment_id.'/edit') }}"><i class="fa fa-edit"></i> Edit</a> 
-        <a id="btn-delete" class="pwd-share-button" onclick="_delete('{{ $comment->comment_id }}', '{{ $current_url }}');"><i class="fa fa-trash-o"></i> Delete</a>
-        <a id="btn-back" class="pwd-share-button" href="{{ url($current_url) }}"><i class="fa fa-caret-left"></i> Back</a> 
+        <a id="btn-reply" class="zetth-share-button"  href="{{ url($current_url."/approve/".$comment->comment_id) }}"><i class="fa fa-check"></i> Approve</a>
+        <a id="btn-reply" class="zetth-share-button"  href="{{ url($current_url."/create?cid=".$comment->comment_id."&pid=".$comment->post_id) }}"><i class="fa fa-reply"></i> Reply</a>
+        <a id="btn-edit" class="zetth-share-button" href="{{ url($current_url.'/'.$comment->comment_id.'/edit') }}"><i class="fa fa-edit"></i> Edit</a> 
+        <a id="btn-delete" class="zetth-share-button" onclick="_delete('{{ $comment->comment_id }}', '{{ $current_url }}');"><i class="fa fa-trash-o"></i> Delete</a>
+        <a id="btn-back" class="zetth-share-button" href="{{ url($current_url) }}"><i class="fa fa-caret-left"></i> Back</a> 
     </div>
 @endsection
 

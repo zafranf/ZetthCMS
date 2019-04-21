@@ -85,7 +85,7 @@
 
   @yield('content2')
 
-  <div id="pwd-modal" class="modal" role="dialog">
+  <div id="zetth-modal" class="modal" role="dialog">
     <div class="modal-dialog {{ !$isDesktop ? 'modal-sm' : '' }}">
       <div class="modal-content">
         <div class="modal-header">

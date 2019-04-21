@@ -1,10 +1,31 @@
-@php($no=1)
-@extends('admin.layout')
+@extends('admin.AdminSC.layouts.main')
+
+@section('content')
+  <div class="panel-body">
+      <div class="row">
+      <div class="col-md-2">Dari</div>
+      <div class="col-md-10">{{ $data->name }} ({{ $data->email }})</div>
+    </div>
+    <div class="row">
+      <div class="col-md-2">No. Telepon</div>
+      <div class="col-md-10">{{ $data->phone!=""?$data->phone:'-' }}</div>
+    </div>
+    <div class="row">
+      <div class="col-md-2">Tanggal</div>
+      <div class="col-md-10">{{ generateDate($data->created_at) }}</div>
+    </div>
+    <hr>
+    {{ $data->message }}
+    <hr>
+    <!-- <a id="btn-delete" class="zetth-share-button" onclick="_delete('{{ $data->id }}', '{{ $current_url }}');"><i class="fa fa-envelope"></i> Mark as Unread</a> --> 
+    <a id="btn-back" class="zetth-share-button" href="{{ url($current_url) }}"><i class="fa fa-caret-left"></i> Kembali</a> 
+    <a id="btn-delete" class="zetth-share-button" onclick="_delete('{{ $current_url . '/' . $data->id }}');"><i class="fa fa-trash-o"></i> Hapus</a>
+  </div>
+@endsection
 
 @section('styles')
-{!! _load_sweetalert('css') !!}
-<style>
-    .pwd-share-button {
+  <style>
+    .zetth-share-button {
         position: relative;
         height: 18px;
         margin-top: -2px;
@@ -18,27 +39,8 @@
         font-size: 12px;
         line-height: 1.2;
     }
-    .pwd-share-button:hover, .pwd-share-button:active, .pwd-share-button:focus {
-        text-decoration: none;
-    }
-</style>
-@endsection
-
-@section('content')
-    <div class="panel-body">
-        From: {{ $inbox->inbox_name }} ({{ $inbox->inbox_email }}) <br>
-        Phone: {{ $inbox->inbox_phone!=""?$inbox->inbox_phone:'-' }} <br>
-        Date: {{ _generate_date($inbox->created_at, false, 'id') }} <br>
-        <br>
-        {{ $inbox->inbox_message }}
-        <br>
-        <br>
-        <!-- <a id="btn-delete" class="pwd-share-button" onclick="_delete('{{ $inbox->inbox_id }}', '{{ $current_url }}');"><i class="fa fa-envelope"></i> Mark as Unread</a> --> 
-        <a id="btn-delete" class="pwd-share-button" onclick="_delete('{{ $inbox->inbox_id }}', '{{ $current_url }}');"><i class="fa fa-trash-o"></i> Delete</a>
-        <a id="btn-back" class="pwd-share-button" href="{{ url($current_url) }}"><i class="fa fa-caret-left"></i> Back</a> 
-    </div>
-@endsection
-
-@section('scripts')
-{!! _load_sweetalert('js') !!}
+    .zetth-share-button:hover, .zetth-share-button:active, .zetth-share-button:focus {
+          text-decoration: none;
+      }
+  </style>
 @endsection

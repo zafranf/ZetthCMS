@@ -5,7 +5,7 @@
 {!! _load_select2('css') !!}
 {!! _load_sweetalert('css') !!}
 <style>
-    .pwd-process {
+    .zetth-process {
         display: none;
         background: #fff;
         width: 100%;
@@ -17,7 +17,7 @@
         opacity: 0.7;
         text-align: center;
     }
-    .pwd-loading {
+    .zetth-loading {
         position: relative;
         top: 45%;
     }
@@ -71,8 +71,8 @@
                         @foreach($albums->photos as $photo)
                         <div id="img{{ ++$no_img }}" class="col-sm-6 col-md-2 col-xs-3 no-padding" style="margin-bottom:1px;">
                             <div class="thumbnail" style="height:{{ $isDesktop ? '150px' : '64px' }};display:table-cell;vertical-align:middle;width:inherit;position:relative;">
-                                <img src="{{ _get_image_temp('assets/images/upload/'.$photo->photo_name, ['auto',140]) }}" style="max-height:140px;"><div id="pwd-process{{ $no_img }}" class="pwd-process">
-                                <img class="pwd-loading" src="{{ url('assets/images/loading.gif') }}"></div>
+                                <img src="{{ _get_image_temp('assets/images/upload/'.$photo->photo_name, ['auto',140]) }}" style="max-height:140px;"><div id="zetth-process{{ $no_img }}" class="zetth-process">
+                                <img class="zetth-loading" src="{{ url('assets/images/loading.gif') }}"></div>
                                 <button class="btn btn-default btn-xs btn-xs-top-right" title="Edit Description" type="button" onclick="_edit2('{{ $no_img }}', '{{ $photo->photo_name }}')" style="right:26px;"><i class="fa fa-edit"></i></button>
                                 <button class="btn btn-default btn-xs btn-xs-top-right" title="Remove Photo" type="button" onclick="_remove2('{{ $no_img }}', '{{ $photo->photo_name }}')"><i class="fa fa-minus"></i></button>
                             </div>
@@ -118,7 +118,7 @@ function addPhotoModal() {
                     '</div>'+
                 '</div>';
     html += 'Description:<br><textarea name="photo_description[]" id="photo_description" class="form-control" placeholder="Photo Description"></textarea>';
-    $('#pwd-modal').modal('show');
+    $('#zetth-modal').modal('show');
     $('.modal-title').text('Add Photo');
     $('.modal-body').html(html);
     $('.modal-footer').html('<button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button><button type="button" class="btn btn-warning" onclick="addPhoto()">Add</button>');
@@ -141,7 +141,7 @@ function addPhoto() {
         $('#photo-box').append(photo);
         $('#photo-box-file'+no_img).append(img_file);
     }
-    $('#pwd-modal').modal('hide');
+    $('#zetth-modal').modal('hide');
     $('.modal-body').html('');
 }
 
@@ -158,7 +158,7 @@ function _remove2(id, name) {
         confirmButtonText: "Yes, delete it!"
     }).then(function(isConfirm){
         if (isConfirm) {
-            $('#pwd-process'+id).show();
+            $('#zetth-process'+id).show();
             $.ajax({
                 url: "{{ url('ajax/delete/photo/') }}",
                 data: {
@@ -183,7 +183,7 @@ function _remove2(id, name) {
                     });
                 }
 
-                $('#pwd-process'+id).hide();
+                $('#zetth-process'+id).hide();
             });
         }
     });

@@ -331,19 +331,19 @@ class MenuTableSeeder extends Seeder
 
         $repOrder = 1;
         /* menu laporan (grup) */
-        /* $report = new Menu;
+        $report = new Menu;
         $report->name = 'Laporan';
         $report->description = 'Grup menu laporan';
         // $report->icon = 'pg-charts';
         $report->order = $mainOrder++;
         $report->status = 1;
         $report->index = 1;
-        $report->save(); */
+        $report->save();
 
         /* menu kontak masuk */
-        /* $repInbox = new Menu;
-        $repInbox->name = 'Kontak Masuk';
-        $repInbox->description = 'Menu pengaturan kontak masuk';
+        $repInbox = new Menu;
+        $repInbox->name = 'Kotak Masuk';
+        $repInbox->description = 'Menu pengaturan kotak masuk';
         $repInbox->route_name = 'inbox.index';
         // $repInbox->icon = 'pg-mail';
         $repInbox->order = $repOrder++;
@@ -354,7 +354,7 @@ class MenuTableSeeder extends Seeder
         $repInbox->read = 1;
         $repInbox->update = 0;
         $repInbox->delete = 1;
-        $repInbox->save(); */
+        $repInbox->save();
 
         /* menu komentar */
         /* $repComment = new Menu;
@@ -406,17 +406,17 @@ class MenuTableSeeder extends Seeder
 
         $logOrder = 1;
         /* menu catatan (grup) */
-        /* $log = new Menu;
+        $log = new Menu;
         $log->name = 'Catatan';
         $log->description = 'Grup menu catatan';
         // $log->icon = 'pg-note';
         $log->order = $mainOrder++;
         $log->status = 1;
         $log->index = 1;
-        $log->save(); */
+        $log->save();
 
         /* menu catatan aktifitas */
-        /* $logActivity = new Menu;
+        $logActivity = new Menu;
         $logActivity->name = 'Aktifitas';
         $logActivity->description = 'Menu catatan aktifitas';
         $logActivity->route_name = 'activities.index';
@@ -429,10 +429,10 @@ class MenuTableSeeder extends Seeder
         $logActivity->read = 1;
         $logActivity->update = 0;
         $logActivity->delete = 0;
-        $logActivity->save(); */
+        $logActivity->save();
 
         /* menu catatan galat */
-        /* $logError = new Menu;
+        $logError = new Menu;
         $logError->name = 'Galat';
         $logError->description = 'Menu catatan galat';
         $logError->route_name = 'errors.index';
@@ -445,23 +445,23 @@ class MenuTableSeeder extends Seeder
         $logError->read = 1;
         $logError->update = 0;
         $logError->delete = 0;
-        $logError->save(); */
+        $logError->save();
 
         /* menu catatan kunjungan */
-        /* $logError = new Menu;
-    $logError->name = 'Kunjungan';
-    $logError->description = 'Menu catatan kunjungan';
-    $logError->route_name = 'visitors.index';
-    // $logError->icon = 'fa fa-list-ul';
-    $logError->order = $logOrder++;
-    $logError->status = 1;
-    $logError->parent_id = $log->id;
-    $logError->index = 1;
-    $logError->create = 0;
-    $logError->read = 1;
-    $logError->update = 0;
-    $logError->delete = 0;
-    $logError->save(); */
+        $logError = new Menu;
+        $logError->name = 'Kunjungan';
+        $logError->description = 'Menu catatan kunjungan';
+        $logError->route_name = 'visitors.index';
+        // $logError->icon = 'fa fa-list-ul';
+        $logError->order = $logOrder++;
+        $logError->status = 1;
+        $logError->parent_id = $log->id;
+        $logError->index = 1;
+        $logError->create = 0;
+        $logError->read = 1;
+        $logError->update = 0;
+        $logError->delete = 0;
+        $logError->save();
     }
 
     public function web()

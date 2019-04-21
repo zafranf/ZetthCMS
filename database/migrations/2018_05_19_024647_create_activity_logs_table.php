@@ -1,8 +1,8 @@
 <?php
 
-use Illuminate\Support\Facades\Schema;
-use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
 
 class CreateActivityLogsTable extends Migration
 {
@@ -22,7 +22,7 @@ class CreateActivityLogsTable extends Migration
             $table->longText('post');
             $table->longText('files');
             $table->integer('user_id')->unsigned()->nullable();
-            $table->integer('count')->unsigned()->default(1);
+            // $table->integer('count')->unsigned()->default(1);
             $table->timestamps();
         });
     }

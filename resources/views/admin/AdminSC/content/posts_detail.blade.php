@@ -35,7 +35,7 @@
         text-decoration: none;
         color: white;
     }
-    .pwd-share-button {
+    .zetth-share-button {
         position: relative;
         height: 18px;
         margin-top: -2px;
@@ -49,7 +49,7 @@
         font-size: 12px;
         line-height: 1.2;
     }
-    .pwd-share-button:hover, .pwd-share-button:active, .pwd-share-button:focus {
+    .zetth-share-button:hover, .zetth-share-button:active, .zetth-share-button:focus {
         text-decoration: none;
     }
 </style>
@@ -77,21 +77,21 @@
         {{ implode($cat, ", ") }}
         <br>
         @if ($isDesktop)
-            <a class="pwd-share-button" onclick="_open_window('https://www.facebook.com/sharer/sharer.php?u={{ $link }}&amp;src=sdkpreparse')"><i class="fa fa-facebook-square"></i> Share</a>
-            <a class="pwd-share-button" onclick="_open_window('https://twitter.com/intent/tweet?text={{ $post->post_title.' '.$link }}')"><i class="fa fa-twitter"></i> Tweet</a>
-            <a class="pwd-share-button" onclick="_open_window('https://plus.google.com/share?url={{ $link }}')"><i class="fa fa-google-plus"></i> Share</a>
-            <a id="btn-short-url" class="pwd-share-button btn-short-url" data-toggle="modal" data-target="#pwd-modal"><i class="fa fa-link"></i> {{ $link }}</a>
-            <a id="btn-edit" class="pwd-share-button" href="{{ url($current_url.'/'.$post->post_id.'/edit') }}"><i class="fa fa-edit"></i> Edit</a>
-            <a id="btn-delete" class="pwd-share-button" onclick="_delete('{{ $post->post_id }}', '{{ $current_url }}');"><i class="fa fa-trash-o"></i> Delete</a>
-            <a id="btn-back" class="pwd-share-button" href="{{ url($current_url) }}"><i class="fa fa-caret-left"></i> Back</a> 
+            <a class="zetth-share-button" onclick="_open_window('https://www.facebook.com/sharer/sharer.php?u={{ $link }}&amp;src=sdkpreparse')"><i class="fa fa-facebook-square"></i> Share</a>
+            <a class="zetth-share-button" onclick="_open_window('https://twitter.com/intent/tweet?text={{ $post->post_title.' '.$link }}')"><i class="fa fa-twitter"></i> Tweet</a>
+            <a class="zetth-share-button" onclick="_open_window('https://plus.google.com/share?url={{ $link }}')"><i class="fa fa-google-plus"></i> Share</a>
+            <a id="btn-short-url" class="zetth-share-button btn-short-url" data-toggle="modal" data-target="#zetth-modal"><i class="fa fa-link"></i> {{ $link }}</a>
+            <a id="btn-edit" class="zetth-share-button" href="{{ url($current_url.'/'.$post->post_id.'/edit') }}"><i class="fa fa-edit"></i> Edit</a>
+            <a id="btn-delete" class="zetth-share-button" onclick="_delete('{{ $post->post_id }}', '{{ $current_url }}');"><i class="fa fa-trash-o"></i> Delete</a>
+            <a id="btn-back" class="zetth-share-button" href="{{ url($current_url) }}"><i class="fa fa-caret-left"></i> Back</a> 
         @else
-            <a class="pwd-share-button" onclick="_open_window('https://www.facebook.com/sharer/sharer.php?u={{ $link }}&amp;src=sdkpreparse')"><i class="fa fa-facebook-square"></i></a>
-            <a class="pwd-share-button" onclick="_open_window('https://twitter.com/intent/tweet?text={{ $post->post_title.' '.$link }}')"><i class="fa fa-twitter"></i></a>
-            <a class="pwd-share-button" onclick="_open_window('https://plus.google.com/share?url={{ $link }}')"><i class="fa fa-google-plus"></i></a>
-            <a id="btn-short-url" class="pwd-share-button btn-short-url" data-toggle="modal" data-target="#pwd-modal"><i class="fa fa-link"></i> <span class="hide">{{ $link }}</span></a>
-            <a id="btn-edit" class="pwd-share-button" href="{{ url($current_url.'/'.$post->post_id.'/edit') }}"><i class="fa fa-edit"></i></a>
-            <a id="btn-delete" class="pwd-share-button" onclick="_delete('{{ $post->post_id }}', '{{ $current_url }}');"><i class="fa fa-trash-o"></i></a>
-            <a id="btn-back" class="pwd-share-button" href="{{ url($current_url) }}"><i class="fa fa-caret-left"></i> Back</a> 
+            <a class="zetth-share-button" onclick="_open_window('https://www.facebook.com/sharer/sharer.php?u={{ $link }}&amp;src=sdkpreparse')"><i class="fa fa-facebook-square"></i></a>
+            <a class="zetth-share-button" onclick="_open_window('https://twitter.com/intent/tweet?text={{ $post->post_title.' '.$link }}')"><i class="fa fa-twitter"></i></a>
+            <a class="zetth-share-button" onclick="_open_window('https://plus.google.com/share?url={{ $link }}')"><i class="fa fa-google-plus"></i></a>
+            <a id="btn-short-url" class="zetth-share-button btn-short-url" data-toggle="modal" data-target="#zetth-modal"><i class="fa fa-link"></i> <span class="hide">{{ $link }}</span></a>
+            <a id="btn-edit" class="zetth-share-button" href="{{ url($current_url.'/'.$post->post_id.'/edit') }}"><i class="fa fa-edit"></i></a>
+            <a id="btn-delete" class="zetth-share-button" onclick="_delete('{{ $post->post_id }}', '{{ $current_url }}');"><i class="fa fa-trash-o"></i></a>
+            <a id="btn-back" class="zetth-share-button" href="{{ url($current_url) }}"><i class="fa fa-caret-left"></i> Back</a> 
         @endif
         <br>
         <br>
@@ -114,13 +114,13 @@
 $(document).ready(function(){
     $('.btn-short-url').on('click', function(){
         url = $(this).text();
-        html = '<input id="pwd-short-url" type="text" class="form-control" readonly value="'+url+'">';
+        html = '<input id="zetth-short-url" type="text" class="form-control" readonly value="'+url+'">';
         $('.modal-title').text('Share URL');
         $('.modal-body').html(html);
         $('.modal-footer').hide();
     });
-    $('#pwd-modal').on('shown.bs.modal', function () {
-        $('#pwd-short-url').select();
+    $('#zetth-modal').on('shown.bs.modal', function () {
+        $('#zetth-short-url').select();
     })
 });
 </script>

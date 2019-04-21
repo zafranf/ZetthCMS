@@ -54,7 +54,7 @@
       text-decoration: none;
       color: white;
     }
-    .pwd-share-button {
+    .zetth-share-button {
       position: relative;
       height: 18px;
       margin-top: -2px;
@@ -68,10 +68,10 @@
       font-size: 12px;
       line-height: 1.2;
     }
-    .pwd-share-button:hover, .pwd-share-button:active, .pwd-share-button:focus {
+    .zetth-share-button:hover, .zetth-share-button:active, .zetth-share-button:focus {
       text-decoration: none;
     }
-    .pwd-stats {
+    .zetth-stats {
       border: 1px solid coral;
       border-radius: 3px;
       width: 100%;
@@ -82,7 +82,7 @@
       text-align: center;
       font-size: 12px;
     }
-    .pwd-stats .text {
+    .zetth-stats .text {
       float: right;
       background: coral;
       color: white;
@@ -94,7 +94,7 @@
       text-align: right;
     }
     @media (max-width: 767px) {
-      .pwd-stats {
+      .zetth-stats {
         width: 40%;
         display: inline;
       }
@@ -153,13 +153,13 @@
       });
       $('.btn-short-url').on('click', function(){
         url = $(this).text();
-        html = 'Press <code>CTRL+C</code> to copy: <input id="pwd-short-url" type="text" class="form-control" readonly value="'+url+'" style="margin-top:10px;">';
+        html = 'Press <code>CTRL+C</code> to copy: <input id="zetth-short-url" type="text" class="form-control" readonly value="'+url+'" style="margin-top:10px;">';
         $('.modal-title').text('Share URL');
         $('.modal-body').html(html);
         $('.modal-footer').hide();
       });
-      $('#pwd-modal').on('shown.bs.modal', function () {
-        $('#pwd-short-url').select();
+      $('#zetth-modal').on('shown.bs.modal', function () {
+        $('#zetth-short-url').select();
       })
     });
   </script>

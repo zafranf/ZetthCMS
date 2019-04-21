@@ -22,9 +22,7 @@ if (env('ADMIN_ROUTE') == 'path') {
 }
 
 /* site routes */
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/', 'SiteController@index');
 
 /* authentication routes */
 Auth::routes(['verify' => true]);

@@ -8,7 +8,10 @@ use \Illuminate\Database\Eloquent\Builder;
 class ErrorLog extends Model
 {
     public $incrementing = false;
-    protected $primaryKey = ['file', 'line', 'path', 'code', 'message'];
+
+    protected $primaryKey = [
+        'file', 'line', 'path', 'code', 'message',
+    ];
 
     protected $fillable = [
         'code', 'path', 'file', 'line', 'message', 'trace', 'data', 'count', 'params',
