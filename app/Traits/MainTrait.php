@@ -469,12 +469,18 @@ trait MainTrait
      * @param [type] $collection
      * @return void
      */
-    protected function generateDataTable($request, $collection)
+    protected function generateDataTable($request, $collection, $escape = false)
     {
         if ($collection instanceof Illuminate\Database\Eloquent\Builder) {
             $collection = $collection->get();
         }
 
-        return \Datatables::collection($collection)->escapeColumns([]) /* ->addColumn('action', 'test') */->make();
+        $make = \Datatables::collection($collection);
+        if (bool($escape)) {
+            $make = $make->escapeColumns([]);
+        }
+        $make = $make->make();
+
+        return $make;
     }
 }

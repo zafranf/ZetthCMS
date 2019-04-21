@@ -5,18 +5,11 @@
 		<table id="table-data" class="row-border hover">
 			<thead>
 				<tr>
-					{{-- <td width="25">No.</td> --}}
-					{{-- @if ($isDesktop) --}}
-						{{-- <td width="100">Foto</td> --}}
-						<td width="200">IP</td>
-						<td>Description</td>
-						<td>Count</td>
-						{{-- <td width="200">Surel</td> --}}
-						{{-- <td width="80">Method</td> --}}
-					{{-- @else
-						<td width="100%">User</td>
-					@endif --}}
-					{{-- <td width="50">Akses</td> --}}
+          <td>No.</td>
+          <td>IP</td>
+          <td>Halaman</td>
+          <td>Referral</td>
+          <td>Jumlah</td>
 				</tr>
 			</thead>
 		</table>
@@ -41,23 +34,24 @@
           [10, 20, 50, 100, "All"]
         ],
         "columns": [
-          // { "width": "30px" },
+          { "width": "30px" },
           // { "data": "image", "width": "80px" },
-          { "data": "ip", "width": "200px" },
+          { "data": "ip", "width": "100px" },
           { "data": "page" },
-          { "data": "count" },
+          { "data": "referral" },
+          { "data": "count", "width": "50px" },
           // { "data": "email", "width": "200px" },
           // { "data": "method", "width": "50px" },
           // { "width": "100px" },
         ],
-        "columnDefs": [/* {
+        "columnDefs": [{
           "targets": 0,
           "data": null,
           "sortable": false,
           "render": function (data, type, row, meta) {
             return meta.row + meta.settings._iDisplayStart + 1;
           }
-        }, */ /* {
+        }, /* {
           "targets": 1,
           "data": 'image',
           "sortable": false,
