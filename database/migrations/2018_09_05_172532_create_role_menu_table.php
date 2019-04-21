@@ -1,8 +1,8 @@
 <?php
 
-use Illuminate\Support\Facades\Schema;
-use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
 
 class CreateRoleMenuTable extends Migration
 {
@@ -15,14 +15,14 @@ class CreateRoleMenuTable extends Migration
     {
         Schema::create('role_menu', function (Blueprint $table) {
             $table->unsignedInteger('role_id');
-            $table->unsignedInteger('menu_id');
+            $table->unsignedInteger('menu_group_id');
 
             $table->foreign('role_id')->references('id')->on('roles')
                 ->onUpdate('cascade')->onDelete('cascade');
-            $table->foreign('menu_id')->references('id')->on('menus')
+            $table->foreign('menu_group_id')->references('id')->on('menu_groups')
                 ->onUpdate('cascade')->onDelete('cascade');
 
-            $table->primary(['role_id', 'menu_id']);
+            $table->primary(['role_id', 'menu_group_id']);
         });
     }
 

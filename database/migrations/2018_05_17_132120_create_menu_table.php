@@ -1,8 +1,8 @@
 <?php
 
-use Illuminate\Support\Facades\Schema;
-use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
 
 class CreateMenuTable extends Migration
 {
@@ -22,10 +22,11 @@ class CreateMenuTable extends Migration
             $table->string('route_name')->nullable();
             $table->string('icon')->nullable();
             $table->enum('target', ['_self', '_blank'])->default('_self');
-            $table->enum('group', ['admin', 'web'])->default('admin');
             $table->tinyInteger('order')->unsigned()->default(1);
             $table->boolean('status')->comment('0=inactive, 1=active')->unsigned();
+            $table->integer('group_id')->unsigned()->default(1);
             $table->integer('parent_id')->unsigned()->default(0);
+            $table->boolean('is_crud')->unsigned()->default(1);
             $table->boolean('index')->unsigned()->default(0);
             $table->boolean('create')->unsigned()->default(0);
             $table->boolean('read')->unsigned()->default(0);

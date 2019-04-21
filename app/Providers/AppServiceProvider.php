@@ -24,35 +24,50 @@ class AppServiceProvider extends ServiceProvider
             if (!Schema::hasTable('applications')) {
                 /* sementara, nanti redirect ke halaman install */
                 dd('You need to install this app first');
-                // redirect('http://google.com')->send();
+                // redirect(url('/install'))->send();
             }
 
             /* check admin page */
             $adminPath = '/admin';
             $isAdminSubdomain = false;
+            $isAdminPanel = false;
+
+            /* check admin on uri */
+            $uri = _server('REQUEST_URI');
+            if (strpos($uri, 'admin') !== false) {
+                $isAdminPanel = true;
+            }
+
+            /* check admin on host */
             $host = parse_url(url('/'))['host'];
             if (strpos($host, 'admin') !== false) {
-                $isAdminSubdomain = true;
                 $adminPath = '';
+                $isAdminSubdomain = true;
+                $isAdminPanel = true;
             }
-            View::share('isAdminSubdomain', $isAdminSubdomain);
-            View::share('adminPath', $adminPath);
-        }
 
-        /* send application data to all views */
-        if (Schema::hasTable('applications')) {
-            $apps = \App\Models\Application::find(1);
+            /* share admin panel variable */
+            View::share([
+                'adminPath' => $adminPath,
+                'isAdminSubdomain' => $isAdminSubdomain,
+                'isAdminPanel' => $isAdminPanel,
+            ]);
+
+            /* send application data to all views */
+            $apps = \App\Models\Application::where('domain', $host)->first();
+            if (!$apps) {
+                throw new \Exception("Application config not found", 1);
+            }
             View::share('apps', $apps);
-        }
 
-        /* send menu data to all views */
-        /* if (Schema::hasTable('menus')) {
-    $appmenu = \App\Models\Menu::where([
-    'parent_id' => 0,
-    'status' => 1,
-    ])->with('submenu')->orderBy('order')->get();
-    View::share('appmenu', $appmenu);
-    } */
+            /* send device type to all views */
+            $agent = new \Jenssegers\Agent\Agent();
+            View::share([
+                'isMobile' => $agent->isMobile(),
+                'isTablet' => $agent->isTablet(),
+                'isDesktop' => $agent->isDesktop(),
+            ]);
+        }
     }
 
     /**

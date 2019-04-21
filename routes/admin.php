@@ -2,30 +2,40 @@
 Route::get('/', function () {
     return redirect('/login');
 });
-Route::get('/login', 'Auth\LoginController@showLoginForm');
-Route::post('/login', 'Auth\LoginController@login');
-Route::post('/logout', 'Auth\LoginController@logout');
+Route::get('/login', 'Admin\Auth\LoginController@showLoginForm');
+Route::post('/login', 'Admin\Auth\LoginController@login');
+Route::post('/logout', 'Admin\Auth\LoginController@logout');
 if (env('APP_DEBUG')) {
-    Route::get('/logout', 'Auth\LoginController@logout');
+    Route::get('/logout', 'Admin\Auth\LoginController@logout');
 }
 
 Route::middleware('auth')->group(function () {
     /* api datatable */
     Route::get('/setting/menus/data', 'Admin\Setting\MenuController@datatable')->name('menus.data');
+    Route::get('/setting/menu-groups/data', 'Admin\Setting\MenuGroupController@datatable')->name('menu-groups.data');
     Route::get('/setting/roles/data', 'Admin\Setting\RoleController@datatable')->name('roles.data');
-    Route::get('/setting/users/data', 'Admin\Setting\UserController@datatable')->name('users.data');
-    Route::get('/content/banners/data', 'Admin\Content\BannerController@datatable')->name('banners.data');
-    Route::get('/content/categories/data', 'Admin\Content\CategoryController@datatable')->name('categories.data');
-    Route::get('/content/tags/data', 'Admin\Content\TagController@datatable')->name('tags.data');
-    Route::get('/report/subscribers/data', 'Admin\Report\SubscriberController@datatable')->name('subscribers.data');
+    Route::get('/data/users/data', 'Admin\Data\UserController@datatable')->name('users.data');
+    Route::get('/data/categories/data', 'Admin\Data\CategoryController@datatable')->name('categories.data');
+    Route::get('/data/tags/data', 'Admin\Data\TagController@datatable')->name('tags.data');
+    Route::get('/content/pages/data', 'Admin\Content\PageController@datatable')->name('pages.data');
+    Route::get('/content/posts/data', 'Admin\Content\PostController@datatable')->name('posts.data');
+    // Route::get('/content/banners/data', 'Admin\Content\BannerController@datatable')->name('banners.data');
+    Route::get('/report/inbox/data', 'Admin\Report\InboxController@datatable')->name('inbox.data');
+    // Route::get('/report/subscribers/data', 'Admin\Report\SubscriberController@datatable')->name('subscribers.data');
+    Route::get('/log/activities/data', 'Admin\Log\ActivityController@datatable')->name('activities.data');
+    Route::get('/log/errors/data', 'Admin\Log\ErrorController@datatable')->name('errors.data');
+    Route::get('/log/visitors/data', 'Admin\Log\VisitorController@datatable')->name('visitors.data');
+
+    /* api ajax */
+    Route::get('/ajax/data/{term}', 'Admin\AjaxController@term')->name('ajax.term');
 
     /* sort menu */
-    Route::get('/setting/menus/sort', 'Admin\Setting\MenuController@sort')->name('menus.sort');
-    Route::put('/setting/menus/sort', 'Admin\Setting\MenuController@sortSave')->name('menus.sortSave');
+    // Route::get('/setting/menus/sort', 'Admin\Setting\MenuController@sort')->name('menus.sort');
+    // Route::put('/setting/menus/sort', 'Admin\Setting\MenuController@sortSave')->name('menus.sortSave');
 
     /* sort banner */
-    Route::get('/content/banners/sort', 'Admin\Content\BannerController@sort')->name('banners.sort')->name('banners.sort');
-    Route::put('/content/banners/sort', 'Admin\Content\BannerController@sortSave')->name('banners.sortSave');
+    /* Route::get('/content/banners/sort', 'Admin\Content\BannerController@sort')->name('banners.sort')->name('banners.sort');
+    Route::put('/content/banners/sort', 'Admin\Content\BannerController@sortSave')->name('banners.sortSave'); */
 
     Route::middleware('access')->group(function () {
         /* dashboard */
@@ -36,34 +46,45 @@ Route::middleware('auth')->group(function () {
             Route::resources([
                 '/application' => 'Admin\Setting\ApplicationController',
                 '/menus' => 'Admin\Setting\MenuController',
+                '/menu-groups' => 'Admin\Setting\MenuGroupController',
                 '/roles' => 'Admin\Setting\RoleController',
-                '/users' => 'Admin\Setting\UserController',
+            ], [
+                'parameters' => [
+                    'menu-groups' => 'menugroup',
+                ],
+            ]);
+        });
+
+        /* module data routes */
+        Route::prefix('data')->group(function () {
+            Route::resources([
+                '/users' => 'Admin\Data\UserController',
+                '/categories' => 'Admin\Data\CategoryController',
+                '/tags' => 'Admin\Data\TagController',
             ]);
         });
 
         /* module content routes */
         Route::prefix('content')->group(function () {
             Route::resources([
-                '/banners' => 'Admin\Content\BannerController',
-                '/posts' => 'Admin\Content\PostController',
                 '/pages' => 'Admin\Content\PageController',
-                '/categories' => 'Admin\Content\CategoryController',
-                '/tags' => 'Admin\Content\TagController',
-                '/gallery/photos' => 'Admin\Content\Gallery\PhotoController',
-                '/gallery/videos' => 'Admin\Content\Gallery\VideoController',
-                '/products' => 'Admin\Content\Product\ProductController',
+                '/posts' => 'Admin\Content\PostController',
+                // '/banners' => 'Admin\Content\BannerController',
+                // '/gallery/photos' => 'Admin\Content\Gallery\PhotoController',
+                // '/gallery/videos' => 'Admin\Content\Gallery\VideoController',
+                // '/products' => 'Admin\Content\Product\ProductController',
             ]);
-            Route::resource('/products/categories', 'Admin\Content\Product\CategoryController')->names('products.categories');
-            Route::resource('/products/tags', 'Admin\Content\Product\TagController')->names('products.tags');
+            // Route::resource('/products/categories', 'Admin\Content\Product\CategoryController')->names('products.categories');
+            // Route::resource('/products/tags', 'Admin\Content\Product\TagController')->names('products.tags');
         });
 
         /* module report routes */
         Route::prefix('report')->group(function () {
             Route::resources([
                 '/inbox' => 'Admin\Report\InboxController',
-                '/comments' => 'Admin\Report\CommentController',
-                '/interms' => 'Admin\Report\IntermController',
-                '/subscribers' => 'Admin\Report\SubscriberController',
+                // '/comments' => 'Admin\Report\CommentController',
+                // '/incoming-terms' => 'Admin\Report\IntermController',
+                // '/subscribers' => 'Admin\Report\SubscriberController',
             ]);
         });
 
@@ -72,6 +93,7 @@ Route::middleware('auth')->group(function () {
             Route::resources([
                 '/activities' => 'Admin\Log\ActivityController',
                 '/errors' => 'Admin\Log\ErrorController',
+                '/visitors' => 'Admin\Log\VisitorController',
             ]);
         });
 

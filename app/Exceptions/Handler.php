@@ -4,10 +4,10 @@ namespace App\Exceptions;
 
 use Exception;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
-use Illuminate\Support\Facades\Schema;
 
 class Handler extends ExceptionHandler
 {
+    use \App\Traits\MainTrait;
     /**
      * A list of the exception types that are not reported.
      *
@@ -37,38 +37,7 @@ class Handler extends ExceptionHandler
      */
     public function report(Exception $e)
     {
-        $log = [
-            'code' => $e->getCode(),
-            'file' => $e->getFile(),
-            'line' => $e->getLine(),
-            'message' => $e->getMessage(),
-            'params' => json_encode(\Request::all()),
-            'path' => \Request::path(),
-            'trace' => json_encode($e->getTrace()),
-        ];
-        if (isset($e->data)) {
-            $log['data'] = $e->data;
-        }
-
-        if ($e->getMessage()) {
-            if (Schema::hasTable('applications')) {
-                \App\Models\ErrorLog::updateOrCreate(
-                    [
-                        'code' => $log['code'],
-                        'message' => $log['message'],
-                        'file' => $log['file'],
-                        'line' => $log['line'],
-                        'path' => $log['path'],
-                    ],
-                    [
-                        'params' => $log['params'],
-                        'trace' => $log['trace'],
-                        'data' => $log['data'] ?? null,
-                        'count' => \DB::raw('count+1'),
-                    ]
-                );
-            }
-        }
+        $this->errorLog($e);
 
         parent::report($e);
     }

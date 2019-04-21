@@ -16,8 +16,23 @@ class MenuController extends AdminController
      */
     public function __construct()
     {
-        $this->current_url = url('/setting/menus');
-        $this->page_title = 'Pengaturan Menu';
+        parent::__construct();
+        $this->current_url = url($this->adminPath . '/setting/menus');
+        $this->page_title = 'Kelola Menu';
+        $this->breadcrumbs[] = [
+            'page' => 'Pengaturan',
+            'icon' => '',
+            'url' => url($this->adminPath . '/setting/application'),
+        ];
+        $this->breadcrumbs[] = [
+            'page' => 'Menu',
+            'icon' => '',
+            'url' => url($this->adminPath . '/setting/menu-groups'),
+        ];
+
+        if (!request()->input('group')) {
+            return redirect($this->adminPath . '/setting/menu-groups')->send();
+        }
     }
 
     /**
@@ -27,14 +42,21 @@ class MenuController extends AdminController
      */
     public function index(Request $r)
     {
+        $this->breadcrumbs[] = [
+            'page' => 'Daftar',
+            'icon' => '',
+            'url' => '',
+        ];
+
         /* set variable for view */
         $data = [
             'current_url' => $this->current_url,
+            'breadcrumbs' => $this->breadcrumbs,
             'page_title' => $this->page_title,
             'page_subtitle' => 'Daftar Menu',
         ];
 
-        return view('admin.setting.menu', $data);
+        return view('admin.AdminSC.setting.menu', $data);
     }
 
     /**
@@ -44,15 +66,22 @@ class MenuController extends AdminController
      */
     public function create()
     {
+        $this->breadcrumbs[] = [
+            'page' => 'Tambah',
+            'icon' => '',
+            'url' => '',
+        ];
+
         /* set variable for view */
         $data = [
             'current_url' => $this->current_url,
+            'breadcrumbs' => $this->breadcrumbs,
             'page_title' => $this->page_title,
             'page_subtitle' => 'Tambah Menu',
             'menus' => Menu::where('parent_id', 0)->with('allSubmenu')->orderBy('order')->get(),
         ];
 
-        return view('admin.setting.menu_form', $data);
+        return view('admin.AdminSC.setting.menu_form', $data);
     }
 
     /**
@@ -66,17 +95,24 @@ class MenuController extends AdminController
         /* validation */
         $this->validate($r, [
             'name' => 'required',
+            'description' => 'required',
+            'group' => 'required|exists:menu_groups,id',
         ]);
 
         /* save data */
         $menu = new Menu;
-        $menu->name = str_sanitize($r->input('name'));
-        $menu->description = str_sanitize($r->input('description'));
-        // $menu->url = $r->input('url');
-        $menu->route_name = str_sanitize($r->input('route_name'));
-        $menu->target = str_sanitize($r->input('target'));
+        $menu->name = $r->input('name');
+        $menu->description = $r->input('description');
+        $menu->url = $r->input('url');
+        $menu->url_external = 0;
+        if ($r->input('url') == 'external') {
+            $menu->url = $r->input('url_external');
+            $menu->url_external = 1;
+        }
+        $menu->route_name = $r->input('route_name');
+        $menu->target = $r->input('target');
         // $menu->order = (int) $r->input('order');
-        $menu->icon = str_sanitize($r->input('icon'));
+        $menu->icon = $r->input('icon');
         $menu->status = bool($r->input('status')) ? 1 : 0;
         $menu->index = bool($r->input('index')) ? 1 : 0;
         $menu->create = bool($r->input('create')) ? 1 : 0;
@@ -84,15 +120,16 @@ class MenuController extends AdminController
         $menu->update = bool($r->input('update')) ? 1 : 0;
         $menu->delete = bool($r->input('delete')) ? 1 : 0;
         $menu->parent_id = (int) $r->input('parent');
+        $menu->group_id = (int) $r->input('group');
         $menu->save();
 
         /* log aktifitas */
         $this->activityLog('<b>' . \Auth::user()->fullname . '</b> menambahkan Menu "' . $menu->name . '"');
 
         /* clear cache */
-        \Cache::flush();
+        // \Cache::flush();
 
-        return redirect($this->current_url)->with('success', 'Menu berhasil ditambah!');
+        return redirect($this->adminPath . '/setting/menu-groups/' . $menu->group_id . '/edit')->with('success', 'Menu "' . $menu->name . '" berhasil ditambah!');
     }
 
     /**
@@ -114,16 +151,23 @@ class MenuController extends AdminController
      */
     public function edit(Menu $menu)
     {
+        $this->breadcrumbs[] = [
+            'page' => 'Tambah',
+            'icon' => '',
+            'url' => '',
+        ];
+
         /* set variable for view */
         $data = [
             'current_url' => $this->current_url,
+            'breadcrumbs' => $this->breadcrumbs,
             'page_title' => $this->page_title,
-            'page_subtitle' => 'Sunting Menu',
+            'page_subtitle' => 'Edit Menu',
             'menus' => Menu::where('parent_id', 0)->with('allSubmenu')->orderBy('order')->get(),
             'data' => $menu,
         ];
 
-        return view('admin.setting.menu_form', $data);
+        return view('admin.AdminSC.setting.menu_form', $data);
     }
 
     /**
@@ -138,16 +182,30 @@ class MenuController extends AdminController
         /* validation */
         $this->validate($r, [
             'name' => 'required',
+            'description' => 'required',
+            'group' => 'required|exists:menu_groups,id',
         ]);
 
+        /* get order number if null */
+        if (!$r->input('order')) {
+            $parent_id = $r->input('parent') ?? 0;
+            $parent = Menu::where('parent_id', (int) $parent_id)->orderBy('order', 'desc')->first();
+            $order = $parent->order + 1;
+        }
+
         /* save data */
-        $menu->name = str_sanitize($r->input('name'));
-        $menu->description = str_sanitize($r->input('description'));
-        // $menu->url = $r->input('url');
-        $menu->route_name = str_sanitize($r->input('route_name'));
-        $menu->target = str_sanitize($r->input('target'));
-        // $menu->order = (int) $r->input('order');
-        $menu->icon = str_sanitize($r->input('icon'));
+        $menu->name = $r->input('name');
+        $menu->description = $r->input('description');
+        $menu->url = $r->input('url');
+        $menu->url_external = 0;
+        if ($r->input('url') == 'external') {
+            $menu->url = $r->input('url_external');
+            $menu->url_external = 1;
+        }
+        $menu->route_name = $r->input('route_name');
+        $menu->target = $r->input('target');
+        $menu->order = $r->input('order') ?? $order;
+        $menu->icon = $r->input('icon');
         $menu->status = bool($r->input('status')) ? 1 : 0;
         $menu->index = bool($r->input('index')) ? 1 : 0;
         $menu->create = bool($r->input('create')) ? 1 : 0;
@@ -155,15 +213,16 @@ class MenuController extends AdminController
         $menu->update = bool($r->input('update')) ? 1 : 0;
         $menu->delete = bool($r->input('delete')) ? 1 : 0;
         $menu->parent_id = (int) $r->input('parent');
+        $menu->group_id = (int) $r->input('group');
         $menu->save();
 
         /* log aktifitas */
         $this->activityLog('<b>' . \Auth::user()->fullname . '</b> memperbarui Menu "' . $menu->name . '"');
 
         /* clear cache */
-        \Cache::flush();
+        // \Cache::flush();
 
-        return redirect($this->current_url)->with('success', 'Menu berhasil disimpan!');
+        return redirect($this->adminPath . '/setting/menu-groups/' . $menu->group_id . '/edit')->with('success', 'Menu "' . $menu->name . '" berhasil disimpan!');
     }
 
     /**
@@ -174,6 +233,11 @@ class MenuController extends AdminController
      */
     public function destroy(Request $r, Menu $menu)
     {
+        /* validation */
+        $this->validate($r, [
+            'group' => 'required|exists:menu_groups,id',
+        ]);
+
         /* log aktifitas */
         $this->activityLog('<b>' . \Auth::user()->fullname . '</b> menghapus Menu "' . $menu->name . '"');
 
@@ -181,9 +245,9 @@ class MenuController extends AdminController
         $menu->delete();
 
         /* clear cache */
-        \Cache::flush();
+        // \Cache::flush();
 
-        return redirect($this->current_url)->with('success', 'Menu berhasil dihapus!');
+        return redirect($this->adminPath . '/setting/menu-groups/' . $menu->group_id . '/edit')->with('success', 'Menu "' . $menu->name . '" berhasil dihapus!');
     }
 
     /**
@@ -192,7 +256,7 @@ class MenuController extends AdminController
     public function datatable(Request $r)
     {
         /* get data */
-        $data = Menu::select(sequence(), 'id', 'name', 'description', 'status')->get();
+        $data = Menu::select('id', 'name', 'description', 'status')->get();
 
         /* generate datatable */
         if ($r->ajax()) {

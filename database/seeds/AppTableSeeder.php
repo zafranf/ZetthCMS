@@ -12,19 +12,20 @@ class AppTableSeeder extends Seeder
     public function run()
     {
         App\Models\Application::create([
+            'domain' => env('APP_DOMAIN'),
             'name' => 'ZetthCMS Core',
-            'slogan' => '',
-            'logo' => '',
-            'icon' => '',
-            'description' => 'Core System ZetthCMS',
-            'keyword' => '',
+            // 'tagline' => '',
+            // 'logo' => '',
+            // 'icon' => '',
+            // 'description' => 'Core System ZetthCMS',
+            // 'keyword' => 'zetthcms, cms',
             'status' => 1,
             'active_at' => date("Y-m-d H:i:s"),
-            'email' => '',
-            'address' => '',
-            'phone' => '',
-            // 'google_analytic' => '',
-            'location' => '',
+            // 'email' => '',
+            // 'address' => '',
+            // 'phone' => '',
+            // 'google_analytics' => '',
+            // 'coordinate' => '',
         ]);
     }
 }

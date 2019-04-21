@@ -14,8 +14,14 @@ class DashboardController extends AdminController
      */
     public function __construct()
     {
+        parent::__construct();
         $this->current_url = url('/setting/roles');
-        $this->page_title = 'Dashboard Admin';
+        $this->page_title = 'Dasbor';
+        $this->breadcrumbs[] = [
+            'page' => 'Dasbor',
+            'icon' => '',
+            'url' => '',
+        ];
     }
 
     /**
@@ -28,9 +34,10 @@ class DashboardController extends AdminController
         $data = [
             'current_url' => $this->current_url,
             'page_title' => $this->page_title,
-            'page_subtitle' => 'Dashboard',
+            'page_subtitle' => 'Beranda',
+            'breadcrumbs' => $this->breadcrumbs,
         ];
 
-        return view('admin.layouts.main', $data);
+        return view('admin.AdminSC.dashboard', $data);
     }
 }

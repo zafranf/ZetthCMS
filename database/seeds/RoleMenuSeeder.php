@@ -14,11 +14,11 @@ class RoleMenuSeeder extends Seeder
         $roles = \App\Models\Role::all();
         foreach ($roles as $role) {
             if ($role->id == 1) {
-                $menus = \App\Models\Menu::all();
+                $menus = \App\Models\MenuGroup::all();
                 foreach ($menus as $menu) {
                     \App\Models\RoleMenu::create([
                         'role_id' => $role->id,
-                        'menu_id' => $menu->id,
+                        'menu_group_id' => $menu->id,
                     ]);
                 }
             }

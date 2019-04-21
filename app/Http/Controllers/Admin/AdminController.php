@@ -11,9 +11,9 @@ class AdminController extends Controller
     public function __construct()
     {
         $this->breadcrumbs[] = [
-            'page' => 'Beranda',
-            'icon' => '',
-            'url' => url('/dashboard'),
+            'page' => '',
+            'icon' => 'fa fa-home',
+            'url' => url($this->adminPath),
         ];
     }
 }

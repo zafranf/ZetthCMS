@@ -3,10 +3,11 @@
 namespace App\Http\Controllers\Admin\Setting;
 
 use App\Http\Controllers\Admin\AdminController;
-use App\Models\Menu;
+use App\Models\MenuGroup;
 use App\Models\Permission;
-use App\Models\PermissionRole;
 use App\Models\Role;
+use App\Models\RoleMenu;
+use App\Models\RolePermission;
 use Illuminate\Http\Request;
 
 class RoleController extends AdminController
@@ -19,8 +20,19 @@ class RoleController extends AdminController
      */
     public function __construct()
     {
-        $this->current_url = url('/setting/roles');
-        $this->page_title = 'Pengaturan Peran dan Akses';
+        parent::__construct();
+        $this->current_url = url($this->adminPath . '/setting/roles');
+        $this->page_title = 'Kelola Peran dan Akses';
+        $this->breadcrumbs[] = [
+            'page' => 'Pengaturan',
+            'icon' => '',
+            'url' => url($this->adminPath . '/setting/application'),
+        ];
+        $this->breadcrumbs[] = [
+            'page' => 'Peran dan Akses',
+            'icon' => '',
+            'url' => $this->current_url,
+        ];
     }
 
     /**
@@ -30,19 +42,21 @@ class RoleController extends AdminController
      */
     public function index(Request $r)
     {
+        $this->breadcrumbs[] = [
+            'page' => 'Daftar',
+            'icon' => '',
+            'url' => '',
+        ];
+
         /* set variable for view */
         $data = [
             'current_url' => $this->current_url,
+            'breadcrumbs' => $this->breadcrumbs,
             'page_title' => $this->page_title,
             'page_subtitle' => 'Daftar Peran',
         ];
 
-        /* generate datatable */
-        if ($r->ajax()) {
-            return $this->generateDataTable($r, $roles);
-        }
-
-        return view('admin.setting.role', $data);
+        return view('admin.AdminSC.setting.roles', $data);
     }
 
     /**
@@ -52,21 +66,25 @@ class RoleController extends AdminController
      */
     public function create()
     {
-        /* get data */
-        $menus = Menu::where([
-            'parent_id' => 0,
-            'status' => 1,
-        ])->with('submenu')->orderBy('order')->get();
+        $this->breadcrumbs[] = [
+            'page' => 'Tambah',
+            'icon' => '',
+            'url' => '',
+        ];
+
+        /* get data menugroups */
+        $menugroups = MenuGroup::where('status', 1)->get();
 
         /* set variable for view */
         $data = [
             'current_url' => $this->current_url,
+            'breadcrumbs' => $this->breadcrumbs,
             'page_title' => $this->page_title,
             'page_subtitle' => 'Tambah Peran',
-            'menus' => $menus,
+            'menugroups' => $menugroups,
         ];
 
-        return view('admin.setting.role_form', $data);
+        return view('admin.AdminSC.setting.roles_form', $data);
     }
 
     /**
@@ -79,25 +97,28 @@ class RoleController extends AdminController
     {
         /* validation */
         $this->validate($r, [
-            'name' => 'required',
+            'name' => 'required|unique:roles',
         ]);
 
         /* save data */
-        $name = str_sanitize($r->input('name'));
+        $name = $r->input('name');
         $role = new Role;
         $role->name = str_slug($name);
         $role->display_name = $name;
-        $role->description = str_sanitize($r->input('description'));
+        $role->description = $r->input('description');
         $role->status = bool($r->input('status')) ? 1 : 0;
         $role->save();
 
         /* set permissions */
-        $this->setPermissions($r, $role);
+        // $this->setPermissions($r, $role);
+
+        /* save menu group */
+        $this->saveMenuGroup($r, $role);
 
         /* log aktifitas */
-        $this->activityLog('<b>' . \Auth::user()->fullname . '</b> menambahkan Peran "' . $role->display_name . '"');
+        $this->activityLog('<b>' . \Auth::user()->fullname . '</b> menambahkan Peran "' . $role->name . '"');
 
-        return redirect('/setting/roles')->with('success', 'Peran berhasil ditambah!');
+        return redirect($this->current_url . '/' . $role->id . '/edit')->with('success', 'Peran "' . $role->display_name . '" berhasil ditambah, segera atur akses menu!');
     }
 
     /**
@@ -119,22 +140,28 @@ class RoleController extends AdminController
      */
     public function edit(Role $role)
     {
-        /* get data */
-        $menus = Menu::where([
-            'parent_id' => 0,
-            'status' => 1,
-        ])->with('submenu')->orderBy('order')->get();
+        $this->breadcrumbs[] = [
+            'page' => 'Edit',
+            'icon' => '',
+            'url' => '',
+        ];
+
+        /* get data menugroups */
+        $menugroups = MenuGroup::where('status', 1)->get();
+        $role = $role->load('menu_groups');
 
         /* set variable for view */
         $data = [
             'current_url' => $this->current_url,
+            'breadcrumbs' => $this->breadcrumbs,
             'page_title' => $this->page_title,
-            'page_subtitle' => 'Sunting Peran',
+            'page_subtitle' => 'Edit Peran',
+            'menugroups' => $menugroups,
+            'menus' => (new Role)->roleMenus($role),
             'data' => $role,
-            'menus' => $menus,
         ];
 
-        return view('admin.setting.role_form', $data);
+        return view('admin.AdminSC.setting.roles_form', $data);
     }
 
     /**
@@ -148,24 +175,32 @@ class RoleController extends AdminController
     {
         /* validation */
         $this->validate($r, [
-            'name' => 'required',
+            'name' => 'required|unique:roles,name,' . $role->id . ',id',
         ]);
 
         /* save data */
-        $name = str_sanitize($r->input('name'));
+        $name = $r->input('name');
         $role->name = str_slug($name);
         $role->display_name = $name;
-        $role->description = str_sanitize($r->input('description'));
+        $role->description = $r->input('description');
         $role->status = bool($r->input('status')) ? 1 : 0;
         $role->save();
 
         /* set permissions */
-        $this->setPermissions($r, $role);
+        if (bool($r->input('is_access'))) {
+            $this->setPermissions($r, $role);
+        } else {
+            /* remove all permissions */
+            RolePermission::where('role_id', $role->id)->delete();
+        }
+
+        /* save menu group */
+        $this->saveMenuGroup($r, $role);
 
         /* log aktifitas */
         $this->activityLog('<b>' . \Auth::user()->fullname . '</b> memperbarui Peran "' . $role->name . '"');
 
-        return redirect('/setting/roles')->with('success', 'Peran berhasil disimpan!');
+        return redirect($this->current_url . '/' . $role->id . '/edit')->with('success', 'Peran "' . $role->display_name . '" berhasil disimpan, segera atur akses menu!');
     }
 
     /**
@@ -177,12 +212,12 @@ class RoleController extends AdminController
     public function destroy(Role $role)
     {
         /* log aktifitas */
-        $this->activityLog('<b>' . \Auth::user()->fullname . '</b> menghapus Peran "' . $role->name . '"');
+        $this->activityLog('<b>' . \Auth::user()->fullname . '</b> menghapus Peran "' . $role->display_name . '"');
 
         /* soft delete */
         $role->delete();
 
-        return redirect('/setting/roles')->with('success', 'Peran berhasil dihapus!');
+        return redirect($this->current_url)->with('success', 'Peran "' . $role->display_name . '" berhasil dihapus!');
     }
 
     /**
@@ -190,8 +225,26 @@ class RoleController extends AdminController
      */
     public function datatable(Request $r)
     {
+        /* where roles */
+        if (\Auth::user()->hasRole('super')) {
+            $whrRole = [
+                // ['status', 1],
+            ];
+        } else if (\Auth::user()->hasRole('admin')) {
+            $whrRole = [
+                // ['status', 1],
+                ['id', '!=', 1],
+            ];
+        } else {
+            $whrRole = [
+                // ['status', 1],
+                ['id', '!=', 1],
+                ['id', '!=', 2],
+            ];
+        }
+
         /* get data */
-        $data = Role::select(sequence(), 'id', 'display_name as name', 'description', 'status')->get();
+        $data = Role::select('id', 'display_name as name', 'description', 'status')->where($whrRole)->get();
 
         /* generate datatable */
         if ($r->ajax()) {
@@ -207,11 +260,16 @@ class RoleController extends AdminController
     public function setPermissions(Request $r, Role $role)
     {
         /* remove all permissions */
-        PermissionRole::where('role_id', $role->id)->delete();
+        RolePermission::where('role_id', $role->id)->delete();
+
+        /* add menus access */
+        $accesses = $r->input('access');
+        if (in_array('menu-groups', array_keys($accesses))) {
+            $accesses['menus'] = $accesses['menu-groups'];
+        }
 
         /* attach new permissions */
         $permissions = [];
-        $accesses = $r->input('access');
         foreach ($accesses as $module => $access) {
             foreach ($access as $key => $val) {
                 // $role->attachPermission($key . '-' . $module);
@@ -225,5 +283,19 @@ class RoleController extends AdminController
 
         // Attach all permissions to the role
         $role->permissions()->sync($permissions);
+    }
+
+    public function saveMenuGroup(Request $r, Role $role)
+    {
+        /* remove all menu group id */
+        RoleMenu::where('role_id', $role->id)->delete();
+
+        $menugroups = $r->input('menugroups') ?? [];
+        foreach ($menugroups as $group) {
+            $rolemenu = new RoleMenu;
+            $rolemenu->role_id = $role->id;
+            $rolemenu->menu_group_id = $group;
+            $rolemenu->save();
+        }
     }
 }

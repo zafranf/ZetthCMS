@@ -87,7 +87,7 @@ class SubscriberController extends AdminController
         $data = [
             'current_url' => $this->current_url,
             'page_title' => $this->page_title,
-            'page_subtitle' => 'Sunting Pelanggan',
+            'page_subtitle' => 'Edit Pelanggan',
             'data' => $subscriber,
         ];
 

@@ -11,19 +11,18 @@
 |
  */
 /* admin routes */
-Route::domain('admin.' . env('APP_DOMAIN', 'zcms.ap'))->group(function () {
-    include "admin.php";
-});
-if (env('APP_DEBUG')) {
+if (env('ADMIN_ROUTE') == 'path') {
     Route::prefix('admin')->group(function () {
+        include "admin.php";
+    });
+} else if (env('ADMIN_ROUTE') == 'subdomain') {
+    Route::domain('admin.' . env('APP_DOMAIN'))->group(function () {
         include "admin.php";
     });
 }
 
 /* site routes */
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/', 'SiteController@index');
 
 /* authentication routes */
 Auth::routes(['verify' => true]);
