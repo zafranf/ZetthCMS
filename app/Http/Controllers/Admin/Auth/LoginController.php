@@ -88,11 +88,7 @@ class LoginController extends Controller
 
         /* set redirect for user admin */
         if (\Auth::user()->is_admin) {
-            if ($this->isAdminSubdomain) {
-                $this->redirectTo = '/dashboard';
-            } else {
-                $this->redirectTo = '/admin/dashboard';
-            }
+            $this->redirectTo = $this->adminPath . '/dashboard';
         }
 
         return $this->authenticated($r, $this->guard()->user())
@@ -110,11 +106,7 @@ class LoginController extends Controller
         /* set redirect */
         $redirect = '/';
         if (\Auth::user()->is_admin) {
-            if ($this->isAdminSubdomain) {
-                $redirect = '/login';
-            } else {
-                $redirect = '/admin/login';
-            }
+            $redirect = $this->adminPath . '/login';
         }
 
         /* log aktifitas */
