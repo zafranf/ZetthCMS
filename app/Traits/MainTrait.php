@@ -28,7 +28,7 @@ trait MainTrait
         $is_robot = $agent->isRobot() ? 1 : 0;
         $robot_name = $agent->robot() ? $agent->robot : null;
 
-        $v = \App\Models\VisitorLog::where([
+        $params = [
             'ip' => $ip,
             'page' => $page,
             'referral' => $referral,
@@ -41,25 +41,19 @@ trait MainTrait
             'os_version' => $os_version,
             'is_robot' => $is_robot,
             'robot_name' => $robot_name,
-        ])->whereBetween('created_at', [date("Y-m-d H:00:00"), date("Y-m-d H:59:59")])->first();
+        ];
+
+        $q = \App\Models\VisitorLog::where($params)->whereBetween('created_at', [date("Y-m-d H:00:00"), date("Y-m-d H:59:59")]);
+
+        $v = $q->first();
         if (!$v) {
-            $v = new \App\Models\VisitorLog;
+            $params['count'] = \DB::raw('count+1');
+            \App\Models\VisitorLog::create($params);
+        } else {
+            $q->update([
+                'count' => \DB::raw('count+1'),
+            ]);
         }
-        $v->ip = $ip;
-        $v->page = $page;
-        $v->referral = $referral;
-        $v->agent = $browser_agent;
-        $v->browser = $browser;
-        $v->browser_version = $browser_version;
-        $v->device = $device;
-        $v->device_name = $device_name;
-        $v->os = $os;
-        $v->os_version = $os_version;
-        $v->is_robot = $is_robot;
-        $v->robot_name = $robot_name;
-        $v->count = \DB::raw('count+1');
-        // dd($v);
-        $v->save();
     }
 
     public function activityLog($description)

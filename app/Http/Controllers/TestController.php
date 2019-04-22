@@ -6,6 +6,7 @@ class TestController extends Controller
 {
     public function index()
     {
-        dd(\App\Models\Menu::with('group')->orderBy('id', 'desc')->first());
+        $tes = \App\Models\VisitorLog::where('created_at', '>=', [date("Y-m-d H:00:00"), date("Y-m-d H:59:59")]);
+        dd($tes);
     }
 }

@@ -13,7 +13,7 @@ class VisitorLog extends Model
         'ip', 'page', 'referral', 'agent', 'browser', 'browser_version', 'device', 'device_name', 'os', 'os_version', 'is_robot', 'robot_name', 'count',
     ];
 
-    protected $fillable = ['ip', 'page', 'referral', 'agent', 'browser', 'browser_version', 'device', 'device_name', 'os', 'os_version', 'is_robot', 'robot_name', 'count'];
+    protected $fillable = ['ip', 'page', 'referral', 'agent', 'browser', 'browser_version', 'device', 'device_name', 'os', 'os_version', 'is_robot', 'robot_name', 'count', 'created_at', 'updated_at'];
 
     /**
      * https://stackoverflow.com/a/51691212/6885956
