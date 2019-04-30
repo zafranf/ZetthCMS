@@ -5,7 +5,7 @@
     <div class="row">
       <div class="col-sm-12">
         <div class="btn btn-default btn-quick">
-          <a href="{{ url($adminPath . '/posts/create') }}">
+          <a href="{{ url($adminPath . '/content/posts/create') }}">
             <div class="row">
               <div class="col-sm-12" title="Create a new Post">
                 <i class="fa fa-edit"></i>
@@ -17,7 +17,7 @@
           </a>
         </div>
         <div class="btn btn-default btn-quick">
-          <a href="{{ url($adminPath . '/pages/create') }}">
+          <a href="{{ url($adminPath . '/content/pages/create') }}">
             <div class="row">
               <div class="col-sm-12" title="Create a new Page">
                 <i class="fa fa-file-o"></i>
@@ -29,7 +29,7 @@
           </a>
         </div>
         <div class="btn btn-default btn-quick">
-          <a href="{{ url($adminPath . '/comments') }}">
+          <a href="{{ url($adminPath . '/report/comments') }}">
             <div class="row">
               <div class="col-sm-12" title="Check for new comments">
                 <i class="fa fa-comment-o"></i>
@@ -42,7 +42,7 @@
           </a>
         </div>
         <div class="btn btn-default btn-quick">
-          <a href="{{ url($adminPath . '/inbox') }}">
+          <a href="{{ url($adminPath . '/report/inbox') }}">
             <div class="row">
               <div class="col-sm-12" title="Get inbox">
                 <i class="fa fa-envelope-o"></i>
@@ -230,7 +230,7 @@
       if (CONNECT){
         /* get data pageview */
         $.ajax({
-          url: "{{ url('ajax/data/pageview') }}",
+          url: "{{ url($adminPath . '/ajax/data/pageview') }}",
           data: {
             range: rangetype,
             start: start.format('YYYY-MM-DD'),

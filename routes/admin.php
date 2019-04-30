@@ -27,6 +27,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/log/visitors/data', 'Admin\Log\VisitorController@datatable')->name('visitors.data');
 
     /* api ajax */
+    Route::get('/ajax/data/pageview', 'Admin\AjaxController@pageview')->name('ajax.pageview');
     Route::get('/ajax/data/{term}', 'Admin\AjaxController@term')->name('ajax.term');
 
     /* sort menu */
