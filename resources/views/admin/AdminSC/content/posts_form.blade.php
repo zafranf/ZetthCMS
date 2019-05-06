@@ -512,7 +512,7 @@
         datumTokenizer: Bloodhound.tokenizers.obj.whitespace('name'),
         queryTokenizer: Bloodhound.tokenizers.whitespace,
         prefetch: {
-          url: '{{ url($adminPath . '/ajax/data/categories') }}',
+          url: "{{ url($adminPath . '/ajax/term/categories') }}",
           cache: false,
           filter: function(list) {
             return $.map(list, function(category) {
@@ -551,7 +551,7 @@
         datumTokenizer: Bloodhound.tokenizers.obj.whitespace('name'),
         queryTokenizer: Bloodhound.tokenizers.whitespace,
         prefetch: {
-          url: "{{ url($adminPath . '/ajax/data/tags') }}",
+          url: "{{ url($adminPath . '/ajax/term/tags') }}",
           cache: false,
           filter: function(list) {
           return $.map(list, function(tag) {

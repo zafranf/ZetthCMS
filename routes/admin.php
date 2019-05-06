@@ -21,14 +21,18 @@ Route::middleware('auth')->group(function () {
     Route::get('/content/posts/data', 'Admin\Content\PostController@datatable')->name('posts.data');
     // Route::get('/content/banners/data', 'Admin\Content\BannerController@datatable')->name('banners.data');
     Route::get('/report/inbox/data', 'Admin\Report\InboxController@datatable')->name('inbox.data');
-    // Route::get('/report/subscribers/data', 'Admin\Report\SubscriberController@datatable')->name('subscribers.data');
+    Route::get('/report/comments/data', 'Admin\Report\CommentController@datatable')->name('comments.data');
+    Route::get('/report/incoming-terms/data', 'Admin\Report\IntermController@datatable')->name('interms.data');
+    Route::get('/report/subscribers/data', 'Admin\Report\SubscriberController@datatable')->name('subscribers.data');
     Route::get('/log/activities/data', 'Admin\Log\ActivityController@datatable')->name('activities.data');
     Route::get('/log/errors/data', 'Admin\Log\ErrorController@datatable')->name('errors.data');
     Route::get('/log/visitors/data', 'Admin\Log\VisitorController@datatable')->name('visitors.data');
 
     /* api ajax */
-    Route::get('/ajax/data/pageview', 'Admin\AjaxController@pageview')->name('ajax.pageview');
-    Route::get('/ajax/data/{term}', 'Admin\AjaxController@term')->name('ajax.term');
+    Route::get('/ajax/pageview', 'Admin\AjaxController@pageview')->name('ajax.pageview');
+    Route::get('/ajax/popularpost', 'Admin\AjaxController@popularpost')->name('ajax.popularpost');
+    Route::get('/ajax/recentcomment', 'Admin\AjaxController@recentcomment')->name('ajax.recentcomment');
+    Route::get('/ajax/term/{term}', 'Admin\AjaxController@term')->name('ajax.term');
 
     /* sort menu */
     // Route::get('/setting/menus/sort', 'Admin\Setting\MenuController@sort')->name('menus.sort');
@@ -83,9 +87,9 @@ Route::middleware('auth')->group(function () {
         Route::prefix('report')->group(function () {
             Route::resources([
                 '/inbox' => 'Admin\Report\InboxController',
-                // '/comments' => 'Admin\Report\CommentController',
-                // '/incoming-terms' => 'Admin\Report\IntermController',
-                // '/subscribers' => 'Admin\Report\SubscriberController',
+                '/comments' => 'Admin\Report\CommentController',
+                '/incoming-terms' => 'Admin\Report\IntermController',
+                '/subscribers' => 'Admin\Report\SubscriberController',
             ]);
         });
 

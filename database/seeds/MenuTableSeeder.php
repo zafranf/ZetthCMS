@@ -357,7 +357,7 @@ class MenuTableSeeder extends Seeder
         $repInbox->save();
 
         /* menu komentar */
-        /* $repComment = new Menu;
+        $repComment = new Menu;
         $repComment->name = 'Komentar';
         $repComment->description = 'Menu pengaturan komentar';
         $repComment->route_name = 'comments.index';
@@ -370,10 +370,10 @@ class MenuTableSeeder extends Seeder
         $repComment->read = 1;
         $repComment->update = 1;
         $repComment->delete = 1;
-        $repComment->save(); */
+        $repComment->save();
 
         /* menu kata pencarian */
-        /* $repInterm = new Menu;
+        $repInterm = new Menu;
         $repInterm->name = 'Kata Pencarian';
         $repInterm->description = 'Menu pengaturan kata pencarian';
         $repInterm->route_name = 'incoming-terms.index';
@@ -386,10 +386,10 @@ class MenuTableSeeder extends Seeder
         $repInterm->read = 0;
         $repInterm->update = 0;
         $repInterm->delete = 0;
-        $repInterm->save(); */
+        $repInterm->save();
 
         /* menu pelanggan info */
-        /* $repSubscriber = new Menu;
+        $repSubscriber = new Menu;
         $repSubscriber->name = 'Pelanggan Info';
         $repSubscriber->description = 'Menu laporan pelanggan info';
         $repSubscriber->route_name = 'subscribers.index';
@@ -402,7 +402,7 @@ class MenuTableSeeder extends Seeder
         $repSubscriber->read = 0;
         $repSubscriber->update = 1;
         $repSubscriber->delete = 1;
-        $repSubscriber->save(); */
+        $repSubscriber->save();
 
         $logOrder = 1;
         /* menu catatan (grup) */

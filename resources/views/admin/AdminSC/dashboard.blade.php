@@ -58,7 +58,8 @@
     </div>
     <hr>
     <div class="row">
-      <div class="col-sm-12">
+      <div class="col-sm-12" id="box-pageview-chart">
+        <div class="loading">Loading<img src="{{ url('themes/admin/AdminSC/images/loading-flat.gif') }}"></div>
         <div id="pageview-chart" style="height:370px;"></div>
       </div>
     </div>
@@ -71,6 +72,7 @@
               <a href="{{ url($adminPath . '/content/article/posts') }}" class="btn btn-default btn-sm pull-right"><i class="fa fa-eye"></i> Semua</a>
             </div>
             <div class="panel-body no-padding">
+              <div class="loading">Loading<img src="{{ url('themes/admin/AdminSC/images/loading-flat.gif') }}"></div>
               <table id="table-data-popular" class="table table-hover no-margin-bottom">
                 <thead>
                   <tr>
@@ -91,6 +93,7 @@
             <a href="{{ url($adminPath . '/report/comments') }}" class="btn btn-default btn-sm pull-right"><i class="fa fa-eye"></i> Semua</a>
           </div>
           <div class="panel-body no-padding">
+            <div class="loading">Loading<img src="{{ url('themes/admin/AdminSC/images/loading-flat.gif') }}"></div>
             <table id="table-data-comment" class="table table-hover no-margin-bottom">
               <thead>
                 <tr>
@@ -224,13 +227,14 @@
         rangetype = 'daily';
       }
 
-      $('#pageview-chart').html("Loading<img src=\"{{ url('themes/admin/AdminSC/images/loading-flat.gif') }}\">");
+      // $('#pageview-chart').html("Loading<img src=\"{{ url('themes/admin/AdminSC/images/loading-flat.gif') }}\">");
       // $('#box-popular-post').addClass('hide');
       // $('#box-recent-comment').addClass('hide');
+      $('.loading').removeClass('hide');
       if (CONNECT){
         /* get data pageview */
         $.ajax({
-          url: "{{ url($adminPath . '/ajax/data/pageview') }}",
+          url: "{{ url($adminPath . '/ajax/pageview') }}",
           data: {
             range: rangetype,
             start: start.format('YYYY-MM-DD'),
@@ -239,13 +243,14 @@
           cache: false
         }).done(function(data) {
           if (data.status) {
+            $('#box-pageview-chart .loading').addClass('hide');
             pageview_chart(data.rows);
           }
         });
 
         /* get data popular post */
-        /* $.ajax({
-          url: "{{ url('ajax/data/popularpost') }}",
+        $.ajax({
+          url: "{{ url($adminPath . '/ajax/popularpost') }}",
           data: {
             start: start.format('YYYY-MM-DD'),
             end: end.format('YYYY-MM-DD')
@@ -253,13 +258,14 @@
           cache: false
         }).done(function(data) {
           if (data.status) {
+            $('#box-popular-post .loading').addClass('hide');
             popular_post(data.rows);
           }
-        }); */
+        });
 
         /* get data recent comment */
-        /* $.ajax({
-          url: "{{ url('ajax/data/recentcomment') }}",
+        $.ajax({
+          url: "{{ url($adminPath . '/ajax/recentcomment') }}",
           data: {
             start: start.format('YYYY-MM-DD'),
             end: end.format('YYYY-MM-DD')
@@ -267,14 +273,15 @@
           cache: false
         }).done(function(data) {
           if (data.status) {
+            $('#box-recent-comment .loading').addClass('hide');
             recent_comments(data.rows);
           }
-        }); */
+        });
       }
     }
 
     /* get popular post */
-    /* function popular_post(data) {
+    function popular_post(data) {
       var html = '';
       if (data.length > 0) {
         $.each(data, function(k,v){
@@ -285,16 +292,16 @@
         });
       } else {
         html += '<tr>';
-        html += '<td colspan="2" align="center">No popular posts.';
+        html += '<td colspan="2" align="center">Belum ada artikel populer.';
         html += '</tr>';
       }
 
       $('#box-popular-post').removeClass('hide');
       $('#popular-post').html(html);
-    } */
+    }
 
     /* get recent comments */
-    /* function recent_comments(data) {
+    function recent_comments(data) {
       var html = '';
       if (data.length > 0) {
         $.each(data, function(k,v){
@@ -311,13 +318,13 @@
         });
       } else {
         html += '<tr>';
-        html += '<td colspan="2" align="center">No comments yet.';
+        html += '<td colspan="2" align="center">Belum ada komentar terbaru.';
         html += '</tr>';
       }
 
       $('#box-recent-comment').removeClass('hide');
       $('#recent-comment').html(html);
-    } */
+    }
 
     /* generate pageview chart */
     function pageview_chart(data) {

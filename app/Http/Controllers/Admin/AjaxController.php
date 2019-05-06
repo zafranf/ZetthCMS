@@ -2,6 +2,8 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Post;
+use App\Models\PostComment;
 use App\Models\Term;
 use App\Models\VisitorLog;
 use DB;
@@ -73,11 +75,12 @@ class AjaxController extends Controller
                 break;
         }
 
-        $visits = VisitorLog::select('ip', DB::raw('date_format(created_at, \'' . $df . '\') as created'), DB::raw('sum(count) as count'))->
-            whereBetween('created_at', [$start . ' 00:00:00', $end . ' 23:59:59'])->
-            orderBy('created_at', 'ASC')->
-            groupBy(DB::raw('date_format(created_at, \'' . $df . '\')'), 'ip')->
-            get();
+        $visits = VisitorLog::select('ip', DB::raw('date_format(created_at, \'' . $df . '\') as created'), DB::raw('sum(count) as count'))
+            ->where('is_robot', 0)
+            ->whereBetween('created_at', [$start . ' 00:00:00', $end . ' 23:59:59'])
+            ->orderBy('created_at', 'ASC')
+            ->groupBy(DB::raw('date_format(created_at, \'' . $df . '\')'), 'ip')
+            ->get();
 
         if ($visits) {
             switch ($range) {
@@ -258,5 +261,77 @@ class AjaxController extends Controller
         $arr_diff = array_diff($time_from_max, $time_exist);
 
         return $arr_diff;
+    }
+
+    public function popularpost(Request $r)
+    {
+        $res = [
+            'rows' => [],
+            'status' => false,
+        ];
+
+        $start = $r->input('start');
+        $end = $r->input('end');
+
+        $pops = Post::select('id', 'title', 'slug', 'visited')
+            ->where('status', 1)
+            ->where('type', 'article')
+            ->whereBetween('updated_at', [$start . ' 00:00:00', $end . ' 23:59:59'])
+            ->orderBy('visited', 'DESC')
+            ->with('categories')
+            ->take(5)
+            ->get();
+
+        if ($pops) {
+            foreach ($pops as $k => $v) {
+                $cat = [];
+                $res['rows'][$k]['title'] = isDesktop() ? str_limit($v->title, 80) : str_limit($v->title, 30);
+                $res['rows'][$k]['slug'] = $v->slug;
+                $res['rows'][$k]['views'] = $v->visited;
+                if (count($v->categories) > 0) {
+                    foreach ($v->categories as $key => $val) {
+                        $cat[] = '<a style="text-decoration:none;">' . $val->name . '</a>';
+                    }
+                }
+                $res['rows'][$k]['categories'] = implode(", ", $cat);
+            }
+
+            $res['status'] = true;
+        }
+
+        return response()->json($res);
+    }
+
+    public function recentcomment(Request $r)
+    {
+        $res = [
+            'rows' => [],
+            'status' => false,
+        ];
+
+        $start = $r->input('start');
+        $end = $r->input('end');
+
+        $comms = PostComment::where('created_by', 0)
+            ->orderBy('created_at', 'DESC')
+            ->with('post')
+            ->take(5)
+            ->get();
+
+        if ($comms) {
+            foreach ($comms as $k => $v) {
+                $today = date("Y-m-d");
+                $post = isDesktop() ? str_limit($v->post->title, 60) : str_limit($v->post->title, 20);
+                $res['rows'][$k]['id'] = $v->comment_id;
+                $res['rows'][$k]['text'] = isDesktop() ? str_limit(strip_tags($v->comment_text), 75) : str_limit(strip_tags($v->comment_text), 20);
+                $res['rows'][$k]['name'] = $v->comment_name;
+                $res['rows'][$k]['post'] = '<a style="text-decoration:none;">' . $post . '</a>';
+                $res['rows'][$k]['time'] = str_replace($today, "", $v->created_at);
+            }
+
+            $res['status'] = true;
+        }
+
+        return response()->json($res);
     }
 }
