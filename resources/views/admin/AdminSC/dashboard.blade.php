@@ -59,7 +59,7 @@
     <hr>
     <div class="row">
       <div class="col-sm-12" id="box-pageview-chart">
-        <div class="loading">Loading<img src="{{ url('themes/admin/AdminSC/images/loading-flat.gif') }}"></div>
+        <div class="loading">Loading<img src="{{ url('themes/AdminSC/images/loading-flat.gif') }}"></div>
         <div id="pageview-chart" style="height:370px;"></div>
       </div>
     </div>
@@ -72,7 +72,7 @@
               <a href="{{ url($adminPath . '/content/article/posts') }}" class="btn btn-default btn-sm pull-right"><i class="fa fa-eye"></i> Semua</a>
             </div>
             <div class="panel-body no-padding">
-              <div class="loading">Loading<img src="{{ url('themes/admin/AdminSC/images/loading-flat.gif') }}"></div>
+              <div class="loading">Loading<img src="{{ url('themes/AdminSC/images/loading-flat.gif') }}"></div>
               <table id="table-data-popular" class="table table-hover no-margin-bottom">
                 <thead>
                   <tr>
@@ -93,7 +93,7 @@
             <a href="{{ url($adminPath . '/report/comments') }}" class="btn btn-default btn-sm pull-right"><i class="fa fa-eye"></i> Semua</a>
           </div>
           <div class="panel-body no-padding">
-            <div class="loading">Loading<img src="{{ url('themes/admin/AdminSC/images/loading-flat.gif') }}"></div>
+            <div class="loading">Loading<img src="{{ url('themes/AdminSC/images/loading-flat.gif') }}"></div>
             <table id="table-data-comment" class="table table-hover no-margin-bottom">
               <thead>
                 <tr>
@@ -227,7 +227,7 @@
         rangetype = 'daily';
       }
 
-      // $('#pageview-chart').html("Loading<img src=\"{{ url('themes/admin/AdminSC/images/loading-flat.gif') }}\">");
+      // $('#pageview-chart').html("Loading<img src=\"{{ url('themes/AdminSC/images/loading-flat.gif') }}\">");
       // $('#box-popular-post').addClass('hide');
       // $('#box-recent-comment').addClass('hide');
       $('.loading').removeClass('hide');

@@ -21,9 +21,9 @@ Route::middleware('auth')->group(function () {
     Route::get('/content/posts/data', 'Admin\Content\PostController@datatable')->name('posts.data');
     // Route::get('/content/banners/data', 'Admin\Content\BannerController@datatable')->name('banners.data');
     Route::get('/report/inbox/data', 'Admin\Report\InboxController@datatable')->name('inbox.data');
-    Route::get('/report/comments/data', 'Admin\Report\CommentController@datatable')->name('comments.data');
-    Route::get('/report/incoming-terms/data', 'Admin\Report\IntermController@datatable')->name('interms.data');
-    Route::get('/report/subscribers/data', 'Admin\Report\SubscriberController@datatable')->name('subscribers.data');
+    // Route::get('/report/comments/data', 'Admin\Report\CommentController@datatable')->name('comments.data');
+    // Route::get('/report/incoming-terms/data', 'Admin\Report\IntermController@datatable')->name('interms.data');
+    // Route::get('/report/subscribers/data', 'Admin\Report\SubscriberController@datatable')->name('subscribers.data');
     Route::get('/log/activities/data', 'Admin\Log\ActivityController@datatable')->name('activities.data');
     Route::get('/log/errors/data', 'Admin\Log\ErrorController@datatable')->name('errors.data');
     Route::get('/log/visitors/data', 'Admin\Log\VisitorController@datatable')->name('visitors.data');
@@ -87,9 +87,9 @@ Route::middleware('auth')->group(function () {
         Route::prefix('report')->group(function () {
             Route::resources([
                 '/inbox' => 'Admin\Report\InboxController',
-                '/comments' => 'Admin\Report\CommentController',
-                '/incoming-terms' => 'Admin\Report\IntermController',
-                '/subscribers' => 'Admin\Report\SubscriberController',
+                // '/comments' => 'Admin\Report\CommentController',
+                // '/incoming-terms' => 'Admin\Report\IntermController',
+                // '/subscribers' => 'Admin\Report\SubscriberController',
             ]);
         });
 
