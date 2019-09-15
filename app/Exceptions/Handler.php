@@ -4,10 +4,11 @@ namespace App\Exceptions;
 
 use Exception;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
-use Illuminate\Support\Facades\Schema;
 
 class Handler extends ExceptionHandler
 {
+    use \ZetthCore\Traits\MainTrait;
+
     /**
      * A list of the exception types that are not reported.
      *
@@ -35,32 +36,11 @@ class Handler extends ExceptionHandler
      * @param  \Exception  $exception
      * @return void
      */
-    public function report(Exception $exception)
+    public function report(Exception $e)
     {
-        $log = [
-            'code' => $exception->getCode(),
-            'file' => $exception->getFile(),
-            'line' => $exception->getLine(),
-            'message' => $exception->getMessage(),
-            'params' => \Request::all(),
-            'path' => \Request::path(),
-            'trace' => $exception->getTrace(),
-        ];
-        if (isset($exception->data)) {
-            $log['data'] = $exception->data;
-        }
-        if ($exception->getMessage()) {
-            if (Schema::hasTable('applications')) {
-                \App\Models\ErrorLog::create([
-                    'code' => $log['code'],
-                    'path' => $log['path'],
-                    'file' => $log['file'],
-                    'line' => $log['line'],
-                    'message' => $log['message'],
-                ]);
-            }
-        }
-        parent::report($exception);
+        $this->errorLog($e);
+
+        parent::report($e);
     }
 
     /**

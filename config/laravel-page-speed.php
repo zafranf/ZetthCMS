@@ -11,7 +11,7 @@ return [
     | You would probably replace that in your local configuration to get a readable output.
     |
     */
-    'enable' => (env('APP_ENV') == 'production') ? env('LARAVEL_PAGE_SPEED_ENABLE', true) : false,
+    'enable' => env('LARAVEL_PAGE_SPEED_ENABLE', true),
 
     /*
     |--------------------------------------------------------------------------
@@ -54,8 +54,7 @@ return [
         '*.iso',
         '*.flv',
         '*.m4v',
-        '*.torrent',
-        '*_debugbar*'
+        '*.torrent'
     ],
 
 ];

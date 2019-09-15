@@ -27,12 +27,18 @@ return [
          * SQL: column LIKE "%k%e%y%w%o%r%d%"
          */
         'use_wildcards' => false,
+
+        /*
+         * Perform a search which starts with the given keyword.
+         * SQL: column LIKE "keyword%"
+         */
+        'starts_with'    => false,
     ],
 
     /*
      * DataTables internal index id response column name.
      */
-    'index_column' => 'DT_Row_Index',
+    'index_column' => 'DT_RowIndex',
 
     /*
      * List of available builders for DataTables.

@@ -17,18 +17,55 @@ return [
     | If true, the morphMap feature is going to be used. The array values that
     | are going to be used are the ones inside the 'user_models' array.
     |
-    */
+     */
     'use_morph_map' => false,
 
     /*
     |--------------------------------------------------------------------------
-    | Use cache in the package
+    | Which permissions and role checker to use.
     |--------------------------------------------------------------------------
     |
-    | Defines if Laratrust will use Laravel's Cache to cache the roles and permissions.
+    | Defines if you want to use the roles and permissions checker.
+    | Available:
+    | - default: Check for the roles and permissions using the method that Laratrust
+    has always used.
+    | - query: Check for the roles and permissions using direct queries to the database.
+    |           This method doesn't support cache yet.
     |
-    */
-    'use_cache' => true,
+     */
+    'checker' => 'default',
+
+    /*
+    |--------------------------------------------------------------------------
+    | Cache
+    |--------------------------------------------------------------------------
+    |
+    | Manage Laratrust's cache configurations. It uses the driver defined in the
+    | config/cache.php file.
+    |
+     */
+    'cache' => [
+        /*
+        |--------------------------------------------------------------------------
+        | Use cache in the package
+        |--------------------------------------------------------------------------
+        |
+        | Defines if Laratrust will use Laravel's Cache to cache the roles and permissions.
+        | NOTE: Currently the database check does not use cache.
+        |
+         */
+        'enabled' => true,
+
+        /*
+        |--------------------------------------------------------------------------
+        | Time to store in cache Laratrust's roles and permissions.
+        |--------------------------------------------------------------------------
+        |
+        | Determines the time in SECONDS to store Laratrust's roles and permissions in the cache.
+        |
+         */
+        'expiration_time' => 3600,
+    ],
 
     /*
     |--------------------------------------------------------------------------
@@ -38,7 +75,7 @@ return [
     | Defines if Laratrust will use the teams feature.
     | Please check the docs to see what you need to do in case you have the package already configured.
     |
-    */
+     */
     'use_teams' => false,
 
     /*
@@ -51,7 +88,7 @@ return [
     | If it's false, when checking a role/permission without specifying the team,
     | it will check only if the user has attached that role/permission ignoring the team.
     |
-    */
+     */
     'teams_strict_check' => false,
 
     /*
@@ -65,9 +102,9 @@ return [
     |
     | The key in the array is the name of the relationship inside the roles and permissions.
     |
-    */
+     */
     'user_models' => [
-        'users' => 'App\Models\User',
+        'users' => 'ZetthCore\Models\User',
     ],
 
     /*
@@ -79,22 +116,22 @@ return [
     | If you want the Laratrust models to be in a different namespace or
     | to have a different name, you can do it here.
     |
-    */
+     */
     'models' => [
         /**
          * Role model
          */
-        'role' => 'App\Models\Role',
+        'role' => 'ZetthCore\Models\Role',
 
         /**
          * Permission model
          */
-        'permission' => 'App\Models\Permission',
+        'permission' => 'ZetthCore\Models\Permission',
 
         /**
          * Team model
          */
-        'team' => 'App\Models\Team',
+        'team' => 'ZetthCore\Models\Team',
 
     ],
 
@@ -105,7 +142,7 @@ return [
     |
     | These are the tables used by Laratrust to store all the authorization data.
     |
-    */
+     */
     'tables' => [
         /**
          * Roles table.
@@ -146,25 +183,25 @@ return [
     |
     | These are the foreign keys used by laratrust in the intermediate tables.
     |
-    */
+     */
     'foreign_keys' => [
         /**
-         * User foreign key on Laratrust's role_user and user_permission tables.
+         * User foreign key on Laratrust's role_user and permission_user tables.
          */
         'user' => 'user_id',
 
         /**
-         * Role foreign key on Laratrust's role_user and role_permission tables.
+         * Role foreign key on Laratrust's role_user and permission_role tables.
          */
         'role' => 'role_id',
 
         /**
-         * Role foreign key on Laratrust's user_permission and role_permission tables.
+         * Role foreign key on Laratrust's permission_user and permission_role tables.
          */
         'permission' => 'permission_id',
 
         /**
-         * Role foreign key on Laratrust's role_user and user_permission tables.
+         * Role foreign key on Laratrust's role_user and permission_user tables.
          */
         'team' => 'team_id',
 
@@ -177,7 +214,7 @@ return [
     |
     | This configuration helps to customize the Laratrust middleware behavior.
     |
-    */
+     */
     'middleware' => [
         /**
          * Define if the laratrust middleware are registered automatically in the service provider
@@ -191,10 +228,30 @@ return [
         'handling' => 'abort',
 
         /**
-         * Parameter passed to the middleware_handling method
+         * Handlers for the unauthorized method in the middlewares.
+         * The name of the handler must be the same as the handling.
          */
-        'params' => '403',
-
+        'handlers' => [
+            /**
+             * Aborts the execution with a 403 code.
+             */
+            'abort' => [
+                'code' => 403,
+            ],
+            /**
+             * Redirects the user to the given url.
+             * If you want to flash a key to the session,
+             * you can do it by setting the key and the content of the message
+             * If the message content is empty it won't be added to the redirection.
+             */
+            'redirect' => [
+                'url' => '/home',
+                'message' => [
+                    'key' => 'error',
+                    'content' => '',
+                ],
+            ],
+        ],
     ],
 
     /*
@@ -205,6 +262,6 @@ return [
     | Supported cases for the magic can method (Refer to the docs).
     | Available: camel_case|snake_case|kebab_case
     |
-    */
+     */
     'magic_can_method_case' => 'kebab_case',
 ];
