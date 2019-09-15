@@ -7,6 +7,8 @@ use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 
 class Handler extends ExceptionHandler
 {
+    use \ZetthCore\Traits\MainTrait;
+
     /**
      * A list of the exception types that are not reported.
      *
@@ -29,12 +31,16 @@ class Handler extends ExceptionHandler
     /**
      * Report or log an exception.
      *
+     * This is a great spot to send exceptions to Sentry, Bugsnag, etc.
+     *
      * @param  \Exception  $exception
      * @return void
      */
-    public function report(Exception $exception)
+    public function report(Exception $e)
     {
-        parent::report($exception);
+        $this->errorLog($e);
+
+        parent::report($e);
     }
 
     /**
