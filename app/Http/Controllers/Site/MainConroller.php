@@ -11,12 +11,12 @@ class MainController extends Controller
     {
         /* get all data */
         $data = [
-            'banners' => \ZetthCore\Models\Banner::where('status', 1)->orderBy('order')->get(),
-            'posts' => \ZetthCore\Models\Post::where('status', 1)->where('type', 'article')->orderBy('published_at', 'desc')->take(5)->get(),
-            'categories' => \ZetthCore\Models\Term::where('status', 1)->where('type', 'category')->get(),
-            'tags' => \ZetthCore\Models\Term::where('status', 1)->where('type', 'tag')->get(),
-            'albums' => \ZetthCore\Models\Album::where('status', 1)->where('type', 'photo')->get(),
-            'videos' => \ZetthCore\Models\Post::where('status', 1)->where('type', 'video')->orderBy('published_at', 'desc')->take(5)->get(),
+            'banners' => _getBanners(),
+            'posts' => _getPosts(),
+            'categories' => _getTerms('category'),
+            'tags' => _getTerms('tag'),
+            'albums' => _getAlbums(),
+            'videos' => _getVideos(),
         ];
 
         return view('site.main', $data);
