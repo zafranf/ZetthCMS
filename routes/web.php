@@ -22,7 +22,7 @@ Route::name('web.')->middleware('visitor_log')->group(function () {
     Route::post('/contact', 'Site\ActionController@contact')->name('contact.post');
     Route::post('/comment', 'Site\ActionController@comment')->name('comment.post');
     Route::post('/subscribe', 'Site\ActionController@subscribe')->name('subscribe.post');
-    Route::get('/unsubscribe/{token?}', 'Site\ActionController@unsubscribe')->name('unsubscribe');
+    Route::get('/unsubscribe/{email}/{token}', 'Site\ActionController@unsubscribe')->name('unsubscribe');
 
     /* Gallery Routes */
     Route::get('/albums', 'Site\GalleryController@album')->name('albums');
