@@ -18,11 +18,11 @@ class RedirectIfAuthenticated
     public function handle($request, Closure $next, $guard = null)
     {
         if (Auth::guard($guard)->check()) {
-            if (Auth::user()->is_admin) {
+            if (Auth::user()->is_admin && isAdminPanel()) {
                 return redirect(route('admin.dashboard.index'));
             }
 
-            return redirect(route('root'));
+            return redirect(route('web.root'));
         }
 
         return $next($request);
