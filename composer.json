@@ -1,7 +1,7 @@
 {
-    "name": "laravel/laravel",
+    "name": "zafranf/zetthcore",
     "type": "project",
-    "description": "The Laravel Framework.",
+    "description": "ZetthCMS",
     "keywords": [
         "framework",
         "laravel"
