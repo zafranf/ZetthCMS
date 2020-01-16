@@ -7,28 +7,31 @@
       <div class="tech-no">
         @forelse ($posts as $post)
         @php
-        $type = $post->type;
-        if ($post->type == 'article') {
-        $type = 'news';
-        } else if ($post->type == 'page') {
-        $type = '';
-        }
+          $type = $post->type;
+          if ($post->type == 'article') {
+            $type = 'post';
+          } else if ($post->type == 'page') {
+            $type = '';
+          }
         @endphp
         @if ($loop->first)
-        <div class="wthree">
-          <h3>Pencarian "{{ _get('q') }}"</h3>
-        </div>
+          <div class="wthree">
+            <h3>Pencarian "{{ _get('q') }}"</h3>
+          </div>
         @endif
         <div class="wthree">
           @if ($post->cover)
-          <div class="col-md-6 wthree-left wow fadeInDown" data-wow-duration=".8s" data-wow-delay=".2s">
-            <div class="tch-img"><a href="{{ url($type.'/'.$post->slug) }}"><img src="{{ $post->cover }}"
-                  class="img-responsive" alt="Gambar {{ $post->title }}"></a></div>
-          </div>
+            <div class="col-md-6 wthree-left wow fadeInDown" data-wow-duration=".8s" data-wow-delay=".2s">
+              <div class="tch-img">
+                <a href="{{ url($type . '/' . $post->slug) }}">
+                  <img src="{{ $post->cover }}" class="img-responsive" alt="Gambar {{ $post->title }}">
+                </a>
+              </div>
+            </div>
           @endif
           <div class="col-md-{{ $post->cover ? '6' : '12' }} wthree-right wow fadeInDown" data-wow-duration=".8s"
             data-wow-delay=".2s">
-            <h3><a href="{{ url($type.'/'.$post->slug) }}">{{ $post->title }}</a></h3>
+            <h3><a href="{{ url($type . '/' . $post->slug) }}">{{ $post->title }}</a></h3>
             {!! $type != '' ? '<h6>'.carbon($post->published_at)->isoFormat('Do MMMM YYYY').'</h6>' : '' !!}
             {{ $post->excerpt }}
             <div class="bht1"><a href="{{ url($type.'/'.$post->slug) }}">Baca</a></div>
