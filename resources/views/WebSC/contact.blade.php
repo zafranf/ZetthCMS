@@ -8,18 +8,18 @@
         <h2 class="w3">Hubungi Kami</h2>
         <div class="contact-grids">
           @if (session('success'))
-          <div class="alert alert-success">
-            {{ session('success') }}
-          </div>
+            <div class="alert alert-success">
+              {{ session('success') }}
+            </div>
           @endif
           @if (count($errors) > 0)
-          <div class="alert alert-danger">
-            <ul>
-              @foreach ($errors->all() as $error)
-              <li>{{ $error }}</li>
-              @endforeach
-            </ul>
-          </div>
+            <div class="alert alert-danger">
+              <ul>
+                @foreach ($errors->all() as $error)
+                <li>{{ $error }}</li>
+                @endforeach
+              </ul>
+            </div>
           @endif
           <div class="col-md-7 contact-grid">
             {{-- <p>Nemo enim ips voluptatem voluptas sitsper natuaut odit aut fugit consequuntur magni dolores
@@ -28,20 +28,18 @@
               <input type="text" name="name" placeholder="Nama*" required>
               <input type="email" name="email" placeholder="Email*" required>
               <input type="text" name="phone" placeholder="No. Telpon">
-              <textarea type="text" name="message" placeholder="Pesan*" required
-                style="height:100px!important;"></textarea>
+              <textarea type="text" name="message" placeholder="Pesan*" required style="height:100px!important;"></textarea>
               <p style="padding:0!important;">* kolom wajib diisi</p>
               @csrf
               <input type="submit" value="Kirim">
-              <div class="g-recaptcha" data-sitekey="{{ env('GOOGLE_RECAPTCHA_SITE_KEY') }}" data-callback="onSubmit"
-                data-size="invisible">
+              <div class="g-recaptcha" data-sitekey="{{ env('GOOGLE_RECAPTCHA_SITE_KEY') }}" data-callback="onSubmit" data-size="invisible">
               </div>
             </form>
           </div>
           <div class="col-md-5 contact-grid1">
             <h4>{{ app('site')->name }}</h4>
             @if (app('site')->address)
-            <p>{!! nl2br(app('site')->address) !!}</p>
+              <p>{!! nl2br(app('site')->address) !!}</p>
             @endif
             {{-- <h4>Address</h4>
             <div class="contact-top">
@@ -49,24 +47,24 @@
             </div> --}}
             <ul>
               @if (app('site')->phone)
-              <li>
-                <i class="glyphicon glyphicon-earphone" aria-hidden="true"></i> {{ app('site')->phone }}
-              </li>
+                <li>
+                  <i class="glyphicon glyphicon-earphone" aria-hidden="true"></i> {{ app('site')->phone }}
+                </li>
               @endif
               @if (app('site')->email)
-              <li>
-                <i class="glyphicon glyphicon-envelope" aria-hidden="true"></i>
-                <a href="mailto:{{ app('site')->email }}">{{ app('site')->email }}</a>
-              </li>
+                <li>
+                  <i class="glyphicon glyphicon-envelope" aria-hidden="true"></i>
+                  <a href="mailto:{{ app('site')->email }}">{{ app('site')->email }}</a>
+                </li>
               @endif
             </ul>
           </div>
           <div class="clearfix"></div>
         </div>
         @if (app('site')->coordinate)
-        <div class="google-map">
-          @include('google.maps')
-        </div>
+          <div class="google-map">
+            @include('google.maps')
+          </div>
         @endif
       </div>
     </div>

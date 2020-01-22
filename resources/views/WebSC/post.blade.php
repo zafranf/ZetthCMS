@@ -8,7 +8,7 @@
         <h2 class="w3">{{ $post->title }}</h2>
         <div class="single">
           @if ($post->cover)
-          <img src="{{ $post->cover }}" class="img-responsive" alt="{{ $post->title }}">
+            <img src="{{ $post->cover }}" class="img-responsive" alt="{{ $post->title }}">
           @endif
           <div class="b-bottom">
             {!! $post->content !!}
