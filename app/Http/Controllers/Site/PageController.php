@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers\Site;
 
+use App\Http\Controllers\Site\Controller;
 use Illuminate\Http\Request;
-use ZetthCore\Http\Controllers\SiteController;
 
-class PageController extends SiteController
+class PageController extends Controller
 {
     public function __construct()
     {
