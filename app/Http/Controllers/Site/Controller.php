@@ -72,7 +72,7 @@ class Controller extends SiteController
             $title = $par->title . $separator . $sitename;
             $image = _get_image($par->cover);
             $keywords = implode(',', $tags);
-            $description = str_limit(strip_tags($par->content), 300);
+            $description = \Str::limit(strip_tags($par->content), 300);
             if (strlen($par->excerpt) > 0) {
                 $description = strip_tags($par->excerpt);
             }
