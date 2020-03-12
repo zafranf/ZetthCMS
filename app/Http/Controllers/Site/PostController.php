@@ -12,7 +12,7 @@ class PostController extends Controller
         parent::__construct();
     }
 
-    public function index(Request $r, $type)
+    public function index(Request $r, $type, $author = null)
     {
         /* set breadcrumbs */
         $this->breadcrumbs[] = [
@@ -20,6 +20,13 @@ class PostController extends Controller
             'icon' => '',
             'url' => '',
         ];
+
+        /* get posts */
+        if ($type == 'author' && !is_null($author)) {
+            $posts = _getAuthorPosts($author);
+        } else {
+            $posts = _getPostsComplete();
+        }
 
         /* set data */
         $data = [
