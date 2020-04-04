@@ -13,6 +13,7 @@
         "fideloper/proxy": "^4.0",
         "google/recaptcha": "^1.2",
         "laravel/framework": "^6.0",
+        "laravel/socialite": "^4.3",
         "laravel/tinker": "^1.0",
         "renatomarinho/laravel-page-speed": "^1.8",
         "zafranf/zetthcore": "^0.2"
@@ -41,6 +42,7 @@
             "App\\": "app/"
         },
         "classmap": [
+            "app/",
             "database/seeds",
             "database/factories"
         ],

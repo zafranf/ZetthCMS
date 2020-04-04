@@ -1,130 +1,392 @@
 @extends('WebSC.layouts.main')
 
 @section('content')
-<div class="technology">
-  <div class="container">
-    <div class="col-md-9 technology-left">
-      <div class="agileinfo">
-        <h2 class="w3">{{ $post->title }}</h2>
-        <div class="single">
-          @if ($post->cover)
-            <img src="{{ $post->cover }}" class="img-responsive" alt="{{ $post->title }}">
-          @endif
-          <div class="b-bottom">
+  @php
+    $post = $page ?? $post;
+    $author = $post->author;
+    $dislike = $like = false;
+    if (app('user') && isset($post->likes_user->like)) {
+      $like = $post->likes_user->like;
+      $dislike = !$post->likes_user->like;
+    }
+  @endphp
+  {{-- <!-- START STATUS FEED --> --}}
+  <section class="articles">
+    <div class="column is-10 is-offset-1">
+      {{-- <!-- START ARTICLE --> --}}
+      <div class="card article">
+        <div class="card-content">
+          <div class="media">
+            @if ($author->image)
+              <div class="media-center" style="z-index:2;">
+                <img src="{{ getImageUser($author->image ?? '') }}" class="author-image" alt="Penulis: {{ $author->fullname }}" title="Penulis: {{ $author->fullname }}">
+              </div>
+            @endif
+            <div class="media-content has-text-centered" {!! !$author->photo ? 'style="margin-top:2rem;overflow:unset;"' : '' !!}>
+              @if ($post->cover)
+                <figure class="image is-3by1">
+                  <a href="{{ url('baca-artikel/'.$post->slug) }}" title="{{ $post->title . ' - ' . app('site')->name }}">
+                    <img src="{{ $post->cover }}" alt="{{ $post->title . ' - ' . app('site')->name }}">
+                  </a>
+                </figure>
+              @endif
+              <p class="title article-title">
+                <a href="{{ url('baca-artikel/'.$post->slug) }}" title="{{ $post->title . ' - ' . app('site')->name }}" class="has-text-danger">{{ $post->title }}</a>
+              </p>
+              {{-- <div class="tags has-addons level-item">
+                <span class="tag is-rounded is-danger" title="Penulis">{{ $author->fullname }}</span>
+                <span class="tag is-rounded has-text-grey-light" title="Tanggal terbit">{{ carbon($post->published_at)->isoFormat('Do MMMM YYYY') }}</span>
+              </div> --}}
+              <p class="subtitle is-6 article-subtitle">
+                <a href="{{ url('penulis/'.$author->name) }}" class="has-text-danger" title="Penulis">
+                  {{ $author->fullname }}
+                </a> pada <span title="Tanggal terbit">{{ $post->published_string }}</a>
+                @forelse ($post->categories as $category)
+                  @if ($loop->first)
+                    <br>
+                    di 
+                  @endif
+                  <a href="{{ url('kategori/'.$category->slug) }}" class="has-text-danger" title="Kategori">{{ $category->name }}</a>{{ !$loop->last ? ',' : '' }}
+                @empty
+                @endforelse
+              </p>
+            </div>
+          </div>
+          <div class="content article-body">
             {!! $post->content !!}
-            <p style="margin-top:10px;font-size:small;">
-              {{ carbon($post->published_at)->isoFormat('Do MMMM YYYY') }}
-              {{-- <a class="span_link" href="#">
-                <span class="glyphicon glyphicon-comment"></span>0
-              </a> --}}
-              <a class="span_link">
-                <span class="glyphicon glyphicon-eye-open"></span> {{ $post->visited }}
-              </a>
-            </p>
-          </div>
-        </div>
 
-        {{-- <div class="response">
-          <h4>Responses</h4>
-          <div class="media response-info">
-            <div class="media-left response-text-left">
-              <a href="#">
-                <img src="images/sin1.jpg" class="img-responsive" alt="">
-              </a>
+            <div class="tags has-addons level-item" style="justify-content:unset;">
+              @foreach ($post->tags as $tag)
+                <span class="tag is-medium is-danger">
+                  <a href="{{ url('label/'.$tag->slug) }}" class="has-text-white" title="Label">#{{ $tag->name }}</a>
+                </span>
+              @endforeach
             </div>
-            <div class="media-body response-text-right">
-              <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit,There are many variations of
-                passages of Lorem Ipsum available,
-                sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
-              <ul>
-                <li>Jun 21, 2016</li>
-                <li><a href="#">Reply</a></li>
-              </ul>
-              <div class="media response-info">
-                <div class="media-left response-text-left">
-                  <a href="#">
-                    <img src="images/sin2.jpg" class="img-responsive" alt="">
-                  </a>
+
+            @if (!isset($page))
+              @if (app('site')->enable_like && $post->like)
+                <div class="buttons">
+                  <button id="btn-like" class="button has-background-white-bis {{ $like ? 'has-text-primary' : '' }}">
+                    <span class="icon">
+                      <i class="fad fa-thumbs-up"></i>
+                    </span>
+                    <span class="count">{{ $post->liked }}</span>
+                  </button>
+                  <button id="btn-dislike" class="button has-background-white-bis {{ $dislike ? 'has-text-danger' : '' }}">
+                    <span class="icon">
+                      <i class="fad fa-thumbs-down"></i>
+                    </span>
+                    <span class="count">{{ $post->disliked }}</span>
+                  </button>
                 </div>
-                <div class="media-body response-text-right">
-                  <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit,There are many
-                    variations of passages of Lorem Ipsum available,
-                    sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
-                  <ul>
-                    <li>July 17, 2016</li>
-                    <li><a href="#">Reply</a></li>
-                  </ul>
-                </div>
-                <div class="clearfix"> </div>
+              @endif
+            @endif
+
+            @if (app('site')->enable_share && $post->share)
+              <div class="buttons">
+                <a class="button" style="border:0;padding:0;">
+                  <span>Sebar:</span>
+                </a>
+                <a href="{{ url('/action/share/'.$post->slug.'/facebook') }}" target="_blank" class="button button-socmed is-facebook">
+                  <span class="icon">
+                    <i class="fab fa-facebook-f"></i>
+                  </span>
+                  @if (app('is_desktop'))
+                    <span>Facebook</span>
+                  @endif
+                </a>
+                <a href="{{ url('/action/share/'.$post->slug.'/twitter') }}" target="_blank" class="button button-socmed is-twitter">
+                  <span class="icon">
+                    <i class="fab fa-twitter"></i>
+                  </span>
+                  @if (app('is_desktop'))
+                    <span>Twitter</span>
+                  @endif
+                </a>
+                <a href="{{ url('/action/share/'.$post->slug.'/whatsapp') }}" target="_blank" class="button button-socmed is-whatsapp">
+                  <span class="icon">
+                    <i class="fab fa-whatsapp"></i>
+                  </span>
+                  @if (app('is_desktop'))
+                    <span>WhatsApp</span>
+                  @endif
+                </a>
+                <a href="{{ url('/action/share/'.$post->slug.'/telegram') }}" target="_blank" class="button button-socmed is-telegram">
+                  <span class="icon">
+                    <i class="fab fa-telegram-plane"></i>
+                  </span>
+                  @if (app('is_desktop'))
+                    <span>Telegram</span>
+                  @endif
+                </a>
+                <a class="button is-copy">
+                  <span class="icon">
+                    <i class="fad fa-link"></i>
+                  </span>
+                  @if (app('is_desktop'))
+                    <span>Salin Tautan</span>
+                  @endif
+                </a>
               </div>
-            </div>
-            <div class="clearfix"> </div>
-          </div>
-          <div class="media response-info">
-            <div class="media-left response-text-left">
-              <a href="#">
-                <img src="images/sin1.jpg" class="img-responsive" alt="">
-              </a>
-            </div>
-            <div class="media-body response-text-right">
-              <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit,There are many variations of
-                passages of Lorem Ipsum available,
-                sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
-              <ul>
-                <li>Jul 22, 2016</li>
-                <li><a href="#">Reply</a></li>
-              </ul>
-              <div class="media response-info">
-                <div class="media-left response-text-left">
-                  <a href="#">
-                    <img src="images/sin2.jpg" class="img-responsive" alt="">
-                  </a>
-                </div>
-                <div class="media-body response-text-right">
-                  <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit,There are many
-                    variations of passages of Lorem Ipsum available,
-                    sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
-                  <ul>
-                    <li>Aug 01, 2016</li>
-                    <li><a href="#">Reply</a></li>
-                  </ul>
-                </div>
-                <div class="clearfix"> </div>
-              </div>
-            </div>
-            <div class="clearfix"> </div>
+            @endif
           </div>
         </div>
-        <div class="coment-form">
-          <h4>Leave your comment</h4>
-          <form action="#" method="post">
-            <input type="text" value="Name " name="name" onfocus="this.value = '';"
-              onblur="if (this.value == '') {this.value = 'Name';}" required="">
-            <input type="email" value="Email" name="email" onfocus="this.value = '';"
-              onblur="if (this.value == '') {this.value = 'Email';}" required="">
-            <input type="text" value="Website" name="websie" onfocus="this.value = '';"
-              onblur="if (this.value == '') {this.value = 'Website';}" required="">
-            <textarea onfocus="this.value = '';" onblur="if (this.value == '') {this.value = 'Your Comment...';}"
-              required="">Your Comment...</textarea>
-            <input type="submit" value="Submit Comment">
-          </form>
-        </div> --}}
-        <div class="clearfix"></div>
       </div>
+      {{-- <!-- END ARTICLE --> --}}
     </div>
-    @include('WebSC.components.sidebar')
-    <div class="clearfix"></div>
-  </div>
-</div>
+  </section>
+  {{-- <!-- END STATUS FEED --> --}}
+
+  @if (!isset($page))
+    @if (app('site')->enable_comment && $post->comment)
+      {{-- <!-- START COMMENT SECTION --> --}}
+      <section id="komentar" class="articles">
+        <div class="column is-10 is-offset-1">
+          <div class="card article">
+            <div class="card-content">
+              <h1 class="title article-title has-border-grey-lighter" style="border-bottom:1px solid #ccc;">
+                <a href="#komentar" class="has-text-dark">Komentar</a>
+              </h1>
+              @if (session('success'))
+                <div class="notification is-success has-text-left">
+                  Komentar berhasil terkirim dan menunggu persetujuan penulis untuk ditampilkan!
+                </div>
+              @endif
+
+              @if (count($post->comments_sub))
+                @foreach ($post->comments_sub as $comment)
+                  @php
+                    $commentator = $comment->commentator;
+                  @endphp
+                  {{-- Start Comment Parent --}}
+                  <article id="komentar-{{ md5($comment->id . env('DB_PORT', 3306)) }}" class="media">
+                    <figure class="media-left">
+                      <p class="image is-64x64">
+                        <img class="is-rounded" src="{{ getImageUser($commentator->image ?? '') }}">
+                      </p>
+                    </figure>
+                    <div class="media-content">
+                      <div class="content">
+                        <p style="margin:5px 0;"><strong>{{ $commentator->fullname }}</strong></p>
+                        {!! $comment->comment !!}
+                        <p><small><a onclick="reply({{ $comment->id }}, '{{ $commentator->fullname }}')" class="has-text-danger">Balas</a> · {{ carbon($comment->created_at)->diffForHumans() }}</small></p>
+                      </div>
+                  
+                      @if (count($comment->subcomments))
+                        @foreach ($comment->subcomments as $subcomment)
+                          @php
+                            $subcommentator = $subcomment->commentator;
+                          @endphp
+                          {{-- Start Comment Child --}}
+                          <article id="komentar-{{ md5($subcomment->id . env('DB_PORT', 3306)) }}" class="media">
+                            <figure class="media-left">
+                              <p class="image is-48x48">
+                                <img class="is-rounded" src="{{ getImageUser($subcommentator->image ?? '') }}">
+                              </p>
+                            </figure>
+                            <div class="media-content">
+                              <div class="content">
+                                <p style="margin:5px 0;"><strong>{{ $subcommentator->fullname }}</strong></p>
+                                {!! $subcomment->comment !!}
+                                <p><small><a onclick="reply({{ $subcomment->parent_id }}, '{{ $subcommentator->fullname }}')" class="has-text-danger">Balas</a> · {{ carbon($subcomment->created_at)->diffForHumans() }}</small></p>
+                              </div>
+                            </div>
+                          </article>
+                          {{-- End Comment Child --}}
+                        @endforeach
+                      @endif
+                    </div>
+                  </article>
+                  {{-- End Comment Parent --}}
+                @endforeach
+              @endif
+
+              @if (Auth::guest())
+                <article class="media">
+                  <div class="media-content">
+                    Silakan <a class="tag is-danger is-medium" href="{{ route('web.login') }}">Masuk</a> untuk dapat memberikan komentar.
+                  </div>
+                </article>
+              @else
+                {{-- Start Comment Form --}}
+                <article id="comment-form" class="media">
+                  <figure class="media-left">
+                    <p class="image is-64x64">
+                      <img class="is-rounded" src="{{ getImageUser() }}">
+                    </p>
+                  </figure>
+                  <div class="media-content">
+                    <form method="post" action="{{ route('web.action.comment') }}">
+                      <div class="field">
+                        <div class="control">
+                          <div class="info-reply is-hidden">
+                            Balas komentar <span class="tag is-danger is-light is-medium">
+                              <span class="reply-name"></span>&nbsp;
+                              <button type="button" onclick="clear_reply()" class="delete is-small"></button>
+                            </span>
+                          </div>
+                          <textarea name="comment" class="textarea" placeholder="Ketikkan komentar Anda di sini..."></textarea>
+                        </div>
+                      </div>
+                      <div class="field">
+                        <input class="is-checkradio is-danger" type="checkbox" id="notify" name="notify" checked="checked">
+                        <label for="notify">Terima notifikasi balasan</label>
+                      </div>
+                      <div class="field">
+                        <div class="control">
+                          @csrf
+                          <input type="hidden" name="slug" value="{{ $post->slug }}">
+                          <input type="hidden" name="reply_to">
+                          <button class="button is-danger">Kirim!</button>
+                        </div>
+                      </div>
+                    </form>
+                  </div>
+                </article>
+                {{-- End Comment Form --}}
+              @endif
+            </div>
+          </div>
+        </div>
+      </section>
+      {{-- <!-- END COMMENT SECTION --> --}}
+    @endif
+  @endif
 @endsection
 
-@section('styles')
-<style>
-  .technology-left p {
-    line-height: 1.9em;
-    font-size: 0.9em;
-    color: #777;
-    margin-bottom: 1em;
-  }
-</style>
-@endsection
+@if (!isset($page))
+  @push('styles')
+    <style>
+      #komentar {
+        margin: unset;
+      }
+      #komentar .card.article:first-child {
+        margin: unset;
+      }
+      #komentar .media-content {
+        margin-top: unset!important;
+      }
+      #komentar .content p {
+        /* margin: unset!important; */
+      }
+      .info-reply {
+        margin-bottom: 5px;
+      }
+      .clear-reply {
+        color: unset;
+      }
+
+      .bg-color-fading {
+        animation: fade 3s forwards;
+        background-color: #fffabc;
+      }
+
+      @keyframes fade {
+        from {background-color: #fffabc;}
+        to {background-color: transparent;}
+      }
+    </style>
+  @endpush
+
+  @push('scripts')
+    <script>
+      $('document').ready(function() {
+        $('#btn-like').on('click', function() {
+          @if (Auth::guest())
+            window.top.location.href = "{{ route('web.login') }}";
+          @else
+            $('#btn-like').addClass('is-loading');
+            $.ajax({
+                type: "POST",
+                url: "{{ route('web.action.like') }}",
+                data: {
+                  post: "{{ $post->slug }}"
+                }
+            }).done(function(result) {
+              $('#btn-like').removeClass('is-loading').blur();
+              if ($('#btn-like').hasClass('has-text-primary')) {
+                $('#btn-like').removeClass('has-text-primary');
+              } else {
+                $('#btn-like').addClass('has-text-primary');
+              }
+              $('#btn-like .count').text(result.data.like);
+              $('#btn-dislike .count').text(result.data.dislike);
+              $('#btn-dislike').removeClass('has-text-danger');
+              console.log(result);
+            });
+          @endif
+        });
+
+        $('#btn-dislike').on('click', function() {
+          @if (Auth::guest())
+            window.top.location.href = "{{ route('web.login') }}";
+          @else
+            $('#btn-dislike').addClass('is-loading');
+            $.ajax({
+                type: "POST",
+                url: "{{ route('web.action.dislike') }}",
+                data: {
+                  post: "{{ $post->slug }}"
+                }
+            }).done(function(result) {
+              $('#btn-dislike').removeClass('is-loading').blur();
+              if ($('#btn-dislike').hasClass('has-text-danger')) {
+                $('#btn-dislike').removeClass('has-text-danger');
+              } else {
+                $('#btn-dislike').addClass('has-text-danger');
+              }
+              $('#btn-like .count').text(result.data.like);
+              $('#btn-dislike .count').text(result.data.dislike);
+              $('#btn-like').removeClass('has-text-primary');
+              console.log(result);
+            });
+          @endif
+        });
+
+        @if (!isset($page))
+          if (window.location.hash) {
+            $(window.location.hash).addClass('bg-color-fading');
+          }
+
+          $('.button.is-copy').on('click', function() {
+            $('#modal').addClass('is-active');
+            let html = 'Tekan ikon untuk menyalin tautan: <div class="field has-addons"><div class="control is-expanded"><input class="input is-fullwidth" type="text" value="{{ url('/' . env('SINGLE_POST_PATH') . '/' . $post->slug) }}" readonly></div><div class="control"><a onclick="copy()" class="button"><i class="fad fa-copy"></i></a></div></div>';
+            $('.modal-card-title').text('Salin Tautan');
+            $('.modal-card-body').html(html);
+            $('.modal-card-foot').hide();
+          });
+        @endif
+      });
+
+      function reply(comment_id, name) {
+        @if (Auth::guest())
+          window.top.location.href = "{{ route('web.login') }}";
+        @else
+          $('input[name=reply_to]').val(comment_id);
+          $('.info-reply').removeClass('is-hidden');
+          $('.info-reply .reply-name').text(name);
+          // $("html").scrollTop($('#comment-form').offset().top);
+          $('textarea[name=comment]').focus();
+        @endif
+      }
+
+      function clear_reply() {
+        $('input[name=reply_to]').val('');
+        $('.info-reply').addClass('is-hidden');
+        $('.info-reply .reply-name').text('');
+      }
+
+      function copy() {
+        $('.modal-card-body input').select();
+        try {
+          setTimeout(function() {
+            document.execCommand('copy');
+            setTimeout(function() {
+              alert('Tautan berhasil disalin!');
+            }, 10);
+          }, 10);
+        } catch(e) {}
+      }
+    </script>
+  @endpush
+@endif

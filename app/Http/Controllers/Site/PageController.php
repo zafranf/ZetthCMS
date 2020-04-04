@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers\Site;
 
-use App\Http\Controllers\Site\Controller;
 use Illuminate\Http\Request;
 
 class PageController extends Controller
@@ -12,10 +11,10 @@ class PageController extends Controller
         parent::__construct();
     }
 
-    public function index(Request $r, $slug)
+    public function index(Request $r, $slug = null)
     {
         /* get page */
-        $page = _getPage($slug); //\App\Models\Post::pages()->active()->where('slug', $slug)->first();
+        $page = _getPage($slug);
         if (!$page) {
             abort(404);
         }
@@ -25,7 +24,7 @@ class PageController extends Controller
 
         /* set breadcrumbs */
         $this->breadcrumbs[] = [
-            'page' => 'Berita',
+            'page' => 'Halaman',
             'icon' => '',
             'url' => '',
         ];

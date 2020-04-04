@@ -1,0 +1,55 @@
+html,
+body#login {
+    font-family: "Roboto", "Open Sans", sans-serif;
+    font-size: 14px;
+    font-weight: 300;
+    background: #f2f6fa;
+}
+
+#login .hero.is-success {
+    background: #f2f6fa;
+}
+
+#login .hero .nav,
+#login .hero.is-success .nav {
+    -webkit-box-shadow: none;
+    box-shadow: none;
+}
+
+#login .box {
+    margin-top: 5rem;
+}
+
+#login .avatar {
+    margin-top: -70px;
+    padding-bottom: 20px;
+}
+
+#login .avatar img {
+    background: #fff;
+    border-radius: 50%;
+    -webkit-box-shadow: 0 2px 3px rgba(10, 10, 10, 0.1),
+        0 0 0 1px rgba(10, 10, 10, 0.1);
+    box-shadow: 0 2px 3px rgba(10, 10, 10, 0.1), 0 0 0 1px rgba(10, 10, 10, 0.1);
+}
+
+#login input {
+    font-weight: 300;
+}
+
+#login .button {
+    justify-content: unset;
+}
+
+.button.is-facebook {
+    background: #4267b2;
+    color: #fff;
+}
+
+.button.is-google {
+    background: #db4437;
+    color: #fff;
+}
+#login .button.is-static {
+    pointer-events: unset;
+}

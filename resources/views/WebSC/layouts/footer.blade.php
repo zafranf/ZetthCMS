@@ -1,52 +1,52 @@
-<div class="footer">
-  <div class="container">
-    <div class="col-md-4 footer-left wow fadeInDown" data-wow-duration=".8s" data-wow-delay=".2s">
-      <h4>Tentang</h4>
-      <p>{{ app('site')->description ?? '-' }}</p>
-      @if (app('site')->description)
-        <div class="bht1"><a href="{{ url('about') }}">Baca</a></div>
-      @endif
-    </div>
-    <div class="col-md-4 footer-middle wow fadeInDown" data-wow-duration=".8s" data-wow-delay=".2s">
-      <h4>Komentar Terbaru</h4>
-      @forelse (_getComments(3) as $comment)
-        <div class="mid-btm">
-          <p>{{ $comment->name . ': "' . $comment->comment . '"' }} di <a href="{{ url($comment->post->slug) }}">{{ $comment->post->title }}</a></p>
-        </div>
-      @empty
-        <p>-</p>
-      @endforelse
-    </div>
-    <div class="col-md-4 footer-right wow fadeInDown" data-wow-duration=".8s" data-wow-delay=".2s">
-      <h4>Tautan Lain</h4>
-      @php $menus = getMenu('lainnya') ?? []; @endphp
-      <ul>
-        @forelse ($menus as $menu)
-          <li>
-            <a href="{{ $menu->url }}" title="{{ $menu->name }}">{{ $menu->name }}</a>
-          </li>
-        @empty
-          <p>-</p>
-        @endforelse
-      </ul>
-    </div>
-    <div class="clearfix"></div>
-  </div>
-</div>
-<div class="copyright wow fadeInDown" data-wow-duration=".8s" data-wow-delay=".2s">
-  <div class="container">
-    <p>&copy; {{ date("Y") }} {{ app('site')->name }}. All rights reserved | Design by <a href="http://w3layouts.com/">W3layouts</a>
-    </p>
-  </div>
-</div>
-{!! _site_js('themes/WebSC/js/jquery-1.11.1.min.js') !!}
-{!! _site_js('themes/WebSC/js/bootstrap.min.js') !!}
-{!! _site_js('themes/WebSC/js/wow.min.js') !!}
-<script>
-  new WOW().init(); 
-</script>
-@yield('scripts')
-@include('google.analytics')
-</body>
 
+    {{-- <!-- START FOOTER --> --}}
+    <footer class="footer">
+      <div class="container">
+        <div class="content has-text-grey has-text-centered">
+          <a href="#{{-- {{ url('/tentang') }} --}}" class="has-text-danger">Tentang</a> |
+          <a href="#{{-- {{ url('/kontak') }} --}}" class="has-text-danger">Kontak</a>  | 
+          <a href="#{{-- {{ url('/sangkalan') }} --}}" class="has-text-danger">Sangkalan</a> | 
+          <a href="#{{-- {{ url('/pp') }} --}}" class="has-text-danger">Kebijakan Privasi</a> | 
+          <a href="#{{-- {{ url('/psd') }} --}}" class="has-text-danger">PSD</a> 
+          <br>
+          <small class="has-text-grey-light">
+            2020 &copy; {{ app('site')->name }}.
+            Templat oleh
+            <a href="https://bulmatemplates.github.io/bulma-templates/" target="_blank" class="has-text-grey">Bulma Templates</a>.
+          </small>
+        </div>
+      </div>
+    </footer>
+    {{-- <!-- END FOOTER --> --}}
+
+    {{-- <button class="button is-primary is-large modal-button" data-target="modal" aria-haspopup="true">Launch example modal</button> --}}
+    {{-- <!-- START MODAL --> --}}
+    <div id="modal" class="modal">
+      <div class="modal-background"></div>
+      <div class="modal-card">
+        <header class="modal-card-head">
+          <p class="modal-card-title">Modal title</p>
+          <button class="delete" aria-label="close"></button>
+        </header>
+        <section class="modal-card-body">
+          <!-- Content ... -->
+        </section>
+        <footer class="modal-card-foot">
+          <button class="button is-success">Save changes</button>
+          <button class="button">Cancel</button>
+        </footer>
+      </div>
+    </div>
+    {{-- <!-- END MODAL --> --}}
+
+    <script defer src="https://pro.fontawesome.com/releases/v5.12.1/js/all.js" integrity="sha384-RiuSF/PBDHssKXqYfH16Hw3famw7Xg29hNO7Lg636dZXUg42q2UtNLPsGfihOxT9" crossorigin="anonymous"></script>
+    {!! _site_js('themes/WebSC/js/scripts.js') !!}
+    @stack('scripts')
+    @include('google.analytics')
+    {{-- <!-- Go to www.addthis.com/dashboard to customize your tools --> --}}
+    {{-- <script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-5e7b16825b2feb44"></script> --}}
+<!--[if]>
+</body></html>
+<![endif]-->
+</body>
 </html>

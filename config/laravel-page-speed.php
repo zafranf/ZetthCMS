@@ -55,7 +55,11 @@ return [
         '*.flv',
         '*.m4v',
         '*.torrent',
-        'manager/*',
+        'larafile/*',
+        env('ADMIN_PATH') . '/*',
+        'themes/admin/*',
+        'test',
+        'test/*',
     ],
 
 ];

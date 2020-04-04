@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers\Site;
 
-use App\Http\Controllers\Site\Controller;
 use Illuminate\Http\Request;
 
 class MainController extends Controller
@@ -19,7 +18,7 @@ class MainController extends Controller
         $data = [
             'page_title' => app('site')->tagline,
             'banners' => _getBanners($singleBanner),
-            'posts' => _getPostsSimple(5),
+            'posts' => _getPostsSimple(),
             'breadcrumbs' => $this->breadcrumbs,
         ];
 
@@ -31,26 +30,24 @@ class MainController extends Controller
 
     public function search(Request $r)
     {
+        /* set breadcrumbs */
         $this->breadcrumbs[] = [
             'page' => 'Pencarian',
             'icon' => '',
             'url' => '',
         ];
 
+        /* set data */
+        $keyword = $r->input('q');
         $data = [
-            'page_title' => 'Pencarian ' . $r->input('q'),
+            'page_title' => 'Pencarian: ' . $keyword,
             'breadcrumbs' => $this->breadcrumbs,
-            'posts' => \App\Models\Post::where('title', 'like', '%' . $r->input('q') . '%')
-            // ->orWhere('content', 'like', '%' . $r->input('q') . '%')
-                ->with('categories')
-                ->withCount('comments')
-                ->orderBy('published_at', 'desc')
-                ->paginate(app('site')->perpage),
+            'posts' => _getSearchPosts($keyword),
         ];
 
         /* Set SEO */
         $this->setSEO($data['page_title']);
 
-        return view($this->getTemplate() . '.search', $data);
+        return view($this->getTemplate() . '.posts', $data);
     }
 }

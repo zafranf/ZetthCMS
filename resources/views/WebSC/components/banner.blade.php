@@ -1,9 +1,27 @@
-<div class="banner" style="background-image:url('{{ $banners->image ?? '' }}')" {!! isset($banners->url) && $banners->url ? 'onclick="window.top.location=\''. url(($banners->url ?? '')) .'\'" style="cursor:pointer;"' : '' !!}>
-  @if (isset($banners->only_image) && !$banners->only_image)
-    <div class="container">
-      <h2>{{ $banners->title }}</h2>
-      <p>{{ $banners->description }}</p>
-      {{-- <a href="{{ url($banners->url) }}">Selengkapnya</a> --}}
+@php
+  $height = app('is_desktop') ? 'height:400px;' : 'height:110px;';
+  $banner_style = 'style="margin-bottom:50px;background:white url(\''.url($banners->image).'\') no-repeat center!important;border-bottom:1px solid #f1f1f1;';
+  // if (app('is_mobile')) {
+    $banner_style .= 'background-size:contain!important;';
+  // }
+  $banner_style .= $height;
+@endphp
+@if ($banners->url!='#')
+  @php
+    $banner_link = ' onclick="window.top.location=\''. url($banners->url) .'\'"';
+    $banner_style .= 'cursor:pointer;';  
+  @endphp
+@endif
+@php
+  $banner_style .= '"';
+@endphp
+<section class="hero is-info is-medium is-bold" {!! $banner_style . ($banner_link ?? '') !!}>
+  @if (!$banners->only_image)
+    <div class="hero-body">
+      <div class="container has-text-centered">
+        <h1 class="title">{{ $banners->title }}</h1>
+        <p>{{ $banners->description }}</p>
+      </div>
     </div>
   @endif
-</div>
+</section>

@@ -21,9 +21,9 @@ class Controller extends SiteController
         $sitename = app('site')->name;
         $title = !empty($title) ? $title . $separator . $sitename : $sitename;
         $tagline = app('site')->tagline;
-        $keywords = app('site')->keyword;
+        $keywords = app('site')->keywords;
         $description = app('site')->description;
-        $logo = _get_image("assets/images/" . app('site')->icon);
+        $logo = getImageLogo(app('site')->icon);
 
         /* Set General SEO */
         SEOMeta::setTitle($title);
@@ -70,7 +70,7 @@ class Controller extends SiteController
             }
 
             $title = $par->title . $separator . $sitename;
-            $image = _get_image($par->cover);
+            $image = getImage($par->cover);
             $keywords = implode(',', $tags);
             $description = \Str::limit(strip_tags($par->content), 300);
             if (strlen($par->excerpt) > 0) {
@@ -101,16 +101,17 @@ class Controller extends SiteController
             ]);
 
             /* twitter card */
+            $socmed = null;
             $cacheSocmedName = 'cacheSocmedSEO';
             $cacheSocmed = \Cache::get($cacheSocmedName);
-            if ($cacheSocmed) {
+            if (!is_null($cacheSocmed) && $cacheSocmed != '-') {
                 $socmed = $cacheSocmed;
-            } else {
-                $socmed = \ZetthCore\Models\SocmedData::where('type', 'site')->whereHas('socmed', function (\Illuminate\Database\Eloquent\Builder $query) {
+            } else if (is_null($cacheSocmed)) {
+                $socmed = \App\Models\SocmedData::where('type', 'site')->whereHas('socmed', function ($query) {
                     $query->where('name', 'Twitter');
                 })->first();
 
-                \Cache::put($cacheSocmedName, $socmed, getCacheTime());
+                \Cache::put($cacheSocmedName, $socmed ?? '-', getCacheTime());
             }
             if ($socmed) {
                 /* Set Twitter SEO */
@@ -125,5 +126,42 @@ class Controller extends SiteController
         } else {
             OpenGraph::addImage($logo);
         }
+    }
+
+    public function generateUsername($user, $method = 1)
+    {
+        /* username from email */
+        if ($method == 1) {
+            $user_name = strtolower(explode("@", $user->email)[0]);
+        }
+        /* username from fullname, first word */
+        else if ($method == 1) {
+            $user_name = strtolower(explode(" ", $user->fullname)[0]);
+        }
+        /* username from fullname, remove space */
+        else if ($method == 2) {
+            $user_name = strtolower(str_replace(" ", "", $user->fullname));
+        }
+        /* username from fullname, change space to _ */
+        else if ($method == 3) {
+            $user_name = strtolower(str_replace(" ", "_", $user->fullname));
+        }
+        /* username from email with id */
+        else if ($method == 4) {
+            $user_name = strtolower(explode("@", $user->email)[0]);
+            $user_name .= str_pad($user->id, 4, '0', STR_PAD_LEFT);
+        }
+
+        /* check existing */
+        $exists = \App\Models\User::where('name', $user_name)->first();
+        if ($exists) {
+            return $this->generateUsername($user, $method += 1);
+        }
+
+        /* save user name */
+        $user->name = $user_name;
+        $user->save();
+
+        return true;
     }
 }

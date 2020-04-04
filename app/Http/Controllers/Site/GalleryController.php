@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers\Site;
 
-use App\Http\Controllers\Site\Controller;
 use Illuminate\Http\Request;
 
 class GalleryController extends Controller
@@ -37,7 +36,7 @@ class GalleryController extends Controller
     public function album_detail(Request $r, $slug)
     {
         /* get photos */
-        $album = \ZetthCore\Models\Album::active()->where('slug', $slug)->with('photos')->first();
+        $album = \App\Models\Album::active()->where('slug', $slug)->with('photos')->first();
         if (!$album) {
             abort(404);
         }
@@ -92,7 +91,7 @@ class GalleryController extends Controller
     public function video_detail(Request $r, $slug)
     {
         /* get photos */
-        $video = \ZetthCore\Models\Post::videos()->active()->where('slug', $slug)->first();
+        $video = \App\Models\Post::videos()->active()->where('slug', $slug)->first();
         if (!$video) {
             abort(404);
         }
