@@ -136,8 +136,8 @@ class ActionController extends Controller
 
         /* save comment */
         $comment = new \App\Models\Comment;
-        $comment->name = \Auth::user()->fullname;
-        $comment->email = \Auth::user()->email;
+        $comment->name = $r->input('name') ?? \Auth::user()->fullname;
+        $comment->email = $r->input('email') ?? \Auth::user()->email;
         $comment->content = '<p>' . nl2br(strip_tags($r->input('comment'))) . '</p>';
         $comment->parent_id = $r->input('reply_to') ?? null;
         $comment->notify = $r->input('notify') ?? 'no';
@@ -235,7 +235,7 @@ class ActionController extends Controller
         $post->save();
 
         /* return to socmed url */
-        $posturl = url('/' . env('POST_PATH') . '/' . $post->slug);
+        $posturl = url('/' . env('POST_PATH', 'post') . '/' . $post->slug);
         if ($socmed == 'facebook') {
             $url = 'https://www.facebook.com/sharer/sharer.php?u=' . $posturl . '&src=sdkpreparse';
         } else if ($socmed == 'twitter') {

@@ -232,7 +232,7 @@ class LoginController extends Controller
     public function loginByEmail(Request $r)
     {
         try {
-            $email = trim($r->input('email'));
+            $email = $r->input('email');
             if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
                 throw new \Exception("Masukkan alamat email dengan benar", 1);
             }
@@ -282,7 +282,7 @@ class LoginController extends Controller
             /* save image */
             if ($oauthUser->avatar) {
                 $file = $oauthUser->avatar;
-                $name = str_slug($user->name) . '.jpg';
+                $name = \Str::slug($user->name) . '.jpg';
 
                 if ($this->uploadImage($file, '/assets/images/users/', $name)) {
                     $user->image = $name;
