@@ -111,18 +111,29 @@ class RegisterController extends Controller
      * Create a new user instance after a valid registration.
      *
      * @param  array  $data
-     * @return \App\User
+     * @return \App\Models\User
      */
     protected function create(array $data)
     {
-        return User::create([
+        /* create user */
+        $user = User::create([
             'name' => $data['email'],
             'fullname' => $data['fullname'],
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
-            'verify_code' => md5($data['email'] . uniqid() . strtotime('now') . env('APP_KEY')),
+        ]);
+
+        /* generate default username */
+        $this->generateUsername($user);
+
+        /* create verification */
+        $user->verify()->create([
+            'user_id' => $user->id,
+            'verify_code' => md5($user->email . uniqid() . strtotime('now') . env('APP_KEY')),
             'verify_code_expire' => now()->addDay(),
         ]);
+
+        return $user;
     }
 
     /**
@@ -134,21 +145,16 @@ class RegisterController extends Controller
      */
     protected function registered(Request $r, $user)
     {
-        /* generate default username */
-        $this->generateUsername($user);
+        /* set data parameter */
+        $data = [
+            'view' => $this->getTemplate() . '.emails.verify',
+            'name' => $user->fullname,
+            'email' => $user->email,
+            'verify_code' => $user->verify->verify_code,
+        ];
 
         /* send mail */
-        $this->sendMail([
-            'view' => $this->getTemplate() . '.emails.verify',
-            'data' => [
-                'name' => $user->fullname,
-                'email' => $user->email,
-                'verify_code' => $user->verify_code,
-            ],
-            'from' => env('MAIL_USERNAME', 'no-reply@' . env('APP_DOMAIN')),
-            'to' => $user->email,
-            'subject' => '[' . env('APP_NAME') . '] Verifikasi akun',
-        ]);
+        \Mail::to($user->email)->queue(new \App\Mail\Verify($data));
 
         return redirect(route('web.verify', ['type' => 'email']))->with('registered', true);
     }

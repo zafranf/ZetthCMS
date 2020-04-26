@@ -30,14 +30,16 @@
             <div class="media">
               @if ($author->image)
                 <div class="media-center" style="z-index:2;">
-                  <a href="{{ url('penulis/' . $author->name) }}" title="Penulis: {{ $author->fullname }}"><img src="{{ getImageUser($author->image ?? '') }}" class="author-image" alt="Penulis: {{ $author->fullname }}" title="Penulis: {{ $author->fullname }}"></a>
+                  <a href="{{ url('penulis/' . $author->name) }}" title="Penulis: {{ $author->fullname }}">
+                    <img src="{{ getImageUser($author->image ?? '') }}" class="author-image" alt="Penulis: {{ $author->fullname }}" title="Penulis: {{ $author->fullname }}">
+                  </a>
                 </div>
               @endif
               <div class="media-content has-text-centered" {!! !$author->image ? 'style="margin-top:2rem;overflow:unset;"' : '' !!}>
                 @if ($post->cover)
                   <figure class="image is-3by1">
                     <a href="{{ url('baca-artikel/'.$post->slug) }}" title="{{ $post->title . ' - ' . app('site')->name }}">
-                      <img src="{{ $post->cover }}" alt="{{ $post->title . ' - ' . app('site')->name }}" title="{{ $post->title . ' - ' . app('site')->name }}">
+                      <img src="{{ getImage('/assets/images/posts/' . $post->cover) }}" alt="{{ $post->title . ' - ' . app('site')->name }}" title="{{ $post->title . ' - ' . app('site')->name }}">
                     </a>
                   </figure>
                 @endif
@@ -47,7 +49,8 @@
                 <div class="tags has-addons level-item">
                   <span class="tag is-rounded is-danger" title="Penulis: {{ $author->fullname }}">
                     <a href="{{ url('penulis/' . $author->name) }}" title="Penulis: {{ $author->fullname }}" class="has-text-white">
-                    {{ $author->fullname }}</a>
+                      {{ $author->fullname }}
+                    </a>
                   </span>
                   <span class="tag is-rounded has-text-grey-light" title="Tanggal terbit: {{ $post->published_string }}">
                     {{ carbon($post->published_at)->isoFormat('Do MMMM YYYY') }}

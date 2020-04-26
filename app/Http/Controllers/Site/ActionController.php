@@ -64,7 +64,7 @@ class ActionController extends Controller
                         $post->increment('disliked');
 
                         /* update user like post */
-                        $likes->like = 0;
+                        $likes->like = 'no';
                         $likes->save();
                     } else {
                         $like_str = 'hapus suka';
@@ -77,7 +77,7 @@ class ActionController extends Controller
                         $post->increment('liked');
 
                         /* update user like post */
-                        $likes->like = 1;
+                        $likes->like = 'yes';
                         $likes->save();
                     } else {
                         $like_str = 'hapus tidak suka';
@@ -94,8 +94,9 @@ class ActionController extends Controller
                 }
 
                 /* save user like post */
-                \App\Models\PostLike::create([
-                    'post_id' => $post->id,
+                \App\Models\Like::create([
+                    'likeable_type' => 'App\Models\Post',
+                    'likeable_id' => $post->id,
                     'user_id' => app('user')->id,
                     'like' => $like,
                 ]);
@@ -128,24 +129,37 @@ class ActionController extends Controller
     public function comment(Request $r)
     {
         /* get post */
-        $post = \App\Models\Post::articles()->where('slug', $r->input('slug'))->first();
+        $post = \App\Models\Post::articles()->active()->where('slug', $r->input('slug'))->first();
         if (!$post) {
             abort(404);
         }
 
         /* save comment */
-        $comment = new \App\Models\PostComment;
+        $comment = new \App\Models\Comment;
         $comment->name = \Auth::user()->fullname;
         $comment->email = \Auth::user()->email;
-        $comment->comment = '<p>' . nl2br(strip_tags($r->input('comment'))) . '</p>';
+        $comment->content = '<p>' . nl2br(strip_tags($r->input('comment'))) . '</p>';
         $comment->parent_id = $r->input('reply_to') ?? null;
-        $comment->post_id = $post->id;
-        $comment->notify = bool($r->input('notify')) ? 1 : 0;
-        $comment->read = 0;
-        $comment->status = 0;
-        $comment->is_owner = 0;
+        $comment->notify = $r->input('notify') ?? 'no';
+        $comment->read = 'no';
+        $comment->status = 'inactive';
+        $comment->is_owner = 'no';
+        $comment->commentable_type = 'App\Models\Post';
+        $comment->commentable_id = $post->id;
         $comment->created_by = \Auth::user()->id;
         $comment->save();
+
+        /* send notif to parent */
+        if ($comment->parent) {
+            $parent = $comment->parent;
+            $topparent = \App\Models\Comment::find($parent->parent_id ?? $parent->id);
+            $data = [
+                'post' => $post,
+                'parent' => $topparent,
+                'comment' => $comment,
+            ];
+            \App\Jobs\CommentReply::dispatch($data);
+        }
 
         /* clear cache */
         \Cache::forget('_getPostscompletedesc' . $post->slug . '11');
@@ -153,7 +167,7 @@ class ActionController extends Controller
         /* save activity */
         $this->activityLog('[~name] memberikan komentar untuk artikel "' . $post->slug . '"');
 
-        return redirect(url(env('SINGLE_POST_PATH', 'post') . "/" . $post->slug . "#komentar"))->with('success', true);
+        return redirect(url(env('POST_PATH', 'post') . "/" . $post->slug . "#komentar"))->with('success', true);
     }
 
     public function contact(Request $r)
@@ -181,8 +195,8 @@ class ActionController extends Controller
         $inbox->site = $r->input('site');
         $inbox->subject = $r->input('subject');
         $inbox->message = $r->input('message');
-        $inbox->read = 0;
-        $inbox->status = 1;
+        $inbox->read = 'no';
+        $inbox->status = 'active';
         $inbox->save();
 
         /* send email to support */
@@ -190,20 +204,20 @@ class ActionController extends Controller
             'content' => $r->input('message'),
         ]);
 
-        /* send mail */
-        $this->sendMail([
-            'view' => $this->getTemplate() . '.emails.contact',
+        /* set data parameter */
+        $data = [
+            'view' => $this->getTemplate() . '.emails.contact_form',
             'data' => $r->input(),
-            'from' => env('MAIL_USERNAME', 'no-reply@' . env('APP_DOMAIN')),
-            'to' => explode(',', env('MAIL_NOTIF')),
-            'subject' => '[' . env('APP_NAME') . '] Pesan masuk dari ' . $r->input('name'),
-        ]);
+        ];
 
-        $data = json_encode($r->except(['message', 'content']));
+        /* send mail */
+        \Mail::to(explode(',', env('MAIL_NOTIF')))->queue(new \App\Mail\ContactForm($data));
+
+        $data = json_encode($r->except(['message', 'content', 'g-recaptcha-response', '_token']));
         $expire = now()->addYear()->getTimestamp();
         $cookie = cookie('contact', $data, $expire);
 
-        return redirect("contact")
+        return redirect(route("web.contact"))
             ->with('success', 'Pesan berhasil dikirim.')
             ->withCookie($cookie);
     }
@@ -211,7 +225,7 @@ class ActionController extends Controller
     public function share(Request $r, $slug, $socmed)
     {
         /* get post */
-        $post = \App\Models\Post::where('slug', $slug)->first();
+        $post = \App\Models\Post::active()->posts()->where('slug', $slug)->first();
         if (!$post) {
             abort(404);
         }
@@ -221,7 +235,7 @@ class ActionController extends Controller
         $post->save();
 
         /* return to socmed url */
-        $posturl = url('/' . env('SINGLE_POST_PATH') . '/' . $post->slug);
+        $posturl = url('/' . env('POST_PATH') . '/' . $post->slug);
         if ($socmed == 'facebook') {
             $url = 'https://www.facebook.com/sharer/sharer.php?u=' . $posturl . '&src=sdkpreparse';
         } else if ($socmed == 'twitter') {

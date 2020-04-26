@@ -1,7 +1,7 @@
 <div style="width:90%;margin:0 auto;border:1px solid #ccc;color:#8B8B8B;padding:5px 10px;" id="zetth-email">
   <center>
     <a href="{{ url('/') }}">
-      <img src="{{ getImageLogo() }}" style="max-height:200px;">
+      <img src="{{ getImageLogo('logo/landscape.png') }}" style="max-height:200px;">
     </a>
   </center>
   <hr>
@@ -40,6 +40,6 @@
       <td>{!! nl2br($content) !!}</td>
     </tr>
   </table>
-
+  <hr>
   <p><small>*mohon untuk tidak membalas email ini.</small></p>
 </div>

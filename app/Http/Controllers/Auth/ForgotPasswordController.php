@@ -64,23 +64,23 @@ class ForgotPasswordController extends Controller
             }
 
             /* Create reset password token */
-            $password = \App\Models\PasswordReset::updateOrCreate([
+            $reset = \App\Models\PasswordReset::updateOrCreate([
                 'email' => $r->input('email'),
             ], [
                 'token' => md5($r->input('email') . uniqid() . strtotime('now') . env('APP_KEY')),
+                'created_at' => now(),
             ]);
-            /* send mail */
-            $this->sendMail([
+
+            /* set data parameter */
+            $data = [
                 'view' => $this->getTemplate() . '.emails.forgot_password',
-                'data' => [
-                    'name' => $user->fullname,
-                    'email' => $user->email,
-                    'code' => $password->token,
-                ],
-                'from' => env('MAIL_USERNAME', 'no-reply@' . env('APP_DOMAIN')),
-                'to' => $user->email,
-                'subject' => '[' . env('APP_NAME') . '] Permintaan ubah sandi',
-            ]);
+                'name' => $user->fullname,
+                'email' => $user->email,
+                'code' => $reset->token,
+            ];
+
+            /* send mail */
+            \Mail::to($user->email)->queue(new \App\Mail\ForgotPassword($data));
         }
 
         return redirect(route('web.forgot.password'))->with('success', $user ? true : false);

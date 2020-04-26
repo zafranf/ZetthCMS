@@ -1,101 +1,146 @@
 @extends('WebSC.layouts.main')
 
+@php
+  $cookie = json_decode(Cookie::get('contact'));
+@endphp
+
 @section('content')
-<div class="technology">
-  <div class="container">
-    <div class="col-md-9 technology-left">
-      <div class="contact-section">
-        <h2 class="w3">Hubungi Kami</h2>
-        <div class="contact-grids">
-          @if (session('success'))
-            <div class="alert alert-success">
-              {{ session('success') }}
+  {{-- <!-- START STATUS FEED --> --}}
+  <section class="articles">
+    <div class="column is-10 is-offset-1">
+      {{-- <!-- START ARTICLE --> --}}
+      <div class="card article">
+        <div class="card-content">
+          <div class="media">
+            <div class="media-content has-text-centered" style="margin-top:2rem;overflow:unset;">
+              <p class="title article-title">
+                Hubungi Kami
+              </p>
             </div>
-          @endif
-          @if (count($errors) > 0)
-            <div class="alert alert-danger">
-              <ul>
-                @foreach ($errors->all() as $error)
-                <li>{{ $error }}</li>
-                @endforeach
-              </ul>
-            </div>
-          @endif
-          <div class="col-md-7 contact-grid">
-            {{-- <p>Nemo enim ips voluptatem voluptas sitsper natuaut odit aut fugit consequuntur magni dolores
-              eosqratio nevoluptatem amet eism com odictor ut ligulate cot ameti dapibu</p> --}}
-            <form id="form-contact" method="post" action="{{ url('/contact') }}">
-              <input type="text" name="name" placeholder="Nama*" required>
-              <input type="email" name="email" placeholder="Email*" required>
-              <input type="text" name="phone" placeholder="No. Telpon">
-              <textarea type="text" name="message" placeholder="Pesan*" required style="height:100px!important;"></textarea>
-              <p style="padding:0!important;">* kolom wajib diisi</p>
-              @csrf
-              <input type="submit" value="Kirim">
-              <div class="g-recaptcha" data-sitekey="{{ env('GOOGLE_RECAPTCHA_SITE_KEY') }}" data-callback="onSubmit" data-size="invisible">
+          </div>
+          <div class="content article-body">
+            <form id="form-contact" method="post" action="{{ route('web.action.contact') }}">
+              @if (session('success'))
+                <div class="notification is-success has-text-left">
+                  {{ session('success') }}
+                </div>
+              @endif
+              @if (count($errors) > 0)
+                <div class="notification is-danger has-text-left">
+                  <ul>
+                    @foreach ($errors->all() as $error)
+                      <li>{{ $error }}</li>
+                    @endforeach
+                  </ul>
+                </div>
+              @endif
+              
+              <div class="field is-horizontal">
+                <div class="field-label is-normal">
+                  <label class="label">Pengirim</label>
+                </div>
+                <div class="field-body">
+                  <div class="field">
+                    <div class="control is-expanded has-icons-left">
+                      <input class="input" type="text" name="name" placeholder="Nama lengkap.." value="{{ $cookie->name ?? old('name') }}">
+                      <span class="icon is-small is-left">
+                        <i class="fad fa-user"></i>
+                      </span>
+                    </div>
+                  </div>
+                  <div class="field">
+                    <div class="control is-expanded has-icons-left has-icons-right">
+                      <input class="input" type="email" name="email" placeholder="Alamat surel.." value="{{ $cookie->email ?? old('email') }}">
+                      <span class="icon is-small is-left">
+                        <i class="fad fa-envelope"></i>
+                      </span>
+                    </div>
+                  </div>
+                </div>
               </div>
+              
+              {{-- <div class="field is-horizontal">
+                <div class="field-label"></div>
+                <div class="field-body">
+                  <div class="field">
+                    <div class="control is-expanded has-icons-left has-icons-right">
+                      <input class="input" type="text" name="phone" placeholder="Nomor telepon.." value="{{ $cookie->phone ?? old('phone') }}">
+                      <span class="icon is-small is-left">
+                        <i class="fad fa-phone"></i>
+                      </span>
+                    </div>
+                  </div>
+                </div>
+              </div> --}}
+              
+              <div class="field is-horizontal">
+                <div class="field-label is-normal">
+                  <label class="label">Tentang</label>
+                </div>
+                <div class="field-body">
+                  <div class="field">
+                    <div class="control">
+                      <input class="input" type="text" name="subject" placeholder="Tentang pesan.." value="{{ $cookie->subject ?? old('subject') }}">
+                    </div>
+                  </div>
+                </div>
+              </div>
+              
+              <div class="field is-horizontal">
+                <div class="field-label is-normal">
+                  <label class="label">Pesan</label>
+                </div>
+                <div class="field-body">
+                  <div class="field">
+                    <div class="control">
+                      <textarea class="textarea" name="message" placeholder="Isi pesan.."></textarea>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              
+              <div class="field is-horizontal">
+                <div class="field-label">
+                  <!-- Left empty for spacing -->
+                </div>
+                <div class="field-body">
+                  <div class="field">
+                    <div class="control">
+                      <button class="button is-primary">
+                        Kirim
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              @csrf
+              <div class="g-recaptcha" data-sitekey="{{ env('GOOGLE_RECAPTCHA_SITE_KEY') }}" data-callback="onSubmit" data-size="invisible">
             </form>
           </div>
-          <div class="col-md-5 contact-grid1">
-            <h4>{{ app('site')->name }}</h4>
-            @if (app('site')->address)
-              <p>{!! nl2br(app('site')->address) !!}</p>
-            @endif
-            {{-- <h4>Address</h4>
-            <div class="contact-top">
-              <div class="clearfix"></div>
-            </div> --}}
-            <ul>
-              @if (app('site')->phone)
-                <li>
-                  <i class="glyphicon glyphicon-earphone" aria-hidden="true"></i> {{ app('site')->phone }}
-                </li>
-              @endif
-              @if (app('site')->email)
-                <li>
-                  <i class="glyphicon glyphicon-envelope" aria-hidden="true"></i>
-                  <a href="mailto:{{ app('site')->email }}">{{ app('site')->email }}</a>
-                </li>
-              @endif
-            </ul>
-          </div>
-          <div class="clearfix"></div>
         </div>
-        @if (app('site')->coordinate)
-          <div class="google-map">
-            @include('google.maps')
-          </div>
-        @endif
       </div>
+      {{-- <!-- END ARTICLE --> --}}
     </div>
-    @include('WebSC.components.sidebar')
-    <div class="clearfix"></div>
-  </div>
-</div>
+  </section>
+  {{-- <!-- END STATUS FEED --> --}}
 @endsection
 
-@section('styles')
-<style>
-  .technology-left p {
-    line-height: 1.9em;
-    font-size: 0.9em;
-    color: #777;
-    margin: 1em 0;
-  }
-
-  .contact-grid1 h4 {
-    font-size: 1.3em !important;
-  }
-</style>
-@endsection
-
-@section('scripts')
-@include('google.recaptcha')
-<script>
-  let formContact = document.getElementById('form-contact');
-  formContact.addEventListener('submit', function(e) {
-    e.preventDefault();
-    grecaptcha.execute();
-  });
-</script>
-@endsection
+@push('scripts')
+  @include('google.recaptcha')
+  <script>
+    let formContact = document.getElementById('form-contact');
+    formContact.addEventListener('submit', function(e) {
+      e.preventDefault();
+      let validName = checkName();
+      let validEmail = checkEmail();
+      /* let validPhone = checkPhone(); */
+      let validSubject = checkSubject();
+      let validMessage = checkMessage();
+      if (!validName || !validEmail /* || !validPhone */ || !validSubject || !validMessage) {
+        e.preventDefault();
+      } else {
+        grecaptcha.execute();
+      }
+    });
+  </script>
+@endpush

@@ -72,10 +72,16 @@ class UserController extends Controller
         $user = app('user');
         $user->name = $r->input('name');
         $user->fullname = $r->input('fullname');
-        $user->gender = $r->input('gender');
-        $user->birthdate = $r->input('birthdate');
-        $user->address = $r->input('address');
-        $user->about = $r->input('about');
+
+        /* save detail */
+        $user->detail()->updateOrCreate([
+            'user_id' => $user->id,
+        ], [
+            'gender' => $r->input('gender'),
+            'birthdate' => $r->input('birthdate'),
+            'address' => $r->input('address'),
+            'about' => $r->input('about'),
+        ]);
 
         /* set password */
         if ($r->input('use_password') && !is_null($r->input('password'))) {

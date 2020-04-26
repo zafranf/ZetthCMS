@@ -27,10 +27,10 @@ Route::name('web.')->middleware(['site'])->group(function () {
         Route::post('/verification/resend', 'Auth\VerificationController@resend')->name('verify.resend.post');
         Route::post('/forgot-password', 'Auth\ForgotPasswordController@send')->name('forgot.post');
         Route::post('/reset-password', 'Auth\ResetPasswordController@store')->name('reset.post');
-        Route::post('/logout', 'Auth\LoginController@logout')->name('logout.post');
+        Route::post('/keluar', 'Auth\LoginController@logout')->name('logout.post');
     });
     if (env('APP_DEBUG')) {
-        Route::get('/logout', 'Auth\LoginController@logout')->name('logout');
+        Route::get('/keluar', 'Auth\LoginController@logout')->name('logout');
         Route::get('/test', 'TestController@index')->name('test');
     }
 
@@ -55,24 +55,24 @@ Route::name('web.')->middleware(['site'])->group(function () {
     Route::middleware(['visitor_log'])->group(function () {
         /* check login status */
         Route::middleware(['guest'])->group(function () {
-            Route::get('/register', 'Auth\LoginController@showRegistrationForm')->name('register');
-            Route::get('/login', 'Auth\LoginController@showLoginForm')->name('login');
-            Route::get('/verification/{type}', 'Auth\VerificationController@index')->name('verify');
-            Route::get('/forgot-password', 'Auth\ForgotPasswordController@index')->name('forgot.password');
-            Route::get('/reset-password', 'Auth\ResetPasswordController@index')->name('reset.password');
+            Route::get('/daftar', 'Auth\LoginController@showRegistrationForm')->name('register');
+            Route::get('/masuk', 'Auth\LoginController@showLoginForm')->name('login');
+            Route::get('/verifikasi/{type}', 'Auth\VerificationController@index')->name('verify');
+            Route::get('/lupa-sandi', 'Auth\ForgotPasswordController@index')->name('forgot.password');
+            Route::get('/ubah-sandi', 'Auth\ResetPasswordController@index')->name('reset.password');
         });
 
         /* must logged in */
         Route::middleware(['auth'])->group(function () {
-            Route::post('/profile', 'Site\UserController@update')->name('profile.post');
+            Route::post('/profil', 'Site\UserController@update')->name('profile.post');
 
-            Route::get('/profile', 'Site\UserController@index')->name('profile');
-            Route::get('/profile/edit', 'Site\UserController@edit')->name('profile.edit');
+            Route::get('/profil', 'Site\UserController@index')->name('profile');
+            Route::get('/profil/edit', 'Site\UserController@edit')->name('profile.edit');
         });
 
         /* Front Routes */
         Route::get('/', 'Site\MainController@index')->name('root');
-        Route::get('/search', 'Site\MainController@search')->name('search');
+        Route::get('/cari', 'Site\MainController@search')->name('search');
 
         /* Gallery Routes */
         Route::get('/albums', 'Site\GalleryController@album')->name('albums');
@@ -85,14 +85,14 @@ Route::name('web.')->middleware(['site'])->group(function () {
         Route::get('/maintenance', 'Site\MiscController@maintenance')->name('maintenance');
 
         /* Posts by Routes */
-        Route::get('/{by_type}/{slug}', 'Site\PostController@by')->name('posts.by')->where('by_type', 'category|tag|author');
+        Route::get('/{by_type}/{slug}', 'Site\PostController@by')->name('posts.by')->where('by_type', 'category|tag|author|kategori|label|penulis');
 
         /* Posts Routes */
-        Route::get('/{type}', 'Site\PostController@index')->name('posts')->where('type', 'posts|articles|news');
-        Route::get('/{type}/{slug}', 'Site\PostController@detail')->name('post')->where('type', 'post|article|news');
+        Route::get('/{type}', 'Site\PostController@index')->name('posts')->where('type', 'posts|articles|news|artikel|berita');
+        Route::get('/{type}/{slug}', 'Site\PostController@detail')->name('post')->where('type', 'post|article|news|baca-artikel|baca-berita');
 
         /* Page Route */
-        Route::get('/contact', 'Site\PageController@contact')->name('contact');
+        Route::get('/kontak', 'Site\PageController@contact')->name('contact');
         Route::get('/{slug}', 'Site\PageController@index')->name('page');
     });
 });

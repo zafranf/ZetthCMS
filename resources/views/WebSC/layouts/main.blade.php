@@ -21,29 +21,7 @@
       </div>
     </div>
     <div id="nav-menu" class="navbar-menu">
-      <div class="navbar-start">
-        <a class="navbar-item{{ in_array(Request::segment(1), ['artikel', 'baca-artikel']) ? ' has-text-danger has-background-white-bis' : '' }}" href="{{ url('/artikel') }}">
-          <i class="fad fa-newspaper"></i>&nbsp;Artikel
-        </a>
-        <a class="navbar-item" {{-- href="{{ url('/burung') }}" --}} disabled>
-          <i class="fad fa-dove"></i>&nbsp;Burung
-        </a>
-        {{-- <a class="navbar-item" href="{{ url('/silsilah') }}" disabled>
-          <i class="fad fa-code-branch"></i>&nbsp;Silsilah
-        </a> --}}
-        <a class="navbar-item" {{-- href="{{ url('/acara') }}" --}} disabled>
-          <i class="fad fa-calendar-week"></i>&nbsp;Acara
-        </a>
-        <a class="navbar-item" {{-- href="{{ url('/lomba') }}" --}} disabled>
-          <i class="fad fa-flag-checkered"></i>&nbsp;Lomba
-        </a>
-        <a class="navbar-item" {{-- href="{{ url('/pasar') }}" --}} disabled>
-          <i class="fad fa-dumpster"></i>&nbsp;Pasar
-        </a>
-        <a class="navbar-item" {{-- href="{{ url('/lelang') }}" --}} disabled>
-          <i class="fad fa-gavel"></i>&nbsp;Lelang
-        </a>
-      </div>
+      {!! generateMenu('website', config('site.menu.options')) !!}
       <div class="navbar-end">
         <hr class="navbar-divider" style="display:block;">
         <div class="navbar-item is-hidden-mobile">

@@ -42,10 +42,11 @@ class VerificationController extends Controller
         ]);
 
         if ($r->input('type') == 'email') {
-            $user = \App\Models\User::where('verify_code', $r->input('code'))->first();
+            $verify = \App\Models\UserVerification::where('verify_code', $r->input('code'))->with('user')->first();
+            $user = $verify->user;
             if ($user) {
                 /* check expire */
-                $expire_at = $user->verify_code_expire;
+                $expire_at = $verify->verify_code_expire;
                 $expired = now()->greaterThanOrEqualTo($expire_at);
 
                 /* check expired */
@@ -54,11 +55,27 @@ class VerificationController extends Controller
                 }
 
                 /* set verified */
-                if (!$user->verified_at) {
-                    $user->verified_at = now();
-                    $user->status = 1;
+                if (is_null($verify->verified_at)) {
+                    $verify->verified_at = now();
+                    $verify->save();
+
+                    /* set status */
+                    $user->status = 'active';
                     $user->save();
+                } else if (!is_null($verify->verified_at)) {
+                    return redirect(route('web.login'))->with('already_verified', true);
                 }
+
+                /* set data parameter */
+                $data = [
+                    'view' => $this->getTemplate() . '.emails.verified',
+                    'name' => $user->fullname,
+                    'email' => $user->email,
+                    'verify_code' => $verify->verify_code,
+                ];
+
+                /* send mail */
+                \Mail::to($user->email)->queue(new \App\Mail\Verified($data));
 
                 return redirect(route('web.login'))->with('verified', true);
             }
@@ -75,7 +92,7 @@ class VerificationController extends Controller
         ]);
 
         /* check user */
-        $user = \App\Models\User::active()->where('email', $r->input('email'))->first();
+        $user = \App\Models\User::where('email', $r->input('email'))->with('verify')->first();
         if ($user) {
             if (!$user->password) {
                 $drivers = [];
@@ -86,22 +103,26 @@ class VerificationController extends Controller
                 return redirect(route('web.verify', ['type' => 'kirim-ulang']))->withInput()->with('oauths', $drivers);
             }
 
+            /* check verify */
+            $verify = $user->verify;
+            if (!is_null($verify->verified_at)) {
+                return redirect(route('web.login'))->with('already_verified', true);
+            }
+
             /* update verify code */
-            $user->verify_code = md5($user->email . uniqid() . strtotime('now') . env('APP_KEY'));
-            $user->save();
+            $verify->verify_code = md5($user->email . uniqid() . strtotime('now') . env('APP_KEY'));
+            $verify->save();
+
+            /* set data parameter */
+            $data = [
+                'view' => $this->getTemplate() . '.emails.verify',
+                'name' => $user->fullname,
+                'email' => $user->email,
+                'verify_code' => $verify->verify_code,
+            ];
 
             /* send mail */
-            $this->sendMail([
-                'view' => $this->getTemplate() . '.emails.verify',
-                'data' => [
-                    'name' => $user->fullname,
-                    'email' => $user->email,
-                    'verify_code' => $user->verify_code,
-                ],
-                'from' => env('MAIL_USERNAME', 'no-reply@' . env('APP_DOMAIN')),
-                'to' => $user->email,
-                'subject' => '[' . env('APP_NAME') . '] Verifikasi akun (kirim ulang)',
-            ]);
+            \Mail::to($user->email)->queue(new \App\Mail\VerifyResend($data));
         }
 
         return redirect(route('web.verify', ['type' => 'email']))->with('resend', $user ? true : false);

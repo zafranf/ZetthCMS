@@ -16,7 +16,7 @@
         "laravel/socialite": "^4.3",
         "laravel/tinker": "^1.0",
         "renatomarinho/laravel-page-speed": "^1.8",
-        "zafranf/zetthcore": "^0.2"
+        "zafranf/zetthcore": "^0.4"
     },
     "require-dev": {
         "barryvdh/laravel-debugbar": "^3.2",

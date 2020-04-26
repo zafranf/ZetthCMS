@@ -134,7 +134,7 @@ class LoginController extends Controller
      */
     protected function authenticated(Request $r, $user)
     {
-        if ($user->status != 1) {
+        if ($user->status != "active") {
             Auth::logout();
 
             return redirect(route('web.login'))->withInput()->with('verified', false);
@@ -144,7 +144,7 @@ class LoginController extends Controller
         $this->redirectTo = $r->input('next');
 
         /* set redirect for user first login */
-        if (app('user')->is_first_login) {
+        if (app('user')->is_first_login == "yes") {
             $this->redirectTo = route('web.profile.edit');
         }
 
@@ -165,7 +165,7 @@ class LoginController extends Controller
 
         /* set first login 0 */
         $user = app('user');
-        $user->is_first_login = 0;
+        $user->is_first_login = "no";
         $user->save();
 
         /* save activity */
@@ -207,11 +207,15 @@ class LoginController extends Controller
     public function handleProviderCallback($driver)
     {
         try {
+            /* get user */
             $user = Socialite::driver($driver)->user();
 
+            /* find or create user and do login */
             $authUser = $this->findOrCreateUser($user, $driver);
             Auth::loginUsingId($authUser->id);
-            if (app('user')->is_first_login) {
+
+            /* set redirect */
+            if (app('user')->is_first_login == "yes") {
                 $this->redirectTo = route('web.profile.edit');
             }
 
@@ -254,56 +258,49 @@ class LoginController extends Controller
      * @param $driver Social auth driver
      * @return  User
      */
-    public function findOrCreateUser($user, $driver)
+    public function findOrCreateUser($oauthUser, $driver)
     {
         /* save user */
-        $authUser = User::firstOrCreate([
-            'email' => $user->email,
+        $user = User::firstOrCreate([
+            'email' => $oauthUser->email,
         ], [
-            'name' => $user->email,
-            'fullname' => $user->name,
-            'email' => $user->email,
-            'is_first_login' => 0,
-            'status' => 1,
+            'name' => $oauthUser->email,
+            'fullname' => $oauthUser->name,
+            'email' => $oauthUser->email,
+            'status' => 'active',
         ]);
 
         /* generate default user name */
-        if ($authUser->wasRecentlyCreated) {
-            $this->generateUsername($authUser);
+        if ($user->wasRecentlyCreated) {
+            $user = $this->generateUsername($user);
+
+            /* save detail */
+            $user->detail()->create([
+                'user_id' => $user->id,
+            ]);
 
             /* save image */
-            if ($user->avatar) {
-                $file = $user->avatar;
-                $headers = get_headers($file, 1);
-                $par = [
-                    'file' => $file,
-                    'folder' => '/assets/images/users/',
-                    'name' => md5($authUser->id * env('DB_PORT', 3306)),
-                    'type' => $headers['Content-Type'][0] ?? $headers['Content-Type'],
-                    'ext' => 'jpg',
-                ];
+            if ($oauthUser->avatar) {
+                $file = $oauthUser->avatar;
+                $name = str_slug($user->name) . '.jpg';
 
-                /* upload image */
-                if ($this->uploadImage($par)) {
-                    $authUser->image = $par['name'] . '.' . $par['ext'];
+                if ($this->uploadImage($file, '/assets/images/users/', $name)) {
+                    $user->image = $name;
+                    $user->save();
                 }
             }
-
-            /* set first login */
-            $authUser->is_first_login = 1;
-            $authUser->save();
         }
 
         /* save user driver */
         UserOauth::firstOrCreate([
-            'user_id' => $authUser->id,
+            'user_id' => $user->id,
             'driver' => $driver,
         ], [
-            'driver_uid' => $user->id,
-            'user_id' => $authUser->id,
-            'raw_data' => json_encode($user),
+            'driver_uid' => $oauthUser->id,
+            'user_id' => $user->id,
+            'raw_data' => json_encode($oauthUser),
         ]);
 
-        return $authUser;
+        return $user;
     }
 }

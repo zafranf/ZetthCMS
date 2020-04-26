@@ -17,39 +17,43 @@
       <div class="card article">
         <div class="card-content">
           <div class="media">
-            @if ($author->image)
+            @if ($author->image && !isset($page))
               <div class="media-center" style="z-index:2;">
-                <img src="{{ getImageUser($author->image ?? '') }}" class="author-image" alt="Penulis: {{ $author->fullname }}" title="Penulis: {{ $author->fullname }}">
+                <a href="{{ url('penulis/' . $author->name) }}" title="Penulis: {{ $author->fullname }}">
+                  <img src="{{ getImageUser($author->image ?? '') }}" class="author-image" alt="Penulis: {{ $author->fullname }}" title="Penulis: {{ $author->fullname }}">
+                </a>
               </div>
             @endif
             <div class="media-content has-text-centered" {!! !$author->photo ? 'style="margin-top:2rem;overflow:unset;"' : '' !!}>
               @if ($post->cover)
                 <figure class="image is-3by1">
                   <a href="{{ url('baca-artikel/'.$post->slug) }}" title="{{ $post->title . ' - ' . app('site')->name }}">
-                    <img src="{{ $post->cover }}" alt="{{ $post->title . ' - ' . app('site')->name }}">
+                    <img src="{{ getImage('/assets/images/posts/' . $post->cover) }}" alt="{{ $post->title . ' - ' . app('site')->name }}">
                   </a>
                 </figure>
               @endif
               <p class="title article-title">
-                <a href="{{ url('baca-artikel/'.$post->slug) }}" title="{{ $post->title . ' - ' . app('site')->name }}" class="has-text-danger">{{ $post->title }}</a>
+                <a href="{{ url('baca-artikel/' . $post->slug) }}" title="{{ $post->title . ' - ' . app('site')->name }}" class="has-text-danger">{{ $post->title }}</a>
               </p>
               {{-- <div class="tags has-addons level-item">
                 <span class="tag is-rounded is-danger" title="Penulis">{{ $author->fullname }}</span>
                 <span class="tag is-rounded has-text-grey-light" title="Tanggal terbit">{{ carbon($post->published_at)->isoFormat('Do MMMM YYYY') }}</span>
               </div> --}}
-              <p class="subtitle is-6 article-subtitle">
-                <a href="{{ url('penulis/'.$author->name) }}" class="has-text-danger" title="Penulis">
-                  {{ $author->fullname }}
-                </a> pada <span title="Tanggal terbit">{{ $post->published_string }}</a>
-                @forelse ($post->categories as $category)
-                  @if ($loop->first)
-                    <br>
-                    di 
-                  @endif
-                  <a href="{{ url('kategori/'.$category->slug) }}" class="has-text-danger" title="Kategori">{{ $category->name }}</a>{{ !$loop->last ? ',' : '' }}
-                @empty
-                @endforelse
-              </p>
+              @if (!isset($page))
+                <p class="subtitle is-6 article-subtitle">
+                  <a href="{{ url('penulis/' . $author->name) }}" class="has-text-danger" title="Penulis">
+                    {{ $author->fullname }}
+                  </a> pada <span title="Tanggal terbit">{{ $post->published_string }}</a>
+                  @forelse ($post->categories as $category)
+                    @if ($loop->first)
+                      <br>
+                      di 
+                    @endif
+                    <a href="{{ url('kategori/'.$category->slug) }}" class="has-text-danger" title="Kategori">{{ $category->name }}</a>{{ !$loop->last ? ',' : '' }}
+                  @empty
+                  @endforelse
+                </p>
+              @endif
             </div>
           </div>
           <div class="content article-body">
@@ -64,7 +68,7 @@
             </div>
 
             @if (!isset($page))
-              @if (app('site')->enable_like && $post->like)
+              @if (bool(app('site')->enable_like) && bool($post->like))
                 <div class="buttons">
                   <button id="btn-like" class="button has-background-white-bis {{ $like ? 'has-text-primary' : '' }}">
                     <span class="icon">
@@ -82,12 +86,12 @@
               @endif
             @endif
 
-            @if (app('site')->enable_share && $post->share)
+            @if (bool(app('site')->enable_share) && bool($post->share))
               <div class="buttons">
                 <a class="button" style="border:0;padding:0;">
                   <span>Sebar:</span>
                 </a>
-                <a href="{{ url('/action/share/'.$post->slug.'/facebook') }}" target="_blank" class="button button-socmed is-facebook">
+                <a href="{{ url('/action/share/' . $post->slug . '/facebook') }}" target="_blank" class="button button-socmed is-facebook">
                   <span class="icon">
                     <i class="fab fa-facebook-f"></i>
                   </span>
@@ -95,7 +99,7 @@
                     <span>Facebook</span>
                   @endif
                 </a>
-                <a href="{{ url('/action/share/'.$post->slug.'/twitter') }}" target="_blank" class="button button-socmed is-twitter">
+                <a href="{{ url('/action/share/' . $post->slug . '/twitter') }}" target="_blank" class="button button-socmed is-twitter">
                   <span class="icon">
                     <i class="fab fa-twitter"></i>
                   </span>
@@ -103,7 +107,7 @@
                     <span>Twitter</span>
                   @endif
                 </a>
-                <a href="{{ url('/action/share/'.$post->slug.'/whatsapp') }}" target="_blank" class="button button-socmed is-whatsapp">
+                <a href="{{ url('/action/share/' . $post->slug . '/whatsapp') }}" target="_blank" class="button button-socmed is-whatsapp">
                   <span class="icon">
                     <i class="fab fa-whatsapp"></i>
                   </span>
@@ -111,7 +115,7 @@
                     <span>WhatsApp</span>
                   @endif
                 </a>
-                <a href="{{ url('/action/share/'.$post->slug.'/telegram') }}" target="_blank" class="button button-socmed is-telegram">
+                <a href="{{ url('/action/share/' . $post->slug . '/telegram') }}" target="_blank" class="button button-socmed is-telegram">
                   <span class="icon">
                     <i class="fab fa-telegram-plane"></i>
                   </span>
@@ -138,7 +142,7 @@
   {{-- <!-- END STATUS FEED --> --}}
 
   @if (!isset($page))
-    @if (app('site')->enable_comment && $post->comment)
+    @if (bool(app('site')->enable_comment) && bool($post->comment))
       {{-- <!-- START COMMENT SECTION --> --}}
       <section id="komentar" class="articles">
         <div class="column is-10 is-offset-1">
@@ -168,7 +172,7 @@
                     <div class="media-content">
                       <div class="content">
                         <p style="margin:5px 0;"><strong>{{ $commentator->fullname }}</strong></p>
-                        {!! $comment->comment !!}
+                        {!! $comment->content !!}
                         <p><small><a onclick="reply({{ $comment->id }}, '{{ $commentator->fullname }}')" class="has-text-danger">Balas</a> · {{ carbon($comment->created_at)->diffForHumans() }}</small></p>
                       </div>
                   
@@ -187,7 +191,7 @@
                             <div class="media-content">
                               <div class="content">
                                 <p style="margin:5px 0;"><strong>{{ $subcommentator->fullname }}</strong></p>
-                                {!! $subcomment->comment !!}
+                                {!! $subcomment->content !!}
                                 <p><small><a onclick="reply({{ $subcomment->parent_id }}, '{{ $subcommentator->fullname }}')" class="has-text-danger">Balas</a> · {{ carbon($subcomment->created_at)->diffForHumans() }}</small></p>
                               </div>
                             </div>
@@ -229,7 +233,7 @@
                         </div>
                       </div>
                       <div class="field">
-                        <input class="is-checkradio is-danger" type="checkbox" id="notify" name="notify" checked="checked">
+                        <input class="is-checkradio is-danger" type="checkbox" id="notify" name="notify" checked="checked" value="yes">
                         <label for="notify">Terima notifikasi balasan</label>
                       </div>
                       <div class="field">
@@ -350,7 +354,8 @@
 
           $('.button.is-copy').on('click', function() {
             $('#modal').addClass('is-active');
-            let html = 'Tekan ikon untuk menyalin tautan: <div class="field has-addons"><div class="control is-expanded"><input class="input is-fullwidth" type="text" value="{{ url('/' . env('SINGLE_POST_PATH') . '/' . $post->slug) }}" readonly></div><div class="control"><a onclick="copy()" class="button"><i class="fad fa-copy"></i></a></div></div>';
+            let url = '{{ urlencode(url('/' . env('POST_PATH') . '/' . $post->slug)) }}';
+            let html = 'Tekan ikon untuk menyalin tautan: <div class="field has-addons"><div class="control is-expanded"><input class="input is-fullwidth" type="text" value="'+decodeURIComponent(url)+'" readonly></div><div class="control"><a onclick="copy()" class="button"><i class="fad fa-copy"></i></a></div></div>';
             $('.modal-card-title').text('Salin Tautan');
             $('.modal-card-body').html(html);
             $('.modal-card-foot').hide();
@@ -365,7 +370,7 @@
           $('input[name=reply_to]').val(comment_id);
           $('.info-reply').removeClass('is-hidden');
           $('.info-reply .reply-name').text(name);
-          // $("html").scrollTop($('#comment-form').offset().top);
+          /* $("html").scrollTop($('#comment-form').offset().top); */
           $('textarea[name=comment]').focus();
         @endif
       }

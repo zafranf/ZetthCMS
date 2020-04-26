@@ -69,12 +69,17 @@
                   </div>
                 @endif
               @endif
-              @if (session('verified'))
+              @if (session('already_verified'))
                 <div class="notification is-success has-text-left">
-                  <b>Verifikasi berhasil!</b><br>
+                  <b>Pengguna sudah aktif!</b><br>
                   Silakan masuk menggunakan alamat email dan sandi Anda.
                 </div>
-              @elseif (session('verified') === false)
+              @elseif (session('verified'))
+              <div class="notification is-success has-text-left">
+                <b>Verifikasi berhasil!</b><br>
+                Silakan masuk menggunakan alamat email dan sandi Anda.
+              </div>
+            @elseif (session('verified') === false)
                 <div class="notification is-warning has-text-left">
                   <b>Pengguna belum diverifikasi!</b><br>
                   Harap lakukan verifikasi terlebih dahulu. Silakan cek email Anda untuk verifikasi.

@@ -107,7 +107,7 @@ class Controller extends SiteController
             if (!is_null($cacheSocmed) && $cacheSocmed != '-') {
                 $socmed = $cacheSocmed;
             } else if (is_null($cacheSocmed)) {
-                $socmed = \App\Models\SocmedData::where('type', 'site')->whereHas('socmed', function ($query) {
+                $socmed = \App\Models\SocmedData::where('socmedable_type', 'App\Models\Site')->whereHas('socmed', function ($query) {
                     $query->where('name', 'Twitter');
                 })->first();
 
@@ -135,19 +135,19 @@ class Controller extends SiteController
             $user_name = strtolower(explode("@", $user->email)[0]);
         }
         /* username from fullname, first word */
-        else if ($method == 1) {
+        else if ($method == 2) {
             $user_name = strtolower(explode(" ", $user->fullname)[0]);
         }
         /* username from fullname, remove space */
-        else if ($method == 2) {
+        else if ($method == 3) {
             $user_name = strtolower(str_replace(" ", "", $user->fullname));
         }
         /* username from fullname, change space to _ */
-        else if ($method == 3) {
+        else if ($method == 4) {
             $user_name = strtolower(str_replace(" ", "_", $user->fullname));
         }
         /* username from email with id */
-        else if ($method == 4) {
+        else if ($method == 5) {
             $user_name = strtolower(explode("@", $user->email)[0]);
             $user_name .= str_pad($user->id, 4, '0', STR_PAD_LEFT);
         }
@@ -162,6 +162,6 @@ class Controller extends SiteController
         $user->name = $user_name;
         $user->save();
 
-        return true;
+        return $user;
     }
 }

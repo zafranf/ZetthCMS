@@ -15,7 +15,7 @@ class CreateUserOauthsTable extends Migration
     public function up()
     {
         Schema::create('user_oauths', function (Blueprint $table) {
-            $table->integer('user_id')->unsigned()->index();
+            $table->bigInteger('user_id')->unsigned()->index();
             $table->string('driver')->nullable();
             $table->string('driver_uid')->nullable();
             $table->text('raw_data')->nullable();

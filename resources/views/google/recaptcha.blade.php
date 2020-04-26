@@ -2,9 +2,9 @@
 <script>
   function onSubmit(token) {
     document.getElementById("form-contact").submit();
-  }/* 
+  }
 
-  let formContact = document.getElementById('form-contact');
+  /* let formContact = document.getElementById('form-contact');
   formContact.addEventListener('submit', function(e) {
     e.preventDefault();
     let validName = checkName();
@@ -17,16 +17,16 @@
     } else {
       grecaptcha.execute();
     }
-  });
+  }); */
 
   function checkName(el = null) {
-      el = el ? el : document.querySelectorAll('input[name=name]')[0];
-      let val = el.value;
+    el = el ? el : document.querySelectorAll('input[name=name]')[0];
+    let val = el.value;
 
-      let valid = (val != "");
-      addValidClass(valid, el)
+    let valid = (val != "");
+    addValidClass(valid, el);
 
-      return valid;
+    return valid;
   }
 
   function checkEmail(el = null) {
@@ -34,7 +34,7 @@
     let val = el.value;
 
     let valid = validateEmail(val);
-    addValidClass(valid, el)
+    addValidClass(valid, el);
 
     return valid;
   }
@@ -44,7 +44,7 @@
     let val = el.value;
 
     let valid = (val != "");
-    addValidClass(valid, el)
+    addValidClass(valid, el);
 
     return valid;
   }
@@ -54,7 +54,7 @@
     let val = el.value;
 
     let valid = (val != "");
-    addValidClass(valid, el)
+    addValidClass(valid, el);
 
     return valid;
   }
@@ -64,7 +64,7 @@
     let val = el.value;
 
     let valid = (val != "");
-    addValidClass(valid, el)
+    addValidClass(valid, el);
 
     return valid;
   }
@@ -81,5 +81,5 @@
     } else {
       el.classList.remove('is-danger');
     }
-  } */
+  }
 </script>

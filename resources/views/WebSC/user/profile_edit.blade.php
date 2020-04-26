@@ -209,13 +209,13 @@
       lang: 'id',
       /* displayMode: 'dialog', */
       dateFormat: 'YYYY-MM-DD',
-      // showFooter: false,
+      /* showFooter: false, */
       showHeader: false,
-      // startDate: today,
-      // minDate: minDate.toString(),
+      /* startDate: today, */
+      /* minDate: minDate.toString(), */
       maxDate: tomorrow,
       disabledDates: [tomorrow],
-      // showClearButton: false,
+      /* showClearButton: false, */
       cancelLabel: 'Batal',
       showTodayButton: true,
       todayLabel: 'Hari ini',
@@ -234,10 +234,10 @@
       });
     }); */
 
-    // var bd1 = document.getElementsByName('birthdate');
-    // bd1[0].value = '';
-    // var bd2 = document.getElementsByName('loft_builddate');
-    // bd2[0].value = '';
+    /* var bd1 = document.getElementsByName('birthdate');
+    bd1[0].value = '';
+    var bd2 = document.getElementsByName('loft_builddate');
+    bd2[0].value = ''; */
 
     var image = document.getElementById("image");
     var imagePreview = document.getElementById("imagePreview");

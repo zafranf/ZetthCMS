@@ -2,5 +2,6 @@
 logo/.DS_Store
 !users/
 !logo/
+!upload/
 !no-image-profile.jpg
 !.gitignore

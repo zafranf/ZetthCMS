@@ -89,17 +89,15 @@ class ResetPasswordController extends Controller
             /* remove reset */
             $reset->delete();
 
-            /* send mail */
-            $this->sendMail([
+            /* set data parameter */
+            $data = [
                 'view' => $this->getTemplate() . '.emails.reset_password',
-                'data' => [
-                    'name' => $user->fullname,
-                    'email' => $user->email,
-                ],
-                'from' => env('MAIL_USERNAME', 'no-reply@' . env('APP_DOMAIN')),
-                'to' => $user->email,
-                'subject' => '[' . env('APP_NAME') . '] Ubah sandi berhasil!',
-            ]);
+                'name' => $user->fullname,
+                'email' => $user->email,
+            ];
+
+            /* send mail */
+            \Mail::to($user->email)->queue(new \App\Mail\ResetPassword($data));
         }
 
         return redirect(route('web.login'))->with('password_changed', isset($user) ? true : false);
