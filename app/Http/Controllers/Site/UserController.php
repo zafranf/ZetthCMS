@@ -15,7 +15,7 @@ class UserController extends Controller
     public function index(Request $r)
     {
         /* check segment */
-        if ($r->segment(1) == 'profil') {
+        if (in_array($r->segment(1), ['profile', 'profil'])) {
             return redirect(url(\Auth::user()->name));
         }
 
@@ -91,17 +91,11 @@ class UserController extends Controller
         /* upload image */
         if ($r->hasFile('image')) {
             $file = $r->file('image');
-            $par = [
-                'file' => $file,
-                'folder' => '/assets/images/users/',
-                'name' => md5($user->id * env('DB_PORT', 3306)),
-                'type' => $file->getClientMimeType(),
-                'ext' => $file->getClientOriginalExtension(),
-            ];
+            $ext = $file->getClientOriginalExtension();
+            $name = \Str::slug($user->name) . '.' . $ext;
 
-            /* upload image */
-            if ($this->uploadImage($par)) {
-                $user->image = $par['name'] . '.' . $par['ext'];
+            if ($this->uploadImage($file, '/assets/images/users/', $name)) {
+                $user->image = $name;
             }
         }
 

@@ -24,7 +24,7 @@ class Controller extends SiteController
         $keywords = app('site')->keywords;
         $description = app('site')->description;
         $logo = getImageLogo(app('site')->icon);
-        $language = app('site')->language;
+        $language = app('site')->lang;
 
         /* Set General SEO */
         SEOMeta::setTitle($title);

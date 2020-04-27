@@ -72,6 +72,9 @@ class LoginController extends Controller
      */
     public function login(Request $r)
     {
+        /* save activity */
+        $this->activityLog('"' . $r->input($this->username()) . '" mencoba masuk ke situs');
+
         $user = User::where('name', $r->{$this->username()})
             ->orWhere('email', $r->{$this->username()})
             ->with('oauths:user_id,driver')
@@ -144,7 +147,7 @@ class LoginController extends Controller
         $this->redirectTo = $r->input('next');
 
         /* set redirect for user first login */
-        if (app('user')->is_first_login == "yes") {
+        if ($user->is_first_login == "yes") {
             $this->redirectTo = route('web.profile.edit');
         }
 

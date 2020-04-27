@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="{{ app('site')->language }}">
+<html lang="{{ app('site')->lang }}">
 
 <head>
   {!! SEOMeta::generate() !!}

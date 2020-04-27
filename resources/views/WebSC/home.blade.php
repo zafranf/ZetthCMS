@@ -80,7 +80,7 @@
               <h1 class="title">
                 <span class="has-text-white">
                   <i class="fal fa-exclamation-circle"></i> 
-                  @if (Request::segment(1) == 'cari')
+                  @if (in_array(Request::segment(1), ['search', 'cari']))
                     Pencarian artikel dengan kata "{{ Request::input('q') }}" tidak ditemukan.
                   @elseif (Request::segment(1) === null || in_array(Request::segment(1), ['articles', 'artikel']))
                     Belum ada data artikel.

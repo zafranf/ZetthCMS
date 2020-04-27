@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="{{ app('site')->language }}" class="has-navbar-fixed-top">
+<html lang="{{ app('site')->lang }}" class="has-navbar-fixed-top">
 
 <head>
   {!! SEOMeta::generate() !!}

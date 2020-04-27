@@ -8,44 +8,6 @@ class ActionController extends Controller
 {
     use \ZetthCore\Traits\MainTrait;
 
-    public function _save_intermx($id = 0)
-    {
-        $referrer = isset($_SERVER['HTTP_REFERER']) ? $_SERVER['HTTP_REFERER'] : null;
-        $hosts = $this->init['hosts'];
-
-        foreach ($hosts as $v) {
-            if (str_contains($referrer, $v)) {
-                $params = Interm::where('interm_host', $v)->first()->interm_param;
-                $param = explode($params . "=", $referrer);
-                if (!isset($param[1])) {
-                    return;
-                }
-                $texts = explode("&", $param[1]);
-                $text = $texts[0];
-
-                $check = IntermData::where('interm_host', $v)->
-                    where('interm_text', $text)->
-                    where('app_id', Session::get('app')->app_id)->
-                    where('post_id', $id)->
-                    first();
-                if ($check) {
-                    $save = IntermData::find($check->interm_id);
-                    $save->interm_count = $check->interm_count + 1;
-                    $save->save();
-                } else {
-                    $save = new IntermData;
-                    $save->interm_host = $v;
-                    $save->interm_text = $text;
-                    $save->interm_count = 1;
-                    $save->post_id = $id;
-                    $save->app_id = Session::get('app')->app_id;
-                    $save->save();
-                }
-                return;
-            }
-        }
-    }
-
     public function like(Request $r, $like = true)
     {
         /* validate request */

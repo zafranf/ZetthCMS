@@ -3,7 +3,7 @@
 @section('content')
   @php
     $post = $page ?? $post;
-    $author = $post->author;
+    $author = !isset($page) ? $post->author : null;
     $dislike = $like = false;
     if (app('user') && isset($post->likes_user->like)) {
       $like = $post->likes_user->like;
@@ -17,17 +17,17 @@
       <div class="card article">
         <div class="card-content">
           <div class="media">
-            @if ($author->image && !isset($page))
+            @if (!isset($page) && $author->image)
               <div class="media-center" style="z-index:2;">
                 <a href="{{ url('penulis/' . $author->name) }}" title="Penulis: {{ $author->fullname }}">
                   <img src="{{ getImageUser($author->image ?? '') }}" class="author-image" alt="Penulis: {{ $author->fullname }}" title="Penulis: {{ $author->fullname }}">
                 </a>
               </div>
             @endif
-            <div class="media-content has-text-centered" {!! !$author->photo ? 'style="margin-top:2rem;overflow:unset;"' : '' !!}>
+            <div class="media-content has-text-centered" {!! $author && !$author->image ? 'style="margin-top:2rem;overflow:unset;"' : '' !!}>
               @if ($post->cover)
                 <figure class="image is-3by1">
-                  <a href="{{ url('baca-artikel/'.$post->slug) }}" title="{{ $post->title . ' - ' . app('site')->name }}">
+                  <a href="{{ url('baca-artikel/' . $post->slug) }}" title="{{ $post->title . ' - ' . app('site')->name }}">
                     <img src="{{ getImage('/assets/images/posts/' . $post->cover) }}" alt="{{ $post->title . ' - ' . app('site')->name }}">
                   </a>
                 </figure>
@@ -59,13 +59,15 @@
           <div class="content article-body">
             {!! $post->content !!}
 
-            <div class="tags has-addons level-item" style="justify-content:unset;">
-              @foreach ($post->tags as $tag)
-                <span class="tag is-medium is-danger">
-                  <a href="{{ url('label/'.$tag->slug) }}" class="has-text-white" title="Label">#{{ $tag->name }}</a>
-                </span>
-              @endforeach
-            </div>
+            @if (!isset($page))
+              <div class="tags has-addons level-item" style="justify-content:unset;">
+                @foreach ($post->tags as $tag)
+                  <span class="tag is-medium is-danger">
+                    <a href="{{ url('label/'.$tag->slug) }}" class="has-text-white" title="Label">#{{ $tag->name }}</a>
+                  </span>
+                @endforeach
+              </div>
+            @endif
 
             @if (!isset($page))
               @if (bool(app('site')->enable_like) && bool($post->like))
