@@ -99,6 +99,7 @@ class ActionController extends Controller
                     'likeable_id' => $post->id,
                     'user_id' => app('user')->id,
                     'like' => $like,
+                    'site_id' => app('site')->id,
                 ]);
             }
 
@@ -147,6 +148,7 @@ class ActionController extends Controller
         $comment->commentable_type = 'App\Models\Post';
         $comment->commentable_id = $post->id;
         $comment->created_by = \Auth::user()->id;
+        $comment->site_id = app('site')->id;
         $comment->save();
 
         /* send notif to parent */
@@ -197,6 +199,7 @@ class ActionController extends Controller
         $inbox->message = $r->input('message');
         $inbox->read = 'no';
         $inbox->status = 'active';
+        $inbox->site_id = app('site')->id;
         $inbox->save();
 
         /* send email to support */

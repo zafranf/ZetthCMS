@@ -20,6 +20,7 @@ class CreateUserOauthsTable extends Migration
             $table->string('driver_uid')->nullable();
             $table->text('raw_data')->nullable();
             $table->timestamps();
+            $table->bigInteger('site_id')->unsigned()->default(1);
         });
     }
 

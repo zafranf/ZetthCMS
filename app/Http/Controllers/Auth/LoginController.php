@@ -208,14 +208,14 @@ class LoginController extends Controller
     {
         try {
             /* get user */
-            $user = Socialite::driver($driver)->user();
+            $oauthUser = Socialite::driver($driver)->user();
 
             /* find or create user and do login */
-            $authUser = $this->findOrCreateUser($user, $driver);
-            Auth::loginUsingId($authUser->id);
+            $user = $this->findOrCreateUser($oauthUser, $driver);
+            $user = Auth::loginUsingId($user->id);
 
             /* set redirect */
-            if (app('user')->is_first_login == "yes") {
+            if ($user->is_first_login == "yes") {
                 $this->redirectTo = route('web.profile.edit');
             }
 
@@ -263,6 +263,7 @@ class LoginController extends Controller
         /* save user */
         $user = User::firstOrCreate([
             'email' => $oauthUser->email,
+            'site_id' => app('site')->id,
         ], [
             'name' => $oauthUser->email,
             'fullname' => $oauthUser->name,
@@ -277,6 +278,7 @@ class LoginController extends Controller
             /* save detail */
             $user->detail()->create([
                 'user_id' => $user->id,
+                'site_id' => $user->site_id,
             ]);
 
             /* save image */
@@ -295,6 +297,7 @@ class LoginController extends Controller
         UserOauth::firstOrCreate([
             'user_id' => $user->id,
             'driver' => $driver,
+            'site_id' => $user->site_id,
         ], [
             'driver_uid' => $oauthUser->id,
             'user_id' => $user->id,

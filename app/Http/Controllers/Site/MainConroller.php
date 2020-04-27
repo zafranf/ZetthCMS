@@ -48,6 +48,6 @@ class MainController extends Controller
         /* Set SEO */
         $this->setSEO($data['page_title']);
 
-        return view($this->getTemplate() . '.posts', $data);
+        return view($this->getTemplate() . '.search', $data);
     }
 }

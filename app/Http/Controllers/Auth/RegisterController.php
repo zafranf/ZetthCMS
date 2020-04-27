@@ -121,6 +121,7 @@ class RegisterController extends Controller
             'fullname' => $data['fullname'],
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
+            'site_id' => app('site')->id,
         ]);
 
         /* generate default username */
@@ -131,6 +132,7 @@ class RegisterController extends Controller
             'user_id' => $user->id,
             'verify_code' => md5($user->email . uniqid() . strtotime('now') . env('APP_KEY')),
             'verify_code_expire' => now()->addDay(),
+            'site_id' => app('site')->id,
         ]);
 
         return $user;

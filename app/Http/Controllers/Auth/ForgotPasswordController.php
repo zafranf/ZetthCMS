@@ -66,6 +66,7 @@ class ForgotPasswordController extends Controller
             /* Create reset password token */
             $reset = \App\Models\PasswordReset::updateOrCreate([
                 'email' => $r->input('email'),
+                'site_id' => app('site')->id,
             ], [
                 'token' => md5($r->input('email') . uniqid() . strtotime('now') . env('APP_KEY')),
                 'created_at' => now(),

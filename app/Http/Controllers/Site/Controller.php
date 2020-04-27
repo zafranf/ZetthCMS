@@ -24,6 +24,7 @@ class Controller extends SiteController
         $keywords = app('site')->keywords;
         $description = app('site')->description;
         $logo = getImageLogo(app('site')->icon);
+        $language = app('site')->language;
 
         /* Set General SEO */
         SEOMeta::setTitle($title);
@@ -42,7 +43,7 @@ class Controller extends SiteController
         OpenGraph::setType('website');
         OpenGraph::setUrl($url);
         OpenGraph::setSiteName($sitename);
-        OpenGraph::addProperty('locale', 'id_ID');
+        OpenGraph::addProperty('locale', $language);
 
         if (!empty($par) && $par->type == "article") {
             $type = 'article';
@@ -51,15 +52,9 @@ class Controller extends SiteController
             $time = $par->published_at != "0000-00-00 00:00:00" ? $par->published_at : $par->created_at;
 
             /* set tags and categories */
-            $cacheTermsName = 'cacheTermsSEO';
-            $cacheTerms = \Cache::get($cacheTermsName);
-            if ($cacheTerms) {
-                $terms = $cacheTerms;
-            } else {
-                $terms = $par->terms;
-
-                \Cache::put($cacheTermsName, $terms, getCacheTime());
-            }
+            $terms = \Cache::remember('cacheTermsSEO', getCacheTime(), function () use ($par) {
+                return $par->terms ?? [];
+            });
             foreach ($terms as $k => $v) {
                 if ($v->type == "tag") {
                     $tags[] = $v->name;
@@ -72,7 +67,7 @@ class Controller extends SiteController
             $title = $par->title . $separator . $sitename;
             $image = getImage($par->cover);
             $keywords = implode(',', $tags);
-            $description = \Str::limit(strip_tags($par->content), 300);
+            $description = \Str::limit(strip_tags($par->content), 255);
             if (strlen($par->excerpt) > 0) {
                 $description = strip_tags($par->excerpt);
             }
@@ -101,19 +96,13 @@ class Controller extends SiteController
             ]);
 
             /* twitter card */
-            $socmed = null;
-            $cacheSocmedName = 'cacheSocmedSEO';
-            $cacheSocmed = \Cache::get($cacheSocmedName);
-            if (!is_null($cacheSocmed) && $cacheSocmed != '-') {
-                $socmed = $cacheSocmed;
-            } else if (is_null($cacheSocmed)) {
-                $socmed = \App\Models\SocmedData::where('socmedable_type', 'App\Models\Site')->whereHas('socmed', function ($query) {
+            $socmed = \Cache::remember('cacheSocmedSEO', getCacheTime(), function () {
+                return \App\Models\SocmedData::where('socmedable_type', 'App\Models\Site')->whereHas('socmed', function ($query) {
                     $query->where('name', 'Twitter');
-                })->first();
+                })->first() ?? '-';
+            });
 
-                \Cache::put($cacheSocmedName, $socmed ?? '-', getCacheTime());
-            }
-            if ($socmed) {
+            if ($socmed != '-') {
                 /* Set Twitter SEO */
                 Twitter::addValue('card', 'summary');
                 Twitter::setImage($image);
