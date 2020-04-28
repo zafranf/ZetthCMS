@@ -69,7 +69,7 @@ class ActionController extends Controller
             $post->save();
 
             /* clear cache */
-            \Cache::forget('_getPostscompletedesc' . $r->input('post') . '11');
+            \Cache::forget('_getPostscompletedesc' . $r->input('post') . '11' . app('site')->id);
 
             /* save activity */
             $this->activityLog('[~name] ' . $like_str . ' artikel "' . $post->slug . '"');
@@ -126,7 +126,7 @@ class ActionController extends Controller
         }
 
         /* clear cache */
-        \Cache::forget('_getPostscompletedesc' . $post->slug . '11');
+        \Cache::forget('_getPostscompletedesc' . $post->slug . '11' . app('site')->id);
 
         /* save activity */
         $this->activityLog('[~name] memberikan komentar untuk artikel "' . $post->slug . '"');
@@ -200,7 +200,7 @@ class ActionController extends Controller
         $post->save();
 
         /* return to socmed url */
-        $posturl = url('/' . env('POST_PATH', 'post') . '/' . $post->slug);
+        $posturl = url(env('POST_PATH', 'post') . '/' . $post->slug);
         if ($socmed == 'facebook') {
             $url = 'https://www.facebook.com/sharer/sharer.php?u=' . $posturl . '&src=sdkpreparse';
         } else if ($socmed == 'twitter') {

@@ -52,7 +52,7 @@ class Controller extends SiteController
             $time = $par->published_at != "0000-00-00 00:00:00" ? $par->published_at : $par->created_at;
 
             /* set tags and categories */
-            $terms = \Cache::remember('cacheTermsSEO', getCacheTime(), function () use ($par) {
+            $terms = \Cache::remember('cacheTermsSEO' . app('site')->id, getCacheTime(), function () use ($par) {
                 return $par->terms ?? [];
             });
             foreach ($terms as $k => $v) {
@@ -96,7 +96,7 @@ class Controller extends SiteController
             ]);
 
             /* twitter card */
-            $socmed = \Cache::remember('cacheSocmedSEO', getCacheTime(), function () {
+            $socmed = \Cache::remember('cacheSocmedSEO' . app('site')->id, getCacheTime(), function () {
                 return \App\Models\SocmedData::where('socmedable_type', 'App\Models\Site')->whereHas('socmed', function ($query) {
                     $query->where('name', 'Twitter');
                 })->first() ?? '-';
