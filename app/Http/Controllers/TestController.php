@@ -11,10 +11,6 @@ class TestController extends Controller
 
     public function index(Request $r)
     {
-        return view('WebSC.emails.verify', [
-            'name' => 'Zafran Fadilah',
-            'email' => 'zafran@fadilah.id',
-            'verify_code' => 'asdqwdjaduiqwh1209ejdjkasd21jij',
-        ]);
+        return 'hello..';
     }
 }

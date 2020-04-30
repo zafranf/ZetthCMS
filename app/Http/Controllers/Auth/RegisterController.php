@@ -127,12 +127,18 @@ class RegisterController extends Controller
         /* generate default username */
         $this->generateUsername($user);
 
+        /* save detail */
+        $user->detail()->create([
+            'user_id' => $user->id,
+            'site_id' => $user->site_id,
+        ]);
+
         /* create verification */
         $user->verify()->create([
             'user_id' => $user->id,
             'verify_code' => md5($user->email . uniqid() . strtotime('now') . env('APP_KEY')),
             'verify_code_expire' => now()->addDay(),
-            'site_id' => app('site')->id,
+            'site_id' => $user->site_id,
         ]);
 
         return $user;

@@ -73,7 +73,7 @@ class LoginController extends Controller
     public function login(Request $r)
     {
         /* save activity */
-        $this->activityLog('"' . $r->input($this->username()) . '" mencoba masuk ke situs');
+        $this->activityLog('<b>' . $r->input($this->username()) . '</b> mencoba masuk ke situs');
 
         $user = User::where('name', $r->{$this->username()})
             ->orWhere('email', $r->{$this->username()})
@@ -186,8 +186,11 @@ class LoginController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function redirectToProvider($driver)
+    public function redirectToProvider(Request $r, $driver)
     {
+        /* save activity */
+        $this->activityLog('[~name] mencoba masuk menggunakan <b>' . $driver . '</b>');
+
         if ($driver == 'google') {
             $scopes = [
                 'https://www.googleapis.com/auth/plus.me',
@@ -197,6 +200,53 @@ class LoginController extends Controller
             $scopes = [
                 'public_profile', 'email',
             ];
+        } else if ($driver == 'magiclink') {
+            $email = $r->input('email');
+            if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+                return redirect()->back()->with('magiclink', false);
+            }
+
+            /* create user */
+            $user = User::firstOrCreate([
+                'email' => $email,
+                'site_id' => app('site')->id,
+            ]);
+
+            /* save additional info */
+            if ($user->wasRecentlyCreated) {
+                $user->fullname = $email;
+                $user->save();
+
+                /* generate default user name */
+                $user = $this->generateUsername($user);
+
+                /* save detail */
+                $user->detail()->create([
+                    'user_id' => $user->id,
+                    'site_id' => $user->site_id,
+                ]);
+            }
+
+            /* create verification */
+            $user->verify()->create([
+                'user_id' => $user->id,
+                'verify_code' => md5($user->email . uniqid() . strtotime('now') . env('APP_KEY')),
+                'verify_code_expire' => now()->addDay(),
+                'site_id' => $user->site_id,
+            ]);
+
+            /* set data parameter */
+            $data = [
+                'view' => $this->getTemplate() . '.emails.magiclink',
+                'name' => $user->fullname,
+                'email' => $user->email,
+                'verify_code' => $user->verify->verify_code,
+            ];
+
+            /* send mail */
+            \Mail::to($user->email)->queue(new \App\Mail\MagicLink($data));
+
+            return redirect()->back()->with('magiclink', true);
         }
 
         return Socialite::driver($driver)->scopes($scopes)->redirect();
@@ -207,11 +257,38 @@ class LoginController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function handleProviderCallback($driver)
+    public function handleProviderCallback(Request $r, $driver)
     {
         try {
             /* get user */
-            $oauthUser = Socialite::driver($driver)->user();
+            if ($driver == 'magiclink') {
+                $verify = \App\Models\UserVerification::where('verify_code', $r->input('code'))->with('user:id,name,email,fullname,image')->first();
+                if (!$verify) {
+                    return redirect(route('web.login'))->with('magiclink_login', false);
+                }
+
+                /* check expire */
+                $expire_at = $verify->verify_code_expire;
+                $expired = now()->greaterThanOrEqualTo($expire_at);
+
+                /* check expired */
+                if ($expired) {
+                    return redirect(route('web.login'))->with('magiclink_login', false);
+                }
+
+                /* remove verify code */
+                if (is_null($verify->verified_at)) {
+                    $verify->delete();
+                }
+
+                /* get user */
+                $oauthUser = $verify->user;
+                if (!$oauthUser) {
+                    return redirect(route('web.login'))->with('magiclink_login', false);
+                }
+            } else {
+                $oauthUser = Socialite::driver($driver)->user();
+            }
 
             /* find or create user and do login */
             $user = $this->findOrCreateUser($oauthUser, $driver);
@@ -232,28 +309,6 @@ class LoginController extends Controller
         }
     }
 
-    public function loginByEmail(Request $r)
-    {
-        try {
-            $email = $r->input('email');
-            if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-                throw new \Exception("Masukkan alamat email dengan benar", 1);
-            }
-
-            /* save activity */
-            $this->activityLog('[~email] meminta akses via tautan ajaib');
-
-            $type = 'success';
-            $message = 'Berhasil! Silakan cek email anda dan klik tautan ajaib yang kami berikan untuk akses masuk.';
-        } catch (\Exception $e) {
-            $this->errorLog($e);
-            $type = 'failed';
-            $message = $e->getMessage();
-        }
-
-        return redirect(route('web.login'))->with($type, $message);
-    }
-
     /**
      * If a user has registered before using social auth, return the user
      * else, create a new user object.
@@ -268,14 +323,14 @@ class LoginController extends Controller
             'email' => $oauthUser->email,
             'site_id' => app('site')->id,
         ], [
-            'name' => $oauthUser->email,
             'fullname' => $oauthUser->name,
             'email' => $oauthUser->email,
             'status' => 'active',
         ]);
 
-        /* generate default user name */
+        /* save additional info */
         if ($user->wasRecentlyCreated) {
+            /* generate default user name */
             $user = $this->generateUsername($user);
 
             /* save detail */
