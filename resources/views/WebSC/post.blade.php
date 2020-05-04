@@ -18,7 +18,7 @@
           <div class="media">
             @if ($author->image)
               <div class="media-center" style="z-index:2;">
-                <a href="{{ url(env('AUTHOR_PATH', 'author') . '/' . $author->name) }}" title="Penulis: {{ $author->fullname }}">
+                <a href="{{ url(config('path.author', 'author') . '/' . $author->name) }}" title="Penulis: {{ $author->fullname }}">
                   <img src="{{ getImageUser($author->image ?? '') }}" class="author-image" alt="Penulis: {{ $author->fullname }}" title="Penulis: {{ $author->fullname }}">
                 </a>
               </div>
@@ -31,10 +31,10 @@
                 <p class="has-text-grey has-text-left is-italic">{{ $post->caption }}</p>
               @endif
               <p class="title article-title">
-                <a href="{{ url(env('POST_PATH', 'post') . '/' . $post->slug) }}" title="{{ $post->title . ' - ' . app('site')->name }}" class="has-text-danger">{{ $post->title }}</a>
+                <a href="{{ url(config('path.post', 'post') . '/' . $post->slug) }}" title="{{ $post->title . ' - ' . app('site')->name }}" class="has-text-danger">{{ $post->title }}</a>
               </p>
               <p class="subtitle is-6 article-subtitle">
-                <a href="{{ url(env('AUTHOR_PATH', 'author') . '/' . $author->name) }}" class="has-text-danger" title="Penulis">
+                <a href="{{ url(config('path.author', 'author') . '/' . $author->name) }}" class="has-text-danger" title="Penulis">
                   {{ $author->fullname }}
                 </a> pada <span title="Tanggal terbit">{{ $post->published_string }}</a>
                 @forelse ($post->categories as $category)
@@ -42,7 +42,7 @@
                     <br>
                     di 
                   @endif
-                  <a href="{{ url(env('CATEGORY_PATH', 'category') . '/' . $category->slug) }}" class="has-text-danger" title="Kategori">{{ $category->name }}</a>{{ !$loop->last ? ',' : '' }}
+                  <a href="{{ url(config('path.category', 'category') . '/' . $category->slug) }}" class="has-text-danger" title="Kategori">{{ $category->name }}</a>{{ !$loop->last ? ',' : '' }}
                 @empty
                 @endforelse
               </p>
@@ -54,7 +54,7 @@
             <div class="tags has-addons level-item" style="justify-content:unset;">
               @foreach ($post->tags as $tag)
                 <span class="tag is-medium is-danger">
-                  <a href="{{ url(env('TAG_PATH', 'tag') . '/' . $tag->slug) }}" class="has-text-white" title="Label">#{{ $tag->name }}</a>
+                  <a href="{{ url(config('path.tag', 'tag') . '/' . $tag->slug) }}" class="has-text-white" title="Label">#{{ $tag->name }}</a>
                 </span>
               @endforeach
             </div>
@@ -341,7 +341,7 @@
 
         $('.button.is-copy').on('click', function() {
           $('#modal').addClass('is-active');
-          let url = '{{ urlencode(url(env('POST_PATH', 'post') . '/' . $post->slug)) }}';
+          let url = '{{ urlencode(url(config('post.tag', 'post') . '/' . $post->slug)) }}';
           let html = 'Tekan ikon untuk menyalin tautan: <div class="field has-addons"><div class="control is-expanded"><input class="input is-fullwidth" type="text" value="'+decodeURIComponent(url)+'" readonly></div><div class="control"><a onclick="copy()" class="button"><i class="fad fa-copy"></i></a></div></div>';
           $('.modal-card-title').text('Salin Tautan');
           $('.modal-card-body').html(html);
