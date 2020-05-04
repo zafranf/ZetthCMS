@@ -60,7 +60,7 @@
               @endforeach
             </div>
 
-            @if (bool(app('site')->enable_like) && bool($post->like))
+            @if (bool(app('site')->enable_like) && bool($post->enable_like))
               <div class="buttons">
                 <button id="btn-like" class="button has-background-white-bis {{ $like ? 'has-text-primary' : '' }}">
                   <span class="icon">
@@ -77,7 +77,7 @@
               </div>
             @endif
 
-            @if (bool(app('site')->enable_share) && bool($post->share))
+            @if (bool(app('site')->enable_share) && bool($post->enable_share))
               <div class="buttons">
                 <a class="button" style="border:0;padding:0;">
                   <span>Sebar:</span>
@@ -132,7 +132,7 @@
   </section>
   {{-- <!-- END STATUS FEED --> --}}
 
-  @if (bool(app('site')->enable_comment) && bool($post->comment))
+  @if (bool(app('site')->enable_comment) && bool($post->enable_comment))
     {{-- <!-- START COMMENT SECTION --> --}}
     <section id="komentar" class="articles">
       <div class="column is-10 is-offset-1">

@@ -42,12 +42,12 @@ class VerificationController extends Controller
         ]);
 
         if ($r->input('type') == 'email') {
-            $verify = \App\Models\UserVerification::where('verify_code', $r->input('code'))->with('user')->first();
+            $verify = \App\Models\UserVerification::where('code', $r->input('code'))->with('user')->first();
             $user = $verify->user;
             if ($user) {
                 /* check expire */
-                $expire_at = $verify->verify_code_expire;
-                $expired = now()->greaterThanOrEqualTo($expire_at);
+                $expired_at = $verify->expired_at;
+                $expired = now()->greaterThanOrEqualTo($expired_at);
 
                 /* check expired */
                 if ($expired) {
@@ -71,7 +71,7 @@ class VerificationController extends Controller
                     'view' => $this->getTemplate() . '.emails.verified',
                     'name' => $user->fullname,
                     'email' => $user->email,
-                    'verify_code' => $verify->verify_code,
+                    'code' => $verify->code,
                 ];
 
                 /* send mail */
@@ -110,7 +110,7 @@ class VerificationController extends Controller
             }
 
             /* update verify code */
-            $verify->verify_code = md5($user->email . uniqid() . strtotime('now') . env('APP_KEY'));
+            $verify->code = md5($user->email . uniqid() . strtotime('now') . env('APP_KEY'));
             $verify->save();
 
             /* set data parameter */
@@ -118,7 +118,7 @@ class VerificationController extends Controller
                 'view' => $this->getTemplate() . '.emails.verify',
                 'name' => $user->fullname,
                 'email' => $user->email,
-                'verify_code' => $verify->verify_code,
+                'code' => $verify->code,
             ];
 
             /* send mail */

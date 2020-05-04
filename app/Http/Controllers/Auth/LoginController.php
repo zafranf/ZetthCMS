@@ -230,8 +230,8 @@ class LoginController extends Controller
             /* create verification */
             $user->verify()->create([
                 'user_id' => $user->id,
-                'verify_code' => md5($user->email . uniqid() . strtotime('now') . env('APP_KEY')),
-                'verify_code_expire' => now()->addDay(),
+                'code' => md5($user->email . uniqid() . strtotime('now') . env('APP_KEY')),
+                'expired_at' => now()->addDay(),
                 'site_id' => $user->site_id,
             ]);
 
@@ -240,7 +240,7 @@ class LoginController extends Controller
                 'view' => $this->getTemplate() . '.emails.magiclink',
                 'name' => $user->fullname,
                 'email' => $user->email,
-                'verify_code' => $user->verify->verify_code,
+                'code' => $user->verify->code,
             ];
 
             /* send mail */
@@ -262,14 +262,14 @@ class LoginController extends Controller
         try {
             /* get user */
             if ($driver == 'magiclink') {
-                $verify = \App\Models\UserVerification::where('verify_code', $r->input('code'))->with('user:id,name,email,fullname,image')->first();
+                $verify = \App\Models\UserVerification::where('code', $r->input('code'))->with('user:id,name,email,fullname,image')->first();
                 if (!$verify) {
                     return redirect(route('web.login'))->with('magiclink_login', false);
                 }
 
                 /* check expire */
-                $expire_at = $verify->verify_code_expire;
-                $expired = now()->greaterThanOrEqualTo($expire_at);
+                $expired_at = $verify->expired_at;
+                $expired = now()->greaterThanOrEqualTo($expired_at);
 
                 /* check expired */
                 if ($expired) {

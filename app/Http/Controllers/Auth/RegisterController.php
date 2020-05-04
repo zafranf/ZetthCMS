@@ -136,8 +136,8 @@ class RegisterController extends Controller
         /* create verification */
         $user->verify()->create([
             'user_id' => $user->id,
-            'verify_code' => md5($user->email . uniqid() . strtotime('now') . env('APP_KEY')),
-            'verify_code_expire' => now()->addDay(),
+            'code' => md5($user->email . uniqid() . strtotime('now') . env('APP_KEY')),
+            'expired_at' => now()->addDay(),
             'site_id' => $user->site_id,
         ]);
 
@@ -158,7 +158,7 @@ class RegisterController extends Controller
             'view' => $this->getTemplate() . '.emails.verify',
             'name' => $user->fullname,
             'email' => $user->email,
-            'verify_code' => $user->verify->verify_code,
+            'code' => $user->verify->code,
         ];
 
         /* send mail */

@@ -74,7 +74,7 @@
                     <div class="control has-icons-left">
                       <div class="select">
                         <select name="gender">
-                          <option value="na">--Pilih--</option>
+                          <option value="">--Pilih--</option>
                           <option value="m" {{ (Auth::user()->gender == 'm') ? 'selected' : '' }}>Laki-laki</option>
                           <option value="f" {{ (Auth::user()->gender == 'f') ? 'selected' : '' }}>Perempuan</option>
                         </select>
