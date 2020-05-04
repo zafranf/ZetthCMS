@@ -26,10 +26,9 @@
             <div class="media-content has-text-centered" {!! $author && !$author->image ? 'style="margin-top:2rem;overflow:unset;"' : '' !!}>
               @if ($post->cover)
                 <figure class="image is-3by1">
-                  <a href="{{ url(env('POST_PATH', 'post') . '/' . $post->slug) }}" title="{{ $post->title . ' - ' . app('site')->name }}">
-                    <img src="{{ getImage('/assets/images/posts/' . $post->cover) }}" alt="{{ $post->title . ' - ' . app('site')->name }}">
-                  </a>
+                  <img src="{{ getImage('/assets/images/posts/' . $post->cover) }}" alt="{{ $post->title . ' - ' . app('site')->name }}">
                 </figure>
+                <p class="has-text-grey has-text-left is-italic">{{ $post->caption }}</p>
               @endif
               <p class="title article-title">
                 <a href="{{ url(env('POST_PATH', 'post') . '/' . $post->slug) }}" title="{{ $post->title . ' - ' . app('site')->name }}" class="has-text-danger">{{ $post->title }}</a>
