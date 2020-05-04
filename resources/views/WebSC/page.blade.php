@@ -24,7 +24,7 @@
           <div class="content article-body">
             {!! $page->content !!}
 
-            @if (bool(app('site')->enable_share) && bool($page->share))
+            @if (bool(app('site')->enable_share) && bool($page->enable_share))
               <div class="buttons">
                 <a class="button" style="border:0;padding:0;">
                   <span>Sebar:</span>
