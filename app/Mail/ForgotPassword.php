@@ -2,43 +2,22 @@
 
 namespace App\Mail;
 
-use Illuminate\Bus\Queueable;
-use Illuminate\Mail\Mailable;
-use Illuminate\Queue\SerializesModels;
+use App\Models\PasswordReset;
+use App\Models\User;
+use ZetthCore\Mail\Main as BaseMain;
 
-class ForgotPassword extends Mailable
+class ForgotPassword extends BaseMain
 {
-    use Queueable, SerializesModels;
-
-    protected $data;
-
-    /**
-     * Create a new message instance.
-     *
-     * @return void
-     */
-    public function __construct($data)
+    public function __construct(User $user, PasswordReset $reset)
     {
-        $this->data = $data;
-    }
+        $data = [
+            'subject' => '[' . env('APP_NAME') . '] Permintaan ubah sandi',
+            'view' => $this->getTemplate() . '.emails.forgot_password',
+            'name' => $user->fullname,
+            'email' => $user->email,
+            'code' => $reset->token,
+        ];
 
-    /**
-     * Build the message.
-     *
-     * @return $this
-     */
-    public function build()
-    {
-        /* set variable */
-        $from = env('MAIL_USERNAME', 'no-reply@' . env('APP_DOMAIN'));
-        $subject = '[' . env('APP_NAME') . '] Permintaan ubah sandi';
-
-        /* set view file */
-        $view = getEmailFile($this->data['view']);
-
-        return $this->from($from)
-            ->subject($subject)
-            ->view($view)
-            ->with($this->data);
+        parent::__construct($data);
     }
 }

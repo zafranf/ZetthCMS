@@ -2,43 +2,21 @@
 
 namespace App\Mail;
 
-use Illuminate\Bus\Queueable;
-use Illuminate\Mail\Mailable;
-use Illuminate\Queue\SerializesModels;
+use App\Models\Comment;
+use App\Models\Post;
+use ZetthCore\Mail\Main as BaseMain;
 
-class CommentReply extends Mailable
+class CommentReply extends BaseMain
 {
-    use Queueable, SerializesModels;
-
-    protected $data;
-
-    /**
-     * Create a new message instance.
-     *
-     * @return void
-     */
-    public function __construct($data)
+    public function __construct(Post $post, Comment $comment)
     {
-        $this->data = $data;
-    }
+        $data = [
+            'subject' => '[' . env('APP_NAME') . '] Balasan komentar artikel "' . $post->title . '"',
+            'view' => $this->getTemplate() . '.emails.comment_replied',
+            'post' => $post,
+            'comment' => $comment,
+        ];
 
-    /**
-     * Build the message.
-     *
-     * @return $this
-     */
-    public function build()
-    {
-        /* set variable */
-        $from = env('MAIL_USERNAME', 'no-reply@' . env('APP_DOMAIN'));
-        $subject = '[' . env('APP_NAME') . '] Balasan komentar artikel "' . $this->data['post']->title . '"';
-
-        /* set view file */
-        $view = getEmailFile($this->data['view']);
-
-        return $this->from($from)
-            ->subject($subject)
-            ->view($view)
-            ->with($this->data);
+        parent::__construct($data);
     }
 }

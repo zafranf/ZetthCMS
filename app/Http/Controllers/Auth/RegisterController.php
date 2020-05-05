@@ -153,16 +153,8 @@ class RegisterController extends Controller
      */
     protected function registered(Request $r, $user)
     {
-        /* set data parameter */
-        $data = [
-            'view' => $this->getTemplate() . '.emails.verify',
-            'name' => $user->fullname,
-            'email' => $user->email,
-            'code' => $user->verify->code,
-        ];
-
         /* send mail */
-        \Mail::to($user->email)->queue(new \App\Mail\Verify($data));
+        \Mail::to($user->email)->queue(new \App\Mail\Verify($user));
 
         return redirect(route('web.verify', ['type' => 'email']))->with('registered', true);
     }

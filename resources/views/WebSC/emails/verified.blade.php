@@ -7,6 +7,9 @@
   <hr>
   <p>Halo, {{ $name }}</p>
   <p>Selamat bergabung di situs <b>{{ env('APP_NAME') }}</b>. Sekarang anda dapat masuk ke situs dan menggunakan situs untuk mendukung kebutuhan hobi merpati anda.</p>
+  <p>
+    <a href="{{ route('web.login') }}" style="padding:5px;border:1px solid transparent;color:#fff;background:#ed4568;border-radius:4px;text-decoration:none;">Masuk</a>
+  </p>
   <p>Terima kasih telah menjadi bagian dari <b>{{ env('APP_NAME') }}</b>.</p>
   <hr>
   <p><small>*mohon untuk tidak membalas email ini.</small></p>

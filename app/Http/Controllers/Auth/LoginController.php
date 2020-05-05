@@ -235,16 +235,8 @@ class LoginController extends Controller
                 'site_id' => $user->site_id,
             ]);
 
-            /* set data parameter */
-            $data = [
-                'view' => $this->getTemplate() . '.emails.magiclink',
-                'name' => $user->fullname,
-                'email' => $user->email,
-                'code' => $user->verify->code,
-            ];
-
             /* send mail */
-            \Mail::to($user->email)->queue(new \App\Mail\MagicLink($data));
+            \Mail::to($user->email)->queue(new \App\Mail\MagicLink($user));
 
             return redirect()->back()->with('magiclink', true);
         }
@@ -286,6 +278,10 @@ class LoginController extends Controller
                 if (!$oauthUser) {
                     return redirect(route('web.login'))->with('magiclink_login', false);
                 }
+
+                /* set status active */
+                $oauthUser->status = 'active';
+                $oauthUser->save();
             } else {
                 $oauthUser = Socialite::driver($driver)->user();
             }

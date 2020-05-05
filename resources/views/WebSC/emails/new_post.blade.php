@@ -6,7 +6,7 @@
     </center>
     <hr>
     <p>Halo,</p>
-    <p>Kami baru saja membuat artikel baru. Klik tautan di bawah untuk langsung membacanya.</p>
+    <p>Kami baru saja membuat artikel baru "{{ $post->title }}". Klik tautan di bawah untuk langsung membacanya.</p>
     <p>
       <a href="{{ getSiteURL(config('post.tag', 'post') . '/' . $post->slug) }}" style="padding:5px;border:1px solid transparent;color:#fff;background:#ed4568;border-radius:4px;text-decoration:none;">Baca artikel</a>
     </p>

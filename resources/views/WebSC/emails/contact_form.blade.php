@@ -32,11 +32,11 @@
     <tr>
       <td>Subyek</td>
       <td>:</td>
-      <td>{{ $subject ?? '-' }}</td>
+      <td>{{ $title ?? '-' }}</td>
     </tr>
     <tr>
-      <td valign="top">Pesan</td>
-      <td>:</td>
+      <td style="vertical-align:top;">Pesan</td>
+      <td style="vertical-align:top;">:</td>
       <td>{!! nl2br($content) !!}</td>
     </tr>
   </table>

@@ -169,16 +169,10 @@ class ActionController extends Controller
             'content' => $r->input('message'),
         ]);
 
-        /* set data parameter */
-        $data = [
-            'view' => $this->getTemplate() . '.emails.contact_form',
-            'data' => $r->input(),
-        ];
-
         /* send mail */
-        \Mail::to(explode(',', env('MAIL_NOTIF')))->queue(new \App\Mail\ContactForm($data));
+        \Mail::to(explode(',', env('MAIL_NOTIF')))->queue(new \App\Mail\ContactForm($r->input()));
 
-        $data = json_encode($r->except(['message', 'content', 'g-recaptcha-response', '_token']));
+        $data = json_encode($r->except(['subject', 'message', 'content', 'g-recaptcha-response', '_token']));
         $expire = now()->addYear()->getTimestamp();
         $cookie = cookie('contact', $data, $expire);
 
@@ -214,5 +208,21 @@ class ActionController extends Controller
         }
 
         return redirect($url);
+    }
+
+    public function subscribe(Request $r)
+    {
+        $this->validate($r, [
+            'email' => ['required', 'email'],
+        ]);
+
+        $subscriber = \App\Models\Subscriber::firstOrCreate([
+            'email' => $r->input('email'),
+        ], [
+            'token' => md5($r->input('email') . uniqid() . strtotime('now') . env('APP_KEY')),
+            'status' => 'active',
+        ]);
+
+        return redirect()->back()->with('subscribed', true);
     }
 }

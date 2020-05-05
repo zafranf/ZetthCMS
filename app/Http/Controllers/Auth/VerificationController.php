@@ -43,8 +43,9 @@ class VerificationController extends Controller
 
         if ($r->input('type') == 'email') {
             $verify = \App\Models\UserVerification::where('code', $r->input('code'))->with('user')->first();
-            $user = $verify->user;
-            if ($user) {
+            if ($verify) {
+                $user = $verify->user;
+
                 /* check expire */
                 $expired_at = $verify->expired_at;
                 $expired = now()->greaterThanOrEqualTo($expired_at);
@@ -66,16 +67,8 @@ class VerificationController extends Controller
                     return redirect(route('web.login'))->with('already_verified', true);
                 }
 
-                /* set data parameter */
-                $data = [
-                    'view' => $this->getTemplate() . '.emails.verified',
-                    'name' => $user->fullname,
-                    'email' => $user->email,
-                    'code' => $verify->code,
-                ];
-
                 /* send mail */
-                \Mail::to($user->email)->queue(new \App\Mail\Verified($data));
+                \Mail::to($user->email)->queue(new \App\Mail\Verified($user));
 
                 return redirect(route('web.login'))->with('verified', true);
             }
@@ -113,16 +106,8 @@ class VerificationController extends Controller
             $verify->code = md5($user->email . uniqid() . strtotime('now') . env('APP_KEY'));
             $verify->save();
 
-            /* set data parameter */
-            $data = [
-                'view' => $this->getTemplate() . '.emails.verify',
-                'name' => $user->fullname,
-                'email' => $user->email,
-                'code' => $verify->code,
-            ];
-
             /* send mail */
-            \Mail::to($user->email)->queue(new \App\Mail\VerifyResend($data));
+            \Mail::to($user->email)->queue(new \App\Mail\VerifyResend($user));
         }
 
         return redirect(route('web.verify', ['type' => 'email']))->with('resend', $user ? true : false);

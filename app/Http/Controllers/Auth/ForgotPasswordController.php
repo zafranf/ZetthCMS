@@ -65,23 +65,15 @@ class ForgotPasswordController extends Controller
 
             /* Create reset password token */
             $reset = \App\Models\PasswordReset::updateOrCreate([
-                'email' => $r->input('email'),
+                'email' => $user->email,
                 'site_id' => app('site')->id,
             ], [
-                'token' => md5($r->input('email') . uniqid() . strtotime('now') . env('APP_KEY')),
+                'token' => md5($user->email . uniqid() . strtotime('now') . env('APP_KEY')),
                 'created_at' => now(),
             ]);
 
-            /* set data parameter */
-            $data = [
-                'view' => $this->getTemplate() . '.emails.forgot_password',
-                'name' => $user->fullname,
-                'email' => $user->email,
-                'code' => $reset->token,
-            ];
-
             /* send mail */
-            \Mail::to($user->email)->queue(new \App\Mail\ForgotPassword($data));
+            \Mail::to($user->email)->queue(new \App\Mail\ForgotPassword($user, $reset));
         }
 
         return redirect(route('web.forgot.password'))->with('success', $user ? true : false);

@@ -2,43 +2,20 @@
 
 namespace App\Mail;
 
-use Illuminate\Bus\Queueable;
-use Illuminate\Mail\Mailable;
-use Illuminate\Queue\SerializesModels;
+use ZetthCore\Mail\Main as BaseMain;
 
-class ContactForm extends Mailable
+class ContactForm extends BaseMain
 {
-    use Queueable, SerializesModels;
-
-    protected $data;
-
-    /**
-     * Create a new message instance.
-     *
-     * @return void
-     */
-    public function __construct($data)
+    public function __construct($input)
     {
-        $this->data = $data;
-    }
+        $data = [
+            'subject' => '[' . env('APP_NAME') . '] Pesan masuk dari ' . $input['name'] . ' (' . $input['email'] . ')',
+            'view' => $this->getTemplate() . '.emails.contact_form',
+            'title' => $input['subject'],
+        ];
+        unset($input['subject']);
+        $data = array_merge($data, $input);
 
-    /**
-     * Build the message.
-     *
-     * @return $this
-     */
-    public function build()
-    {
-        /* set variable */
-        $from = env('MAIL_USERNAME', 'no-reply@' . env('APP_DOMAIN'));
-        $subject = '[' . env('APP_NAME') . '] Pesan masuk dari ' . $this->data['data']['name'] . ' (' . $this->data['data']['email'] . ')';
-
-        /* set view file */
-        $view = getEmailFile($this->data['view']);
-
-        return $this->from($from)
-            ->subject($subject)
-            ->view($view)
-            ->with($this->data['data']);
+        parent::__construct($data);
     }
 }

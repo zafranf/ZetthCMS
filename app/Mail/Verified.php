@@ -2,43 +2,20 @@
 
 namespace App\Mail;
 
-use Illuminate\Bus\Queueable;
-use Illuminate\Mail\Mailable;
-use Illuminate\Queue\SerializesModels;
+use App\Models\User;
+use ZetthCore\Mail\Main as BaseMain;
 
-class Verified extends Mailable
+class Verified extends BaseMain
 {
-    use Queueable, SerializesModels;
-
-    protected $data;
-
-    /**
-     * Create a new message instance.
-     *
-     * @return void
-     */
-    public function __construct($data)
+    public function __construct(User $user)
     {
-        $this->data = $data;
-    }
+        $data = [
+            'subject' => '[' . env('APP_NAME') . '] Verifikasi berhasil!',
+            'view' => $this->getTemplate() . '.emails.verified',
+            'name' => $user->fullname,
+            'email' => $user->email,
+        ];
 
-    /**
-     * Build the message.
-     *
-     * @return $this
-     */
-    public function build()
-    {
-        /* set variable */
-        $from = env('MAIL_USERNAME', 'no-reply@' . env('APP_DOMAIN'));
-        $subject = '[' . env('APP_NAME') . '] Verifikasi berhasil!';
-
-        /* set view file */
-        $view = getEmailFile($this->data['view']);
-
-        return $this->from($from)
-            ->subject($subject)
-            ->view($view)
-            ->with($this->data);
+        parent::__construct($data);
     }
 }
