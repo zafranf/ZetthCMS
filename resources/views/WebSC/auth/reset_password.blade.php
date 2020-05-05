@@ -53,7 +53,7 @@
                 </div>
                 <div class="level is-mobile">
                   @csrf
-                  <input type="hidden" name="code" value="{{ request()->input('kode') }}">
+                  <input type="hidden" name="code" value="{{ request()->input('code') }}">
                   <div class="level-left">
                     <button type="submit" class="button is-danger">Ubah</button>
                   </div>

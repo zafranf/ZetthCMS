@@ -18,10 +18,10 @@ class VerificationController extends Controller
         $this->setSEO($data['page_title']);
 
         /* check code */
-        if ($r->input('kode')) {
+        if ($r->input('code')) {
             $r->merge([
                 'type' => $type,
-                'code' => $r->input('kode'),
+                'code' => $r->input('code'),
             ]);
 
             return $this->verify($r);

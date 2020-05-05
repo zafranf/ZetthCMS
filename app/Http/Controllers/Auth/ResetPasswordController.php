@@ -50,8 +50,8 @@ class ResetPasswordController extends Controller
         $this->setSEO($data['page_title']);
 
         /* check code expiration */
-        if ($r->input('kode')) {
-            $reset = \App\Models\PasswordReset::where('token', $r->input('kode'))->first();
+        if ($r->input('code')) {
+            $reset = \App\Models\PasswordReset::where('token', $r->input('code'))->first();
             if ($reset) {
                 $expire_at = $reset->created_at->addDay();
                 $expired = now()->greaterThanOrEqualTo($expire_at);
