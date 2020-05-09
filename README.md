@@ -1,7 +1,7 @@
 # ZetthCMS
 CMS yang dibuat dari Laravel Framework (aslinya cuma untuk proyek pribadi)
 
-### Yang dibutuhkan:
+### Dibutuhkan:
 - Semua yang [dibutuhkan Laravel](https://laravel.com/docs/6.x#server-requirements)
 - Ekstensi _Imagick_
 
@@ -10,3 +10,6 @@ CMS yang dibuat dari Laravel Framework (aslinya cuma untuk proyek pribadi)
 - Siapkan _database_
 - Atur semua nilai di file `.env` (terutama `APP_*` dan `DB_*`)
 - Jalankan `php artisan zetth:install`
+
+### Jalankan aplikasi:
+- Jalankan `php artisan serve`
