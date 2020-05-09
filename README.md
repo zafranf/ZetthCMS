@@ -1,7 +1,7 @@
 # ZetthCMS
 CMS yang dibuat dari Laravel Framework (aslinya cuma untuk proyek pribadi)
 
-### Dibutuhkan:
+### Yang dibutuhkan:
 - Semua yang [dibutuhkan Laravel](https://laravel.com/docs/6.x#server-requirements)
 - Ekstensi _Imagick_
 
