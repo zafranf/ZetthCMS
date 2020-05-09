@@ -41,5 +41,5 @@
     </tr>
   </table>
   <hr>
-  <p><small>*mohon untuk tidak membalas email ini.</small></p>
+  <p><small>*mohon untuk tidak membalas surel ini.</small></p>
 </div>

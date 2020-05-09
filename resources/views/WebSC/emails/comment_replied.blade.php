@@ -11,5 +11,5 @@
       <a href="{{ getSiteURL(config('path.post') . '/' . $post->slug . '#comment-' . md5($comment->id . env('DB_PORT', 3306))) }}" style="padding:5px;border:1px solid transparent;color:#fff;background:#ed4568;border-radius:4px;text-decoration:none;">Lihat komentar</a>
     </p>
     <hr>
-    <p><small>*mohon untuk tidak membalas email ini.</small></p>
+    <p><small>*mohon untuk tidak membalas surel ini.</small></p>
   </div>

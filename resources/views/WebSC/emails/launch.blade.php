@@ -11,5 +11,5 @@
     <a href="{{ getSiteURL('/') }}" style="padding:5px;border:1px solid transparent;color:#fff;background:#ed4568;border-radius:4px;text-decoration:none;">Kunjungi situs</a>
   </p>
   <hr>
-  <p><small>*mohon untuk tidak membalas email ini.</small></p>
+  <p><small>*mohon untuk tidak membalas surel ini.</small></p>
 </div>

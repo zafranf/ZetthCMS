@@ -62,9 +62,9 @@
                     </div>
                   </div>
                   <div class="field">
-                    <label class="label">Email</label>
+                    <label class="label">Surel</label>
                     <div class="control has-icons-left">
-                      <input class="input" type="email" name="email" placeholder="Alamat email.." value="{{ app('user')->email }}" maxlength="100" disabled>
+                      <input class="input" type="email" name="email" placeholder="Alamat surel.." value="{{ app('user')->email }}" maxlength="100" disabled>
                       <span class="icon is-left">
                         <i class="fad fa-envelope"></i>
                       </span>

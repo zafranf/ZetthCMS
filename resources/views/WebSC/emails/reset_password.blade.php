@@ -1,4 +1,4 @@
-<div style="background:#fff;width:90%;margin:0 auto;border:1px solid #ccc;color:#8B8B8B;padding:5px 10px;" id="merpati-email">
+<div style="background:#fff;width:90%;margin:0 auto;border:1px solid #ccc;color:#8B8B8B;padding:5px 10px;" id="zetth-email">
   <center>
     <a href="{{ url('/') }}">
       <img src="{{ getImageLogo('logo/landscape.png') }}" style="max-height:200px;">
@@ -15,5 +15,5 @@
     <pre style="background:#e9e9e9;padding:10px;"><code>{{ route('web.login') }}</code></pre>
   </p>
   <hr>
-  <p><small>*mohon untuk tidak membalas email ini.</small></p>
+  <p><small>*mohon untuk tidak membalas surel ini.</small></p>
 </div>

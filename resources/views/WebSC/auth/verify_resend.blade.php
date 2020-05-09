@@ -42,7 +42,7 @@
                   </div>
                 @endif
                 <div class="field">
-                  <input class="input" name="email" placeholder="Alamat email.." required autofocus>
+                  <input class="input" name="email" placeholder="Alamat surel.." required autofocus>
                 </div>
                 <div class="level is-mobile">
                   @csrf

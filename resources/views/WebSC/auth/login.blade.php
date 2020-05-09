@@ -132,7 +132,7 @@
                   <input class="input" name="fullname" placeholder="Nama lengkap.." required maxlength="100" autofocus>
                 </div>
                 <div class="field">
-                  <input class="input" name="email" placeholder="Alamat email.." required maxlength="100">
+                  <input class="input" name="email" placeholder="Alamat surel.." required maxlength="100">
                 </div>
                 <div class="field">
                   <input class="input" type="password" name="password" placeholder="Sandi.." required minlength="6">
@@ -165,7 +165,7 @@
                 @endif
                 <div class="field">
                   <p class="has-text-grey has-text-left"><b>Tautan Pintas</b><br>Kami akan mengirimkan tautan pintas untuk akses masuk Anda tanpa menggunakan sandi.</p>
-                  <input class="input" name="email" placeholder="Alamat email.." value="{{ old('email') }}" {{ !old('email') ? 'autofocus' : '' }} required maxlength="100">
+                  <input class="input" name="email" placeholder="Alamat surel.." value="{{ old('email') }}" {{ !old('email') ? 'autofocus' : '' }} required maxlength="100">
                 </div>
                 <div class="level is-mobile">
                   <div class="level-left">

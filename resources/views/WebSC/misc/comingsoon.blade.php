@@ -78,13 +78,13 @@
       <hr style="margin-top:20px;">
       <div style="margin:0 10px;text-align:left;">
         @if (session('subscribed'))
-          Email Anda sudah kami terima. Kami akan menginformasikan kembali melalui email ketika situs sudah aktif. Terima kasih.
+          Alamat surel Anda sudah kami terima. Kami akan menginformasikan kembali melalui surel ketika situs sudah aktif. Terima kasih.
         @else
-          Beri tahu saya melalui email:
+          Beri tahu saya melalui surel:
           <form action="{{ route('web.action.subscribe') }}" method="post">
             <div class="field has-addons">
               <div class="control">
-                <input type="email" class="input is-small" name="email" placeholder="Masukkan email anda..">
+                <input type="email" class="input is-small" name="email" placeholder="Masukkan surel anda..">
               </div>
               <div class="control">
                 @csrf
