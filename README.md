@@ -1,5 +1,5 @@
 # ZetthCMS
-CMS based on Laravel Framework (basically for personal use)
+CMS yang dibuat dari Laravel Framework (aslinya cuma untuk proyek pribadi)
 
 ### Yang dibutuhkan:
 - Semua yang [dibutuhkan Laravel](https://laravel.com/docs/6.x#server-requirements)
