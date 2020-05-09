@@ -52,7 +52,7 @@ class ForgotPasswordController extends Controller
         ]);
 
         /* check user */
-        $user = \App\Models\User::active()->where('email', $r->input('email'))->first();
+        $user = \App\Models\User::active()->where('email', _encrypt($r->input('email')))->first();
         if ($user) {
             if (!$user->password) {
                 $drivers = [];
@@ -65,7 +65,7 @@ class ForgotPasswordController extends Controller
 
             /* Create reset password token */
             $reset = \App\Models\PasswordReset::updateOrCreate([
-                'email' => $user->email,
+                'email' => _encrypt($user->email),
                 'site_id' => app('site')->id,
             ], [
                 'token' => md5($user->email . uniqid() . strtotime('now') . env('APP_KEY')),
@@ -74,6 +74,8 @@ class ForgotPasswordController extends Controller
 
             /* send mail */
             \Mail::to($user->email)->queue(new \App\Mail\ForgotPassword($user, $reset));
+
+            return redirect(route('web.reset.password'))->with('request_reset', true);
         }
 
         return redirect(route('web.forgot.password'))->with('success', $user ? true : false);

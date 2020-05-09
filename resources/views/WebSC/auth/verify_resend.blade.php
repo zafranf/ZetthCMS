@@ -12,7 +12,7 @@
             @if (session('success'))
               <div class="notification is-success has-text-left">
                 <b>Berhasil!</b><br>
-                Kami telah mengirimkan tautan untuk mengubah sandi Anda. Silakan cek email Anda (kotak masuk/sampah).
+                Kami telah mengirimkan tautan untuk mengubah sandi Anda. Silakan cek surel Anda (kotak masuk/sampah).
                 <br>
                 Anda akan dialihkan ke halaman utama dalam <span class="seconds">5</span> detik.
               </div>
@@ -34,7 +34,7 @@
               </div>
             @else
               <p class="has-text-grey has-text-left"><b>Kirim ulang kode verifikasi</b><br>
-              Masukkan email Anda di kolom bawah ini. Kami akan mengirimkan ulang kode verifikasi ke email Anda.</p>
+              Masukkan surel Anda di kolom bawah ini. Kami akan mengirimkan ulang kode verifikasi ke surel Anda.</p>
               <form id="form-login" method="post" action="{{ route('web.verify.resend.post') }}">
                 @if (isset($errors) && $errors->has('email'))
                   <div class="notification is-warning has-text-left">

@@ -28,7 +28,7 @@ class VerificationController extends Controller
         }
 
         /* handle type */
-        if ($type == 'kirim-ulang') {
+        if ($type == config('path.verification_resend')) {
             $type = 'resend';
         }
 
@@ -85,7 +85,7 @@ class VerificationController extends Controller
         ]);
 
         /* check user */
-        $user = \App\Models\User::where('email', $r->input('email'))->with('verify')->first();
+        $user = \App\Models\User::where('email', _encrypt($r->input('email')))->with('verify')->first();
         if ($user) {
             if (!$user->password) {
                 $drivers = [];
@@ -93,7 +93,7 @@ class VerificationController extends Controller
                     $drivers[] = $oauth->driver;
                 }
 
-                return redirect(route('web.verify', ['type' => 'kirim-ulang']))->withInput()->with('oauths', $drivers);
+                return redirect(route('web.verify', ['type' => config('path.verification_resend')]))->withInput()->with('oauths', $drivers);
             }
 
             /* check verify */

@@ -62,17 +62,17 @@
                 @if (session('already_verified'))
                   <div class="notification is-success has-text-left">
                     <b>Pengguna sudah aktif!</b><br>
-                    Silakan masuk menggunakan alamat email dan sandi Anda.
+                    Silakan masuk menggunakan alamat surel dan sandi Anda.
                   </div>
                 @elseif (session('verified'))
                   <div class="notification is-success has-text-left">
                     <b>Verifikasi berhasil!</b><br>
-                    Silakan masuk menggunakan alamat email dan sandi Anda.
+                    Silakan masuk menggunakan alamat surel dan sandi Anda.
                   </div>
                 @elseif (session('verified') === false)
                   <div class="notification is-warning has-text-left">
                     <b>Pengguna belum diverifikasi!</b><br>
-                    Harap lakukan verifikasi terlebih dahulu. Silakan cek email Anda untuk verifikasi.
+                    Harap lakukan verifikasi terlebih dahulu. Silakan cek surel Anda untuk verifikasi.
                   </div>
                 @elseif (session('oauths'))
                   <div class="notification is-warning has-text-left">
@@ -89,11 +89,16 @@
                 @elseif (session('password_changed'))
                   <div class="notification is-success has-text-left">
                     <b>Ubah sandi berhasil!</b><br>
-                    Silakan masuk menggunakan alamat email dan sandi Anda yang baru.
+                    Silakan masuk menggunakan alamat surel dan sandi Anda yang baru.
+                  </div>
+                @elseif (session('password_changed') === false)
+                  <div class="notification is-warning has-text-left">
+                    <b>Gagal ubah sandi!</b><br>
+                    Terdapat kesalahan data ubah sandi. Silakan dicoba lagi.
                   </div>
                 @endif
                 <div class="field">
-                  <input class="input" name="name" placeholder="Alamat email/nama profil.." required value="{{ old('name') }}" {{ !old('name') ? 'autofocus' : '' }}>
+                  <input class="input" name="name" placeholder="Nama atau surel.." required value="{{ old('name') }}" {{ !old('name') ? 'autofocus' : '' }}>
                 </div>
                 <div class="field">
                   <input class="input" type="password" name="password" placeholder="Sandi.." required>
@@ -150,20 +155,21 @@
                 @if (session('magiclink') !== null && !session('magiclink'))
                   <div class="notification is-danger has-text-left">
                     <b>Email tidak valid!</b><br>
-                    Silakan masukkan alamat email yang valid.
+                    Silakan masukkan alamat surel yang valid.
                   </div>
                 @elseif (session('magiclink_login') !== null && !session('magiclink_login'))
                   <div class="notification is-danger has-text-left">
                     <b>Gagal akses masuk!</b><br>
-                    Tautan pintas telah kedaluarsa atau tidak ditemukan. Silakan masukkan alamat email untuk mendapatkan tautan pintas yang baru.
+                    Tautan pintas telah kedaluarsa atau tidak ditemukan. Silakan masukkan alamat surel untuk mendapatkan tautan pintas yang baru.
                   </div>
                 @endif
                 <div class="field">
                   <p class="has-text-grey has-text-left"><b>Tautan Pintas</b><br>Kami akan mengirimkan tautan pintas untuk akses masuk Anda tanpa menggunakan sandi.</p>
-                  <input class="input" name="email" placeholder="Alamat email.." required value="{{ old('email') }}" {{ !old('email') ? 'autofocus' : '' }}>
+                  <input class="input" name="email" placeholder="Alamat email.." value="{{ old('email') }}" {{ !old('email') ? 'autofocus' : '' }} required maxlength="100">
                 </div>
                 <div class="level is-mobile">
                   <div class="level-left">
+                    <input type="hidden" name="form" value="register">
                     <button type="submit" class="button is-danger">Kirim</button>
                   </div>
                   <div class="level-right">
@@ -178,7 +184,7 @@
                 <div class="field">
                   <div class="notification is-success has-text-left">
                     <b>Tautan pintas berhasil terkirim!</b><br>
-                    Silakan periksa email Anda (termasuk kotak sampah) untuk proses masuk ke situs.
+                    Silakan periksa surel Anda (termasuk kotak sampah) untuk proses masuk ke situs.
                   </div>
                   <input class="input" name="code" placeholder="Kode tautan pintas.." required value="{{ old('code') }}" {{ !old('code') ? 'autofocus' : '' }}>
                 </div>

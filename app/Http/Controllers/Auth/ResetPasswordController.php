@@ -5,7 +5,6 @@ namespace App\Http\Controllers\Auth;
 use App\Http\Controllers\Site\Controller;
 use Illuminate\Foundation\Auth\ResetsPasswords;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Hash;
 
 class ResetPasswordController extends Controller
 {
@@ -63,9 +62,9 @@ class ResetPasswordController extends Controller
             } else {
                 return redirect(route('web.forgot.password'))->with('expired', true);
             }
-        } else {
-            return redirect(route('web.forgot.password'))->with('expired', true);
-        }
+        } /*  else {
+        return redirect(route('web.forgot.password'))->with('expired', true);
+        } */
 
         return view($this->getTemplate() . '.auth.reset_password', $data);
     }
@@ -74,25 +73,31 @@ class ResetPasswordController extends Controller
     {
         /* Check validation */
         $this->validate($r, [
+            'email' => ['required', 'email'],
             'code' => ['required'],
             'password' => ['required', 'string', 'min:6', 'confirmed'],
         ]);
 
         /* check user */
-        $reset = \App\Models\PasswordReset::where('token', $r->input('code'))->with('user')->first();
-        if ($reset && $reset->user) {
+        $email = _encrypt($r->input('email'));
+        $reset = \App\Models\PasswordReset::where('email', $email)->where('token', $r->input('code'))->first();
+        if ($reset) {
             /* set new password */
-            $user = $reset->user;
-            $user->password = Hash::make($r->input('password'));
-            $user->save();
+            $user = $reset->user()->first();
+            if ($user) {
+                $user->password = $r->input('password');
+                $user->save();
 
-            /* remove reset */
-            $reset->delete();
+                /* remove reset */
+                $reset->delete();
 
-            /* send mail */
-            \Mail::to($user->email)->queue(new \App\Mail\ResetPassword($user));
+                /* send mail */
+                \Mail::to($user->email)->queue(new \App\Mail\ResetPassword($user));
+
+                return redirect(route('web.login'))->with('password_changed', true);
+            }
         }
 
-        return redirect(route('web.login'))->with('password_changed', isset($user) ? true : false);
+        return redirect(route('web.login'))->with('password_changed', false);
     }
 }

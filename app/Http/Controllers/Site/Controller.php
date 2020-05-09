@@ -142,7 +142,7 @@ class Controller extends SiteController
         }
 
         /* check existing */
-        $exists = \App\Models\User::where('name', $user_name)->first();
+        $exists = \App\Models\User::where('name', _encrypt($user_name))->first();
         if ($exists) {
             return $this->generateUsername($user, $method += 1);
         }

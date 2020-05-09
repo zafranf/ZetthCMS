@@ -12,12 +12,12 @@
             @if (session('resend'))
               <div class="notification is-success has-text-left">
                 <b>Kode verifikasi berhasil dikirim!</b><br>
-                Kami telah mengirimkan ulang kode verifikasi ke email Anda. Silakan periksa email Anda (termasuk kotak sampah) untuk proses verifikasi.
+                Kami telah mengirimkan ulang kode verifikasi ke surel Anda. Silakan periksa surel Anda (termasuk kotak sampah) untuk proses verifikasi.
               </div>
             @elseif (session('registered'))
               <div class="notification is-success has-text-left">
                 <b>Pendaftaran berhasil!</b><br>
-                Kami telah mengirimkan kode verifikasi ke email Anda. Silakan periksa email Anda (termasuk kotak sampah) untuk proses verifikasi.
+                Kami telah mengirimkan kode verifikasi ke surel Anda. Silakan periksa surel Anda (termasuk kotak sampah) untuk proses verifikasi.
               </div>
             @elseif (session('success') === false)
               <div class="notification is-warning has-text-left">
@@ -25,8 +25,8 @@
                 Kode verifikasi telah kedaluarsa atau akun sudah terverifikasi. Silakan klik "Kirim ulang code?" di bawah atau langsung <a class="has-text-danger" href="{{ route('web.login') }}">masuk</a>. 
               </div>
             @else
-              <p class="has-text-grey has-text-left"><b>Verifikasi email</b><br>
-              Silakan masukkan kode verifikasi yang sudah kami kirim ke alamat email Anda lalu tekan tombol untuk verifikasi.</p>
+              <p class="has-text-grey has-text-left"><b>Verifikasi surel</b><br>
+              Silakan masukkan kode verifikasi yang sudah kami kirim ke alamat surel Anda lalu tekan tombol untuk verifikasi.</p>
             @endif
             <form id="form-verification" method="post" action="{{ route('web.verify.post') }}">
               @if (isset($errors) && $errors->has('code'))
@@ -44,7 +44,7 @@
                   <button type="submit" class="button is-danger">Verifikasi</button>
                 </div>
                 <div class="level-right">
-                  <a class="has-text-danger" href="{{ route('web.verify', ['type' => 'kirim-ulang']) }}">Kirim ulang kode?</a>
+                  <a class="has-text-danger" href="{{ route('web.verify', ['type' => config('path.verification_resend')]) }}">Kirim ulang kode?</a>
                 </div>
               </div>
             </form>

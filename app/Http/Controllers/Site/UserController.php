@@ -3,7 +3,6 @@
 namespace App\Http\Controllers\Site;
 
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
 {
@@ -15,8 +14,8 @@ class UserController extends Controller
     public function index(Request $r)
     {
         /* check segment */
-        if (in_array($r->segment(1), ['profile', 'profil'])) {
-            return redirect(url(\Auth::user()->name));
+        if (in_array($r->segment(1), [config('path.profile')])) {
+            return redirect(url(app('user')->name));
         }
 
         /* set breadcrumbs */
@@ -79,13 +78,13 @@ class UserController extends Controller
         ], [
             'gender' => $r->input('gender'),
             'birthdate' => $r->input('birthdate'),
-            'address' => $r->input('address'),
-            'about' => $r->input('about'),
+            'address' => strip_tags($r->input('address')),
+            'about' => strip_tags($r->input('about')),
         ]);
 
         /* set password */
         if ($r->input('use_password') && !is_null($r->input('password'))) {
-            $user->password = Hash::make($r->input('password'));
+            $user->password = $r->input('password');
         }
 
         /* upload image */

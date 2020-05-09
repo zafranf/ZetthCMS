@@ -12,7 +12,7 @@
             @if (session('success'))
               <div class="notification is-success has-text-left">
                 <b>Berhasil!</b><br>
-                Kami telah mengirimkan tautan untuk mengubah sandi Anda. Silakan cek email Anda (kotak masuk/sampah).
+                Kami telah mengirimkan tautan untuk mengubah sandi Anda. Silakan cek surel Anda (kotak masuk/sampah).
                 <br>
                 Anda akan dialihkan ke halaman utama dalam <span class="seconds">5</span> detik.
               </div>
@@ -33,8 +33,14 @@
                 Silakan masuk menggunakan tombol yang tersedia di halaman <a class="has-text-danger" href="{{ route('web.login') }}">masuk</a>.
               </div>
             @else
+              @if (session('request_reset'))
+                <div class="notification is-success has-text-left">
+                  <b>Berhasil!</b><br>
+                  Kami telah mengirimkan tautan untuk mengubah sandi Anda. Silakan cek surel Anda (termasuk kotak sampah).
+                </div>
+              @endif
               <p class="has-text-grey has-text-left"><b>Ubah sandi</b><br>
-              Masukkan sandi baru Anda.</p>
+              Masukkan surel dan sandi baru Anda.</p>
               <form id="form-login" method="post" action="{{ route('web.reset.post') }}">
                 @if (count($errors))
                   <div class="notification is-warning has-text-left">
@@ -46,14 +52,19 @@
                   </div>
                 @endif
                 <div class="field">
-                  <input class="input" type="password" name="password" placeholder="Sandi baru.." required autofocus>
+                  <input class="input" type="email" name="email" placeholder="Alamat surel.." required autofocus>
+                </div>
+                <div class="field{{ request()->query('code') ? ' is-hidden' : '' }}">
+                  <input class="input" type="text" name="code" placeholder="Kode ubah sandi.." value="{{ request()->query('code') }}" required>
+                </div>
+                <div class="field">
+                  <input class="input" type="password" name="password" placeholder="Sandi baru.." required>
                 </div>
                 <div class="field">
                   <input class="input" type="password" name="password_confirmation" placeholder="Ulangi sandi baru.." required autofocus>
                 </div>
                 <div class="level is-mobile">
                   @csrf
-                  <input type="hidden" name="code" value="{{ request()->input('code') }}">
                   <div class="level-left">
                     <button type="submit" class="button is-danger">Ubah</button>
                   </div>

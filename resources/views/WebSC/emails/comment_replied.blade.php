@@ -8,7 +8,7 @@
     <p>Halo,</p>
     <p>Anda baru saja mendapatkan balasan komentar dari artikel "{{ $post->title }}". Klik tautan di bawah untuk langsung membacanya.</p>
     <p>
-      <a href="{{ getSiteURL(config('post.tag', 'post') . '/' . $post->slug . '#komentar-' . md5($comment->id . env('DB_PORT', 3306))) }}" style="padding:5px;border:1px solid transparent;color:#fff;background:#ed4568;border-radius:4px;text-decoration:none;">Lihat komentar</a>
+      <a href="{{ getSiteURL(config('path.post') . '/' . $post->slug . '#comment-' . md5($comment->id . env('DB_PORT', 3306))) }}" style="padding:5px;border:1px solid transparent;color:#fff;background:#ed4568;border-radius:4px;text-decoration:none;">Lihat komentar</a>
     </p>
     <hr>
     <p><small>*mohon untuk tidak membalas email ini.</small></p>

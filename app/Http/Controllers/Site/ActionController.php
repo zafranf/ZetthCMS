@@ -131,7 +131,7 @@ class ActionController extends Controller
         /* save activity */
         $this->activityLog('[~name] memberikan komentar untuk artikel "' . $post->slug . '"');
 
-        return redirect(url(config('path.post', 'post') . "/" . $post->slug . "#komentar"))->with('success', true);
+        return redirect(url(config('path.post') . "/" . $post->slug . "#comments"))->with('success', true);
     }
 
     public function contact(Request $r)
@@ -194,7 +194,7 @@ class ActionController extends Controller
         $post->save();
 
         /* return to socmed url */
-        $posturl = url(config('path.post', 'post') . '/' . $post->slug);
+        $posturl = url(config('path.post') . '/' . $post->slug);
         if ($socmed == 'facebook') {
             $url = 'https://www.facebook.com/sharer/sharer.php?u=' . $posturl . '&src=sdkpreparse';
         } else if ($socmed == 'twitter') {

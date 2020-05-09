@@ -12,7 +12,7 @@
             @if (session('success'))
               <div class="notification is-success has-text-left">
                 <b>Berhasil!</b><br>
-                Kami telah mengirimkan tautan untuk mengubah sandi Anda. Silakan cek email Anda (kotak masuk/sampah).
+                Kami telah mengirimkan tautan untuk mengubah sandi Anda. Silakan cek surel Anda (termasuk kotak sampah).
                 <br>
                 Anda akan dialihkan ke halaman utama dalam <span class="seconds">5</span> detik.
               </div>
@@ -36,11 +36,11 @@
               @if (session('expired'))
                 <div class="notification is-warning has-text-left">
                   <b>Gagal!</b><br>
-                  Kode ubah sandi sudah kedaluarsa atau tidak ditemukan. Silakan masukkan alamat email untuk buat permintaan ubah sandi.
+                  Kode ubah sandi sudah kedaluarsa atau tidak ditemukan. Silakan masukkan alamat surel untuk buat permintaan ubah sandi.
                 </div>
               @else
                 <p class="has-text-grey has-text-left"><b>Lupa sandi?</b><br>
-                Masukkan email Anda di kolom bawah ini. Kami akan mengirimkan tautan untuk mengubah sandi Anda.</p>
+                Masukkan surel Anda di kolom bawah ini. Kami akan mengirimkan tautan untuk mengubah sandi Anda.</p>
               @endif
               <form id="form-login" method="post" action="{{ route('web.forgot.post') }}">
                 @if (isset($errors) && $errors->has('email'))
@@ -49,7 +49,7 @@
                   </div>
                 @endif
                 <div class="field">
-                  <input class="input" name="email" placeholder="Alamat email.." required autofocus>
+                  <input class="input" name="email" placeholder="Alamat surel.." required autofocus>
                 </div>
                 <div class="level is-mobile">
                   @csrf

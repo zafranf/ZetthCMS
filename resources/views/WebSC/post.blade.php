@@ -18,7 +18,7 @@
           <div class="media">
             @if ($author->image)
               <div class="media-center" style="z-index:2;">
-                <a href="{{ url(config('path.author', 'author') . '/' . $author->name) }}" title="Penulis: {{ $author->fullname }}">
+                <a href="{{ url(config('path.author') . '/' . $author->name) }}" title="Penulis: {{ $author->fullname }}">
                   <img src="{{ getImageUser($author->image ?? '') }}" class="author-image" alt="Penulis: {{ $author->fullname }}" title="Penulis: {{ $author->fullname }}">
                 </a>
               </div>
@@ -31,10 +31,10 @@
                 <p class="has-text-grey has-text-left is-italic">{{ $post->caption }}</p>
               @endif
               <p class="title article-title">
-                <a href="{{ url(config('path.post', 'post') . '/' . $post->slug) }}" title="{{ $post->title . ' - ' . app('site')->name }}" class="has-text-danger">{{ $post->title }}</a>
+                <a href="{{ url(config('path.post') . '/' . $post->slug) }}" title="{{ $post->title . ' - ' . app('site')->name }}" class="has-text-danger">{{ $post->title }}</a>
               </p>
               <p class="subtitle is-6 article-subtitle">
-                <a href="{{ url(config('path.author', 'author') . '/' . $author->name) }}" class="has-text-danger" title="Penulis">
+                <a href="{{ url(config('path.author') . '/' . $author->name) }}" class="has-text-danger" title="Penulis">
                   {{ $author->fullname }}
                 </a> pada <span title="Tanggal terbit">{{ $post->published_string }}</a>
                 @forelse ($post->categories as $category)
@@ -42,7 +42,7 @@
                     <br>
                     di 
                   @endif
-                  <a href="{{ url(config('path.category', 'category') . '/' . $category->slug) }}" class="has-text-danger" title="Kategori">{{ $category->name }}</a>{{ !$loop->last ? ',' : '' }}
+                  <a href="{{ url(config('path.category') . '/' . $category->slug) }}" class="has-text-danger" title="Kategori">{{ $category->name }}</a>{{ !$loop->last ? ',' : '' }}
                 @empty
                 @endforelse
               </p>
@@ -54,7 +54,7 @@
             <div class="tags has-addons level-item" style="justify-content:unset;">
               @foreach ($post->tags as $tag)
                 <span class="tag is-medium is-danger">
-                  <a href="{{ url(config('path.tag', 'tag') . '/' . $tag->slug) }}" class="has-text-white" title="Label">#{{ $tag->name }}</a>
+                  <a href="{{ url(config('path.tag') . '/' . $tag->slug) }}" class="has-text-white" title="Label">#{{ $tag->name }}</a>
                 </span>
               @endforeach
             </div>
@@ -133,12 +133,12 @@
 
   @if (bool(app('site')->enable_comment) && bool($post->enable_comment))
     {{-- <!-- START COMMENT SECTION --> --}}
-    <section id="komentar" class="articles">
+    <section id="comments" class="articles">
       <div class="column is-10 is-offset-1">
         <div class="card article">
           <div class="card-content">
             <h1 class="title article-title has-border-grey-lighter" style="border-bottom:1px solid #ccc;">
-              <a href="#komentar" class="has-text-dark">Komentar</a>
+              <a href="#comments" class="has-text-dark">Komentar</a>
             </h1>
             @if (session('success'))
               <div class="notification is-success has-text-left">
@@ -152,7 +152,7 @@
                   $commentator = $comment->commentator;
                 @endphp
                 {{-- Start Comment Parent --}}
-                <article id="komentar-{{ md5($comment->id . env('DB_PORT', 3306)) }}" class="media">
+                <article id="comment-{{ md5($comment->id . env('DB_PORT', 3306)) }}" class="media">
                   <figure class="media-left">
                     <p class="image is-64x64">
                       <img class="is-rounded" src="{{ getImageUser($commentator->image ?? '') }}">
@@ -171,7 +171,7 @@
                           $subcommentator = $subcomment->commentator;
                         @endphp
                         {{-- Start Comment Child --}}
-                        <article id="komentar-{{ md5($subcomment->id . env('DB_PORT', 3306)) }}" class="media">
+                        <article id="comment-{{ md5($subcomment->id . env('DB_PORT', 3306)) }}" class="media">
                           <figure class="media-left">
                             <p class="image is-48x48">
                               <img class="is-rounded" src="{{ getImageUser($subcommentator->image ?? '') }}">
@@ -248,16 +248,16 @@
 
 @push('styles')
   <style>
-    #komentar {
+    #comments {
       margin: unset;
     }
-    #komentar .card.article:first-child {
+    #comments .card.article:first-child {
       margin: unset;
     }
-    #komentar .media-content {
+    #comments .media-content {
       margin-top: unset!important;
     }
-    #komentar .content p {
+    #comments .content p {
       /* margin: unset!important; */
     }
     .info-reply {
@@ -341,7 +341,7 @@
 
         $('.button.is-copy').on('click', function() {
           $('#modal').addClass('is-active');
-          let url = '{{ urlencode(url(config('post.tag', 'post') . '/' . $post->slug)) }}';
+          let url = '{{ urlencode(url(config('path.post') . '/' . $post->slug)) }}';
           let html = 'Tekan ikon untuk menyalin tautan: <div class="field has-addons"><div class="control is-expanded"><input class="input is-fullwidth" type="text" value="'+decodeURIComponent(url)+'" readonly></div><div class="control"><a onclick="copy()" class="button"><i class="fad fa-copy"></i></a></div></div>';
           $('.modal-card-title').text('Salin Tautan');
           $('.modal-card-body').html(html);

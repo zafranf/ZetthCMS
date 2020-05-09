@@ -11,13 +11,13 @@
             <div class="media-content has-text-centered" style="margin-top:2rem;overflow:unset;">
               @if ($page->cover)
                 <figure class="image is-3by1">
-                  <a href="{{ url(config('path.post', 'post') . '/' . $page->slug) }}" title="{{ $page->title . ' - ' . app('site')->name }}">
+                  <a href="{{ url(config('path.post') . '/' . $page->slug) }}" title="{{ $page->title . ' - ' . app('site')->name }}">
                     <img src="{{ getImage('/assets/images/posts/' . $page->cover) }}" alt="{{ $page->title . ' - ' . app('site')->name }}">
                   </a>
                 </figure>
               @endif
               <p class="title article-title">
-                <a href="{{ url(config('path.post', 'post') . '/' . $page->slug) }}" title="{{ $page->title . ' - ' . app('site')->name }}" class="has-text-danger">{{ $page->title }}</a>
+                <a href="{{ url(config('path.post') . '/' . $page->slug) }}" title="{{ $page->title . ' - ' . app('site')->name }}" class="has-text-danger">{{ $page->title }}</a>
               </p>
             </div>
           </div>

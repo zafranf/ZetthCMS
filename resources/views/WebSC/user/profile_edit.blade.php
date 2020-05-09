@@ -25,8 +25,9 @@
               </div>
             @endif
   
-            <form action="{{ route('web.profile.post') }}" enctype="multipart/form-data" method="post">
+            <form action="{{ route('web.profile.put') }}" enctype="multipart/form-data" method="post">
               {{ csrf_field() }}
+              {{ method_field('PUT') }}
               <div class="columns ">
                 <div class="column">
                   <h5 class="title is-5">Profil Pengguna</h5>
@@ -54,7 +55,7 @@
                   <div class="field">
                     <label class="label">Nama Lengkap</label>
                     <div class="control has-icons-left">
-                      <input class="input" type="text" name="fullname" placeholder="Nama lengkap.." value="{{ Auth::user()->fullname }}" maxlength="100">
+                      <input class="input" type="text" name="fullname" placeholder="Nama lengkap.." value="{{ app('user')->fullname }}" maxlength="100">
                       <span class="icon is-left">
                         <i class="fad fa-user"></i>
                       </span>
@@ -63,7 +64,7 @@
                   <div class="field">
                     <label class="label">Email</label>
                     <div class="control has-icons-left">
-                      <input class="input" type="email" name="email" placeholder="Alamat email.." value="{{ Auth::user()->email }}" maxlength="100" disabled>
+                      <input class="input" type="email" name="email" placeholder="Alamat email.." value="{{ app('user')->email }}" maxlength="100" disabled>
                       <span class="icon is-left">
                         <i class="fad fa-envelope"></i>
                       </span>
@@ -75,8 +76,8 @@
                       <div class="select">
                         <select name="gender">
                           <option value="">--Pilih--</option>
-                          <option value="m" {{ (Auth::user()->gender == 'm') ? 'selected' : '' }}>Laki-laki</option>
-                          <option value="f" {{ (Auth::user()->gender == 'f') ? 'selected' : '' }}>Perempuan</option>
+                          <option value="m" {{ (app('user')->detail->gender == 'm') ? 'selected' : '' }}>Laki-laki</option>
+                          <option value="f" {{ (app('user')->detail->gender == 'f') ? 'selected' : '' }}>Perempuan</option>
                         </select>
                         <span class="icon is-left">
                           <i class="fad fa-venus-mars"></i>
@@ -87,7 +88,7 @@
                   <div class="field">
                     <label class="label">Tanggal Lahir</label>
                     <div class="control has-icons-left">
-                      <input class="input" type="date" name="birthdate" placeholder="Tanggal lahir.." value="{{ Auth::user()->birthdate }}">
+                      <input class="input" type="date" name="birthdate" placeholder="Tanggal lahir.." value="{{ app('user')->detail->birthdate }}">
                       <span class="icon is-left">
                         <i class="far fa-calendar-alt"></i>
                       </span>
@@ -96,13 +97,13 @@
                   <div class="field">
                     <label class="label">Alamat</label>
                     <div class="control">
-                      <textarea class="textarea" name="address" placeholder="Alamat lengkap.." rows="3">{{ Auth::user()->address }}</textarea>
+                      <textarea class="textarea" name="address" placeholder="Alamat lengkap.." rows="3">{{ app('user')->detail->address }}</textarea>
                     </div>
                   </div>
                   <div class="field">
                     <label class="label">Tentang Pengguna</label>
                     <div class="control">
-                      <textarea class="textarea" name="about" placeholder="Sekilas tentang pengguna.." rows="3">{{ Auth::user()->about }}</textarea>
+                      <textarea class="textarea" name="about" placeholder="Sekilas tentang pengguna.." rows="3">{{ app('user')->detail->about }}</textarea>
                     </div>
                   </div>
                   <div class="columns">
@@ -125,7 +126,7 @@
                       </span>
                     </label>
                     <div class="control has-icons-left has-icons-right">
-                      <input class="input" type="text" name="name" placeholder="Text input" value="{{ Auth::user()->name }}" maxlength="20" autofocus>
+                      <input class="input" type="text" name="name" placeholder="Text input" value="{{ app('user')->name }}" maxlength="30" autofocus>
                       <span class="icon is-left">
                         <i class="fad fa-user"></i>
                       </span>
@@ -138,7 +139,7 @@
                   <div class="field">
                     <div class="control">
                       <input class="is-checkradio" type="checkbox" name="use_password" id="use_password" onclick="showPasswordFields()"> 
-                      <label for="use_password" onclick="showPasswordFields()">{{ !Auth::user()->password ? 'Gunakan' : 'Ubah' }} sandi?</label>
+                      <label for="use_password" onclick="showPasswordFields()">{{ !app('user')->password ? 'Gunakan' : 'Ubah' }} sandi?</label>
                     </div>
                   </div>
                   <div class="field password is-hidden has-addons">

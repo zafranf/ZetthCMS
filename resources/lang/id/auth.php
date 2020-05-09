@@ -13,7 +13,7 @@ return [
     |
      */
 
-    'failed' => 'Data kredensial tidak cocok dengan data kami.',
+    'failed' => 'Kombinasi pengguna dan sandi tidak sesuai.',
     'throttle' => 'Terlalu banyak percobaan. Coba lagi dalam :seconds detik.',
 
 ];

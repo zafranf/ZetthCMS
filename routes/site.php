@@ -1,5 +1,9 @@
 <?php
-/* Site Routes */
+/**
+ * Additional Web Routes
+ * Middleware: web
+ */
+
 //
 
 /* Log all visits */

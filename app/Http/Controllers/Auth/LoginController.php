@@ -8,6 +8,7 @@ use App\Models\UserOauth;
 use Auth;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\Request;
+use Illuminate\Validation\ValidationException;
 use Socialite;
 
 class LoginController extends Controller
@@ -75,8 +76,15 @@ class LoginController extends Controller
         /* save activity */
         $this->activityLog('<b>' . $r->input($this->username()) . '</b> mencoba masuk ke situs');
 
-        $user = User::where('name', $r->{$this->username()})
-            ->orWhere('email', $r->{$this->username()})
+        /* merge password */
+        $r->merge([
+            $this->username() => _encrypt($r->input($this->username(true))),
+            'password' => $r->input('password') . \Str::slug(env('APP_KEY')),
+        ]);
+
+        /* check user's password */
+        $user = User::where('name', $r->input($this->username()))
+            ->orWhere('email', $r->input($this->username()))
             ->with('oauths:user_id,driver')
             ->first();
         if ($user && !$user->password) {
@@ -92,25 +100,47 @@ class LoginController extends Controller
     }
 
     /**
+     * Get the failed login response instance.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Symfony\Component\HttpFoundation\Response
+     *
+     * @throws \Illuminate\Validation\ValidationException
+     */
+    protected function sendFailedLoginResponse(Request $r)
+    {
+        /* merge decrypted username */
+        $r->merge([
+            $this->username() => _decrypt($r->input($this->username())),
+        ]);
+
+        throw ValidationException::withMessages([
+            $this->username() => [trans('auth.failed')],
+        ]);
+    }
+
+    /**
      * Get the login username to be used by the controller.
      *
      * @return string
      */
-    public function username()
+    public function username($merge = false)
     {
         /* set variable */
-        $field = 'name';
-        $value = request()->get($field);
+        $key = 'name';
+        $value = request()->input($key);
 
         /* check input email */
         if (filter_var($value, FILTER_VALIDATE_EMAIL)) {
-            $field = 'email';
+            $key = 'email';
         }
 
         /* merge request */
-        request()->merge([$field => $value]);
+        if ($merge) {
+            request()->merge([$key => $value]);
+        }
 
-        return $field;
+        return $key;
     }
 
     /**
@@ -208,7 +238,7 @@ class LoginController extends Controller
 
             /* create user */
             $user = User::firstOrCreate([
-                'email' => $email,
+                'email' => _encrypt($email),
                 'site_id' => app('site')->id,
             ]);
 
@@ -316,11 +346,10 @@ class LoginController extends Controller
     {
         /* save user */
         $user = User::firstOrCreate([
-            'email' => $oauthUser->email,
+            'email' => _encrypt($oauthUser->email),
             'site_id' => app('site')->id,
         ], [
             'fullname' => $oauthUser->name,
-            'email' => $oauthUser->email,
             'status' => 'active',
         ]);
 
