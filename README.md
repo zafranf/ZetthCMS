@@ -1,4 +1,4 @@
-# Situs Komuntias Penggemar Merpati Seluruh Indonesia
+# ZetthCMS
 CMS yang dibuat dari Laravel Framework (aslinya cuma untuk proyek pribadi)
 
 ### Yang dibutuhkan:
