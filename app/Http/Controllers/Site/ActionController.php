@@ -176,6 +176,9 @@ class ActionController extends Controller
         $expire = now()->addYear()->getTimestamp();
         $cookie = cookie('contact', $data, $expire);
 
+        /* save activity */
+        $this->activityLog($inbox->email . ' mengirim pesan dari formulir kontak');
+
         return redirect(route("web.contact"))
             ->with('success', 'Pesan berhasil dikirim.')
             ->withCookie($cookie);
@@ -222,6 +225,9 @@ class ActionController extends Controller
             'token' => md5($r->input('email') . uniqid() . strtotime('now') . env('APP_KEY')),
             'status' => 'active',
         ]);
+
+        /* save activity */
+        $this->activityLog($r->input('email') . ' mendaftar jadi pelanggan');
 
         return redirect()->back()->with('subscribed', true);
     }
