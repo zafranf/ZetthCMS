@@ -19,8 +19,9 @@ class Controller extends SiteController
         $separator = config('seotools.meta.defaults.separator');
         $url = url()->current();
         $sitename = app('site')->name;
-        $title = !empty($title) ? $title . $separator . $sitename : $sitename;
         $tagline = app('site')->tagline;
+        $sitetag = !empty($tagline) ? $sitename . ' - ' . $tagline : $sitename;
+        $title = !empty($title) ? $title . $separator . $sitetag : $sitetag;
         $keywords = app('site')->keywords;
         $description = app('site')->description;
         $logo = getImageLogo(app('site')->icon);
