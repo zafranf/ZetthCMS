@@ -78,6 +78,8 @@ class PostController extends Controller
             $term = \App\Models\Term::where('slug', $slug)->where('type', $type_q)->active()->first();
             if ($term) {
                 $title = $term->name;
+            } else {
+                abort(404);
             }
 
             /* get posts */
@@ -92,7 +94,6 @@ class PostController extends Controller
             if ($user) {
                 $title = $user->fullname;
             } else {
-                dd('a');
                 abort(404);
             }
 
