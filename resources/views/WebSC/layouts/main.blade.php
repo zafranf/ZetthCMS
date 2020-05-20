@@ -35,7 +35,7 @@
           </form>
         </div>
         @if (Auth::user())
-          <a class="navbar-item" href="{{ app('user')->name }}">
+          <a class="navbar-item" href="{{ url(app('user')->name) }}">
             <i class="fad fa-user"></i>&nbsp;Profil
           </a>
           <a class="navbar-item" href="{{ url('#') }}" onclick="event.preventDefault();$('#form-logout').submit();">
