@@ -13,6 +13,12 @@ class PageController extends Controller
 
     public function index(Request $r, $slug = null)
     {
+        /* check username */
+        $user = \App\Models\User::active()->where('name', _encrypt($slug))->first();
+        if ($user) {
+            return $this->user($r, $user);
+        }
+
         /* get page */
         $page = _getPage($slug);
         if (!$page) {
@@ -58,5 +64,27 @@ class PageController extends Controller
         $this->setSEO($data['page_title']);
 
         return view($this->getTemplate() . '.contact', $data);
+    }
+
+    public function user(Request $r, User $user)
+    {
+        /* set breadcrumbs */
+        $this->breadcrumbs[] = [
+            'page' => $user->fullname,
+            'icon' => '',
+            'url' => '',
+        ];
+
+        /* set data */
+        $data = [
+            'page_title' => $user->fullname,
+            'breadcrumbs' => $this->breadcrumbs,
+            'user' => $user,
+        ];
+
+        /* Set SEO */
+        $this->setSEO($data['page_title']);
+
+        return view($this->getTemplate() . '.user.profile', $data);
     }
 }

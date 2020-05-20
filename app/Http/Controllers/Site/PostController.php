@@ -11,7 +11,7 @@ class PostController extends Controller
         parent::__construct();
     }
 
-    public function index(Request $r, $type)
+    public function index(Request $r)
     {
         /* set breadcrumbs */
         $this->breadcrumbs[] = [
@@ -33,7 +33,7 @@ class PostController extends Controller
         return view($this->getTemplate() . '.posts', $data);
     }
 
-    public function detail(Request $r, $type, $slug)
+    public function detail(Request $r, $slug)
     {
         /* get post */
         $post = _getPost($slug);
@@ -73,17 +73,31 @@ class PostController extends Controller
     {
         /* set title */
         $title = $slug;
-        if (in_array($type, ['tag', 'label']) || in_array($type, ['category', 'kategori'])) {
-            $type_q = in_array($type, ['tag', 'label']) ? 'tag' : 'category';
+        if ($type == config('path.tag') || $type == config('path.category')) {
+            $type_q = $type == config('path.tag') ? 'tag' : 'category';
             $term = \App\Models\Term::where('slug', $slug)->where('type', $type_q)->active()->first();
             if ($term) {
                 $title = $term->name;
             }
-        } else if (in_array($type, ['author', 'penulis'])) {
+
+            /* get posts */
+            if ($type == config('path.category')) {
+                $posts = _getCategoryPosts($slug);
+            } else if ($type == config('path.tag')) {
+                $posts = _getTagPosts($slug);
+            }
+        } else if ($type == config('path.author')) {
+            $slug = _encrypt($slug);
             $user = \App\Models\User::where('name', $slug)->active()->first();
             if ($user) {
                 $title = $user->fullname;
+            } else {
+                dd('a');
+                abort(404);
             }
+
+            /* get posts */
+            $posts = _getAuthorPosts($slug);
         }
 
         /* set breadcrumbs */
@@ -92,15 +106,6 @@ class PostController extends Controller
             'icon' => '',
             'url' => '',
         ];
-
-        /* get posts */
-        if (in_array($type, ['category', 'kategori'])) {
-            $posts = _getCategoryPosts($slug);
-        } else if (in_array($type, ['tag', 'label'])) {
-            $posts = _getTagPosts($slug);
-        } else if (in_array($type, ['author', 'penulis'])) {
-            $posts = _getAuthorPosts($slug);
-        }
 
         /* set data */
         $data = [
