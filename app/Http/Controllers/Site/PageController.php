@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Site;
 
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class PageController extends Controller
@@ -14,7 +15,7 @@ class PageController extends Controller
     public function index(Request $r, $slug = null)
     {
         /* check username */
-        $user = \App\Models\User::active()->where('name', _encrypt($slug))->first();
+        $user = User::active()->where('name', _encrypt($slug))->first();
         if ($user) {
             return $this->user($r, $user);
         }
