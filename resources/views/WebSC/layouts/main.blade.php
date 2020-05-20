@@ -3,7 +3,7 @@
   {{-- <!-- START NAV --> --}}
   <nav class="navbar is-white is-fixed-top">
     <div class="navbar-brand">
-      <a class="navbar-item brand-text" href="{{ url('/') }}" style="padding:0">
+      <a class="navbar-item brand-text" href="{{ route('web.root') }}" style="padding:0">
         <img src="{{ getImageLogo() }}">
       </a>
       <div class="navbar-item is-hidden-desktop">
@@ -35,7 +35,7 @@
           </form>
         </div>
         @if (Auth::user())
-          <a class="navbar-item" href="{{ route('web.profile') }}">
+          <a class="navbar-item" href="{{ app('user')->name }}">
             <i class="fad fa-user"></i>&nbsp;Profil
           </a>
           <a class="navbar-item" href="{{ url('#') }}" onclick="event.preventDefault();$('#form-logout').submit();">
