@@ -7,7 +7,7 @@
         <div class="column is-4 is-offset-4">
           <div class="box">
             <figure class="avatar">
-              <a href="{{ url('/') }}"><img src="{{ getImageLogo() }}" width="100"></a>
+              <a href="{{ _url('/') }}"><img src="{{ getImageLogo() }}" width="100"></a>
             </figure>
             @if (session('resend'))
               <div class="notification is-success has-text-left">

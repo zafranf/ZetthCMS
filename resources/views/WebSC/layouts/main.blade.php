@@ -38,7 +38,7 @@
           <a class="navbar-item" href="{{ url(app('user')->name) }}">
             <i class="fad fa-user"></i>&nbsp;Profil
           </a>
-          <a class="navbar-item" href="{{ url('#') }}" onclick="event.preventDefault();$('#form-logout').submit();">
+          <a class="navbar-item" href="{{ _url('#') }}" onclick="event.preventDefault();$('#form-logout').submit();">
             <i class="fad fa-sign-out-alt"></i>&nbsp;Keluar
           </a>
           <form action="{{ route('web.logout.post') }}" id="form-logout" method="post" class="is-hidden">
@@ -48,7 +48,7 @@
           <a class="navbar-item" href="{{ route('web.login') }}">
             <i class="fad fa-sign-in-alt"></i>&nbsp;Masuk/Daftar
           </a>
-          {{-- <a class="navbar-item" href="{{ url('/pendaftaran') }}">
+          {{-- <a class="navbar-item" href="{{ _url('/pendaftaran') }}">
             <i class="fab fa-wpforms"></i>&nbsp;Daftar
           </a> --}}
         @endif

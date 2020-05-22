@@ -45,7 +45,7 @@ class GalleryController extends Controller
         $this->breadcrumbs[] = [
             'page' => 'Album',
             'icon' => '',
-            'url' => url('/albums'),
+            'url' => _url('/albums'),
         ];
         $this->breadcrumbs[] = [
             'page' => $album->name,
@@ -100,7 +100,7 @@ class GalleryController extends Controller
         $this->breadcrumbs[] = [
             'page' => 'Video',
             'icon' => '',
-            'url' => url('/videos'),
+            'url' => _url('/videos'),
         ];
         $this->breadcrumbs[] = [
             'page' => $video->title,

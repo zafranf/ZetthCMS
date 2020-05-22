@@ -3,11 +3,11 @@
     <footer class="footer">
       <div class="container">
         <div class="content has-text-grey has-text-centered">
-          <a href="#{{-- {{ url('/tentang') }} --}}" class="has-text-danger">Tentang</a> |
-          <a href="#{{-- {{ url('/kontak') }} --}}" class="has-text-danger">Kontak</a>  | 
-          <a href="#{{-- {{ url('/sangkalan') }} --}}" class="has-text-danger">Sangkalan</a> | 
-          <a href="#{{-- {{ url('/pp') }} --}}" class="has-text-danger">Kebijakan Privasi</a> | 
-          <a href="#{{-- {{ url('/psd') }} --}}" class="has-text-danger">PSD</a> 
+          <a href="#{{-- {{ _url('/tentang') }} --}}" class="has-text-danger">Tentang</a> |
+          <a href="#{{-- {{ _url('/kontak') }} --}}" class="has-text-danger">Kontak</a>  | 
+          <a href="#{{-- {{ _url('/sangkalan') }} --}}" class="has-text-danger">Sangkalan</a> | 
+          <a href="#{{-- {{ _url('/pp') }} --}}" class="has-text-danger">Kebijakan Privasi</a> | 
+          <a href="#{{-- {{ _url('/psd') }} --}}" class="has-text-danger">PSD</a> 
           <br>
           <small class="has-text-grey-light">
             2020 &copy; {{ app('site')->name }}.

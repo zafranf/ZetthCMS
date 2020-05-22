@@ -8,7 +8,7 @@
 @endphp
 @if ($banners->url!='#')
   @php
-    $banner_link = ' onclick="window.top.location=\''. url($banners->url) .'\'"';
+    $banner_link = ' onclick="window.top.location=\''. _url($banners->url) .'\'"';
     $banner_style .= 'cursor:pointer;';  
   @endphp
 @endif

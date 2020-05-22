@@ -48,7 +48,7 @@ class PostController extends Controller
         $this->breadcrumbs[] = [
             'page' => 'Artikel',
             'icon' => '',
-            'url' => url('/artikel'),
+            'url' => _url('/artikel'),
         ];
         $this->breadcrumbs[] = [
             'page' => $post->title,

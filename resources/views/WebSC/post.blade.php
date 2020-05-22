@@ -81,7 +81,7 @@
                 <a class="button" style="border:0;padding:0;">
                   <span>Sebar:</span>
                 </a>
-                <a href="{{ url('/action/share/' . $post->slug . '/facebook') }}" target="_blank" class="button button-socmed is-facebook">
+                <a href="{{ _url('/action/share/' . $post->slug . '/facebook') }}" target="_blank" class="button button-socmed is-facebook">
                   <span class="icon">
                     <i class="fab fa-facebook-f"></i>
                   </span>
@@ -89,7 +89,7 @@
                     <span>Facebook</span>
                   @endif
                 </a>
-                <a href="{{ url('/action/share/' . $post->slug . '/twitter') }}" target="_blank" class="button button-socmed is-twitter">
+                <a href="{{ _url('/action/share/' . $post->slug . '/twitter') }}" target="_blank" class="button button-socmed is-twitter">
                   <span class="icon">
                     <i class="fab fa-twitter"></i>
                   </span>
@@ -97,7 +97,7 @@
                     <span>Twitter</span>
                   @endif
                 </a>
-                <a href="{{ url('/action/share/' . $post->slug . '/whatsapp') }}" target="_blank" class="button button-socmed is-whatsapp">
+                <a href="{{ _url('/action/share/' . $post->slug . '/whatsapp') }}" target="_blank" class="button button-socmed is-whatsapp">
                   <span class="icon">
                     <i class="fab fa-whatsapp"></i>
                   </span>
@@ -105,7 +105,7 @@
                     <span>WhatsApp</span>
                   @endif
                 </a>
-                <a href="{{ url('/action/share/' . $post->slug . '/telegram') }}" target="_blank" class="button button-socmed is-telegram">
+                <a href="{{ _url('/action/share/' . $post->slug . '/telegram') }}" target="_blank" class="button button-socmed is-telegram">
                   <span class="icon">
                     <i class="fab fa-telegram-plane"></i>
                   </span>

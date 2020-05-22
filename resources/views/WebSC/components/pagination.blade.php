@@ -14,7 +14,7 @@
           </li>
         @else
           <li>
-            <a class="pagination-link" href="{{ url($paginate['first_page_url']) }}" rel="first" aria-label="@lang('pagination.first_page')">&laquo;</a>
+            <a class="pagination-link" href="{{ _url($paginate['first_page_url']) }}" rel="first" aria-label="@lang('pagination.first_page')">&laquo;</a>
           </li>
         @endif
       @endif
@@ -70,7 +70,7 @@
       @if ($paginate['total'] >= app('site')->perpage * 10)
         @if ($paginator->hasMorePages())
           <li>
-            <a class="pagination-link" href="{{ url($paginate['last_page_url']) }}" rel="last" aria-label="@lang('pagination.last_page')">&raquo;</a>
+            <a class="pagination-link" href="{{ _url($paginate['last_page_url']) }}" rel="last" aria-label="@lang('pagination.last_page')">&raquo;</a>
           </li>
         @else
           <li class="disabled" aria-disabled="true" aria-label="@lang('pagination.last_page')">

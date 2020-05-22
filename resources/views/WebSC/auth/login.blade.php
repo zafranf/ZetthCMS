@@ -7,7 +7,7 @@
         <div class="column is-4 is-offset-4">
           <div class="box">
             <figure class="avatar">
-              <a href="{{ url('/') }}">
+              <a href="{{ _url('/') }}">
                 <img src="{{ getImageLogo() }}" width="100">
               </a>
             </figure>
@@ -106,7 +106,7 @@
                 <div class="level is-mobile">
                   @csrf
                   <input type="hidden" name="form" value="login">
-                  <input type="hidden" name="next" value="{{ URL::previous() != route('web.login') ? URL::previous() : url('/') }}">
+                  <input type="hidden" name="next" value="{{ URL::previous() != route('web.login') ? URL::previous() : _url('/') }}">
                   <div class="level-left">
                     <button type="submit" class="button is-danger">Masuk</button>
                   </div>
