@@ -22,7 +22,7 @@ class GalleryController extends Controller
 
         /* set data */
         $data = [
-            'page_title' => 'Album Sekolah',
+            'page_title' => 'Album Foto',
             'breadcrumbs' => $this->breadcrumbs,
             'albums' => _getAlbums(),
         ];
@@ -45,7 +45,7 @@ class GalleryController extends Controller
         $this->breadcrumbs[] = [
             'page' => 'Album',
             'icon' => '',
-            'url' => _url('/albums'),
+            'url' => _url(config('path.albums')),
         ];
         $this->breadcrumbs[] = [
             'page' => $album->name,
@@ -100,7 +100,7 @@ class GalleryController extends Controller
         $this->breadcrumbs[] = [
             'page' => 'Video',
             'icon' => '',
-            'url' => _url('/videos'),
+            'url' => _url(config('path.videos')),
         ];
         $this->breadcrumbs[] = [
             'page' => $video->title,
