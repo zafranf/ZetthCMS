@@ -82,7 +82,7 @@
                   <i class="fal fa-exclamation-circle"></i> 
                   @if (in_array(Request::segment(1), [config('path.search')]))
                     Pencarian artikel dengan kata "{{ Request::input('q') }}" tidak ditemukan.
-                  @elseif (Request::segment(1) === null || in_array(Request::segment(1), [config('path.articles')]))
+                  @elseif (Request::segment(1) === null || in_array(Request::segment(1), [config('path.posts')]))
                     Belum ada data artikel.
                   @else
                     Artikel dari {{ Request::segment(1) }} "{{ Request::segment(2) }}" tidak ditemukan.
