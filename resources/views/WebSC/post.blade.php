@@ -341,7 +341,7 @@
 
         $('.button.is-copy').on('click', function() {
           $('#modal').addClass('is-active');
-          let url = '{{ urlencode(url(config('path.post') . '/' . $post->slug)) }}';
+          let url = '{{ urlencode(_url(config('path.post') . '/' . $post->slug)) }}';
           let html = 'Tekan ikon untuk menyalin tautan: <div class="field has-addons"><div class="control is-expanded"><input class="input is-fullwidth" type="text" value="'+decodeURIComponent(url)+'" readonly></div><div class="control"><a onclick="copy()" class="button"><i class="fad fa-copy"></i></a></div></div>';
           $('.modal-card-title').text('Salin Tautan');
           $('.modal-card-body').html(html);

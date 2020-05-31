@@ -15,7 +15,7 @@ class UserController extends Controller
     {
         /* check segment */
         if (in_array($r->segment(1), [config('path.profile')])) {
-            return redirect(url(app('user')->name));
+            return redirect(_url(app('user')->name));
         }
 
         /* set breadcrumbs */

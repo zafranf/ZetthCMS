@@ -131,7 +131,7 @@ class ActionController extends Controller
         /* save activity */
         $this->activityLog('[~name] memberikan komentar untuk artikel "' . $post->slug . '"');
 
-        return redirect(url(config('path.post') . "/" . $post->slug . "#comments"))->with('success', true);
+        return redirect(_url(config('path.post') . "/" . $post->slug . "#comments"))->with('success', true);
     }
 
     public function contact(Request $r)
