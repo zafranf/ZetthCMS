@@ -57,7 +57,7 @@
                     <button type="submit" class="button is-danger">Kirim</button>
                   </div>
                   <div class="level-right">
-                    <a class="has-text-danger" href="{{ url()->previous() }}">&laquo; Kembali</a>
+                    <a class="has-text-danger" href="{{ _url()->previous() }}">&laquo; Kembali</a>
                   </div>
                 </div>
               </form>

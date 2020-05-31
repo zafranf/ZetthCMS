@@ -30,7 +30,7 @@
             <div class="media">
               @if ($author->image)
                 <div class="media-center" style="z-index:2;">
-                  <a href="{{ url(config('path.author') . '/' . $author->name) }}" title="Penulis: {{ $author->fullname }}">
+                  <a href="{{ _url(config('path.author') . '/' . $author->name) }}" title="Penulis: {{ $author->fullname }}">
                     <img src="{{ getImageUser($author->image ?? '') }}" class="author-image" alt="Penulis: {{ $author->fullname }}" title="Penulis: {{ $author->fullname }}">
                   </a>
                 </div>
@@ -38,17 +38,17 @@
               <div class="media-content has-text-centered" {!! !$author->image ? 'style="margin-top:2rem;overflow:unset;"' : '' !!}>
                 @if ($post->cover)
                   <figure class="image is-3by1">
-                    <a href="{{ url(config('path.post') . '/' . $post->slug) }}" title="{{ $post->title . ' - ' . app('site')->name }}">
+                    <a href="{{ _url(config('path.post') . '/' . $post->slug) }}" title="{{ $post->title . ' - ' . app('site')->name }}">
                       <img src="{{ getImage('/assets/images/posts/' . $post->cover) }}" alt="{{ $post->title . ' - ' . app('site')->name }}" title="{{ $post->title . ' - ' . app('site')->name }}">
                     </a>
                   </figure>
                 @endif
                 <p class="title article-title">
-                  <a href="{{ url(config('path.post') . '/' . $post->slug) }}" title="{{ $post->title . ' - ' . app('site')->name }}" class="has-text-danger">{{ $post->title }}</a>
+                  <a href="{{ _url(config('path.post') . '/' . $post->slug) }}" title="{{ $post->title . ' - ' . app('site')->name }}" class="has-text-danger">{{ $post->title }}</a>
                 </p>
                 <div class="tags has-addons level-item">
                   <span class="tag is-rounded is-danger" title="Penulis: {{ $author->fullname }}">
-                    <a href="{{ url(config('path.author') . '/' . $author->name) }}" title="Penulis: {{ $author->fullname }}" class="has-text-white">
+                    <a href="{{ _url(config('path.author') . '/' . $author->name) }}" title="Penulis: {{ $author->fullname }}" class="has-text-white">
                       {{ $author->fullname }}
                     </a>
                   </span>
@@ -59,7 +59,7 @@
                 <p class="subtitle is-6 article-subtitle">
                   di 
                   @foreach ($post->categories as $category)
-                    <a href="{{ url(config('path.category') . '/' . $category->slug) }}" class="has-text-danger" title="Kategori">{{ $category->name }}</a>{{ !$loop->last ? ',' : '' }}
+                    <a href="{{ _url(config('path.category') . '/' . $category->slug) }}" class="has-text-danger" title="Kategori">{{ $category->name }}</a>{{ !$loop->last ? ',' : '' }}
                   @endforeach
                 </p>
               </div>
@@ -67,7 +67,7 @@
             <div class="content article-body">
               {{ $post->excerpt }}
               <br><br>
-              <a href="{{ url(config('path.post') . '/' . $post->slug) }}" title="{{ $post->title .' - ' . app('site')->name }}" class="button is-danger">Baca lengkap</a>
+              <a href="{{ _url(config('path.post') . '/' . $post->slug) }}" title="{{ $post->title .' - ' . app('site')->name }}" class="button is-danger">Baca lengkap</a>
             </div>
           </div>
         </div>

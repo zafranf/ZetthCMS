@@ -197,7 +197,7 @@ class ActionController extends Controller
         $post->save();
 
         /* return to socmed url */
-        $posturl = url(config('path.post') . '/' . $post->slug);
+        $posturl = _url(config('path.post') . '/' . $post->slug);
         if ($socmed == 'facebook') {
             $url = 'https://www.facebook.com/sharer/sharer.php?u=' . $posturl . '&src=sdkpreparse';
         } else if ($socmed == 'twitter') {

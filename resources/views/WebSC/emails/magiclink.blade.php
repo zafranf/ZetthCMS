@@ -8,7 +8,7 @@
   <p>Halo, {{ $name }}</p>
   <p>Silakan klik tombol di bawah ini untuk masuk ke akun Anda.</p>
   <p>
-    <a href="{{ url(route('web.login.driver.callback', ['driver' => 'magiclink']) . '?code=' . $code) }}" style="padding:5px;border:1px solid transparent;color:#fff;background:#ed4568;border-radius:4px;text-decoration:none;">Masuk</a>
+    <a href="{{ _url(route('web.login.driver.callback', ['driver' => 'magiclink']) . '?code=' . $code) }}" style="padding:5px;border:1px solid transparent;color:#fff;background:#ed4568;border-radius:4px;text-decoration:none;">Masuk</a>
   </p>
   <p>
     Atau masukkan kode berikut ke halaman tautan pintas:

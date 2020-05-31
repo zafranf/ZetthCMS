@@ -18,7 +18,7 @@
           <div class="media">
             @if ($author->image)
               <div class="media-center" style="z-index:2;">
-                <a href="{{ url(config('path.author') . '/' . $author->name) }}" title="Penulis: {{ $author->fullname }}">
+                <a href="{{ _url(config('path.author') . '/' . $author->name) }}" title="Penulis: {{ $author->fullname }}">
                   <img src="{{ getImageUser($author->image ?? '') }}" class="author-image" alt="Penulis: {{ $author->fullname }}" title="Penulis: {{ $author->fullname }}">
                 </a>
               </div>
@@ -31,10 +31,10 @@
                 <p class="has-text-grey has-text-left is-italic">{{ $post->caption }}</p>
               @endif
               <p class="title article-title">
-                <a href="{{ url(config('path.post') . '/' . $post->slug) }}" title="{{ $post->title . ' - ' . app('site')->name }}" class="has-text-danger">{{ $post->title }}</a>
+                <a href="{{ _url(config('path.post') . '/' . $post->slug) }}" title="{{ $post->title . ' - ' . app('site')->name }}" class="has-text-danger">{{ $post->title }}</a>
               </p>
               <p class="subtitle is-6 article-subtitle">
-                <a href="{{ url(config('path.author') . '/' . $author->name) }}" class="has-text-danger" title="Penulis">
+                <a href="{{ _url(config('path.author') . '/' . $author->name) }}" class="has-text-danger" title="Penulis">
                   {{ $author->fullname }}
                 </a> pada <span title="Tanggal terbit">{{ $post->published_string }}</a>
                 @forelse ($post->categories as $category)
@@ -42,7 +42,7 @@
                     <br>
                     di 
                   @endif
-                  <a href="{{ url(config('path.category') . '/' . $category->slug) }}" class="has-text-danger" title="Kategori">{{ $category->name }}</a>{{ !$loop->last ? ',' : '' }}
+                  <a href="{{ _url(config('path.category') . '/' . $category->slug) }}" class="has-text-danger" title="Kategori">{{ $category->name }}</a>{{ !$loop->last ? ',' : '' }}
                 @empty
                 @endforelse
               </p>
@@ -54,7 +54,7 @@
             <div class="tags has-addons level-item" style="justify-content:unset;">
               @foreach ($post->tags as $tag)
                 <span class="tag is-medium is-danger">
-                  <a href="{{ url(config('path.tag') . '/' . $tag->slug) }}" class="has-text-white" title="Label">#{{ $tag->name }}</a>
+                  <a href="{{ _url(config('path.tag') . '/' . $tag->slug) }}" class="has-text-white" title="Label">#{{ $tag->name }}</a>
                 </span>
               @endforeach
             </div>

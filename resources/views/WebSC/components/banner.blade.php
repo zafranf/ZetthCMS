@@ -1,6 +1,6 @@
 @php
   $height = app('is_desktop') ? 'height:400px;' : 'height:110px;';
-  $banner_style = 'style="margin-bottom:50px;background:white url(\''.getImage('assets/images/banners/'.$banners->image).'\') no-repeat center!important;border-bottom:1px solid #f1f1f1;';
+  $banner_style = 'style="margin-bottom:50px;background:white _url(\''.getImage('assets/images/banners/'.$banners->image).'\') no-repeat center!important;border-bottom:1px solid #f1f1f1;';
   // if (app('is_mobile')) {
     $banner_style .= 'background-size:contain!important;';
   // }

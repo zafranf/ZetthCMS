@@ -17,7 +17,7 @@ class Controller extends SiteController
     public function setSEO($title = '', $par = [])
     {
         $separator = config('seotools.meta.defaults.separator');
-        $url = url()->current();
+        $url = _url()->current();
         $sitename = app('site')->name;
         $tagline = app('site')->tagline;
         $sitetag = !empty($tagline) ? $sitename . ' - ' . $tagline : $sitename;
